@@ -1,0 +1,109 @@
+﻿<div class="thongtin">
+    <form  name="form" novalidate>
+
+
+        <h1 class="title_thongtin">QUÊN MẬT KHẨU</h1>
+        <div class="thongtintaihoan">
+            <h2 class="thongtindangnhap">Tên đăng nhập <label>(email đăng nhập)</label></h2>
+            <input class="input_playlist" style=" width: 400px; margin-left: 20px;" maxlength="50" name="email" ng-model="emailQuenMatKhau" type="email" placeholder="Nhập email" required />
+        </div>
+        <div class="capcha">
+            <div style="flex:1;position:relative" class="makiemtra">
+                <h1 class="thongtindangnhap">Mã kiểm tra</h1>
+                <div>
+                    <span ng-click="ramdomCapCha()" style=" font-size: 35px;  color: #ed2b91; border-radius: 30px; padding: 5px; background-color: #0000004f;" class="material-icons-outlined">
+                        refresh
+                    </span>
+
+                    <span style="margin: 5px; border: 1px solid #cac5c554;" class="stt_xep_hang  top1_xep_hang">
+                        {{capCha}}
+                    </span>
+
+                </div>
+                
+            </div>
+            <div style="flex:2;" class="makiemtra">
+                <h1 class="thongtindangnhap">Nhập mã kiểm tra</h1>
+                <input class="input_playlist " style=" width: 333px; margin-left: 18px; margin-top: 5px;" ng-model="maCapCha" type="text" maxlength="6" placeholder="Nhập mã capcha" />
+            </div>
+        </div>
+        <button ng-click="quenMatKhau(emailQuenMatKhau)" ng-disabled=" form.email.$error.email || capCha != maCapCha " type="submit" class="button_create_playlist custombutton" ng-class="{'disable_thongtin':  form.email.$error.email || capCha != maCapCha }">Gửi email đặt lại mật khẩu</button>
+        <button ng-click="back()"  style="background-color: rgb(255 234 245 / 16%);" class="button_create_playlist custombutton">Quay về trang chủ</button>
+    </form>
+</div>
+<label ng-show="datLaiMatKhau"  class="overplayquenmatkhau">
+    overlay
+</label>
+<div ng-show="datLaiMatKhau" class="tao_playlist_layout_canhan">
+    <div class="modal_laylist_layout">
+        <div class="modal_laylist_layout_item">
+            <div class="modal_content">
+                <h3 style=" font-size: 18px; margin-bottom: 15px;">Đặt lại mật khẩu thành công. Vui lòng kiểm tra email của bạn.</h3>
+               
+                <div class="option_playlist">
+
+
+
+                </div>
+                <button ng-click="back()" class="button_create_playlist">Quay lại trang chủ</button>
+            </div>
+        </div>
+    </div>
+
+</div>
+<style>
+    .overplayquenmatkhau {
+        position: absolute;
+        /* width: 100vw; */
+        /* height: 100vh; */
+        top: -60px;
+        left: -500px;
+        right: -325px;
+        bottom: -93px;
+        background-color: #000000c7;
+        z-index: 6;
+    }
+    .disable_thongtin {
+        opacity: 0.5;
+        cursor: not-allowed !important;
+    }
+    .thongtin {
+        width: 700px;
+        height: 575px;
+        /* background-color: #411465; */
+        box-shadow: 0 2px 10px 0 #42424254;
+        background-color: #411465;
+        border-radius: 15px;
+    }
+    .custombutton {
+        width: 300px;
+        height: 40px;
+        margin-left: 195px;
+        margin-top: 20px;
+        text-transform: capitalize;
+    }
+    .thongtindangnhap {
+        color: #fff;
+        font-size: 14px;
+        margin-left: 20px;
+    }
+    .thongtintaihoan {
+        height: 75px;
+    }
+    .title_thongtin {
+        color: #fff;
+        padding: 33px;
+        margin-left: 175px;
+    }
+    .capcha {
+        height: 170px;
+        display: flex;
+        margin-top: 35px;
+        color: #fff;
+        margin-left: 20px;
+        justify-content: space-between;
+    }
+</style>
+
+
+

@@ -1,0 +1,127 @@
+﻿
+
+<div class="zm-sidebar-scrollbar-big" style="padding: 0px 0px 0px 0px; width: 100%;">
+    <div class="zm-sidebar-scrollbar" style="height: 80vh; color:white; ">
+        <nav class="zm-navbar zm-navbar-main mar-t-5 mar-b-0">
+
+            <div class="new-release-chart-header" style="">
+                <div class="mar-b-15 pad-t-20">
+                    <a class="" href="/hub/Sinh-Nhat/IWZ9Z0BZ.html">
+                        <div class="hero is-medium">
+                            <div class="container hero-body" style="max-width:1236px; height: 350px;">
+                                <figure class="image banner-image is-48x48">
+                                    <img src="https://photo-zmp3.zadn.vn/cover/c/1/d/3/c1d3f0b3fa7d49aa5401abe85c8a5a8e.jpg" alt="">
+                                </figure>
+                            </div>
+                        </div>
+                    </a>
+                </div>
+                <!--<div class="title">
+                    <h3 class="mar-0 title">Thể Loại</h3>
+
+                    <i class="icon fa fa-play-circle " style="padding: 10px; font-size: 42px;"></i>
+                    <h3 class="bold subtitle">Cập nhật lần cuối lúc 18/06/2021 21:52</h3>
+                </div>-->
+
+            </div>
+            <div class="list" >
+
+                <div class="zm-section playlist-section mar-b-30"  ng-repeat="tl in datataiTheLoai">
+                    <div class="container" style="max-width: 1230px;">
+                        <h3 class="title">
+                            <a href="/home1#/chitiettheloai/{{tl.key}}" class="a-hover">
+                                {{tl.tentheloai}}<i class="icon fa fa-chevron-right" style=" padding-left: 10px; font-size: 20px;">
+                                </i>
+                            </a>
+                        </h3>
+                        <div class="zm-carousel-wrapper">
+                            <div class="zm-carousel">
+                                <div class="zm-carousel__container" style="transform: translate3d(0px, 0px, 0px);" ng-repeat="dsptl in tl.object">
+
+                                    <div class="zm-carousel-item is-fullhd-2 is-widescreen-2 is-desktop-20 is-touch-3 is-tablet-3" style="width: 196px;">
+                                        <div class="playlist-wrapper">
+                                            <div class="zm-card">
+                                                <div style=" width: auto; height: 175px;">
+
+                                                    <a class="" title="{{dsptl.object.tendanhsachphattheloai}}" href="/home1#/danhsachphat/{{dsptl.object.id}}">
+                                                        <div class="zm-card-image" style="height:175px;">
+                                                            <figure class="image is-48x48">
+                                                                <img src="{{dsptl.object.linkhinhanh}}" style="height: 175px;" alt="">
+                                                            </figure>
+
+                                                            <div class="opacity "></div>
+                                                            <div class="zm-actions-container">
+                                                                <div class="zm-box zm-actions">
+                                                                    <div class="play1-play1" style="font-size: 2rem; padding-top: 30px; color: white; padding-right: 20px;">
+                                                                        <i class="far fa-heart iconmusic"></i>
+                                                                    </div>
+                                                                    <div class="play1-play2" style=" font-size: 6rem; color: white; padding-top: 30px;" tabindex="0" ng-click="$event.preventDefault(); okok(event); ">
+
+                                                                        <i class="fa fa-play-circle"></i>
+
+                                                                    </div>
+                                                                    <div class="play1-play3" style="font-size: 2rem; color: white;  padding-top: 30px; padding-left: 24px;">
+
+                                                                        <i class="fa fa-ellipsis-h"></i>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+
+                                                            <!--<div class="play-play1">
+                                                                <div class="play1-play1" style=" padding-top: 12px; padding-right: 20px;">
+                                                                    <i class="far fa-heart iconmusic"></i>
+                                                                </div>
+                                                                <div class="play1-play2" style=" padding-top: 24px;">
+
+                                                                    <i class="fa fa-play-circle"></i>
+
+                                                                </div>
+                                                                <div class="play1-play3" style="font-size: 2rem; color: white;  padding-top: 45px; padding-left: 24px;">
+
+                                                                    <i class="fa fa-ellipsis-h"></i>
+                                                                </div>
+                                                            </div>-->
+                                                        </div>
+
+                                                    </a>
+                                                </div>
+                                                <div class="zm-card-content" onclick="window.location='/home1#/danhsachphat';">
+                                                    <h4 class="title is-6">
+                                                        <a class="" title="{{dsptl.object.tendanhsachphattheloai}}" href="">{{dsptl.object.tendanhsachphattheloai}}</a>
+                                                    </h4><h3 class="mt-10 subtitle"></h3>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+
+
+
+                                </div>
+                            </div>
+                            <!--<button class="zm-btn zm-carousel-control-prev zm-disabled is-hide button" tabindex="0">
+                                <i class="icon ic-go-left"></i>
+                            </button>
+                            <button class="zm-btn zm-carousel-control-next zm-disabled is-hide button" tabindex="0">
+                                <i class="icon ic-go-right"></i>
+                            </button>-->
+                        </div>
+                    </div>
+                </div>
+
+
+                <template style="height: 1px; min-width: 1px; display: block;">
+                </template>
+            </div>
+
+
+        </nav>
+
+
+
+    </div>
+
+</div>
+
+
+
+

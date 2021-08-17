@@ -1,0 +1,86 @@
+﻿
+<div class="col-lg-8">
+    <div class="card card-small mb-4">
+        <div class="card-header border-bottom">
+            <h6 class="m-0">Account Details</h6>
+        </div>
+        <ul class="list-group list-group-flush">
+            <li class="list-group-item p-3">
+                <div class="row">
+                    <div class="col">
+                        <form>
+
+                            <div class="form-row">
+                                <div class="form-group col-md-6">
+                                    <label for="feLastName">Tên bài hát</label>
+                                    <input type="text" ng-model="data1.object.tenbaihat" class="form-control" id="feLastName" value="Brooks">
+                                </div>
+
+                                <!--<div class="form-group col-md-6">
+                                    <label for="feLastName">Lời Bài Hát</label>
+                                    <input type="text" ng-model="data1.object.loibaihat" class="form-control" id="feFirstName" value="Sierra">-->
+                                    <!--<textarea id="okem" rows="8" cols="100">
+                </textarea>-->
+                                <!--</div>-->
+                            </div>
+                            <div class="form-row">
+                                <div class="form-group col-md-6">
+                                    <label for="feFirstName">Hình Ảnh</label>
+                                    <input type="file" class="form-control" style="font-size:15px" name="file" ng-files="getTheFilesHinhAnh($files)" accept="image/*" required multiple>
+
+                                </div>
+                                <div class="form-group col-md-6">
+                                    <label for="feFirstName">Chủ Đề</label>
+                                    <select ng-model="valueChuDe" style="width: 100%; border-color:#007bff;" class="form-control" ng-change="changeChuDe()">
+                                        <option style="width: 100%; color: #007bff;" ng-value="x.object.id" value="{{x.object.id}}" ng-repeat="x in dataloadchude">{{x.object.tenchude}}</option>
+
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="form-row">
+                                <div class="form-group col-md-6">
+                                    <label for="feFirstName">Mô tả</label>
+                                    <input type="text" ng-model="data1.object.mota" class="form-control" id="feFirstName" value="Sierra">
+                                </div>
+                                <div class="form-group col-md-6">
+                                    <label for="feFirstName">Ca Sĩ</label>
+                                    <input type="text" ng-model="data1.object.casi" class="form-control" id="feFirstName" value="Sierra">
+                                </div>
+                            </div>
+                            <div class="form-row">
+                                <div class="form-group col-md-6">
+                                    <label for="feFirstName">Thể Loại</label>
+                                    <select ng-model="valueTheLoai" style="width: 100%; border-color:#007bff;" class="form-control" ng-change="changeTheLoai()">
+                                        <option style="width: 100%; color: #007bff;" ng-value="x.object.id" value="{{x.object.id}}" ng-repeat="x in dataloadtheloai">{{x.object.tentheloai}}</option>
+
+                                    </select>
+                                </div>
+                                <div class="form-group col-md-6">
+                                    <label for="feFirstName">Danh Sách Phát Thể Loại</label>
+                                    <select ng-model="valueDanhSachPhatTheLoai" style="width: 100%; border-color:#007bff;" class="form-control" ng-change="changeDanhSachPhatTheLoai()">
+                                        <option style="width: 100%; color: #007bff;" ng-value="x.object.id" value="{{x.object.id}}" ng-repeat="x in datataiDanhSachPhatTheLoai">{{x.object.tendanhsachphattheloai}}</option>
+
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="form-row">
+                                <div class="form-group col-md-6">
+                                    <label id="addLoiBaiHat" for="feLastName">Lời Bài Hát</label>
+                                    <!--<input type="text" ng-model="model.loibaihat" class="form-control" value="Sierra">-->
+                                    <textarea ng-model="data1.object.loibaihat" name="okem1" rows="8" cols="100" style="border-color: #007bff;">
+                                    </textarea>
+
+                                </div>
+                            </div>
+                            <div class="form-row">
+
+                            </div>
+                            <button type="submit" ng-click="submit()" class="btn btn-accent">Sữa Bài Hát</button>
+                            <button type="submit" ng-click="cancel()" class="btn btn-accent">Thoát</button>
+                        </form>
+                    </div>
+                </div>
+            </li>
+        </ul>
+    </div>
+</div>

@@ -1,0 +1,85 @@
+﻿<div class="main-content-container container-fluid px-4">
+    <!-- Page Header -->
+    <div class="page-header row no-gutters py-4">
+        <!--<div class="col-12 col-sm-4 text-center text-sm-left mb-0">
+            <button type="submit" ng-click="add()" class="btn btn-accent">Tạo Danh Sách Phát Thể Loại</button>
+           
+        </div>-->
+        <div class="col-12 col-sm-4 text-center text-sm-left mb-0">
+            <h6 style="display: initial; width: 46%; border-color: #007bff;">Thể Loại :</h6>
+            <select ng-model="valueTheLoai" style="display: initial; width: 46%; border-color: #007bff;" class="form-control" ng-change="timkiem.object.theloai_id = valueTheLoai;changeTheLoai(taiTop20 | filter:timkiem);">
+                <option style="width: 100%; color: #007bff;" ng-value="rong" value="{{rong}}">Tất Cả</option>
+                <option style="width: 100%; color: #007bff;" ng-value="x.object.id" value="{{x.object.id}}" ng-repeat="x in dataloadtheloai">{{x.object.tentheloai}}</option>
+            </select>
+
+        </div>
+        <div class="col-12 col-sm-4 text-center text-sm-left mb-0">
+
+
+        </div>
+    </div>
+    <!-- End Page Header -->
+    <!-- Default Light Table -->
+    <div class="row">
+
+        <div class="col">
+            <div class="card card-small mb-4 dodai" style="height:565px; max-height:565px;">
+                <div class="card-header border-bottom">
+                    <h6 class="m-0">Top 20</h6>
+                    
+                </div>
+                <div class="card-body p-0 pb-3 text-center">
+                    <table class="table mb-0 dodaibang">
+                        <thead class="bg-light">
+                            <tr>
+                                <!--<th scope="col" class="border-0">id</th>-->
+                                <th scope="col" class="border-0"> Tên Top20</th>
+                                <th scope="col" class="border-0">Ảnh</th>
+                                <th scope="col" class="border-0">Mô Tả</th>
+                                <!--<th scope="col" class="border-0">Thể Loại</th>-->
+                                <th scope="col" class="border-0">Sửa</th>
+                                <th scope="col" class="border-0">Xóa</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr ng-repeat="data in taiTop20  | filter:timkiem | startFrom:currentPage*pageSize | limitTo:pageSize">
+
+                                <td class="vitrigiua">{{data.object.tentop20}}</td>
+                                <!--<td>{{data.object.theloai_id}}</td>-->
+                                <td ><img src="{{data.object.linkhinhanh}}" class="icon-category hinhanh"></td>
+                                <td class="vitrigiua" style="width: 200px;"><p style=" text-overflow: Ellipsis;width: 370px;white-space: nowrap;overflow: hidden;">{{data.object.mota}}</p></td>
+
+                                <td class="vitrigiua"> <button ng-click="edit(data)" style="width: 25px; height: 25px; padding: 0px;-webkit-box-shadow: 0 2px 5px 0 rgba(85,168,253,0.45);" class="btn btn-accent blue"><i class="fa fa-edit"></i></button>       </td>
+                                <td class="vitrigiua"> <button type="submit" ng-click="delete(data.object.id)" style="width: 25px; height: 25px; padding: 0px;-webkit-box-shadow: 0 2px 5px 0 rgba(230,60,95,0.45)" class="btn btn-accent red"><i class="fa fa-trash"></i></button></td>
+
+
+                            </tr>
+
+                        </tbody>
+                    </table>
+
+                    {{currentPage+1}}/{{soTrang}}
+                </div>
+
+            </div>
+
+
+        </div>
+
+    </div>
+    <!-- End Default Light Table -->
+    <!-- Default Dark Table -->
+    <div class="row" style="padding:0px 0px 0px 15px">
+
+        <nav aria-label="Page navigation example">
+            <ul class="pagination pagination-primary" style="padding-left: 0px;">
+                <li class="page-item" ng-click="Truoc()"><a class="page-link" href="">Trước</a></li>
+                <li class="page-item" ng-repeat="a in range(soTrang)| limitTo:soLuong track by $index  ">
+                    <a class="page-link" href="" ng-click="phanTrang( $index + size )">{{$index + 1 + size}}</a>
+                </li>
+                <li class="page-item" ng-click="Sau()"><a class="page-link" href="">Sau</a></li>
+            </ul>
+        </nav>
+    </div>
+  
+</div>

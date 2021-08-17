@@ -1,0 +1,477 @@
+﻿
+<div class="header_account" ng-init="checkmusic = false;">
+
+    <div class="photo_account">
+        <img ng-if="checklogin.hinhanh != null" class="img_account" src="{{checklogin.hinhanh}}">
+        <img ng-if="checklogin.hinhanh == null " class="img_account" src="https://avatar.talk.zdn.vn/default.jpg" />
+    </div>
+    <h3 class="name_account">{{checklogin.hovaten}}</h3>
+    <div class="vip_account">
+        <a ng-click="$event.preventDefault(); clickShowVip();" class="mua_vip_account">
+            MUA VIP NGAY
+        </a>
+        <label for="checked_seting" class="dos_dangxuat">
+            <span class="material-icons-outlined dots_account">
+                more_horiz
+            </span>
+        </label>
+
+        <input style="position:fixed;z-index:0;margin-left:300px;" type="text" ng-focus="showSettingfocus()" ng-blur="blurSetting()" id="checked_seting" />
+
+        <div ng-show="checked" class="user_profile">
+            <ul style="list-style:none" class="setting-user">
+                <li ng-mousedown="mousedowmDangXuat()" ng-mouseup="mouseupDangXuat()" class="item_setting"><span style=" margin-right: 15px; " class="material-icons-outlined">login</span> <span>Đăng Xuất</span></li>
+            </ul>
+        </div>
+    </div>
+    <div class="zm-narbar-container_account">
+        <ul class="zm-navbar-menu_account">
+            <li ng-click="tabActiveClick(0)" ng-class="{'is-active_account':  tabactive==0}" class="zm-navbar-item_account">
+                <div class="navbar-link">
+                    <span class="name_tab_account">TỔNG QUAN</span>
+                </div>
+            </li>
+            <li ng-click="tabActiveClick(1)" ng-class="{'is-active_account':  tabactive==1}" class="zm-navbar-item_account ">
+                <div class="navbar-link">
+                    <span class="name_tab_account">ĐÃ LƯU</span>
+                </div>
+            </li>
+            <li ng-click="tabActiveClick(2)" ng-class="{'is-active_account':  tabactive==2}" class="zm-navbar-item_account">
+                <div class="navbar-link">
+                    <span class="name_tab_account">PLAYLIST</span>
+                </div>
+            </li>
+
+            <li ng-click="tabActiveClick(3)" ng-class="{'is-active_account':  tabactive==3}" class="zm-navbar-item_account">
+                <div class="navbar-link">
+                    <span class="name_tab_account">TẢI LÊN</span>
+                </div>
+            </li>
+        </ul>
+    </div>
+
+</div>
+<div ng-if="tabactive==0" class="tongquan_account">
+    <div class="header_option">
+        <h1 class="titleis-2">
+            <span>Bài Hát Đã Thích</span>
+        </h1>
+        <div class="is-center_option">
+            <input id="up-button" type="file" accept="audio/*" multiple="" style="display: none;">
+            <label ng-click="upLoadNhac()" class="zm-lbl_option" for="up-button">
+
+                <span class="material-icons-outlined">file_upload</span><span class="margin: 0px 6px;">Tải lên</span>
+            </label>
+            <a class="zm-btn_option" tabindex="0" ng-click="playMotBanNhac(listBaiHatYeuThich)">
+                <i class="fas fa-play"></i>
+                <span style=" margin: 0 10px; ">Phát tất cả</span>
+            </a>
+
+        </div>
+    </div>
+
+    <div class="">
+        <div class="media_luu">
+            <div class="menu_baihat"><div class="menu_baihat_item">Bài Hát</div></div>
+            <div class="menu_thoigian"><div class="menu_baihat_item">Thời Gian</div></div>
+
+        </div>
+
+    </div>
+
+    <div class="list_nhac_da_luu">
+
+        <div class="item_nhac_da_luu" ng-class="{'active_baihat_timkiem' : checkplaymusic == $index}" ng-repeat="x in listBaiHatYeuThich">
+            <div class="border_nhac_luu">
+                <div class="media_luu">
+                    <div class="media_luu_left">
+                        <span class="stt_xep_hang"><i class="fas fa-music"></i> </span>
+
+                        <div class="hinh_baihat_daluu">
+                            <div ng-click="Play(); " ng-show="kiemTraBaiHatDangPhat==x.id " class="playmusic_canhan_a">
+                                <div ng-show="kiemTraBaiHatDangPhat==x.id && playmusic ==1 " class="play_baihat"> </div>
+
+                                <i ng-show="kiemTraBaiHatDangPhat==x.id && playmusic ==0" class="far fa-play-circle icon_play_canhan"></i>
+                            </div>
+
+                            <div ng-show="kiemTraBaiHatDangPhat !=x.id" class="background_icon_play" ng-click="playMotBanNhac(x); viTriBanNhac($index)">
+
+                                <i class="far fa-play-circle icon_play_canhan"></i>
+                            </div>
+                            <img class="hinh_da_luu" src="{{x.linkhinhanh}}" />
+
+                        </div>
+
+                        <div class="info_da_luu">
+                            <span class="ten_bai_hat_da_luu">{{x.tenbaihat}}</span>
+                            <h3 class="ca_si_bai_hat_da_luu">{{x.casi}}</h3>
+                        </div>
+                    </div>
+                    <div class="media_luu_content"><div class="time_bai_hat">{{x.thoiluongbaihat}}</div></div>
+                    <div class="media_luu_right">
+                        <label class="label_account" ng-click="listBaiHatYeuThich.splice($index, 1); yeuThichBaiHat(x.id)">
+                            <i class="fas fa-heart icon_account"></i>
+                        </label>
+                        <!--<label class="label_account">
+                            <i class="far fa-heart icon_account_notfocus"></i>
+                        </label>-->
+                        <span ng-click="themBaiHatVaoPhatTiepTheo(x)" class="material-icons-outlined dots_account_baihat">
+                            more_horiz
+                        </span>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+
+    </div>
+    <br />
+    <div class="header_option">
+        <h1 class="titleis-2">
+            <span>Danh Sách Phát </span>
+        </h1>
+
+    </div>
+    <div class="danh_sach_phat_account">
+        <div class="button_nextplaylist">
+            <a href="" class="btn-next" ng-click="nextPlaylist()"><i class="fa fa-chevron-right" aria-hidden="true"></i></a>
+            <a href="" style="margin-right: 24px;" class="btn-prev" ng-click="backPlaylist()"><i class="fa fa-chevron-left" aria-hidden="true"></i></a>
+
+        </div>
+        <div class="item_danh_sach_phat">
+            <label class="item_ds_chitiet">
+                <label for="showplaylist" class="tao_playlist">
+                    <label for="showplaylist" class="item_tao_playlist">
+                        <span class="material-icons-outlined icon_taodsphat">
+                            add
+                        </span>
+                        <span>Tạo playlist mới</span>
+                    </label>
+                </label>
+            </label>
+            <div class="item_ds_chitiet_item" ng-repeat="x in playlist_canhan">
+                <div class="tao_playlist_item">
+                    <a href="/#/playlist/{{x.id}}" class="item_tao_playlist_curent">
+                        <div class="img_playlist" ng-style="{'background-image': 'url(' + x.linkhinhanh + ')'}"></div>
+                        <div class="hover_playlist">
+                            <label class="hover_remove_playlist">
+                                <i style="font-size:23px;" class="fas fa-trash"></i>
+                            </label>
+                            <i class="icon_play">
+                            </i>
+                            <label class="hover_remove_playlist_dots">
+                                <span style="font-size:23px;" class="material-icons-outlined">
+                                    more_horiz
+                                </span>
+                            </label>
+                        </div>
+                        <div class="hover_background">
+                        </div>
+                    </a>
+                    <div class="ten_danh_sach_phat_da_tao" style="margin:4px;">
+                        <h4 class="ten_bai_hat_da_luu hover_ten_dsphat"><a> {{x.tendanhsachphat}}</a></h4>
+                        <h3 class="ca_si_bai_hat_da_luu"><a>{{checklogin.hovaten}}</a></h3>
+                    </div>
+                </div>
+            </div>
+
+
+        </div>
+    </div>
+    <br />
+    <div class="header_option">
+        <h1 class="titleis-2">
+            <span>Danh Sách Phát Yêu Thích</span>
+        </h1>
+
+    </div>
+
+    <div class="danh_sach_phat_account">
+        <div class="button_nextplaylist">
+            <a href="" class="btn-next" ng-click="nextPlaylist()"><i class="fa fa-chevron-right" aria-hidden="true"></i></a>
+            <a href="" style="margin-right: 24px;" class="btn-prev" ng-click="backPlaylist()"><i class="fa fa-chevron-left" aria-hidden="true"></i></a>
+
+        </div>
+
+        <div class="item_danh_sach_phat">
+            <div class="item_ds_chitiet_item" ng-repeat="x in listDSPyeuThichNgheSi">
+                <div class="tao_playlist_item">
+                    <a href="/#/playlist/{{x.id}}" class="item_tao_playlist_curent">
+                        <div class="img_playlist" ng-style="{'background-image': 'url(' + x.linkhinhanh + ')'}"></div>
+                        <div class="hover_playlist">
+                            <label class="hover_remove_playlist" ng-click="$event.preventDefault();listDSPyeuThichNgheSi.splice($index, 1);yeuThichDanhSachPhatNguoiDungID(x.id);">
+                                <i style="font-size:23px;" class="fas fa-heart icon_account"></i>
+                            </label>
+                            <i class="icon_play">
+                            </i>
+                            <label class="hover_remove_playlist_dots">
+                                <span style="font-size:23px;" class="material-icons-outlined">
+                                    more_horiz
+                                </span>
+                            </label>
+                        </div>
+                        <div class="hover_background">
+                        </div>
+                    </a>
+                    <div class="ten_danh_sach_phat_da_tao" style="margin:4px;">
+                        <h4 class="ten_bai_hat_da_luu hover_ten_dsphat"><a> {{x.tendanhsachphat}}</a></h4>
+                        <h3 class="ca_si_bai_hat_da_luu"><a href="#/nghesi/{{x.nguoidung_id}}">{{checklogin.hovaten}}</a></h3>
+                    </div>
+                </div>
+            </div>
+            <div class="item_ds_chitiet_item" ng-repeat="x in listDanhSachPhatYeuThich">
+                <div class="tao_playlist_item">
+                    <a href="/#/danhsachphat/{{x.id}}" class="item_tao_playlist_curent">
+                        <div class="img_playlist" ng-style="{'background-image': 'url(' + x.linkhinhanh + ')'}"></div>
+                        <div class="hover_playlist">
+                            <label style="cursor:pointer" title="bỏ yêu thích danh sách phát" ng-click="$event.preventDefault();listDanhSachPhatYeuThich.splice($index, 1);yeuThichDanhSachPhat(x.id);" class="hover_remove_playlist">
+                                <i class="fas fa-heart icon_account"></i>
+                            </label>
+                            <i class="icon_play">
+                            </i>
+                            <label style="cursor:pointer;" class="hover_remove_playlist_dots">
+                                <span style="font-size:23px;" class="material-icons-outlined">
+                                    more_horiz
+                                </span>
+                            </label>
+                        </div>
+                        <div class="hover_background">
+                        </div>
+                    </a>
+                    <div class="ten_danh_sach_phat_da_tao" style="margin:4px;">
+                        <h4 class="ten_bai_hat_da_luu hover_ten_dsphat"><a> {{x.tendanhsachphattheloai}}</a></h4>
+                        <h3 class="ca_si_bai_hat_da_luu"><a>Zing mp3</a></h3>
+                    </div>
+                </div>
+            </div>
+
+
+        </div>
+    </div>
+</div>
+<div ng-if="tabactive==1" class="tongquan_account">
+    <div class="header_option">
+        <h1 class="titleis-2">
+            <span>Bài Hát ></span>
+        </h1>
+        <div class="is-center_option">
+            <input id="up-button" type="file" accept="audio/*" multiple="" style="display: none;">
+            <label class="zm-lbl_option" for="up-button">
+
+                <span class="material-icons-outlined">file_upload</span><span class="margin: 0px 6px;">Tải lên</span>
+            </label>
+            <a class="zm-btn_option" tabindex="0" ng-click="playMotBanNhac(listDaTaiXuong_CaNhan)">
+                <i class="fas fa-play"></i>
+                <span style=" margin: 0 10px; ">Phát tất cả</span>
+            </a>
+        </div>
+    </div>
+    <div class="list_nhac_da_luu_baihat">
+        <div class="">
+            <div class="media_luu">
+                <div class="menu_baihat"><div class="menu_baihat_item">Bài Hát</div></div>
+                <div class="menu_thoigian"><div class="menu_baihat_item">Thời Gian</div></div>
+
+            </div>
+
+        </div>
+        <div class="item_nhac_da_luu" ng-class="{'active_baihat_timkiem' : kiemTraBaiHatDangPhat==x.id  }" ng-repeat="x in listDaTaiXuong_CaNhan">
+            <div class="border_nhac_luu">
+                <div class="media_luu_baihat">
+                    <div class="media_luu_left_baihat">
+                        <span class="stt_xep_hang"><i class="fas fa-music"></i> </span>
+
+                        <div class="hinh_baihat_daluu">
+                            <div ng-click="Play(); " ng-show="kiemTraBaiHatDangPhat==x.id " class="playmusic_canhan_a">
+                                <div ng-show="kiemTraBaiHatDangPhat==x.id && playmusic ==1 " class="play_baihat"> </div>
+
+                                <i ng-show="kiemTraBaiHatDangPhat==x.id && playmusic ==0" class="far fa-play-circle icon_play_canhan"></i>
+                            </div>
+                            <label ng-show="kiemTraBaiHatDangPhat!=x.id " class="background_icon_play" ng-click="playMotBanNhac(x); viTriBanNhacDaLuu($index)">
+                                <i class="far fa-play-circle icon_play_canhan"></i>
+                            </label>
+                            <img class="hinh_da_luu" src="{{x.linkhinhanh}}" />
+
+                        </div>
+                        <div class="info_da_luu">
+                            <span class="ten_bai_hat_da_luu">{{x.tenbaihat}}</span>
+                            <h3 class="ca_si_bai_hat_da_luu">{{x.casi}}</h3>
+                        </div>
+                    </div>
+                    <div class="media_luu_content"><div class="time_bai_hat">{{x.thoiluongbaihat}}</div></div>
+                    <div class="media_luu_right">
+                        <label class="label_account" ng-click="toggleYeuThichBHDaLuu_CaNhan($index)">
+                            <i ng-show="x.yeuthich==0" class="far fa-heart icon_nav_right_first_canhan"></i>
+                            <i ng-show="x.yeuthich==1" class="fas fa-heart icon_active_yeuthich"></i>
+
+                        </label>
+                        <!--<label class="label_account">
+                            <i class="far fa-heart icon_account_notfocus"></i>
+                        </label>-->
+                        <span class="material-icons-outlined dots_account_baihat">
+                            more_horiz
+                        </span>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+
+
+
+    </div>
+
+</div>
+<div ng-if="tabactive==2" class="tongquan_account">
+    <div class="danh_sach_phat_account">
+        <div class="button_nextplaylist">
+            <a href="" class="btn-next" ng-click="nextPlaylist()"><i class="fa fa-chevron-right" aria-hidden="true"></i></a>
+            <a href="" style="margin-right: 24px;" class="btn-prev" ng-click="backPlaylist()"><i class="fa fa-chevron-left" aria-hidden="true"></i></a>
+
+        </div>
+        <div class="item_danh_sach_phat">
+            <div class="item_ds_chitiet">
+                <div class="tao_playlist">
+                    <div class="item_tao_playlist">
+                        <span class="material-icons-outlined icon_taodsphat">
+                            add
+                        </span>
+                        <span>Tạo playlist mới</span>
+                    </div>
+                </div>
+            </div>
+            <div class="item_ds_chitiet_item" ng-repeat="x in playlist_canhan">
+                <div class="tao_playlist_item">
+                    <a href="/#/playlist/{{x.id}}" class="item_tao_playlist_curent">
+                        <div class="img_playlist" ng-style="{'background-image': 'url(' + x.linkhinhanh + ')'}"></div>
+                        <div class="hover_playlist">
+                            <label class="hover_remove_playlist">
+                                <i style="font-size:23px;" class="fas fa-trash"></i>
+                            </label>
+                            <i class="icon_play">
+                            </i>
+                            <label class="hover_remove_playlist_dots">
+                                <span style="font-size:23px;" class="material-icons-outlined">
+                                    more_horiz
+                                </span>
+                            </label>
+                        </div>
+                        <div class="hover_background">
+                        </div>
+                    </a>
+                    <div class="ten_danh_sach_phat_da_tao" style="margin:4px;">
+                        <h4 class="ten_bai_hat_da_luu hover_ten_dsphat"><a> {{x.tendanhsachphat}}</a></h4>
+                        <h3 class="ca_si_bai_hat_da_luu"><a>{{checklogin.hovaten}}</a></h3>
+                    </div>
+                </div>
+            </div>
+
+
+        </div>
+    </div>
+</div>
+<div ng-if="tabactive==3" class="tongquan_account">
+
+
+    <div class="is-center_option_tailen">
+        <h1 class="titleis-2">
+            <span>Bài Hát Tải Lên</span>
+        </h1>
+        <input id="up-button" type="file" accept="audio/*" multiple="" style="display: none;">
+        <div style="display:flex;">
+            <label class="zm-lbl_option" for="up-button">
+
+                <span class="material-icons-outlined">file_upload</span><span class="margin: 0px 6px;">Tải lên</span>
+            </label>
+            <a class="zm-btn_option" tabindex="0" ng-click="playMotBanNhac(listBaiHatDaTaiLen)">
+                <i class="fas fa-play"></i>
+                <span style=" margin: 0 10px; ">Phát tất cả</span>
+            </a>
+        </div>
+
+
+    </div>
+    <div class="list_nhac_da_luu_baihat">
+
+        <div class="">
+            <div class="media_luu">
+                <div class="menu_baihat"><div class="menu_baihat_item">Bài Hát</div></div>
+                <div class="menu_thoigian"><div class="menu_baihat_item">Thời Gian</div></div>
+
+            </div>
+
+        </div>
+        <div class="item_nhac_da_luu" ng-class="{'active_baihat_timkiem' : kiemTraBaiHatDangPhat==x.id  }" ng-repeat="x in listBaiHatDaTaiLen">
+            <div class="border_nhac_luu">
+                <div class="media_luu_baihat">
+                    <div class="media_luu_left_baihat">
+                        <span class="stt_xep_hang"><i class="fas fa-music"></i> </span>
+
+                        <div class="hinh_baihat_daluu">
+                            <div ng-click="Play(); " ng-show="kiemTraBaiHatDangPhat==x.id " class="playmusic_canhan_a">
+                                <div ng-show="kiemTraBaiHatDangPhat==x.id &&playmusic ==1 " class="play_baihat"> </div>
+
+                                <i ng-show="kiemTraBaiHatDangPhat==x.id && playmusic ==0" class="far fa-play-circle icon_play_canhan"></i>
+                            </div>
+                            <label ng-show="kiemTraBaiHatDangPhat!=x.id " class="background_icon_play" ng-click="playMotBanNhac(x); viTriBanNhacTaiLen( $index)">
+                                <i class="far fa-play-circle icon_play_canhan"></i>
+                            </label>
+                            <img class="hinh_da_luu" src="{{x.linkhinhanh}}" />
+
+                        </div>
+                        <div class="info_da_luu">
+                            <span class="ten_bai_hat_da_luu">{{x.tenbaihat}}</span>
+                            <h3 class="ca_si_bai_hat_da_luu">{{x.casi}}</h3>
+                        </div>
+                    </div>
+                    <div class="media_luu_content">
+                        <div class="time_bai_hat">{{x.thoiluongbaihat}}</div>
+
+                        <div class="private">
+                            <div ng-show="x.chedo ==0" class="congkhaibh">
+                                <div  class="title">Cá nhân</div>
+                                <i style=" font-size: 10px; margin-top: 5px;" class="fas fa-chevron-down"></i>
+                            </div>
+                            <div ng-show="x.chedo ==1"  class="congkhaibh">
+                                <div class="title">Công khai</div>
+                                <i style=" font-size: 10px; margin-top: 5px;" class="fas fa-chevron-down"></i>
+                            </div>
+                            <div class="list">
+                                <div class="list-item" ng-click="x.chedo = 0;congKhaiBaiHat(x)">
+                                    <span>Cá nhân</span>
+                                    <span ng-show="x.chedo ==0" style="font-size:16px;" class="material-icons-outlined">
+                                        check
+                                    </span>
+                                </div>
+                                <div class="list-item" ng-click="x.chedo = 1;congKhaiBaiHat(x)">
+                                    <a>Công khai</a>
+                                    <span ng-show="x.chedo ==1" style="font-size:16px;" class="material-icons-outlined">
+                                        check
+                                    </span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="media_luu_right">
+                        <label class="label_account" ng-click="toggleYeuThichBHDaTaiLen_CaNhan($index)">
+                            <i ng-show="x.yeuthich==0" class="far fa-heart icon_nav_right_first_canhan"></i>
+                            <i ng-show="x.yeuthich==1" class="fas fa-heart icon_active_yeuthich"></i>
+
+                        </label>
+                        <!--<label class="label_account">
+                            <i class="far fa-heart icon_account_notfocus"></i>
+                        </label>-->
+                        <span class="material-icons-outlined dots_account_baihat">
+                            more_horiz
+                        </span>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+
+
+
+    </div>
+</div>

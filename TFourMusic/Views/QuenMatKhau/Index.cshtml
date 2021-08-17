@@ -1,0 +1,17 @@
+﻿<script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.6.9/angular.min.js"></script>
+<div class="content" ng-app="App_ESEIM" ng-controller="Ctrl_ESEIM">
+    <div id="loading_main" class="manche_loadding" style="display:none"> <div class="loadding_thanhtoan"></div> </div>
+    <div style="min-height:100px;position:absolute;top: 60px; left: 500px; padding: 5px;" ng-view>
+
+    </div>
+</div>
+<script src="~/views/front-end/quenmatkhau/controller.js" type="text/javascript"></script>
+<style>
+    .content {
+        height: 100vh;
+        width: 100vw;
+        padding: 0;
+        margin: -1px;
+        position:relative;
+    }
+</style>

@@ -1,0 +1,127 @@
+﻿<div class="col-lg-8">
+    <div class="card card-small mb-4">
+        <div class="card-header border-bottom">
+            <h6 class="m-0">Tạo Người Dùng</h6>
+        </div>
+        <ul class="list-group list-group-flush">
+            <li class="list-group-item p-3">
+                <div class="row">
+                    <div class="col">
+                        <form>
+                            <div class="form-row">
+                                <div class="form-group col-md-6">
+                                    <label for="feFirstName">Tài Khoản</label>
+                                    <input type="text" ng-model="model.taikhoan" class="form-control" id="feFirstName" value="Sierra">
+                                </div>
+                                <div class="form-group col-md-6">
+                                    <label for="feFirstName">Email</label>
+                                    <input type="text" ng-model="model.email" class="form-control" id="feFirstName" value="Sierra">
+                                </div>
+                            </div>
+                            <div class="form-row">
+                                <div class="form-group col-md-6">
+                                    <label for="feFirstName">Mật Khẩu</label>
+                                    <input type="text" ng-model="model.matkhau" class="form-control" id="feFirstName" value="Sierra">
+                                </div>
+                                <div class="form-group col-md-6">
+                                    <label for="feFirstName">Họ Tên</label>
+                                    <input type="text" ng-model="model.hoten" class="form-control" id="feFirstName" value="Sierra">
+                                </div>
+                            </div>
+                            <div class="form-row">
+                                <div class="form-group col-md-6">
+                                    <label for="feFirstName">Quốc Gia</label>
+                                    <select ng-model="model.quocgia" style="width: 100%; border-color:#007bff;" class="form-control">
+                                        
+                                        <option value="Brunei"style="width: 100%; color: #007bff;">Brunei</option>
+                                        <option value="Cambodia" style="width: 100%; color: #007bff;">Cambodia</option>
+                                     
+                                        
+                                        <option value="Laos" style="width: 100%; color: #007bff;">Laos</option>
+                                       
+                                        <option value="Malaysia" style="width: 100%; color: #007bff;">Malaysia</option>
+                                       
+                                        <option value="Philippines" style="width: 100%; color: #007bff;">Philippines</option>
+                                        <option value="Qatar" style="width: 100%; color: #007bff;">Qatar</option>
+                              
+                                        <option value="Singapore"style="width: 100%; color: #007bff;">Singapore</option>
+                                       
+                                      
+                                        <option value="Thailand" style="width: 100%; color: #007bff;">Thailand</option>
+                                        <option value="Timor-Leste" style="width: 100%; color: #007bff;">Timor-Leste</option>
+                                        
+                                  
+                                        <option value="Việt Nam"style="width: 100%; color: #007bff;" >Việt Nam</option>
+                                        <option value="Indonesia" style="width: 100%; color: #007bff;">Indonesia</option>
+                                    </select>
+                                </div>
+                                <div class="form-group col-md-6">
+                                    <label for="feFirstName">Thành Phố</label>
+                                    <label for="feFirstName">Website</label>
+                                    <input type="text" ng-model="model.thanhpho" class="form-control" id="feFirstName" value="Sierra">
+                                </div>
+
+                            </div>
+                            <div class="form-row">
+                                <div class="form-group col-md-6">
+
+                                    <label for="feFirstName">Ngày Sinh</label>
+                                    <input type="date" ng-model="model.ngaysinh" class="form-control" id="feFirstName" value="Sierra">
+                                </div>
+                                <div class="form-group col-md-6">
+                                    <label for="feFirstName">Giới Tính</label>
+                                    <select ng-model="model.gioitinh" style="width: 100%; border-color:#007bff;" class="form-control">
+                                        <option style="width: 100%; color: #007bff;" value="Nam">Nam</option>
+                                        <option style="width: 100%; color: #007bff;" value="Nữ">Nữ</option>
+                                        <option style="width: 100%; color: #007bff;" value="Khác">Khác</option>
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="form-row">
+                                <div class="form-group col-md-6">
+                                    <label for="feFirstName">Website</label>
+                                    <input type="text" ng-model="model.website" class="form-control" id="feFirstName" value="Sierra">
+                                </div>
+                                <div class="form-group col-md-6">
+                                    <label for="feFirstName">Mô Tả</label>
+                                    <input type="text" ng-model="model.mota" class="form-control" id="feFirstName" value="Sierra">
+                                </div>
+                            </div>
+                            <div class="form-row">
+                                <div class="form-group col-md-6">
+                                    <label for="feFirstName">Cover</label>
+                                    <input type="text" ng-model="model.cover" class="form-control" id="feFirstName" value="Sierra">
+                                </div>
+                                <div class="form-group col-md-6">
+                                    <label for="feFirstName">Link Facebook</label>
+                                    <input type="text" ng-model="model.facebook" class="form-control" id="feFirstName" value="Sierra">
+                                </div>
+                            </div>
+                            <div class="form-row">
+
+                                <div class="form-group col-md-6">
+                                    <label for="feFirstName">Hình Đại Diện</label>
+                                    <!--<input type="file" id="upload" style="display:none" ng-files="getTheFilesHinhAnh($files)" multiple>-->
+                                    <input type="file" class="form-control" style="font-size:15px" name="file" ng-files="getTheFilesHinhAnh($files)" accept="image/*" required>
+                                </div>
+                            </div>
+                            <!--<div class="form-row">
+
+        <div class="form-group col-md-6">
+            <label for="feFirstName">Thể Loại</label>
+            <select ng-model="valueTheLoai" style="width: 100%; border-color:#189918;" class="form-control" ng-change="changeTheLoai()">
+                <option style="width: 100%; color: #189918;" ng-value="x.object.id" value="{{x.object.id}}" ng-repeat="x in dataloadtheloai">{{x.object.tentheloai}}</option>
+
+            </select>
+        </div>
+    </div>-->
+
+                            <button type="submit" ng-click="submit()" class="btn btn-accent" id="submitcd">Tạo Người Dùng</button>
+                            <button type="submit" ng-click="cancel()" class="btn btn-accent">Thoát</button>
+                        </form>
+                    </div>
+                </div>
+            </li>
+        </ul>
+    </div>
+</div>

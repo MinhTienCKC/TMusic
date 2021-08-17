@@ -1,0 +1,112 @@
+﻿
+<div class="main-content-container container-fluid px-4" id="main-baihat">
+    <!-- Page Header -->
+    <div class="page-header row no-gutters py-4" style="padding-bottom: 0.1rem!important;">
+        <div class="col-12 col-sm-4 text-center text-sm-left mb-0">
+            <button type="submit" ng-click="add()" class="btn btn-accent" style="">Tạo Bài Hát</button>
+            <button type="submit" ng-show="!hienTimKiem" ng-click="showSearch()" class="btn btn-accent" style=" font-size: 0.75rem; width: 95px;">Tìm Kiếm</button>
+           
+
+            
+            
+        </div>
+      
+    </div>
+    <div class="page-header row no-gutters py-4" style="padding-top: 0rem !important; padding-bottom: 0.1rem!important;" ng-show="hienTimKiem">
+        <div class="col-12 col-sm-4 text-center text-sm-left mb-0">
+            <input type="text" ng-model="timkiem.object.tenbaihat" class="form-control" id="feLastName23" placeholder="Tìm theo tên" value="Brooks">
+            <input type="text" ng-model="timkiem.object.casi" class="form-control" id="feLastName2" placeholder="Tìm theo ca sĩ" value="Brooks">
+            <!--<input type="text" ng-model="timkiem.object.tenbaihat" class="form-control" id="feLastName" placeholder="Tìm theo tên" value="Brooks">-->
+
+
+
+        </div>
+        <div class="col-12 col-sm-4 text-center text-sm-left mb-0">
+
+            <!--<button type="submit"  ng-click="timKiem()" class="btn btn-accent" style="padding: 28px 15px;">Tìm Kiếm</button>-->
+            <button type="submit"  ng-click="showSearch()" class="btn btn-accent" style="padding: 28px 8px;">Ẩn Tìm Kiếm</button>
+
+
+        </div>
+    
+
+    </div>
+    <!-- End Page Header -->
+    <!-- Default Light Table -->
+    <div class="row">
+    
+        <div class="col">
+            <div class="card card-small mb-4">
+                <div class="card-header border-bottom">
+                    <h6 class="m-0">Bài Hát</h6>
+                </div>
+                <div class="card-body p-0 pb-3 text-center">
+                    <table class="table mb-0">
+                        <thead class="bg-light">
+                            <tr>
+                                <!--<th scope="col" class="border-0">id</th>-->
+                                <th scope="col" class="border-0">Tên Nhạc</th>
+                                <th scope="col" class="border-0">Ảnh</th>
+                                <th scope="col" class="border-0">Thời Lượng</th>
+                                <!--<th scope="col" class="border-0">Mô Tả</th>-->
+                                <th scope="col" class="border-0">Ca Sĩ</th>
+                                <th scope="col" class="border-0">Lượt Nghe</th>
+                                <th scope="col" class="border-0">Lượt Tải Xuống</th>
+                                <th scope="col" class="border-0">Lượt Thích</th>
+                                <th scope="col" class="border-0">Edit</th>
+                                <th scope="col" class="border-0">Delete</th>
+
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr ng-repeat="data in dataloadbaihat | filter:timkiem | startFrom:currentPage*pageSize | limitTo:pageSize ">
+                                <!--<td>{{data.key}}</td>-->
+                                <td>{{data.object.tenbaihat}}</td>
+                                <!--<td>{{data.object.link}}</td>-->
+                                <td><img src="{{data.object.linkhinhanh}}" class="icon-category"></td>
+                                <td>{{data.object.thoiluongbaihat}}</td>
+                                <td>{{data.object.casi}}</td>
+                                <!--<td>{{data.object.loibaihat}}</td>
+                <td>{{data.object.mota}}</td>-->
+                                <td>{{data.object.luotnghe}}</td>
+                                <td>{{data.object.luottaixuong}}</td>
+                                <td>{{data.object.luotthich}}</td>
+
+                                <td> <button ng-click="edit(data)" style="width: 25px; height: 25px; padding: 0px;-webkit-box-shadow: 0 2px 5px 0 rgba(85,168,253,0.45);" class="btn btn-accent blue"><i class="fa fa-edit"></i></button>       </td>
+                                <td> <button type="submit" ng-click="delete(data.key)" style="width: 25px; height: 25px; padding: 0px;-webkit-box-shadow: 0 2px 5px 0 rgba(230,60,95,0.45)" class="btn btn-accent red"><i class="fa fa-trash"></i></button></td>
+
+
+                            </tr>
+                           
+
+                        </tbody>
+
+                    </table>
+                    {{currentPage+1}}/{{numberOfPages()}}
+
+
+                </div>
+
+            </div>
+
+
+        </div>
+
+    </div>
+    <!-- End Default Light Table -->
+    <!-- Default Dark Table -->
+    <div class="row" style="padding:0px 0px 0px 15px">
+        <!--{{currentPage+1}}/{{numberOfPages()}}-->
+        <nav aria-label="Page navigation example">
+            <ul class="pagination pagination-primary" style="padding-left: 0px;">
+                <li class="page-item" ng-click="Truoc()"><a class="page-link" href="">Trước</a></li>
+                <li class="page-item" ng-repeat="a in range(numberOfPages())| limitTo:soLuong track by $index  ">
+                    <a class="page-link" href="" ng-click="phanTrang( $index + size )">{{$index + 1 + size}}</a>
+                </li>
+                <li class="page-item" ng-click="Sau()"><a class="page-link" href="">Sau</a></li>
+            </ul>
+        </nav>
+    </div>
+
+    <!-- End Default Dark Table -->
+</div>

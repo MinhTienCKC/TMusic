@@ -1,0 +1,33 @@
+﻿
+    <div class="col-lg-8">
+        <div class="card card-small mb-4">
+            <div class="card-header border-bottom">
+                <h6 class="m-0">Danh Sách Phát</h6>
+            </div>
+            <ul class="list-group list-group-flush">
+                <li class="list-group-item p-3">
+                    <div class="row">
+                        <div class="col">
+                            <form>
+
+                                <div class="form-row">
+
+                                    <div class="form-group col-md-6">
+                                        <label for="feLastName">Tên Danh Sách Phát</label>
+                                        <input type="text" ng-model="model.tendanhsachphat" class="form-control" id="feLastName" value="Brooks">
+                                    </div>
+                                    <div class="form-group col-md-6">
+                                        <label for="feLastName">Mô Tả</label>
+                                        <input type="text" ng-model="model.mota" class="form-control" id="feLastName" value="Brooks">
+                                    </div>
+                                </div>
+                               
+                                <button type="submit" ng-click="submit()" class="btn btn-accent">Tạo Danh Sách Phát</button>
+                                <button type="submit" ng-click="cancel()" class="btn btn-accent">Thoát</button>
+                            </form>
+                        </div>
+                    </div>
+                </li>
+            </ul>
+        </div>
+    </div>

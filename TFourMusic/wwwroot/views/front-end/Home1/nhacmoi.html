@@ -1,0 +1,196 @@
+﻿
+<div id="idcontextmenu" class="zm-sidebar-scrollbar-big" style="padding: 70px; width: 105.4%;">
+    
+    <div class="zm-sidebar-scrollbar" style="height: 70vh; color:hsla(0,0%,100%,0.5); ">
+        <nav class="zm-navbar zm-navbar-main mar-t-5 mar-b-0">
+            <div class="new-release-chart-header">
+                <div class="title">
+                    <h3 class="mar-0 title">Mới phát hành</h3>
+
+                    <i class="icon fa fa-play-circle " style="padding: 10px; font-size: 42px;"></i>
+
+                </div>
+                <h3 class="bold subtitle">Cập nhật lần cuối lúc {{date | date:'dd-MM-yyyy HH:mm'}}</h3>
+                <!--<ul  id="contextmenu-node" ng-show="isVisible" style="position: absolute; top: 20px; left: 50px;">
+                    <li> Item 1 </li>
+                    <li> Item 2 </li>
+                </ul>-->
+                <!--<div id="contextmenu-node" ng-show="isVisible"  class="zm-contextmenu song-menu" style="position: absolute; top: 20px; left: 50px;">
+                    <div class="menu">
+                        <ul class="menu-list">
+                            <div class="menu-list--submenu">
+                                <div class="media song-info-menu">
+                                    <div class="media-left">
+                                        <figure class="image is-40x40">
+                                            <img src="https://photo-resize-zmp3.zadn.vn/w94_r1x1_jpeg/cover/8/f/f/a/8ffa6834a803b7dad7128d26e6094b70.jpg" alt="">
+                                        </figure>
+                                    </div><div class="is-w-150 media-content">
+                                        <a>
+                                            <div class="title-wrapper">
+                                                <span class="item-title title" title="Sài Gòn Ơi Xin Lỗi Cảm Ơn">Sài Gòn Ơi Xin Lỗi Cảm Ơn</span>
+                                            </div>
+                                        </a><div class="song-stats">
+                                            <div class="stat-item">
+                                                <i class="icon ic-like"></i>
+                                                <span>5K</span>
+                                            </div><div class="stat-item">
+                                                <i class="icon ic-view"></i>
+                                                <span>122K</span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </ul>
+                        <ul class="menu-list">
+                            <div class="group-button-menu">
+                                <div class="group-button-list">
+                                    <button class="zm-btn button">
+                                        <i class="icon ic-download"></i><span>Tải xuống</span>
+                                    </button><button class="zm-btn button" tabindex="0">
+                                        <i class="icon ic-add-lyric">
+                                        </i><span>Lời bài hát</span>
+                                    </button>
+                                    <span class="zm-btn button">
+                                        <i class="icon ic-denial"></i>
+                                        <span>Chặn</span>
+                                    </span>
+                                </div>
+                            </div>
+                        </ul>
+                        <ul class="menu-list">
+                            <li>
+                                <button class="zm-btn button" tabindex="0"><i class="icon ic-add-play-now"></i><span>Thêm vào danh sách phát</span></button>
+                            </li>
+                            <li>
+                                <button class="zm-btn button" tabindex="0"><i class="icon ic-play-next"></i><span>Phát tiếp theo</span></button>
+                            </li>
+                            <li>
+                                <div class="menu-list--submenu">
+                                    <button class="zm-btn button" tabindex="0">
+                                        <i class="icon ic-add"></i>
+                                        <span>Thêm vào playlist</span>
+                                        <i class="icon ic-go-right"></i>
+                                    </button>
+                                </div>
+                            </li>
+                            <li>
+                                <button class="zm-btn button" tabindex="0">
+                                    <i class="icon ic-comment"></i><span>Bình luận</span>
+                                    <span class="comment-badge"></span>
+                                </button>
+                            </li>
+                            <li>
+                                <button class="zm-btn button" tabindex="0">
+                                    <i class="icon ic-link"></i><span>Sao chép link</span>
+                                </button>
+                            </li>
+                            <li>
+                                <div class="menu-list--submenu">
+                                    <button class="zm-btn button" tabindex="0">
+                                        <i class="icon ic-share"></i><span>Chia sẻ</span><i class="icon ic-go-right"></i>
+                                    </button>
+                                </div>
+                            </li>
+                        </ul>
+                    </div>
+                </div>-->
+
+                <div ng-contextmenu visible="isVisible"> Right Click On the Item! </div>
+            </div>
+            <div class="list mar-b-20" ng-repeat="data in taiNhacMoi" context-menu="contextMenuBaiHat1"  ng-right-click="moChiTietBaiHat(data)">
+
+                <div class="chart-song-item on-top first" >
+                    <div class="list-item bor-b-1 media-item">
+                        <div class="media">
+                            <div class="media-left">
+                                <div class="song-prefix mar-r-15">
+                                    <span class="number is-top-1 is-center mar-r-5">{{$index + 1}}</span>
+                                    <div class="sort">
+                                        <i class="icon is-18x18  fa fa-window-minimize"></i>
+                                    </div>
+                                </div>
+                                <div class="song-thumb">
+                                    <figure class="image is-40x40" title="{{data.object.tenbaihat}}">
+                                        <img src="https://s120-ava-talk.zadn.vn/0/5/1/5/0/120/4ff9b54b6eb2292f46483676eda192ae.jpg" alt="">
+                                    </figure>
+                                    <div class="play-play">
+
+                                        <i class="fa fa-play"></i>
+                                    </div>
+                                    <!--<div class="opacity "></div>-->
+                                    <!--<div class="zm-actions-container">
+                                        <div class="zm-box zm-actions">
+                                            <button class="zm-btn zm-tooltip-btn animation-like is-hidden active is-hover-circle button" tabindex="0">
+                                                <i class="icon ic-like"></i><i class="icon ic-like-full">
+                                                </i>
+                                            </button>
+                                            <button class="zm-btn action-play  button" tabindex="0">
+                                                <i class="icon action-play ic-play"></i>
+                                            </button>
+                                            <button class="zm-btn zm-tooltip-btn is-hidden is-hover-circle button" tabindex="0">
+                                                <i class="icon ic-more"></i>
+                                            </button>
+                                        </div>
+                                    </div>-->
+                                </div>
+                                <div class="card-info">
+                                    <div class="title-wrapper">
+                                        <span class="item-title title" title="{{data.object.tenbaihat}}" style=" color: white;">{{data.object.tenbaihat}}</span>
+                                    </div><h3 class="is-one-line subtitle">
+                                        <a class="" href="">{{data.object.casi}}</a>
+                                    </h3>
+                                </div>
+                            </div>
+
+                            <div class="media-content">
+
+
+                                <div class="song-duration"> <a>{{data.object.thoiluongbaihat}}</a></div>
+
+                            </div>
+                            <div class="media-right">
+                                <div class="level">
+                                    <div class="level-item"></div>
+                                    <div class="level-item">
+                                        <button class="button-item1">
+                                            <i class="ibutton fa fa-microphone"></i>
+                                        </button>
+
+
+
+                                    </div>
+                                    <div class="level-item">
+                                        <button class="button-item1">
+                                            <i class="ibutton far fa-heart iconmusic"></i>
+                                        </button>
+
+                                    </div>
+                                    <div class="level-item">
+                                        <button class="button-item1" >
+                                            <i class="ibutton fa fa-ellipsis-h"></i>
+                                        </button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+
+
+
+            </div>
+
+
+        </nav>
+
+
+
+    </div>
+
+</div>
+
+
+
+

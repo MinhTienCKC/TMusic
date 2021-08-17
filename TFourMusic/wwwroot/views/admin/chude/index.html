@@ -1,0 +1,81 @@
+﻿<div class="main-content-container container-fluid px-4">
+    <!-- Page Header -->
+    <div class="page-header row no-gutters py-4">
+        <div class="col-12 col-sm-4 text-center text-sm-left mb-0">
+            <button type="submit" ng-click="add()" class="btn btn-accent">Tạo Chủ Đề</button>
+            <input type="text" ng-model="dynamic" style="font-size:19px" class="form-control" id="feLastName" value="Brooks">
+            <input type="text" ng-model="max" style="font-size:19px" class="form-control" id="feLastName" value="Brooks">
+            <button type="submit" id="btntext" ng-click="text123()" class="btn btn-accent">Tạo Chủ Đề</button>
+        </div>
+        <div class="col-12 col-sm-4 text-center text-sm-left mb-0">
+
+
+        </div>
+        <div class="col-12 col-sm-4 text-center text-sm-left mb-0">
+
+
+        </div>
+    </div>
+    <!-- End Page Header -->
+    <!-- Default Light Table -->
+    <div class="row">
+
+        <div class="col">
+            <div class="card card-small mb-4 dodai">
+                <div class="card-header border-bottom">
+                    <h6 class="m-0">Chủ Đề</h6>
+                    <uib-progressbar max="max" value="dynamic"><span style="color:white; white-space:nowrap;">{{dynamic}}/ {{max}}</span></uib-progressbar>
+                </div>
+                <div class="card-body p-0 pb-3 text-center">
+                    <table class="table mb-0 dodaibang">
+                        <thead class="bg-light">
+                            <tr>
+                                <!--<th scope="col" class="border-0">id</th>-->
+                                <th scope="col" class="border-0">Tên Chủ Đề</th>
+                                <th scope="col" class="border-0">Ảnh</th>
+                                <!--<th scope="col" class="border-0">Thể Loại</th>-->
+                                <th scope="col" class="border-0">Sửa</th>
+                                <th scope="col" class="border-0">Xóa</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr ng-repeat="data in dataloadchude  | startFrom:currentPage*pageSize | limitTo:pageSize">
+                                <!--<td>{{data.Object.key}}</td>-->
+                                <td class="vitrigiua">{{data.object.tenchude}}</td>
+                                <td><img src="{{data.object.linkhinhanh}}" class="icon-category hinhanh"></td>
+                                <!--<td>{{data.tentheloai}}</td>-->
+
+                                <td class="vitrigiua"> <button ng-click="edit(data)" style="width: 25px; height: 25px; padding: 0px;-webkit-box-shadow: 0 2px 5px 0 rgba(85,168,253,0.45);" class="btn btn-accent blue"><i class="fa fa-edit"></i></button>       </td>
+                                <td class="vitrigiua"> <button type="submit" ng-click="delete(data.key)" style="width: 25px; height: 25px; padding: 0px;-webkit-box-shadow: 0 2px 5px 0 rgba(230,60,95,0.45)" class="btn btn-accent red"><i class="fa fa-trash"></i></button></td>
+
+
+                            </tr>
+
+                        </tbody>
+                    </table>
+                    {{currentPage+1}}/{{numberOfPages()}}
+
+                </div>
+
+            </div>
+
+
+        </div>
+
+    </div>
+    <!-- End Default Light Table -->
+    <!-- Default Dark Table -->
+    <div class="row" style="padding:0px 0px 0px 15px">
+        <!--{{currentPage+1}}/{{numberOfPages()}}-->
+        <nav aria-label="Page navigation example">
+            <ul class="pagination pagination-primary" style="padding-left: 0px;">
+                <li class="page-item" ng-click="Truoc()"><a class="page-link" href="">Trước</a></li>
+                <li class="page-item" ng-repeat="a in range(numberOfPages())| limitTo:soLuong track by $index  ">
+                    <a class="page-link" href="" ng-click="phanTrang( $index + size )">{{$index + 1 + size}}</a>
+                </li>
+                <li class="page-item" ng-click="Sau()"><a class="page-link" href="">Sau</a></li>
+            </ul>
+        </nav>
+    </div>
+    
+</div>

@@ -1,0 +1,386 @@
+﻿
+<div  class="zm-sidebar-scrollbar-big" style="padding:0px 70px 0px 70px; width: 105.8%; top:20px;">
+    <div class="zm-sidebar-scrollbar" style=" overflow: overlay;  height: 1000px; color:hsla(0,0%,100%,0.5); ">
+        <nav class="zm-navbar zm-navbar-main mar-t-5 mar-b-0">
+            <div  style=" display: flex;">
+                <div style="height:100px;">
+                    <div class="media-left" style=" width: 300px; height: 300px;" animatechitiet>
+                        <div class="zm-card header-thumbnail">
+                  
+                            <div class="zm-card-image item" style="height: 300px;" ng-class="{'xoayHinh': kiemTraDSPNguoiDungClick == taiChiTietPlayList_PlayList[0].id && playmusic == 1 }">
+                                <figure class="image is-48x48">
+                                    <img style="height: 300px; object-fit: cover;" src="{{taiChiTietPlayList_PlayList[0].linkhinhanh}}" alt="">
+                                </figure>
+                                <div class="opacity" ng-class="{'hien_nen_den': kiemTraDSPNguoiDungClick == taiChiTietPlayList_PlayList[0].id && playmusic == 1 }"></div>
+                                <div class="zm-actions-container itemchitiet">
+                                    <div ng-click="$event.preventDefault(); Play(); " class="play11-play1" style=" cursor: pointer; width: 55px; height: 55px; display: flex; align-items: center; justify-content: center; border: 1px solid #fff; border-radius: 50%; font-size: 20px; opacity:100%" tabindex="0" ng-show="kiemTraDSPNguoiDungClick == taiChiTietPlayList_PlayList[0].id">
+                                        <div ng-show="playmusic == 1 " class="play_baihat_nhacmoi" style="top: 30%;left: 28%; height: 26px; width: 27px;"> </div>
+
+                                        <!--<i ng-show="playmusic == 0 " class="nutplay_baihat_nhacmoi fa fa-play" style="color: white;"></i>-->
+                                        <i ng-show="playmusic == 0 " class="fa fa-play" style="width: 55px; height: 55px; display: flex; align-items: center; justify-content: center; font-size: 20px;"></i>
+                                    </div>
+                                    <div ng-show="kiemTraDSPNguoiDungClick != taiChiTietPlayList_PlayList[0].id" class="play11-play1 add-to-cartchitiet" style="cursor: pointer; width: 55px; height: 55px; display: flex; align-items: center; justify-content: center; border: 1px solid #fff; border-radius: 50%; font-size: 20px; " ng-click="playMotBanNhac(taiDSBaiHatTheoDSPNguoiDung_PlayList); xoayHinhDSPNguoiDung_Playlist(taiChiTietPlayList_PlayList[0].id)">
+
+                                        <!--<i class="fa fa-play-circle"></i>-->
+                                        <i class="fa fa-play" style="width: 55px; height: 55px; display: flex; align-items: center; justify-content: center;  "></i>
+                                    </div>
+
+
+                                </div>                            
+                            </div>
+                        </div>
+                    </div>
+                    <div class="media-content" style="width: 300px; text-align: center;">
+                        <div class="content-top">
+                            <h3 class="title" style=" color: white; padding-top: 10px; margin-bottom: 5px;">{{taiChiTietPlayList_PlayList[0].tendanhsachphat}}</h3>
+                            <div class="release" style="font-size: 12px;">Tạo bởi <span style="color: white;">{{taiThongTinNguoiDungBangIdPlayList_PLayList[0].hoten}}</span></div>
+                            <h3 class="subtitle">Công Khai</h3>
+                        </div>
+                        <div class="actions">
+                            <button ng-show="kiemTraDSPNguoiDungClick != taiChiTietPlayList_PlayList[0].id" class="zm-btn btn-play-all is-outlined active is-medium is-upper button" tabindex="0" style="width: 180px; height: 40px; border-color: #ed2b91; background-color: #ed2b91;" ng-click="playMotBanNhac(taiDSBaiHatTheoDSPNguoiDung_PlayList); xoayHinhDSPNguoiDung_Playlist(taiChiTietPlayList_PlayList[0].id)">
+                                <i class="fa fa-play" style=" padding-right: 10px;"></i><span> PHÁT TÂT CẢ</span>
+                            </button>
+                            <button ng-show="kiemTraDSPNguoiDungClick == taiChiTietPlayList_PlayList[0].id" ng-click="$event.preventDefault(); Play(); " class="zm-btn btn-play-all is-outlined active is-medium is-upper button" tabindex="0" style="width: 180px; height: 40px; border-color: #ed2b91; background-color: #ed2b91;">
+                                <i ng-show="playmusic == 0 ">  <i class="fa fa-play" style=" padding-right: 10px;"></i><span> TIẾP TỤC PHÁT</span></i>
+                                <i ng-show="playmusic == 1">  <i class="fa fa-pause" style=" padding-right: 10px;"></i><span> TẠM DỪNG</span></i>
+                            </button>
+                            <div class="level">
+                                <!--<div class="level-item" style=" margin-right: -220px;">
+        <button class="button-item1" style=" width: 30px; height: 30px; background-color: hsla(0,0%,100%,0.1);">
+            <i class="ibutton far fa-heart iconmusic" font-size: 14px;></i>
+        </button>
+
+    </div>-->
+                                <div ng-show="taiChiTietPlayList_PlayList[0].nguoidung_id != checklogin.uid" class="level-item" style=" margin-right: -220px;" ng-click="$event.preventDefault(); yeuThichPlayListChiTietUi(); yeuThichDanhSachPhatNguoiDungID(taiChiTietPlayList_PlayList[0].id)">
+                                    <button class="button-item1" style=" width: 30px; height: 30px; background-color: hsla(0,0%,100%,0.1);">
+                                        <i ng-show="taiChiTietPlayList_PlayList[0].yeuthich==0 || !checklogin.dadangnhap" class="far fa-heart" style=" color: white;font-size: 1.7rem;"></i>
+                                        <i ng-show="taiChiTietPlayList_PlayList[0].yeuthich==1" class="fas fa-heart" style="color:#ed2b91; font-size: 1.7rem;"></i>
+                                    </button>
+
+                                </div>
+                                <div class="level-item" context-menu1="contextMenuPlaylist" ng-click="$event.preventDefault(); moChiTietDSP_TheLoai(taiChiTietPlayList_PlayList[0]); ">
+                                    <button class="button-item1" style="font-size:17px; background-color: hsla(0,0%,100%,0.1); width: 30px; height: 30px;">
+                                        <i class="ibutton fa fa-ellipsis-h"></i>
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="zm-sidebar-scrollbar" style=" width: 1000px; height: 560px; position: inherit;">
+                    <div class="playlist-content" style="padding-right: 65px; padding-left: 10px; ">
+                        <!--<div class="description" style="font-size: 20px;"><span>Lời tựa </span><span style="color:white;">{{taiChiTietPlayList_PlayList[0].mota}}</span> </div>-->
+                        <div class="list mar-b-10 song-list-select" style="margin-bottom: 20px !important;">
+                            <div class="media select-header">
+                                <div class="media-left">
+                                    <div class="column-text">Bài hát</div>
+                                </div><div class="media-content" style="height: 15px;">
+                                    <div class="column-text">Thời gian</div>
+                                </div>
+                                <div class="media-right">
+                                    <div class="zm-dropdown zm-group-dropdown mar-r-10">
+                                        <select class="" style="background: #6335a0;  border-radius: 13px;">
+                                            <option class="zm-dropdown-list-item" value="Mặc định">Mặc Định</option>
+                                            <option class="zm-dropdown-list-item" value="Tên ca sĩ (A-Z)">Tên bài hát (A-Z)</option>
+                                            <option class="zm-dropdown-list-item" value="Tên ca sĩ (A-Z)">Tên ca sĩ (A-Z)</option>
+
+                                        </select>
+                                    </div>
+
+                                </div>
+                            </div>
+                            <div ng-repeat="data in taiDSBaiHatTheoDSPNguoiDung_PlayList" class="animate">
+
+
+                                <div class="select-item" ng-class="{'clickbaihat': kiemTraBaiHatDangPhat == data.id }" context-menu="contextMenuBaiHatPlaylist" ng-right-click="moChiTietBaiHat(data,$index)">
+                                    <label class="checkbox">
+                                        <input type="checkbox">
+                                    </label>
+                                    <div class="list-item bor-b-1 media-item" style="width:1000px;height: auto;">
+                                        <div class="media">
+                                            <div class="media-left" animate>
+                                                <div class="song-prefix mar-r-15">
+                                                    <div class="sort" style="padding-bottom: 0px;">
+                                                        <i class="icon is-18x18  fa fa-music" style=" width: 10px; height: 2px; font-size: 14px;"></i>
+                                                    </div>
+                                                </div>
+                                                <div class="song-thumb item">
+                                                    <figure class="image is-40x40" style="height: auto; width: auto; padding: 0px; " title="{{data.tenbaihat}}">
+                                                        <img src="{{data.linkhinhanh}}" alt="" style="height: 51.2px; width: 70px; object-fit: cover; border-radius: 6px;">
+                                                    </figure>
+                                                    <div class="opacity" ng-class="{'hien_nen_den': kiemTraBaiHatDangPhat == data.id }"></div>
+                                                    <div ng-click="Play(); " class="play-playclick" ng-show="kiemTraBaiHatDangPhat == data.id">
+                                                        <div ng-show="playmusic == 1 " class="play_baihat_nhacmoi" style="color: white;"> </div>
+                                                        <i ng-show="playmusic == 0 " class="nutplay_baihat_nhacmoi fa fa-play" style="color: white;"></i>
+                                                    </div>
+                                                    <div class="play-play add-to-cart" ng-show="kiemTraBaiHatDangPhat != data.id" ng-click="playMotBanNhac(data);playDSPNguoiDung_Playlist(taiChiTietPlayList_PlayList[0].id)">
+                                                        <i class="nutplay_baihat_nhacmoi fa fa-play" style="color: white;"></i>
+                                                    </div>
+                                                </div>
+                                                <div class="card-info">
+                                                    <div class="title-wrapper">
+                                                        <span class="item-title title" style=" color: white;" title="{{data.tenbaihat}}">{{data.tenbaihat}}</span>
+                                                    </div><h3 class="is-one-line subtitle">
+                                                        <a class="" href="">{{data.casi}}</a>
+                                                    </h3>
+                                                </div>
+                                            </div>
+
+                                            <div class="media-content">
+
+
+                                                <div class="song-duration"> <a>{{data.thoiluongbaihat}}</a></div>
+
+                                            </div>
+                                            <div class="media-right">
+                                                <div class="level">
+                                                    <div class="level-item"></div>
+                                                    <div class="level-item">
+                                                        <button class="button-item1">
+                                                            <i class="ibutton fa fa-microphone"></i>
+                                                        </button>
+
+
+
+                                                    </div>
+                                                    <div class="level-item">
+                                                        <button class="button-item1" ng-click="yeuThichBaiHatUi($index); yeuThichBaiHat(data.id)">
+                                                            <i ng-show="!checklogin.dadangnhap" class="ibutton far fa-heart iconmusic" style="font-size: 14px;"></i>
+                                                            <i ng-show="data.yeuthich==0" class="ibutton far fa-heart iconmusic" style="font-size: 14px;"></i>
+                                                            <i ng-show="data.yeuthich==1" class="fas fa-heart " style="color:#ed2b91;"></i>
+
+
+                                                        </button>
+
+                                                    </div>
+                                                    <div class="level-item" context-menu1="contextMenuBaiHatPlaylist" ng-click="moChiTietBaiHat(data)">
+                                                        <button class="button-item1">
+                                                            <i class="ibutton fa fa-ellipsis-h"></i>
+                                                        </button>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <h3 class="bottom-info subtitle"><span style="padding-right: 5px;">{{soBaiHat}} bài hát</span>•<span style="padding-left: 5px;">{{tongThoiGianPhat}}</span></h3>
+                        </div>
+
+                        <div ng-show="soBaiHat < 10"  class="list mar-b-10 song-list-select">
+                            <div ng-show="taiChiTietPlayList_PlayList[0].nguoidung_id == checklogin.uid" class="section-header" style=" display: flex; align-items: center; justify-content: space-between;">
+                                <h3 class="mar-0 title is-2" style="font-size: 20px; color:white;">Bài hát gợi ý</h3>
+                                <button ng-click="lamMoiGoiY()" class="zm-btn is-outlined active is-small is-upper button" tabindex="0" style="margin: 0; font-size: 12px; padding: 6px 19px; width: 112px; height: 30px;  border-color: #ed2b91; background-color: #ed2b91;">
+                                    <i class="icon fas fa-sync" style=" font-size: 14px; margin-right: 5px;"></i>
+                                    <span>LÀM MỚI</span>
+                                </button>
+                            </div>
+                            <h3 ng-show="taiChiTietPlayList_PlayList[0].nguoidung_id == checklogin.uid" class="mar-b-15 subtitle" style="margin-bottom: 15px !important;">Dựa trên các bài hát trong playlist này</h3>
+                            <h3 ng-show="taiChiTietPlayList_PlayList[0].nguoidung_id != checklogin.uid" class="title is-2" style="color:white; padding-top: 30px;">Có thể bạn quan tâm</h3>
+                            <div ng-repeat="data in taiDanhSachBaiHatTheoTheLoai | limitTo: soLuong ">
+                                <div class="select-item" ng-class="{'clickbaihat': kiemTraBaiHatDangPhat == taiDanhSachBaiHatTheoTheLoai[$index+size].id }" context-menu="contextMenuBaiHat_BaiHat" ng-right-click="moChiTietBaiHat(taiDanhSachBaiHatTheoTheLoai[$index+size])">
+                                    <label class="checkbox">
+                                        <input type="checkbox">
+                                    </label>
+                                    <div class="list-item bor-b-1 media-item" style="width:1000px;     height: auto;">
+                                        <div class="media">
+                                            <div class="media-left">
+                                                <div class="song-prefix mar-r-15">
+
+                                                    <div class="sort" style="padding-bottom: 0px;">
+                                                        <i class="icon is-18x18  fa fa-music" style=" width: 10px; height: 2px; font-size: 14px;"></i>
+                                                    </div>
+                                                </div>
+                                                <div class="song-thumb">
+                                                    <figure class="image is-40x40" style="height: auto; width: auto; padding: 0px; " title="{{taiDanhSachBaiHatTheoTheLoai[$index+size].tenbaihat}}">
+                                                        <img src="{{taiDanhSachBaiHatTheoTheLoai[$index+size].linkhinhanh}}" alt="" style="height: 51.2px; width: 70px; object-fit: cover; border-radius: 6px;">
+                                                    </figure>
+                                                    <div class="opacity" ng-class="{'hien_nen_den': kiemTraBaiHatDangPhat == taiDanhSachBaiHatTheoTheLoai[$index+size].id }"></div>
+                                                    <div ng-click="Play(); " class="play-playclick" ng-show="kiemTraBaiHatDangPhat == taiDanhSachBaiHatTheoTheLoai[$index+size].id">
+                                                        <div ng-show="playmusic == 1 " class="play_baihat_nhacmoi" style="color: white;"> </div>
+                                                        <i ng-show="playmusic == 0 " class="nutplay_baihat_nhacmoi fa fa-play" style="color: white;"></i>
+                                                    </div>
+                                                    <div class="play-play" ng-show="kiemTraBaiHatDangPhat != taiDanhSachBaiHatTheoTheLoai[$index+size].id" ng-click="playMotBanNhac(taiDanhSachBaiHatTheoTheLoai[$index+size])">
+                                                        <i class="nutplay_baihat_nhacmoi fa fa-play" style="color: white;"></i>
+                                                    </div>
+                                                </div>
+                                                <div class="card-info">
+                                                    <div class="title-wrapper">
+                                                        <span class="item-title title" style=" color: white;" title="{{taiDanhSachBaiHatTheoTheLoai[$index+size].tenbaihat}}">{{taiDanhSachBaiHatTheoTheLoai[$index+size].tenbaihat}}</span>
+                                                    </div><h3 class="is-one-line subtitle">
+                                                        <a class="" href="">{{taiDanhSachBaiHatTheoTheLoai[$index+size].casi}}</a>
+                                                    </h3>
+                                                </div>
+
+                                            </div>
+
+                                            <div class="media-content">
+
+
+                                                <div class="song-duration"> <a>{{taiDanhSachBaiHatTheoTheLoai[$index+size].thoiluongbaihat}}</a></div>
+
+                                            </div>
+                                            <div class="media-right">
+                                                <div class="level">
+                                                    <div class="level-item"></div>
+
+
+                                                    <div class="level-item">
+                                                        <button class="button-item1" ng-click="yeuThichBaiHatUiTheLoai($index+size); yeuThichBaiHat(taiDanhSachBaiHatTheoTheLoai[$index+size].id)">
+                                                            <i ng-show="!checklogin.dadangnhap" class="ibutton far fa-heart iconmusic" style="font-size: 14px;"></i>
+                                                            <i ng-show="taiDanhSachBaiHatTheoTheLoai[$index+size].yeuthich==0" class="ibutton far fa-heart iconmusic" style="font-size: 14px;"></i>
+                                                            <i ng-show="taiDanhSachBaiHatTheoTheLoai[$index+size].yeuthich==1" class="fas fa-heart " style="color:#ed2b91;"></i>
+
+
+                                                        </button>
+
+                                                    </div>
+
+                                                    <!--<div class="level-item">
+    <button class="button-item1">-->
+                                                    <!--<i class="ibutton far fa-heart iconmusic" style="font-size: 14px;"></i>-->
+                                                    <!--<i ng-show="!checklogin.dadangnhap" class="ibutton far fa-heart iconmusic" style="font-size: 14px;"></i>
+            <i ng-show="data.yeuthich==0 " class="ibutton far fa-heart iconmusic" style="font-size: 14px;"></i>
+            <i ng-show="data.yeuthich==1" ng-class="{'active_yeuthich': sttmusic == $index}" class="fas fa-heart icon_account_a" style="color:#ed2b91;"></i>
+        </button>
+
+    </div>-->
+                                                    <div ng-show="taiChiTietPlayList_PlayList[0].nguoidung_id == checklogin.uid" class="level-item">
+                                                        <button class="button-item1" ng-click="themBaiHatVaoPlaylistHienTai(taiDanhSachBaiHatTheoTheLoai[$index+size],$index+size)">
+                                                            <i class="ibutton fa fa-plus" style="font-size: 14px;"></i>
+                                                        </button>
+                                                    </div>
+                                                    <div ng-show="taiChiTietPlayList_PlayList[0].nguoidung_id != checklogin.uid" class="level-item" context-menu1="contextMenuBaiHatPlaylist" ng-click="moChiTietBaiHat(data)">
+                                                        <button class="button-item1">
+                                                            <i class="ibutton fa fa-ellipsis-h"></i>
+                                                        </button>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                        </div>
+
+                     
+                    </div>
+                </div>
+            </div>
+
+            <div class="theLoaiCon">
+                <div class="list">
+
+                    <div class="zm-section playlist-section mar-b-30" ng-repeat="tl in taiTheLoaiKetHopDanhSachPhatTheLoaiMoi | limitTo: 3">
+                        <div class="container" style="max-width: 1230px; padding-right: 70px;">
+                            <h3 class="title">
+                                <a href="/#/chitiettheloai/{{tl.key}}" class="a-hover">
+                                    {{tl.tentheloai}}<i class="icon fa fa-chevron-right" style=" padding-left: 10px; font-size: 20px;">
+                                    </i>
+                                </a>
+                            </h3>
+                            <div class="zm-carousel-wrapper">
+                                <div class="zm-carousel">
+                                    <div class="zm-carousel__container" style="transform: translate3d(0px, 0px, 0px); width: 234px" ng-repeat="dsptl in tl.object | limitTo: 5">
+
+
+                                        <div class="zm-carousel-item is-fullhd-2 is-widescreen-2 is-desktop-20 is-touch-3 is-tablet-3" style="width: 196px;">
+                                            <div class="playlist-wrapper">
+                                                <div class="zm-card">
+                                                    <div style=" width: auto; height: 185px;">
+                                                        <!--context-menu="contextMenuDSPTheLoai" ng-right-click="moChiTietBaiHat(dsptl)"-->
+                                                        <a class="" title="{{dsptl.tendanhsachphattheloai}}" href="/#/danhsachphat/{{dsptl.id}}" style="position: absolute; display:block;">
+                                                            <div class="zm-card-image" style="height:185px;" context-menu="contextMenuDSPTheLoai" ng-right-click="moChiTietDSP_TheLoai(dsptl)">
+                                                                <figure class="image is-48x48">
+                                                                    <img src="{{dsptl.linkhinhanh}}" style="height: 185px;    object-fit: cover;" alt="">
+                                                                </figure>
+
+                                                                <div class="opacity " ng-class="{'hien_nen_den': kiemTraDSPTLClick == dsptl.id && playmusic == 1 }"></div>
+                                                                <div class="zm-actions-container">
+                                                                    <div class="zm-box zm-actions" ng-class="{'clickdsptl': kiemTraDSPTLClick == dsptl.id && playmusic == 1 }">
+                                                                        <div class="play1-play3 nut_dsp_tl" style="font-size: 2rem; height: 30px; width: 30px; " ng-click="$event.preventDefault();  yeuThichDanhSachPhatUi($parent.$index,$index);yeuThichDanhSachPhat(dsptl.id)">
+                                                                            <!--<i class="far fa-heart iconmusic"></i>-->
+                                                                            <i ng-show="!checklogin.dadangnhap" class="far fa-heart iconmusic" style="font-size: 14px;"></i>
+                                                                            <i ng-show="dsptl.yeuthich==0" class="far fa-heart iconmusic" style="font-size: 14px;"></i>
+                                                                            <i ng-show="dsptl.yeuthich==1" class="fas fa-heart " style="color:#ed2b91; font-size: 14px;"></i>
+                                                                        </div>
+                                                                        <div ng-click="$event.preventDefault(); Play(); " class="play1-play2 nut_dsp_tl vong_tron_play" style="" tabindex="0" ng-show="kiemTraDSPTLClick == dsptl.id">
+                                                                            <div ng-show="playmusic == 1 " class="play_baihat_dsptl" style="top: 51%;left: 38%; height: 26px; width: 27px;"> </div>
+
+                                                                            <!--<i ng-show="playmusic == 0 " class="nutplay_baihat_nhacmoi fa fa-play" style="color: white;"></i>-->
+                                                                            <i ng-show="playmusic == 0 " class="fa fa-play" style=""></i><!--width: 55px; height: 55px; display: flex; align-items: center; justify-content: center; font-size: 20px;-->
+                                                                        </div>
+                                                                        <div ng-show="kiemTraDSPTLClick != dsptl.id" class="play1-play2 nut_dsp_tl vong_tron_play" style="" tabindex="0" ng-click="$event.preventDefault(); playDanhSachPhatTheLoai(dsptl.id); ">
+
+                                                                            <!--<i class="fa fa-play-circle"></i>-->
+                                                                            <i class="fa fa-play" style=""></i>
+                                                                        </div>
+                                                                        <div class="play1-play3 nut_dsp_tl" style="font-size: 2rem; height: 30px; width: 30px;" context-menu1="contextMenuDSPTheLoai" ng-click="$event.preventDefault(); moChiTietDSP_TheLoai(dsptl); ">
+
+                                                                            <i class="fa fa-ellipsis-h"></i>
+                                                                        </div>
+                                                                    </div>
+
+                                                                </div>
+
+
+                                                            </div>
+
+                                                        </a>
+
+                                                    </div>
+                                                    <div class="zm-card-content">
+                                                        <h4 class="title is-6">
+                                                            <a title="{{dsptl.tendanhsachphattheloai}}" href="/#/danhsachphat/{{dsptl.id}}" class="a-hover">{{dsptl.tendanhsachphattheloai}}</a>
+                                                        </h4><h3 class="mt-10 subtitle"></h3>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+
+
+
+                                    </div>
+                                </div>
+                                <!--<button class="zm-btn zm-carousel-control-prev zm-disabled is-hide button" tabindex="0">
+                        <i class="icon ic-go-left"></i>
+                    </button>
+                    <button class="zm-btn zm-carousel-control-next zm-disabled is-hide button" tabindex="0">
+                        <i class="icon ic-go-right"></i>
+                    </button>-->
+                            </div>
+                        </div>
+                    </div>
+
+
+                    <template style="height: 1px; min-width: 1px; display: block;">
+                    </template>
+                </div>
+
+            </div>
+        </nav>
+    
+
+
+    </div>
+
+</div>
+<div class="modal fade" id="myModal" role="dialog">
+    <div class="modal-dialog">
+
+        <!-- Modal content-->
+        <div class="modal-content" style="width:540px !important; background-color: #6a39af; border-radius: 8px;">
+            <div class="add-lyric-content clearfix">
+                <h3 class="title">Lời bài hát</h3>
+                <div class="content1">
+                    <textarea class="textarea_loi_bai_hat" rows="1" disabled=""> Bài hát: Sài Gòn Mưa Rơi Ca sĩ: Hồ Quang Hiếu Chiều mưa tầm tã không một lời Lặng lẽ cứ thế xa rời Dường như ngày tháng Mình cùng với nhau Chỉ là yêu đương nhất thời Nghe đâu đây đâu đây Trong gió tiếng lòng vỡ tan Như dư âm dư âm Trong trái tim lạnh mang Một tình yêu chắc không thể quên Đến khi tim này ngừng đập Giờ mình anh Quay cuồng trong cơn mưa Giữa một thành phố xa lạ Liệu trong dòng xe đang lao vội vã Có lúc nào anh nhớ ra Vì điều gì điều gì mà em phải cách xa Rồi một ngày Một ngày nào đó em thứ tha Tình yêu kia lẽ nào chỉ là Chỉ là gió bay thoáng qua Sài Gòn mưa rơi rơi rơi nhanh rất buồn Con tim anh nơi đây vẫn luôn Vẫn cứ nhớ em khôn nguôi Tình làm sao buông Sài Gòn mưa rơi rơi rơi nhanh rất buồn Con tim anh nơi đây nhớ thương Giờ anh ước tan thành khói mây Bay theo em Chiều mưa tầm tã em không một lời Lặng lẽ cứ thế xa rời Dường như ngày tháng Mình cùng với nhau Chỉ là yêu thương nhất thời Nghe đâu đây đâu đây Trong gió tiếng lòng vỡ tan Như dư âm dư âm Trong trái tim lạnh mang Một tình yêu chắc không thể quên Đến khi tim này ngừng đập Giờ mình anh Quay cuồng trong cơn mưa Giữa một thành phố xa lạ Liệu trong dòng xe đang lao vội vã Có lúc nào anh nhớ ra Vì điều gì điều gì mà em phải cách xa Rồi một ngày Một ngày nào đó em thứ tha Tình yêu kia lẽ nào chỉ là Chỉ là gió bay thoáng qua Sài Gòn mưa rơi rơi rơi nhanh rất buồn Con tim anh nơi đây vẫn luôn Vẫn cứ nhớ em khôn nguôi Tình làm sao buông Sài Gòn mưa rơi rơi rơi nhanh rất buồn Con tim anh nơi đây nhớ thương Giờ anh ước tan thành khói mây Bay theo em Em nơi nào biết đâu tìm Biết đâu tìm giữa một nơi chốn Anh chưa từng quen Có cách nào cho hai ta bắt đầu lại Bao yêu thương ấy như là lúc đầu Sài Gòn mưa rơi rơi rơi nhanh rất buồn Con tim anh nơi đây vẫn luôn Vẫn cứ nhớ em khôn nguôi Tình làm sao buông Sài Gòn mưa rơi rơi rơi nhanh rất buồn Con tim anh nơi đây vẫn luôn Vẫn cứ nhớ em khôn nguôi Tình làm sao buông Sài Gòn mưa rơi rơi rơi nhanh rất buồn Con tim anh nơi đây nhớ thương Giờ anh ước tan thành khói mây Bay theo em Giờ anh ước tan thành khói mây Bay theo em</textarea>
+                </div><div class="modal-card-foot"><div class="level"><div class="level-left"><span><a class="add-lyric-btn">Đóng góp lời bài hát</a></span></div><div class="level-right"><button class="zm-btn is-outlined is-medium is-upper button" data-dismiss="modal" tabindex="0"><i class="icon"></i><span>Đóng</span></button></div></div></div>
+            </div>
+        </div>
+
+    </div>
+</div>
+
+
+
