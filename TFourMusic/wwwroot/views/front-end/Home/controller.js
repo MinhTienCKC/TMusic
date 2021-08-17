@@ -2195,7 +2195,7 @@ app.controller('Ctrl_ESEIM', function ($scope, dataservice, $uibModal, $rootScop
 
 });
 
-
+  //17/08 ĐÃ SỮA CSDL MỚI
 app.controller('index', function ($scope, dataservice, $rootScope, $location) {
     $scope.yeuThichTop20Ui = function (viTri) {
         if ($rootScope.checklogin.dadangnhap == true) {
