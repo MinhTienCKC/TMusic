@@ -2297,6 +2297,7 @@ app.controller('index', function ($scope, dataservice, $rootScope, $location) {
                     nguoidung_id: $rootScope.checklogin.uid,
                     nguoidung_theodoi_id: $scope.topNgheSi[theodoi].uid
                 }
+                //dã sữa csdl moi
                 dataservice.theoDoiNguoiDung($scope.modelTheoDoi, function (rs) {
                     rs = rs.data;
                     if (rs) {

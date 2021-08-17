@@ -417,6 +417,7 @@ namespace TFourMusic.Controllers
         {
             return View(new ErrorViewModel { RequestId = Activity.Current?.Id ?? HttpContext.TraceIdentifier });
         }
+        //17-08 Đã sữa CSDL mới
         public List<chitietdanhsachphatnguoidungModel> LayBangChiTietDanhSachPhatNguoiDung(string uid = null)
         {
             if (uid == null)
@@ -468,28 +469,50 @@ namespace TFourMusic.Controllers
                 return list;
             }
         }
-        public List<chudeModel> LayBangChuDe()
+        //17-08 Đã sữa CSDL mới
+        public List<chudeModel> LayBangChuDe(string idchude = null)
         {
-            client = new FireSharp.FirebaseClient(config);
-            FirebaseResponse response = client.Get("csdlmoi/chude");
-            var data = JsonConvert.DeserializeObject<dynamic>(response.Body);
-            var list = new List<chudeModel>();
-
-            if (data != null)
+            try
             {
-                foreach (var item in data)
+                if (idchude == null)
                 {
-                    list.Add(JsonConvert.DeserializeObject<chudeModel>(((JProperty)item).Value.ToString()));
+                    client = new FireSharp.FirebaseClient(config);
+                    FirebaseResponse response = client.Get("csdlmoi/chude");
+                    var data = JsonConvert.DeserializeObject<dynamic>(response.Body);
+                    var list = new List<chudeModel>();
 
+                    if (data != null)
+                    {
+                        foreach (var item in data)
+                        {
+                            list.Add(JsonConvert.DeserializeObject<chudeModel>(((JProperty)item).Value.ToString()));
+
+                        }
+                    }
+
+                    return list;
+                }
+                else
+                {
+
+                    //return list;
+                    client = new FireSharp.FirebaseClient(config);
+                    FirebaseResponse response = client.Get("csdlmoi/chude/" + idchude);
+                    var data = JsonConvert.DeserializeObject<chudeModel>(response.Body);
+                    List<chudeModel> list = new List<chudeModel>();
+
+                    list.Add(data);
+                    return list;
                 }
             }
-
-
-
-            return list;
+            catch
+            {
+                return null;
+            }
 
         }
         /// 29/07 
+        ///    //17-08 Đã sữa CSDL mới
         public List<top20Model> LayBangTop20(string idtheloai = null)
         {
             if (idtheloai == null)
@@ -540,6 +563,7 @@ namespace TFourMusic.Controllers
             }
 
         }
+        //17-08 Đã sữa CSDL mới
         public List<hoadonthanhtoanModel> LayBangHoaDonThanhToan(string uid = null)
         {
             if (uid == null)
@@ -586,6 +610,7 @@ namespace TFourMusic.Controllers
                 return list;
             }
         }
+        //17-08 Đã sữa CSDL mới
 
         public List<theodoiModel> LayBangTheoDoi(string uid = null)
         {
@@ -634,6 +659,7 @@ namespace TFourMusic.Controllers
                 return list;
             }
         }
+        //17-08 Đã sữa CSDL mới
         public List<danhsachphatnguoidungModel> LayBangDanhSachPhatNguoiDung(string uid = null)
         {
             if (uid == null)
@@ -686,6 +712,7 @@ namespace TFourMusic.Controllers
 
 
         }
+        //17-08 Đã sữa CSDL mới
         public List<danhsachphattheloaiModel> LayBangDanhSachPhatTheLoai(string idtheloai = null)
         {
             if (idtheloai == null)
@@ -736,6 +763,7 @@ namespace TFourMusic.Controllers
 
 
         }
+        //17-08 Đã sữa CSDL mới
         public List<dataixuongModel> LayBangDaTaiXuong(string uid = null)
 
         {
@@ -784,27 +812,41 @@ namespace TFourMusic.Controllers
                 return list;
             }
         }
-        public List<goivipModel> LayBangGoiVip()
+        //17-08 Đã sữa CSDL mới
+        public List<goivipModel> LayBangGoiVip(string idgoivip = null)
         {
             try
             {
-                client = new FireSharp.FirebaseClient(config);
-                FirebaseResponse response = client.Get("csdlmoi/goivip");
-                var data = JsonConvert.DeserializeObject<dynamic>(response.Body);
-                var list = new List<goivipModel>();
-
-                if (data != null)
+                if (idgoivip == null)
                 {
-                    foreach (var item in data)
+                    client = new FireSharp.FirebaseClient(config);
+                    FirebaseResponse response = client.Get("csdlmoi/goivip");
+                    var data = JsonConvert.DeserializeObject<dynamic>(response.Body);
+                    var list = new List<goivipModel>();
+
+                    if (data != null)
                     {
-                        list.Add(JsonConvert.DeserializeObject<goivipModel>(((JProperty)item).Value.ToString()));
+                        foreach (var item in data)
+                        {
+                            list.Add(JsonConvert.DeserializeObject<goivipModel>(((JProperty)item).Value.ToString()));
 
+                        }
                     }
+
+                    return list;
                 }
+                else
+                {
 
+                    //return list;
+                    client = new FireSharp.FirebaseClient(config);
+                    FirebaseResponse response = client.Get("csdlmoi/goivip/" + idgoivip);
+                    var data = JsonConvert.DeserializeObject<goivipModel>(response.Body);
+                    List<goivipModel> list = new List<goivipModel>();
 
-
-                return list;
+                    list.Add(data);
+                    return list;
+                }
             }
             catch
             {
@@ -813,6 +855,7 @@ namespace TFourMusic.Controllers
 
 
         }
+        //17-08 Đã sữa CSDL mới
         public List<nguoidungModel> LayBangNguoiDung(string uid = null)
         {
             try
@@ -854,26 +897,85 @@ namespace TFourMusic.Controllers
             }
 
         }
-        public List<theloaiModel> LayBangTheLoai()
+        //17-08 Đã sữa CSDL mới
+        public List<theloaiModel> LayBangTheLoai(string idtheloai = null)
         {
             try
             {
-                client = new FireSharp.FirebaseClient(config);
-                FirebaseResponse response = client.Get("csdlmoi/theloai");
-                var data = JsonConvert.DeserializeObject<dynamic>(response.Body);
-                var list = new List<theloaiModel>();
-                if (data != null)
+                if (idtheloai == null)
+                {
+                    client = new FireSharp.FirebaseClient(config);
+                    FirebaseResponse response = client.Get("csdlmoi/theloai");
+                    var data = JsonConvert.DeserializeObject<dynamic>(response.Body);
+                    var list = new List<theloaiModel>();
+
+                    if (data != null)
+                    {
+                        foreach (var item in data)
+                        {
+                            list.Add(JsonConvert.DeserializeObject<theloaiModel>(((JProperty)item).Value.ToString()));
+
+                        }
+                    }
+
+                    return list;
+                }
+                else
                 {
 
-                    foreach (var item in data)
-                    {
-                        list.Add(JsonConvert.DeserializeObject<theloaiModel>(((JProperty)item).Value.ToString()));
+                    //return list;
+                    client = new FireSharp.FirebaseClient(config);
+                    FirebaseResponse response = client.Get("csdlmoi/theloai/" + idtheloai);
+                    var data = JsonConvert.DeserializeObject<theloaiModel>(response.Body);
+                    List<theloaiModel> list = new List<theloaiModel>();
 
-                    }
+                    list.Add(data);
+                    return list;
                 }
+            }
+            catch
+            {
+                return null;
+            }
 
 
-                return list;
+
+        }
+        //17-08 Đã sữa CSDL mới
+        public List<quangcaoModel> LayBangQuangCao(string idquangcao = null)
+        {
+            try
+            {
+                if (idquangcao == null)
+                {
+                    client = new FireSharp.FirebaseClient(config);
+                    FirebaseResponse response = client.Get("csdlmoi/quangcao");
+                    var data = JsonConvert.DeserializeObject<dynamic>(response.Body);
+                    var list = new List<quangcaoModel>();
+
+                    if (data != null)
+                    {
+                        foreach (var item in data)
+                        {
+                            list.Add(JsonConvert.DeserializeObject<quangcaoModel>(((JProperty)item).Value.ToString()));
+
+                        }
+                    }
+
+                    return list;
+                }
+                else
+                {
+
+                    //return list;
+                    client = new FireSharp.FirebaseClient(config);
+                    FirebaseResponse response = client.Get("csdlmoi/quangcao/" + idquangcao);
+                    var data = JsonConvert.DeserializeObject<quangcaoModel>(response.Body);
+                    List<quangcaoModel> list = new List<quangcaoModel>();
+
+                    list.Add(data);
+                    return list;
+                }
             }
             catch
             {
@@ -882,34 +984,7 @@ namespace TFourMusic.Controllers
 
 
         }
-        public List<quangcaoModel> LayBangQuangCao()
-        {
-            try
-            {
-                client = new FireSharp.FirebaseClient(config);
-                FirebaseResponse response = client.Get("csdlmoi/quangcao");
-                var data = JsonConvert.DeserializeObject<dynamic>(response.Body);
-                var list = new List<quangcaoModel>();
-                if (data != null)
-                {
-
-                    foreach (var item in data)
-                    {
-                        list.Add(JsonConvert.DeserializeObject<quangcaoModel>(((JProperty)item).Value.ToString()));
-
-                    }
-                }
-
-
-                return list;
-            }
-            catch
-            {
-                return null;
-            }
-
-
-        }
+        //17-08 Đã sữa CSDL mới
         public List<yeuthichModel> LayBangYeuThichBaiHat(string uid = null)
         {
 
@@ -958,6 +1033,7 @@ namespace TFourMusic.Controllers
             }
 
         }
+        //17-08 Đã sữa CSDL mới
         public List<yeuthichdanhsachphatnguoidung> layBangYeuThichDanhSachPhatNguoiDung(string uid = null)
         {
             if (uid == null)
@@ -1006,6 +1082,7 @@ namespace TFourMusic.Controllers
 
 
         }
+        //17-08 Đã sữa CSDL mới
         public List<yeuthichdanhsachphattheloaiModel> LayBangYeuThichDSPTheLoai(string uid = null)
         {
             if (uid == null)
@@ -1054,6 +1131,7 @@ namespace TFourMusic.Controllers
 
 
         }
+        //17-08 Đã sữa CSDL mới
         public List<yeuthichtop20Model> LayBangYeuThichTop20(string uid = null)
         {
             if (uid == null)
@@ -1100,6 +1178,59 @@ namespace TFourMusic.Controllers
                 return list;
             }
         }
+        //17-08 Đã sữa CSDL mới
+        public List<chitietdanhsachphattheloaiModel> LayBangChiTietDanhSachPhatTheLoai(string iddsptheloai = null)
+        {
+            if (iddsptheloai == null)
+            {
+                client = new FireSharp.FirebaseClient(config);
+                FirebaseResponse response = client.Get("csdlmoi/chitietdanhsachphattheloai");
+                var data = JsonConvert.DeserializeObject<dynamic>(response.Body);
+                var list = new List<chitietdanhsachphattheloaiModel>();
+                if (data != null)
+                {
+
+                    foreach (var item in data)
+                    {
+                        foreach (var x in item)
+                        {
+                            foreach (var y in x)
+
+                            {
+                                list.Add(JsonConvert.DeserializeObject<chitietdanhsachphattheloaiModel>(((JProperty)y).Value.ToString()));
+
+                            }
+
+                        }
+
+                    }
+                }
+
+
+
+                return list;
+            }
+            else
+            {
+                client = new FireSharp.FirebaseClient(config);
+                FirebaseResponse response = client.Get("csdlmoi/chitietdanhsachphattheloai/" + iddsptheloai);
+                var data = JsonConvert.DeserializeObject<dynamic>(response.Body);
+                var list = new List<chitietdanhsachphattheloaiModel>();
+                if (data != null)
+                {
+
+                    foreach (var item in data)
+                    {
+                        list.Add(JsonConvert.DeserializeObject<chitietdanhsachphattheloaiModel>(((JProperty)item).Value.ToString()));
+
+                    }
+
+
+                }
+                return list;
+            }
+        }
+        //17-08 Đã sữa CSDL mới
 
         public async Task<IActionResult> DanhSachQuangCao(string uid)
         {
@@ -1140,6 +1271,7 @@ namespace TFourMusic.Controllers
 
 
         }
+        //17-08 Đã sữa CSDL mới
         [HttpPost]
         public object getUser(string uid)
         {
@@ -1156,7 +1288,7 @@ namespace TFourMusic.Controllers
                     {
                         user.vip = 0;
                         client = new FireSharp.FirebaseClient(config);
-                        SetResponse response = client.Set("nguoidung/" + user.id, user);
+                        SetResponse response = client.Set("csdlmoi/nguoidung/"+ uid, user);
                     }
                     return user;
                 }
@@ -1553,6 +1685,7 @@ namespace TFourMusic.Controllers
 
         }
 
+        // 17/08 Đã Sữa CSDL mới
         [HttpPost]
         public async Task<bool> YeuThichBaiHatAsync([FromBody] yeuthichModel yeuthich)
 
@@ -1574,32 +1707,38 @@ namespace TFourMusic.Controllers
                         if (kq.Count() > 0)
                         {
                             client = new FireSharp.FirebaseClient(config);
-                            FirebaseResponse response = client.Delete("yeuthich/" + kq[0].id);
+                            FirebaseResponse response = client.Delete("csdlmoi/yeuthich/yeuthichbaihat/"+yeuthich.nguoidung_id+ "/" + kq[0].id);
 
 
                             qery.luotthich = qery.luotthich - 1;
                             client = new FireSharp.FirebaseClient(config);
-                            SetResponse responsebaihat = client.Set("baihat/" + qery.id, qery);
+                            SetResponse responsebaihat = client.Set("csdlmoi/baihat/" + qery.id, qery);
                             return false;
                         }
                         else
                         {
                             qery.luotthich = qery.luotthich + 1;
                             client = new FireSharp.FirebaseClient(config);
-                            SetResponse responsebaihat = client.Set("baihat/" + qery.id, qery);
+                            SetResponse responsebaihat = client.Set("csdlmoi/baihat/" + qery.id, qery);
                             yeuthich.thoigian = DateTime.Now;
                             var firebase = new FirebaseClient(Key);
 
                             // add new item to list of data and let the client generate new key for you (done offline)
                             var dino = await firebase
+                              .Child("csdlmoi")
                               .Child("yeuthich")
+                              .Child("yeuthichbaihat")
+                              .Child(yeuthich.nguoidung_id.ToString())
                               .PostAsync(yeuthich)
                               ;
 
                             string idkey = dino.Key.ToString();
                             yeuthich.id = idkey;
                             await firebase
-                               .Child("yeuthich")
+                               .Child("csdlmoi")
+                              .Child("yeuthich")
+                              .Child("yeuthichbaihat")
+                              .Child(yeuthich.nguoidung_id.ToString())
                                .Child(idkey)
                                .PutAsync(yeuthich);
                             return true;
@@ -1620,12 +1759,16 @@ namespace TFourMusic.Controllers
             }
 
         }
+
+
+
+        //17-08 Đã sữa CSDL mới
         [HttpPost]
         public async Task<bool> theoDoiNguoiDung([FromBody] theodoiModel theodoi)
         {
             try
             {
-                var list = LayBangTheoDoi();
+                var list = LayBangTheoDoi(theodoi.nguoidung_id);
                 if (list.Count > 0)
                 {
                     var kq = (from theodoilist in list
@@ -1634,7 +1777,7 @@ namespace TFourMusic.Controllers
                     if (kq.Count() > 0)
                     {
                         client = new FireSharp.FirebaseClient(config);
-                        FirebaseResponse response = client.Delete("theodoi/" + kq[0].id);
+                        FirebaseResponse response = client.Delete("csdlmoi/theodoi/"+ theodoi.nguoidung_id+"/" + kq[0].id);
                         return false;
                     }
                     else
@@ -1644,14 +1787,18 @@ namespace TFourMusic.Controllers
 
                         // add new item to list of data and let the client generate new key for you (done offline)
                         var dino = await firebase
+                          .Child("csdlmoi")
                           .Child("theodoi")
+                          .Child(theodoi.nguoidung_id.ToString())
                           .PostAsync(theodoi)
                           ;
 
                         string idkey = dino.Key.ToString();
                         theodoi.id = idkey;
                         await firebase
+                           .Child("csdlmoi")
                            .Child("theodoi")
+                           .Child(theodoi.nguoidung_id.ToString())
                            .Child(idkey)
                            .PutAsync(theodoi);
 
@@ -1667,14 +1814,18 @@ namespace TFourMusic.Controllers
 
                     // add new item to list of data and let the client generate new key for you (done offline)
                     var dino = await firebase
+                      .Child("csdlmoi")
                       .Child("theodoi")
+                      .Child(theodoi.nguoidung_id.ToString())
                       .PostAsync(theodoi)
                       ;
 
                     string idkey = dino.Key.ToString();
                     theodoi.id = idkey;
                     await firebase
+                       .Child("csdlmoi")
                        .Child("theodoi")
+                       .Child(theodoi.nguoidung_id.ToString())
                        .Child(idkey)
                        .PutAsync(theodoi);
 
@@ -1687,24 +1838,50 @@ namespace TFourMusic.Controllers
                 return false;
             }
         }
-        public List<baihatModel> getListBaiHat()
+        public List<baihatModel> getListBaiHat(string idbaihat = null)
         {
-            client = new FireSharp.FirebaseClient(config);
-            FirebaseResponse response = client.Get("csdlmoi/baihat");
-            var data = JsonConvert.DeserializeObject<dynamic>(response.Body);
-            var list = new List<baihatModel>();
-
-
-            foreach (var item in data)
+            try
             {
-                list.Add(JsonConvert.DeserializeObject<baihatModel>(((JProperty)item).Value.ToString()));
+                if (idbaihat == null)
+                {
+                    client = new FireSharp.FirebaseClient(config);
+                    FirebaseResponse response = client.Get("csdlmoi/baihat");
+                    var data = JsonConvert.DeserializeObject<dynamic>(response.Body);
+                    var list = new List<baihatModel>();
 
+                    if (data != null)
+                    {
+                        foreach (var item in data)
+                        {
+                            list.Add(JsonConvert.DeserializeObject<baihatModel>(((JProperty)item).Value.ToString()));
+
+                        }
+                    }
+                    list = (from bh in list
+                           where bh.chedo == 1 && bh.daxoa == 0
+                           select bh).ToList();
+                    return list;
+                }
+                else
+                {
+
+                    //return list;
+                    client = new FireSharp.FirebaseClient(config);
+                    FirebaseResponse response = client.Get("csdlmoi/baihat/" + idbaihat);
+                    var data = JsonConvert.DeserializeObject<baihatModel>(response.Body);
+                    List<baihatModel> list = new List<baihatModel>();
+
+                    list.Add(data);
+                    return list;
+                }
+            }
+            catch
+            {
+                return null;
             }
 
-
-            return list;
-
         }
+        //17-08 Đã sữa CSDL mới
         public List<baihatcustomModel> convertBaiHat(List<baihatModel> list, string uid)
         {
             var listyeuthich = LayBangYeuThichBaiHat(uid);
@@ -1757,9 +1934,10 @@ namespace TFourMusic.Controllers
             }
             return listkq;
         }
+        //17-08 Đã sữa CSDL mới
         public List<nguoidungcustomModel> convertNguoiDung(List<nguoidungModel> list, string uid)
         {
-            var listyeuthichtong = LayBangTheoDoi();
+            var listyeuthichtong = LayBangTheoDoi(uid);
             var listyeuthich = (from yeuthich in listyeuthichtong
                                 where yeuthich.nguoidung_id == uid
                                 select yeuthich).ToList();
@@ -1814,6 +1992,7 @@ namespace TFourMusic.Controllers
             }
             return listkq;
         }
+        //17-08 Đã sữa CSDL mới
         public List<nguoidungchualogincustomModel> convertNguoiDungChuaLogin(List<nguoidungModel> list)
         {
             var listyeuthichtong = LayBangTheoDoi();
@@ -1849,6 +2028,7 @@ namespace TFourMusic.Controllers
             }
             return listkq;
         }
+        //18/08 Đã sữa CSDL mới
         [HttpPost]
         public object GetListBaiHatMoi(string uid = "")
         {
@@ -1896,6 +2076,7 @@ namespace TFourMusic.Controllers
 
 
         }
+        //18/08 Đã sữa CSDL mới
         [HttpPost]
         public object getListTheoDoi(string uid)
         {
@@ -2302,6 +2483,7 @@ namespace TFourMusic.Controllers
             }
         }
 
+        
         // thêm lượt nghe bài hát 
         [HttpPost]
         public bool themLuotNghe(string idbh)
@@ -2316,7 +2498,7 @@ namespace TFourMusic.Controllers
                                         select bh).FirstOrDefault();
                     qery.luotnghe = qery.luotnghe + 1;
                     client = new FireSharp.FirebaseClient(config);
-                    SetResponse response = client.Set("baihat/" + qery.id, qery);
+                    SetResponse response = client.Set("csdlmoi/baihat/" + qery.id, qery);
                     return true;
                 }
                 else
@@ -2379,7 +2561,7 @@ namespace TFourMusic.Controllers
 
                 //return list;
                 client = new FireSharp.FirebaseClient(config);
-                FirebaseResponse response = client.Get("csdlmoi/nguoidung/" + "hFxjlTD1nzeMgmtJiIBQN9xGJ8D3");
+                FirebaseResponse response = client.Get("csdlmoi/nguoidung/" + iddsp);
                 var data = JsonConvert.DeserializeObject<nguoidungModel>(response.Body);
                 List<nguoidungModel> list = new List<nguoidungModel>();
 
@@ -3814,26 +3996,7 @@ namespace TFourMusic.Controllers
         }
 
         // 1/8
-        public List<chitietdanhsachphattheloaiModel> LayBangChiTietDanhSachPhatTheLoai()
-        {
-            client = new FireSharp.FirebaseClient(config);
-            FirebaseResponse response = client.Get("chitietdanhsachphattheloai");
-            var data = JsonConvert.DeserializeObject<dynamic>(response.Body);
-            var list = new List<chitietdanhsachphattheloaiModel>();
-
-            if (data != null)
-            {
-                foreach (var item in data)
-                {
-                    list.Add(JsonConvert.DeserializeObject<chitietdanhsachphattheloaiModel>(((JProperty)item).Value.ToString()));
-
-                }
-            }
-
-
-
-            return list;
-        }
+       
 
         // 2/8 sữa hình ảnh người dùng
         [HttpPost]
