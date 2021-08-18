@@ -319,6 +319,7 @@
     margin-left: 30px;
     max-height: 45px;
     margin-top: 4px;
+    object-fit: cover;
 }
 
 .media_luu_content {
@@ -755,6 +756,7 @@
     cursor: pointer;
     font-size: 12px;
     margin-right: 36%;
+    padding-right: 10px;
     /* margin-left: 263px; */
     /* width: 438px; */
     color: #ffffff80;

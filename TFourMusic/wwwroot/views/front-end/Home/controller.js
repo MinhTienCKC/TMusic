@@ -465,7 +465,7 @@ app.controller('Ctrl_ESEIM', function ($scope, dataservice, $uibModal, $rootScop
     $scope.ramdomsong = false;
     $rootScope.checklogin = {
         hovaten: '',
-        uid: '',
+        uid: null,
         hinhanh: '',
         dadangnhap: false,
         vip: 0,
@@ -1579,6 +1579,10 @@ app.controller('Ctrl_ESEIM', function ($scope, dataservice, $uibModal, $rootScop
     }
 
     $scope.clickTaoPlaylist = function () {
+        $("#loading_main").css("display", "block");
+      
+            
+     
         if ($rootScope.checklogin.dadangnhap) {
             $scope.danhSachPhatNguoiDung = {
                 id: '',
@@ -1592,6 +1596,7 @@ app.controller('Ctrl_ESEIM', function ($scope, dataservice, $uibModal, $rootScop
             $scope.danhSachPhatNguoiDung.nguoidung_id = $rootScope.checklogin.uid;
             dataservice.taoDanhSachPhat_NguoiDung($scope.danhSachPhatNguoiDung, function (rs) {
                 rs = rs.data;
+                $("#loading_main").css("display", "none");
                 if (rs.Error) { } else {
 
                 }
@@ -1606,6 +1611,7 @@ app.controller('Ctrl_ESEIM', function ($scope, dataservice, $uibModal, $rootScop
             $scope.tenplaylist = "";
 
         } else {
+            $("#loading_main").css("display", "none");
             $rootScope.closelogin = true;
         }
     }
@@ -2291,7 +2297,7 @@ app.controller('index', function ($scope, dataservice, $rootScope, $location) {
         }
         $scope.theoDoi_index = function (theodoi) {
             if ($rootScope.checklogin.dadangnhap) {
-
+                console.log($rootScope.checklogin);
                 $scope.modelTheoDoi = {
                     id: '',
                     nguoidung_id: $rootScope.checklogin.uid,
