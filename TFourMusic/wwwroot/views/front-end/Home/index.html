@@ -229,10 +229,10 @@
                         <div class="subtitle_timkiem"><span class="followers">{{x.soluongtheodoi}} theo dõi</span></div>
                     </div>
                     <div class="zm-card-footer_timkiem">
-                        <button ng-show="x.theodoi==1" ng-click="theoDoi_index($index); x.soluongtheodoi = x.soluongtheodoi-1; " style="cursor:pointer;" class="zm-btn_timkiem is-outlined_timkiem active_timkiem mar-t-15_timkiem mar-b-20_timkiem is-small_timkiem is-upper_timkiem button_timkiem" tabindex="0">
+                        <button ng-show="x.theodoi==1 && checklogin.dadangnhap == true" ng-click="theoDoi_index($index); x.soluongtheodoi = x.soluongtheodoi-1; " style="cursor:pointer;" class="zm-btn_timkiem is-outlined_timkiem active_timkiem mar-t-15_timkiem mar-b-20_timkiem is-small_timkiem is-upper_timkiem button_timkiem" tabindex="0">
                             <span class="material-icons-outlined">check</span><span>Đã Theo Dõi</span>
                         </button>
-                        <button ng-show="x.theodoi==0" ng-click="theoDoi_index($index); x.soluongtheodoi = x.soluongtheodoi+1;" class="zm-btn button_theodoi is-outlined mar-t-15 mar-b-20 is-small is-upper button" tabindex="0">
+                        <button ng-show="x.theodoi==0 && checklogin.dadangnhap == true" ng-click="theoDoi_index($index); x.soluongtheodoi = x.soluongtheodoi+1;" class="zm-btn button_theodoi is-outlined mar-t-15 mar-b-20 is-small is-upper button" tabindex="0">
                             <i style=" font-size: 14px; margin: 0px 5px; " class="fas fa-user-plus"></i><span>Theo Dõi</span>
                         </button>
                         <button ng-show="!checklogin.dadangnhap" ng-click="theoDoi_index($index)" class="zm-btn button_theodoi is-outlined mar-t-15 mar-b-20 is-small is-upper button" tabindex="0">

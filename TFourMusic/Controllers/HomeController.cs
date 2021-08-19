@@ -836,7 +836,7 @@ namespace TFourMusic.Controllers
                     {
                         list.Add(data);
                     }
-                   
+
                     return list;
                 }
             }
@@ -858,7 +858,7 @@ namespace TFourMusic.Controllers
                     FirebaseResponse response = client.Get("csdlmoi/nguoidung");
                     var data = JsonConvert.DeserializeObject<dynamic>(response.Body);
                     var list = new List<nguoidungModel>();
-                  
+
                     if (data != null)
                     {
                         foreach (var item in data)
@@ -878,11 +878,11 @@ namespace TFourMusic.Controllers
                     FirebaseResponse response = client.Get("csdlmoi/nguoidung/" + uid);
                     var data = JsonConvert.DeserializeObject<nguoidungModel>(response.Body);
                     List<nguoidungModel> list = new List<nguoidungModel>();
-                    if(data!= null)
+                    if (data != null)
                     {
                         list.Add(data);
                     }
-                    
+
                     return list;
                 }
             }
@@ -928,7 +928,7 @@ namespace TFourMusic.Controllers
                     {
                         list.Add(data);
                     }
-                   
+
                     return list;
                 }
             }
@@ -975,7 +975,7 @@ namespace TFourMusic.Controllers
                     {
                         list.Add(data);
                     }
-                    
+
                     return list;
                 }
             }
@@ -1358,7 +1358,7 @@ namespace TFourMusic.Controllers
 
                             qery.luotthich = qery.luotthich - 1;
                             client = new FireSharp.FirebaseClient(config);
-                            SetResponse responsebaihat = client.Set("csdlmoi/baihat/" + qery.nguoidung_id+ "/" + qery.id, qery);
+                            SetResponse responsebaihat = client.Set("csdlmoi/baihat/" + qery.nguoidung_id + "/" + qery.id, qery);
                             return false;
                         }
                         else
@@ -1392,8 +1392,37 @@ namespace TFourMusic.Controllers
 
                     }
                     else
-                        return false;
+                    {
+                        var listbaihat = getListBaiHat();
+                        baihatModel qery = (from bh in getListBaiHat()
+                                            where bh.id == yeuthich.baihat_id
+                                            select bh).FirstOrDefault();
+                        qery.luotthich = qery.luotthich + 1;
+                        client = new FireSharp.FirebaseClient(config);
+                        SetResponse responsebaihat = client.Set("csdlmoi/baihat/" + qery.nguoidung_id + "/" + qery.id, qery);
+                        yeuthich.thoigian = DateTime.Now;
+                        var firebase = new FirebaseClient(Key);
 
+                        // add new item to list of data and let the client generate new key for you (done offline)
+                        var dino = await firebase
+                          .Child("csdlmoi")
+                          .Child("yeuthich")
+                          .Child("yeuthichbaihat")
+                          .Child(yeuthich.nguoidung_id.ToString())
+                          .PostAsync(yeuthich)
+                          ;
+
+                        string idkey = dino.Key.ToString();
+                        yeuthich.id = idkey;
+                        await firebase
+                           .Child("csdlmoi")
+                          .Child("yeuthich")
+                          .Child("yeuthichbaihat")
+                          .Child(yeuthich.nguoidung_id.ToString())
+                           .Child(idkey)
+                           .PutAsync(yeuthich);
+                        return false;
+                    }
                 }
                 else
                     return false;
@@ -1692,9 +1721,9 @@ namespace TFourMusic.Controllers
             {
                 if (uid != null)
                 {
-                    
+
                     var listbaihat = getListBaiHat();
-                   var datakq = (from baihat in listbaihat
+                    var datakq = (from baihat in listbaihat
                                   where baihat.chedo == 1
                                   select baihat).ToList().OrderByDescending(x => x.thoigian).Take(listbaihat.Count > 12 ? 12 : listbaihat.Count).ToList();
                     //List<baihatModel> datakq = data.ToList();
@@ -1740,7 +1769,8 @@ namespace TFourMusic.Controllers
             {
 
                 var listbh = getListBaiHat();
-                var listnd = LayBangNguoiDung(uid);
+                var listnd = LayBangNguoiDung();
+                
                 if (uid != null && uid != "")
                 {
                     var convertnd = convertNguoiDung(listnd, uid);
@@ -2083,7 +2113,7 @@ namespace TFourMusic.Controllers
                 {
                     return Json("LoiFirebase");
                 }
-            
+
             }
 
 
@@ -2155,7 +2185,7 @@ namespace TFourMusic.Controllers
             try
             {
                 client = new FireSharp.FirebaseClient(config);
-                SetResponse response = client.Set("csdlmoi/baihat/" + bh.nguoidung_id+ "/" + bh.id, bh);
+                SetResponse response = client.Set("csdlmoi/baihat/" + bh.nguoidung_id + "/" + bh.id, bh);
                 return true;
             }
             catch (Exception ex)
@@ -2165,11 +2195,39 @@ namespace TFourMusic.Controllers
 
 
         }
-        public async Task<bool> XoaDanhSachPhatNguoiDung(string iddsp)
+        public async Task<bool> XoaDanhSachPhatNguoiDung([FromBody] Text model)
         {
             try
-            {        
-                return false;
+            {
+                if(model != null)
+                {
+                    var listchitiet = LayBangChiTietDanhSachPhatNguoiDung(model.uid);
+                    listchitiet = (from ct in listchitiet
+                                   where ct.danhsachphat_id == model.key
+                                   select ct).ToList();
+                    client = new FireSharp.FirebaseClient(config);
+                    if (listchitiet.Count() > 0)
+                    {
+                       
+                      
+                        foreach (var item in listchitiet)
+                        {
+                            FirebaseResponse response = client.Delete("csdlmoi/chitietdanhsachphatnguoidung/" + model.uid + "/" + item.id);
+                        }
+                        return false;
+                    }
+                    else
+                    {
+                        FirebaseResponse response = client.Delete("csdlmoi/danhsachphatnguoidung/" + model.uid + "/" + model.key);
+                        return true;
+                    }
+
+
+                }
+                else
+                {
+                    return false;
+                }
             }
             catch (Exception ex)
             {
@@ -2253,7 +2311,7 @@ namespace TFourMusic.Controllers
                 if (model.uid != null)
                 {
                     var datakq = LayBangDanhSachPhatNguoiDung(model.uid);
-                    
+
                     if (model.key != null && model.key != "")
                     {
                         var data = convertDanhSachPhatNguoiDung(datakq, model.key);
@@ -2285,7 +2343,7 @@ namespace TFourMusic.Controllers
             {
                 var list = getListBaiHat();
 
-                if (list.Count > 0 && list[0]!= null)
+                if (list.Count > 0 && list[0] != null)
                 {
 
                     var datakq = (from baihat in list
@@ -2315,7 +2373,7 @@ namespace TFourMusic.Controllers
         {
             if (uid != null)
             {
-                var listdspyeuthich = LayBangYeuThichDSPTheLoai(uid);   
+                var listdspyeuthich = LayBangYeuThichDSPTheLoai(uid);
                 var listdsp = LayBangDanhSachPhatTheLoai();
 
                 var result = (from list in listdsp
@@ -2339,7 +2397,8 @@ namespace TFourMusic.Controllers
                 var listdspyeuthich = layBangYeuThichDanhSachPhatNguoiDung(uid);
                 var listdsp = LayBangDanhSachPhatNguoiDung();
 
-                var result = (from list in listdsp where list.chedo == 1 
+                var result = (from list in listdsp
+                              where list.chedo == 1
                               join listyeuthich in listdspyeuthich on list.id equals listyeuthich.danhsachphat_id
                               where listyeuthich.nguoidung_id == uid
                               select list).ToList();
@@ -2362,8 +2421,8 @@ namespace TFourMusic.Controllers
                 {
 
                     var listnguoidung = LayBangNguoiDung();
-                    var datakq = (from nguoidung in listnguoidung 
-                                  where nguoidung.hoten.ToUpper().Contains(model.tuKhoa.ToUpper()) 
+                    var datakq = (from nguoidung in listnguoidung
+                                  where nguoidung.hoten.ToUpper().Contains(model.tuKhoa.ToUpper())
                                   select nguoidung).OrderBy(x => x.hoten).ToList();
 
                     if (model.uid != null)
@@ -2471,7 +2530,7 @@ namespace TFourMusic.Controllers
         // 18/08 Đã Sữa CSDL Mới
         public List<baihatcustomModel> getListDaTaiLen_CaNhan(string uid)
         {
-            if(uid != null)
+            if (uid != null)
             {
                 var list = getListBaiHat(uid);
                 list = (from bh in list
@@ -2561,12 +2620,210 @@ namespace TFourMusic.Controllers
                 return Json(ex.Message.ToString());
             }
         }
+        // 18/08 Đã Sữa CSDL Mới
+        [HttpPost]
+        public async Task<bool> YeuThichDanhSachPhatNguoiDung([FromBody] yeuthichdanhsachphatnguoidung yeuthichdanhsachphatnguoidung)
 
+        {
+            try
+            {
+                var list = layBangYeuThichDanhSachPhatNguoiDung();
+                if (list.Count > 0)
+                {
+                    var kq = (from yeuthichnew in list
+                              where yeuthichnew.danhsachphat_id.Equals(yeuthichdanhsachphatnguoidung.danhsachphat_id) && yeuthichnew.nguoidung_id.Equals(yeuthichdanhsachphatnguoidung.nguoidung_id)
+                              select yeuthichnew).ToList();
+                    if (kq.Count() > 0)
+                    {
+                        client = new FireSharp.FirebaseClient(config);
+                        FirebaseResponse response = client.Delete("csdlmoi/yeuthich/yeuthichdanhsachphatnguoidung/"+  yeuthichdanhsachphatnguoidung.nguoidung_id+"/"+ kq[0].id);
+                        return false;
+                    }
+                    else
+                    {
+                        yeuthichdanhsachphatnguoidung.thoigian = DateTime.Now;
+                        var firebase = new FirebaseClient(Key);
 
+                        // add new item to list of data and let the client generate new key for you (done offline)
+                        var dino = await firebase
+                           .Child("csdlmoi")
+                      .Child("yeuthich")
+                      .Child("yeuthichdanhsachphatnguoidung")
+                      .Child(yeuthichdanhsachphatnguoidung.nguoidung_id)
+                          .PostAsync(yeuthichdanhsachphatnguoidung)
+                          ;
 
+                        string idkey = dino.Key.ToString();
+                        yeuthichdanhsachphatnguoidung.id = idkey;
+                        await firebase
+                            .Child("csdlmoi")
+                      .Child("yeuthich")
+                      .Child("yeuthichdanhsachphatnguoidung")
+                      .Child(yeuthichdanhsachphatnguoidung.nguoidung_id)
+                           .Child(idkey)
+                           .PutAsync(yeuthichdanhsachphatnguoidung);
+                        return true;
+                    }
 
+                }
+                else
+                {
+                    yeuthichdanhsachphatnguoidung.thoigian = DateTime.Now;
+                    var firebase = new FirebaseClient(Key);
 
+                    // add new item to list of data and let the client generate new key for you (done offline)
+                    var dino = await firebase
+                      .Child("csdlmoi")
+                      .Child("yeuthich")
+                      .Child("yeuthichdanhsachphatnguoidung")
+                      .Child(yeuthichdanhsachphatnguoidung.nguoidung_id)
+                      .PostAsync(yeuthichdanhsachphatnguoidung)
+                      ;
 
+                    string idkey = dino.Key.ToString();
+                    yeuthichdanhsachphatnguoidung.id = idkey;
+                    await firebase
+                        .Child("csdlmoi")
+                      .Child("yeuthich")
+                      .Child("yeuthichdanhsachphatnguoidung")
+                      .Child(yeuthichdanhsachphatnguoidung.nguoidung_id)
+                       .Child(idkey)
+                       .PutAsync(yeuthichdanhsachphatnguoidung);
+                    return false;
+                }
+            }
+            catch
+            {
+                return false;
+            }
+
+        }
+
+        // 18/08 Đã Sữa CSDL Mới
+        public List<danhsachphatnguoidungcustomModel> convertDanhSachPhatNguoiDung(List<danhsachphatnguoidungModel> list, string uid)
+        {
+            var listyeuthichdsp = layBangYeuThichDanhSachPhatNguoiDung(uid);
+            listyeuthichdsp = (from yeuthich in listyeuthichdsp
+                               where yeuthich.nguoidung_id == uid
+                               select yeuthich).ToList();
+            List<danhsachphatnguoidungcustomModel> listkq = new List<danhsachphatnguoidungcustomModel>();
+            for (int item = 0; item < list.Count(); item++)
+            {
+                danhsachphatnguoidungcustomModel danhsachphat = new danhsachphatnguoidungcustomModel();
+
+                danhsachphat.id = list[item].id;
+                danhsachphat.tendanhsachphat = list[item].tendanhsachphat;
+                danhsachphat.linkhinhanh = list[item].linkhinhanh;
+                danhsachphat.nguoidung_id = list[item].nguoidung_id;
+                danhsachphat.thoigian = list[item].thoigian;
+                bool checkYeuThich = false;
+                for (int j = 0; j < listyeuthichdsp.Count(); j++)
+                {
+
+                    if (list[item].id.Equals(listyeuthichdsp[j].danhsachphat_id))
+                    {
+                        checkYeuThich = true;
+                    }
+
+                }
+                if (checkYeuThich)
+                {
+                    danhsachphat.yeuthich = 1;
+                    listkq.Add(danhsachphat);
+                }
+                else
+                {
+                    danhsachphat.yeuthich = 0;
+                    listkq.Add(danhsachphat);
+                }
+
+            }
+            return listkq;
+        }
+
+        // 18/08 Đã Sữa CSDL Mới
+        [HttpPost]
+        public async Task<bool> YeuThichTop20Async([FromBody] yeuthichtop20Model yeuthichtop20)
+
+        {
+            try
+            {
+                if (yeuthichtop20.nguoidung_id == null || yeuthichtop20.nguoidung_id == "" &&
+                   yeuthichtop20.top20_id == null || yeuthichtop20.top20_id == "")
+                {
+                    return false;
+                }
+                var list = LayBangYeuThichTop20(yeuthichtop20.nguoidung_id);
+                if (list.Count > 0)
+                {
+                    var kq = (from yeuthichnew in list
+                              where yeuthichnew.top20_id.Equals(yeuthichtop20.top20_id) && yeuthichnew.nguoidung_id.Equals(yeuthichtop20.nguoidung_id)
+                              select yeuthichnew).ToList();
+                    if (kq.Count() > 0)
+                    {
+                        client = new FireSharp.FirebaseClient(config);
+                        FirebaseResponse response = client.Delete("csdlmoi/yeuthich/yeuthichdanhsachphattop20/"+ yeuthichtop20.nguoidung_id+ "/" + kq[0].id);
+                        return false;
+                    }
+                    else
+                    {
+                        yeuthichtop20.thoigian = DateTime.Now;
+                        var firebase = new FirebaseClient(Key);
+
+                        // add new item to list of data and let the client generate new key for you (done offline)
+                        var dino = await firebase
+                          .Child("csdlmoi")
+                          .Child("yeuthich")
+                          .Child("yeuthichdanhsachphattop20")
+                          .Child(yeuthichtop20.nguoidung_id)
+                          .PostAsync(yeuthichtop20)
+                          ;
+
+                        string idkey = dino.Key.ToString();
+                        yeuthichtop20.id = idkey;
+                        await firebase
+                         .Child("csdlmoi")
+                          .Child("yeuthich")
+                          .Child("yeuthichdanhsachphattop20")
+                          .Child(yeuthichtop20.nguoidung_id)
+                           .Child(idkey)
+                           .PutAsync(yeuthichtop20);
+                        return true;
+                    }
+
+                }
+                else
+                {
+                    yeuthichtop20.thoigian = DateTime.Now;
+                    var firebase = new FirebaseClient(Key);
+
+                    // add new item to list of data and let the client generate new key for you (done offline)
+                    var dino = await firebase
+                      .Child("csdlmoi")
+                      .Child("yeuthich")
+                      .Child("yeuthichdanhsachphattop20")
+                      .Child(yeuthichtop20.nguoidung_id)
+                      .PostAsync(yeuthichtop20)
+                      ;
+
+                    string idkey = dino.Key.ToString();
+                    yeuthichtop20.id = idkey;
+                    await firebase
+                     .Child("csdlmoi")
+                      .Child("yeuthich")
+                      .Child("yeuthichdanhsachphattop20")
+                      .Child(yeuthichtop20.nguoidung_id)
+                       .Child(idkey)
+                       .PutAsync(yeuthichtop20);
+                    return false;
+                }
+            }
+            catch
+            {
+                return false;
+            }
+
+        }
 
 
 
@@ -3333,47 +3590,7 @@ namespace TFourMusic.Controllers
             }
             return listkq;
         }
-        // 03/08 bổ sung nười dùng id
-        public List<danhsachphatnguoidungcustomModel> convertDanhSachPhatNguoiDung(List<danhsachphatnguoidungModel> list, string uid)
-        {
-            var listyeuthichdsp = layBangYeuThichDanhSachPhatNguoiDung();
-            listyeuthichdsp = (from yeuthich in listyeuthichdsp
-                               where yeuthich.nguoidung_id == uid
-                               select yeuthich).ToList();
-            List<danhsachphatnguoidungcustomModel> listkq = new List<danhsachphatnguoidungcustomModel>();
-            for (int item = 0; item < list.Count(); item++)
-            {
-                danhsachphatnguoidungcustomModel danhsachphat = new danhsachphatnguoidungcustomModel();
-
-                danhsachphat.id = list[item].id;
-                danhsachphat.tendanhsachphat = list[item].tendanhsachphat;
-                danhsachphat.linkhinhanh = list[item].linkhinhanh;
-                danhsachphat.nguoidung_id = list[item].nguoidung_id;
-                danhsachphat.thoigian = list[item].thoigian;
-                bool checkYeuThich = false;
-                for (int j = 0; j < listyeuthichdsp.Count(); j++)
-                {
-
-                    if (list[item].id.Equals(listyeuthichdsp[j].danhsachphat_id))
-                    {
-                        checkYeuThich = true;
-                    }
-
-                }
-                if (checkYeuThich)
-                {
-                    danhsachphat.yeuthich = 1;
-                    listkq.Add(danhsachphat);
-                }
-                else
-                {
-                    danhsachphat.yeuthich = 0;
-                    listkq.Add(danhsachphat);
-                }
-
-            }
-            return listkq;
-        }
+      
         // 03/08 bổ sung kiểm tra id nd và dsptl id
         [HttpPost]
         public async Task<bool> YeuThichDanhSachPhatAsync([FromBody] yeuthichdanhsachphattheloaiModel yeuthichdanhsachphattheloai)
@@ -3429,55 +3646,7 @@ namespace TFourMusic.Controllers
             }
 
         }
-        [HttpPost]
-        public async Task<bool> YeuThichDanhSachPhatNguoiDung([FromBody] yeuthichdanhsachphatnguoidung yeuthichdanhsachphatnguoidung)
-
-        {
-            try
-            {
-                var list = layBangYeuThichDanhSachPhatNguoiDung();
-                if (list.Count > 0)
-                {
-                    var kq = (from yeuthichnew in list
-                              where yeuthichnew.danhsachphat_id.Equals(yeuthichdanhsachphatnguoidung.danhsachphat_id) && yeuthichnew.nguoidung_id.Equals(yeuthichdanhsachphatnguoidung.nguoidung_id)
-                              select yeuthichnew).ToList();
-                    if (kq.Count() > 0)
-                    {
-                        client = new FireSharp.FirebaseClient(config);
-                        FirebaseResponse response = client.Delete("yeuthichdanhsachphatnguoidung/" + kq[0].id);
-                        return false;
-                    }
-                    else
-                    {
-                        yeuthichdanhsachphatnguoidung.thoigian = DateTime.Now;
-                        var firebase = new FirebaseClient(Key);
-
-                        // add new item to list of data and let the client generate new key for you (done offline)
-                        var dino = await firebase
-                          .Child("yeuthichdanhsachphatnguoidung")
-                          .PostAsync(yeuthichdanhsachphatnguoidung)
-                          ;
-
-                        string idkey = dino.Key.ToString();
-                        yeuthichdanhsachphatnguoidung.id = idkey;
-                        await firebase
-                           .Child("yeuthichdanhsachphatnguoidung")
-                           .Child(idkey)
-                           .PutAsync(yeuthichdanhsachphatnguoidung);
-                        return true;
-                    }
-
-                }
-                else
-                    return false;
-
-            }
-            catch
-            {
-                return false;
-            }
-
-        }
+      
         [HttpPost]
         public object taiTheLoaiKetHopDanhSachPhatTheLoaiMoi(string uid = "")
         {
@@ -3742,61 +3911,7 @@ namespace TFourMusic.Controllers
 
 
 
-        // 03/08 bổ sung kt id nd và top20 id 
-        [HttpPost]
-        public async Task<bool> YeuThichTop20Async([FromBody] yeuthichtop20Model yeuthichtop20)
-
-        {
-            try
-            {
-                if (yeuthichtop20.nguoidung_id == null || yeuthichtop20.nguoidung_id == "" &&
-                   yeuthichtop20.top20_id == null || yeuthichtop20.top20_id == "")
-                {
-                    return false;
-                }
-                var list = LayBangYeuThichTop20();
-                if (list.Count > 0)
-                {
-                    var kq = (from yeuthichnew in list
-                              where yeuthichnew.top20_id.Equals(yeuthichtop20.top20_id) && yeuthichnew.nguoidung_id.Equals(yeuthichtop20.nguoidung_id)
-                              select yeuthichnew).ToList();
-                    if (kq.Count() > 0)
-                    {
-                        client = new FireSharp.FirebaseClient(config);
-                        FirebaseResponse response = client.Delete("yeuthichtop20/" + kq[0].id);
-                        return false;
-                    }
-                    else
-                    {
-                        yeuthichtop20.thoigian = DateTime.Now;
-                        var firebase = new FirebaseClient(Key);
-
-                        // add new item to list of data and let the client generate new key for you (done offline)
-                        var dino = await firebase
-                          .Child("yeuthichtop20")
-                          .PostAsync(yeuthichtop20)
-                          ;
-
-                        string idkey = dino.Key.ToString();
-                        yeuthichtop20.id = idkey;
-                        await firebase
-                           .Child("yeuthichtop20")
-                           .Child(idkey)
-                           .PutAsync(yeuthichtop20);
-                        return true;
-                    }
-
-                }
-                else
-                    return false;
-
-            }
-            catch
-            {
-                return false;
-            }
-
-        }
+       
         public class top20customModel : top20Model
         {
 

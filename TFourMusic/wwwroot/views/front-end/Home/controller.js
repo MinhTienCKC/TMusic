@@ -296,7 +296,7 @@ app.factory('dataservice', function ($http) {
             $http.post('/Home/LayBangGoiVip').then(callback);
         },
         XoaDanhSachPhatNguoiDung: function (data, callback) {
-            $http.post('/Home/XoaDanhSachPhatNguoiDung?iddsp=' + data).then(callback);
+            $http.post('/Home/XoaDanhSachPhatNguoiDung' , data).then(callback);
         },
         // Lấy bài hát theo id 
         taiBaiHatTheoId: function (data, callback) {
@@ -457,6 +457,7 @@ app.controller('Ctrl_ESEIM', function ($scope, dataservice, $uibModal, $rootScop
     let audio = document.createElement("audio");
     var idBaiHatDangNghe;
     var timeOutCongLuotNghe;
+
     $rootScope.BaiHatDangPhat;
     $rootScope.kiemTraBaiHatDangPhat = '';//  23.7.2021 biến này để lưu id bài hát khi phát nhạc để check vị trí bài hát đang phát
     $scope.closeloginAccount = function () {
@@ -534,9 +535,9 @@ app.controller('Ctrl_ESEIM', function ($scope, dataservice, $uibModal, $rootScop
                                     dataservice.getPlaylist_CaNhan($rootScope.checklogin.uid, function (rs) {
                                         rs = rs.data;
 
-                                        $scope.playlist_canhan = rs;
-                                        for (var i = 0; i < $scope.playlist_canhan.length; i++) {
-                                            playlist += '<li ng-click="themBaiHatVaoPlayList(' + "'" + $scope.playlist_canhan[i].id + "'" + ')"><button class="zm-btn button" tabindex="0"><i class="icon ic-list-music"></i><span>' + $scope.playlist_canhan[i].tendanhsachphat + '</span></button></li>';
+                                       $rootScope.playlist_canhan = rs;
+                                        for (var i = 0; i <$rootScope.playlist_canhan.length; i++) {
+                                            playlist += '<li ng-click="themBaiHatVaoPlayList(' + "'" +$rootScope.playlist_canhan[i].id + "'" + ')"><button class="zm-btn button" tabindex="0"><i class="icon ic-list-music"></i><span>' +$rootScope.playlist_canhan[i].tendanhsachphat + '</span></button></li>';
 
                                         }
 
@@ -676,7 +677,7 @@ app.controller('Ctrl_ESEIM', function ($scope, dataservice, $uibModal, $rootScop
 
     $scope.signOut = function () {
         $("#loading_main").css("display", "block");
-      
+
         firebase.auth().signOut().then(function () {
             $rootScope.checklogin.dadangnhap = false;
             $rootScope.checklogin.hovaten = '';
@@ -747,6 +748,8 @@ app.controller('Ctrl_ESEIM', function ($scope, dataservice, $uibModal, $rootScop
     }
     $scope.initData = function () {
         $scope.repeate = false;
+        //$scope.huyhengioshow = 0;
+        //$scope.xacthucemail = true;
         var promiselogin = new Promise(function (resolve, reject) {
             firebase.auth().onAuthStateChanged(function (userlogin) {
                 if (userlogin) {
@@ -1128,9 +1131,9 @@ app.controller('Ctrl_ESEIM', function ($scope, dataservice, $uibModal, $rootScop
     }
     $scope.dangky = function () {
         $("#loading_main").css("display", "block");
-     
-         
-      
+
+
+
         if ($scope.model.gioitinh == 1) {
             $scope.model.gioitinh = "Nam"
         }
@@ -1141,20 +1144,20 @@ app.controller('Ctrl_ESEIM', function ($scope, dataservice, $uibModal, $rootScop
             $scope.kq = rs;
             if (rs) {
                 $("#loading_main").css("display", "none");
-         
+
                 $scope.taoThanhCong = true;
                 $rootScope.closelogin = false;
                 var downloadbaihat = document.getElementById("btntext");
                 downloadbaihat.click();
-            } 
+            }
             else {
                 $scope.taoThatBai = true;
                 $("#loading_main").css("display", "none");
             }
-            
+
         });
     }
-    
+
     $scope.xacthucemail = false;
     $scope.dangNhapWeb = function () {
         $("#loading_main").css("display", "block");
@@ -1232,77 +1235,76 @@ app.controller('Ctrl_ESEIM', function ($scope, dataservice, $uibModal, $rootScop
 
     }
     $scope.dangNhapEmailvaPass = function (email, pass) {
-        if (email != null && email != "" && email != undefined && pass != null && pass != "" && pass != undefined)
-        {
-        $("#loading_main").css("display", "block");
-        $timeout(function () {
-            $rootScope.closelogin = true;
-        }, 1400);
-        $scope.dangNhapLoi = "";
-        firebase.auth().signInWithEmailAndPassword(email, pass)
-            .then(function (result) {
+        if (email != null && email != "" && email != undefined && pass != null && pass != "" && pass != undefined) {
+            $("#loading_main").css("display", "block");
+            $timeout(function () {
+                $rootScope.closelogin = true;
+            }, 1400);
+            $scope.dangNhapLoi = "";
+            firebase.auth().signInWithEmailAndPassword(email, pass)
+                .then(function (result) {
 
-                var user = result.user;// This appears in the console
-                if (user.emailVerified) {
-                    $timeout(function () {
-                        $rootScope.closelogin = false;
-                    }, 1450);
-                    $scope.modellogin = {
-                        id: '',
-                        daxacthuc: '1',
-                        matkhau: '',
-                        email: '',
-                        hoten: '',
-                        quocgia: 'null',
-                        thanhpho: 'null',
-                        website: 'null',
-                        mota: 'null',
-                        ngaysinh: '',
-                        facebook: 'null',
-                        hinhdaidien: '',
-                        cover: 'null',
-                        gioitinh: '',
-                        online: 0,
-                        vip: 0,
-                        hansudung: '',
-                        uid: ''
-                    }
-                    var user = result.user;
-                    $scope.modellogin.email = user.email;
-                    $scope.modellogin.hoten = user.displayName;
-                    $scope.modellogin.uid = user.uid;
-                    if (user.photoURL != null) {
-                        $scope.modellogin.hinhdaidien = user.photoURL;
-                    }
-
-                    dataservice.taoNguoiDungXacThuc($scope.modellogin, function (rs) {
-                        rs = rs.data;
-                        if (rs.Error) { }
-                        else {
+                    var user = result.user;// This appears in the console
+                    if (user.emailVerified) {
+                        $timeout(function () {
+                            $rootScope.closelogin = false;
+                        }, 1450);
+                        $scope.modellogin = {
+                            id: '',
+                            daxacthuc: '1',
+                            matkhau: '',
+                            email: '',
+                            hoten: '',
+                            quocgia: 'null',
+                            thanhpho: 'null',
+                            website: 'null',
+                            mota: 'null',
+                            ngaysinh: '',
+                            facebook: 'null',
+                            hinhdaidien: '',
+                            cover: 'null',
+                            gioitinh: '',
+                            online: 0,
+                            vip: 0,
+                            hansudung: '',
+                            uid: ''
                         }
-                    });
-                    $rootScope.closelogin = false;
-                    delete $scope.modellogin;
-                    $("#loading_main").css("display", "none");
-                    window.location.assign("/");
-                }
-                else {
-                    $("#loading_main").css("display", "none");
-                    //$scope.signOut();
-                    $scope.xacthucemail = true;
+                        var user = result.user;
+                        $scope.modellogin.email = user.email;
+                        $scope.modellogin.hoten = user.displayName;
+                        $scope.modellogin.uid = user.uid;
+                        if (user.photoURL != null) {
+                            $scope.modellogin.hinhdaidien = user.photoURL;
+                        }
 
-                }
-            })
-            .catch(function (error) {
+                        dataservice.taoNguoiDungXacThuc($scope.modellogin, function (rs) {
+                            rs = rs.data;
+                            if (rs.Error) { }
+                            else {
+                            }
+                        });
+                        $rootScope.closelogin = false;
+                        delete $scope.modellogin;
+                        $("#loading_main").css("display", "none");
+                        window.location.assign("/");
+                    }
+                    else {
+                        $("#loading_main").css("display", "none");
+                        //$scope.signOut();
+                        $scope.xacthucemail = true;
 
-                if (error.code == "auth/user-not-found") {
-                    $scope.dangNhapLoi = "Email bạn nhập không kết nối với tài khoản nào"
-                }
-                if (error.code == "auth/wrong-password") {
-                    $scope.dangNhapLoi = "Mật khẩu không hợp lệ."
-                }
-                $("#loading_main").css("display", "none");
-            });
+                    }
+                })
+                .catch(function (error) {
+
+                    if (error.code == "auth/user-not-found") {
+                        $scope.dangNhapLoi = "Email bạn nhập không kết nối với tài khoản nào"
+                    }
+                    if (error.code == "auth/wrong-password") {
+                        $scope.dangNhapLoi = "Mật khẩu không hợp lệ."
+                    }
+                    $("#loading_main").css("display", "none");
+                });
 
         }
         else {
@@ -1383,17 +1385,17 @@ app.controller('Ctrl_ESEIM', function ($scope, dataservice, $uibModal, $rootScop
 
 
             }
-            
-        } 
+
+        }
 
     }
     $scope.ResendEmailXacThuc = function () {
         $scope.time = 60;
-      
+
         if (!$scope.kiemtraXacThucEmail) {
             firebase.auth().currentUser.sendEmailVerification()
                 .then(() => {
-                   
+
                     var timeXacThuc = $interval(function () {
                         if ($scope.time == 0) {
                             $interval.cancel(timeXacThuc);
@@ -1580,9 +1582,9 @@ app.controller('Ctrl_ESEIM', function ($scope, dataservice, $uibModal, $rootScop
 
     $scope.clickTaoPlaylist = function () {
         $("#loading_main").css("display", "block");
-      
-            
-     
+
+
+
         if ($rootScope.checklogin.dadangnhap) {
             $scope.danhSachPhatNguoiDung = {
                 id: '',
@@ -1603,7 +1605,7 @@ app.controller('Ctrl_ESEIM', function ($scope, dataservice, $uibModal, $rootScop
                 dataservice.getPlaylist_CaNhan($rootScope.checklogin.uid, function (rs) {
                     rs = rs.data;
                     if (rs.Error) { } else {
-                        $scope.playlist_canhan = rs;
+                       $rootScope.playlist_canhan = rs;
                     }
                 });
             })
@@ -2201,7 +2203,7 @@ app.controller('Ctrl_ESEIM', function ($scope, dataservice, $uibModal, $rootScop
 
 });
 
-  //17/08 ĐÃ SỮA CSDL MỚI
+//17/08 ĐÃ SỮA CSDL MỚI
 app.controller('index', function ($scope, dataservice, $rootScope, $location) {
     $scope.yeuThichTop20Ui = function (viTri) {
         if ($rootScope.checklogin.dadangnhap == true) {
@@ -2218,7 +2220,8 @@ app.controller('index', function ($scope, dataservice, $rootScope, $location) {
     }
     $scope.initData = function () {
 
-     
+        //$scope.huyhengioshow = 1;
+        //$scope.xacthucemail = true;
         var promise = new Promise(function (resolve, reject) {
             firebase.auth().onAuthStateChanged(function (userlogin) {
                 if (userlogin) {
@@ -2520,7 +2523,7 @@ app.controller('canhan', function ($scope, dataservice, $rootScope, $location, $
             dataservice.getPlaylist_CaNhan($rootScope.checklogin.uid, function (rs) {
                 rs = rs.data;
                 if (rs.Error) { } else {
-                    $scope.playlist_canhan = rs;
+                   $rootScope.playlist_canhan = rs;
                 }
             });
         }
@@ -2683,15 +2686,13 @@ app.controller('canhan', function ($scope, dataservice, $rootScope, $location, $
     }
     $scope.guiEmailXacMinh = function () {
         $scope.time = 60;
-      
-        if (!$scope.kiemtraXacThuc)
-        {
+
+        if (!$scope.kiemtraXacThuc) {
             firebase.auth().currentUser.sendEmailVerification()
                 .then(() => {
-                   
+
                     var timeXacThuc = $interval(function () {
-                        if ($scope.time == 0)
-                        {
+                        if ($scope.time == 0) {
                             $interval.cancel(timeXacThuc);
                             $scope.kiemtraXacThuc = false;
                             $scope.titleXacThucEmail = "Gửi lại mã xác thực"
@@ -2708,7 +2709,7 @@ app.controller('canhan', function ($scope, dataservice, $rootScope, $location, $
         else {
 
         }
-       
+
     }
     $scope.toggleYeuThichBHDaLuu_CaNhan = function (index) {
 
@@ -2896,7 +2897,7 @@ app.controller('canhan', function ($scope, dataservice, $rootScope, $location, $
             dataservice.getPlaylist_CaNhan($rootScope.checklogin.uid, function (rs) {
                 rs = rs.data;
                 if (rs.Error) { } else {
-                    $scope.playlist_canhan = rs;
+                   $rootScope.playlist_canhan = rs;
                 }
             });
             dataservice.getListYeuThichDSP_canhan($rootScope.checklogin.uid, function (rs) {
@@ -3018,13 +3019,37 @@ app.controller('canhan', function ($scope, dataservice, $rootScope, $location, $
 
         })
     }
-    $scope.xoaDanhSachPhat = function (id)
-    {
+    $scope.showXoaDanhSachPhat = function (id) {
         if (id != null && id != "" && id != undefined) {
-            dataservice.XoaDanhSachPhatNguoiDung(id, function (rs) {
-                rs = rs.data;
-
-            });
+            $scope.idxoaDanhSachPhat = id;
+            $scope.xoaDanhSachPhatNguoiDung = true;
+        }
+    }
+    $scope.xoaDanhSachPhat = function (id) {
+        if ($rootScope.checklogin.dadangnhap) {
+            if (id != null && id != "" && id != undefined) {
+                $scope.Text = {
+                    key: id,
+                    uid: $rootScope.checklogin.uid
+                }
+                dataservice.XoaDanhSachPhatNguoiDung($scope.Text, function (rs) {
+                    rs = rs.data;
+                    if (rs == true)
+                    {
+                       /* =$rootScope.playlist_canhan.findIndex(p => p.id == "123");*/
+                        var found =$rootScope.playlist_canhan.find(function (item) { return item.id === id });
+                        var idx  =$rootScope.playlist_canhan.indexOf(found);
+                        // Is currently selected
+                        if (idx > -1) {
+                           $rootScope.playlist_canhan.splice(idx, 1);
+                        }
+                       
+                    }
+                });
+            }
+        }
+        else {
+            $rootScope.closelogin = true;
         }
 
     }
@@ -3381,7 +3406,7 @@ app.directive("animate", function () {
             var cart = $('.shopping-cart');
             var imgtodrag = $(this).parent('.item').find("img").eq(0).removeAttr("hidden");
             console.log(imgtodrag);
-          
+
             if (imgtodrag) {
 
                 var imgclone = imgtodrag.clone()
@@ -3397,7 +3422,7 @@ app.directive("animate", function () {
                         'width': '80px',
                         'z-index': '100',
                         'border-radius': '999px',
-                        'display' : 'block'
+                        'display': 'block'
                     })
                     .appendTo($('body'))
                     .animate({

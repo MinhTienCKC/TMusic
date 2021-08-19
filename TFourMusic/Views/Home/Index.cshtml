@@ -5,7 +5,7 @@
 <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.6.9/angular.min.js"></script>
 <div id="container" style="width:100vh; height:98vh;">
 
-    <div id="contentMain" class="content " ng-app="App_ESEIM" ng-controller="Ctrl_ESEIM" >
+    <div id="contentMain" class="content " ng-app="App_ESEIM" ng-controller="Ctrl_ESEIM"  ng-init="huyhengioshow = 0;xacthucemail = 0">
         @*21/07   làm loading tải xuống*@
         @*<div class="loadingdownload" id="loaddingdownload" style="display:none;"></div>*@
         <a id="btntaixuong" href="" download style="display:none;">download thẻ a</a>
@@ -347,8 +347,8 @@
                 </div>
             </div>
         </div>
-        <label ng-show="huyhengioshow" ng-click="huyhengioshow = 0" class="tao_playlist_layout_label_hengio"></label>
-        <div ng-show="huyhengioshow" class="tao_playlist_layout_hengio">
+        <label  ng-if="huyhengioshow == 1" ng-click="huyhengioshow = 0" class="tao_playlist_layout_label_hengio"></label>
+        <div ng-if="huyhengioshow == 1" class="tao_playlist_layout_hengio">
 
             <div class="modal_laylist_layout">
                 <div class="modal_laylist_layout_item">
@@ -375,7 +375,7 @@
             </div>
 
         </div>
-        <div class="wapper">
+        <div class="wapper" >
 
             <div ng-show="soGioConLai != '00:00:00' && soGioConLai !=undefined" class="alarm-countdown">
                 <span>Nhạc sẽ dừng sau:</span>
@@ -781,10 +781,10 @@
             </div>
 
         </div>
-        <label class="overplaycanhan" ng-show="xacthucemail">
+        <label class="overplaycanhan" ng-if="xacthucemail == 1">
             overlay
         </label>
-        <div ng-show="xacthucemail" class="tao_playlist_layout_xacthuc" ng-init="titleGuiLaiXacThucEmail= 'Gửi Email Xác Thực';kiemtraXacThucEmail= false;">
+        <div ng-if="xacthucemail == 1" class="tao_playlist_layout_xacthuc" ng-init="titleGuiLaiXacThucEmail= 'Gửi Email Xác Thực';kiemtraXacThucEmail= false;">
 
             <div class="modal_laylist_layout">
                 <div class="modal_laylist_layout_item">
@@ -817,7 +817,7 @@
             </div>
 
         </div>
-
+       
     </div>
 
 </div>

@@ -566,7 +566,7 @@
         justify-content: space-evenly;
         display: flex;
         align-items: center;
-        z-index: 10;
+        z-index: 2;
         position: absolute;
     }
 

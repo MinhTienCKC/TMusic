@@ -97,6 +97,30 @@
     </div>
 
 </div>
+<label class="overplaycanhan" ng-show="xoaDanhSachPhatNguoiDung">
+    overlay
+</label>
+<div ng-show="xoaDanhSachPhatNguoiDung" class="tao_playlist_layout_doimatkhau">
+    <div class="modal_laylist_layout">
+        <div class="modal_laylist_layout_item" style="padding:15px;">
+            <div class="modal_content">
+
+                <h3 style=" font-size: 18px; margin-bottom: 15px;">Thông Báo</h3>
+                <div>
+                    <div class="thongtin_doimatkhau">
+                        <h3 class="saimatkhau">Bạn có chắc chắn muốn xóa Danh Sách Phát không?</h3>
+                    </div>                   
+                    </div>             
+                </div>
+                <div class="option_playlist">
+                </div>
+                <div style="display: flex; padding-top: 20px;">
+                    <button ng-click="xoaDanhSachPhatNguoiDung = false" style="display: flex; justify-content: center; align-items: center; font-weight: 400; background-color: #ffffff1a; border: 1px solid #ffffff1a; color: rgb(255 255 255); margin: 0 auto;" class="button_create_playlist">Hủy</button>
+                    <button ng-click="xoaDanhSachPhat(idxoaDanhSachPhat); xoaDanhSachPhatNguoiDung= 0;" class="button_create_playlist"> Chắc Chắn</button>
+                </div>
+            </div>
+    </div>
+</div>
 <label class="overplaycanhan" ng-show="doimatkhau">
     overlay
 </label>
@@ -174,7 +198,7 @@
                 </div>
                 <div style="display: flex; padding-top: 20px;">
                     <button ng-click="doiemail = false" style="display: flex; justify-content: center; align-items: center; font-weight: 400; background-color: #ffffff1a; border: 1px solid #ffffff1a; color: rgb(255 255 255); margin: 0 auto;" class="button_create_playlist">Hủy</button>
-                  
+
                     <button ng-click="doiEmailTaiKhoan(matkhauemailcu,emailmoi)" ng-disabled="matkhauemailcu.length < 6 || matkhauemailcu.length < 6 || emailmoi.length < 6 " ng-class="{'disable_button': matkhauemailcu.length < 6 || matkhauemailcu.length < 6  ||matkhauemailcu.length < 6  }" class="button_create_playlist"> Xác nhận</button>
                 </div>
             </div>
@@ -319,7 +343,7 @@
                             <img class="hinh_da_luu" src="{{x.linkhinhanh
                         }}" />
 
-</div>
+                        </div>
 
                         <div class="info_da_luu">
                             <span class="ten_bai_hat_da_luu">{{x.tenbaihat}}</span>
@@ -381,7 +405,7 @@
                     <a href="/#/playlist/{{x.id}}" class="item_tao_playlist_curent">
                         <div class="img_playlist" ng-style="{'background-image': 'url(' + x.linkhinhanh + ')'}"></div>
                         <div class="hover_playlist">
-                            <label style="cursor:pointer;" class="hover_remove_playlist" ng-click="$event.preventDefault();xoaDanhSachPhat(x.id)">
+                            <label style="cursor:pointer;" class="hover_remove_playlist" ng-click="$event.preventDefault(); showXoaDanhSachPhat(x.id)">
                                 <i style="font-size:23px;" class="fas fa-trash"></i>
                             </label>
                             <i class="icon_play" ng-click="$event.preventDefault(); playDanhSachPhatNguoiDung(x.id); ">
@@ -454,14 +478,14 @@
                     </div>
                 </div>
             </div>
-            <div ng-if="listDanhSachPhatYeuThich.length ==0" class="container page-search">
+            <!--<div ng-if="listDanhSachPhatYeuThich.length ==0" class="container page-search">
                 <div class="container no-content mar-t-30">
                     <div class="no-content-box">
                         <i class="icon main-icon ic-svg-dics-music-icon"></i>
                         <span class="no-content-text">Không Danh Sách Phát Yêu Thích</span>
                     </div>
                 </div>
-            </div>
+            </div>-->
             <div ng-if="listDanhSachPhatYeuThich.length > 0" class="item_ds_chitiet_item" ng-repeat="x in listDanhSachPhatYeuThich" context-menu="contextMenuDSPTheLoai" ng-right-click="moChiTietDSP_TheLoai(x)">
                 <div class="tao_playlist_item">
                     <a href="/#/danhsachphat/{{x.id}}" class="item_tao_playlist_curent">
