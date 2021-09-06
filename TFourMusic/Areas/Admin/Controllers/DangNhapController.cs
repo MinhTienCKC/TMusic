@@ -6,9 +6,12 @@ using System;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
+using System.Security.Claims;
 using System.Threading.Tasks;
 using TFourMusic.Models;
-
+using Microsoft.AspNetCore.Authentication.Cookies;
+using Microsoft.AspNetCore.Authentication;
+using System.Net;
 namespace TFourMusic.Controllers
 {
     [Area("Admin")]
@@ -17,13 +20,16 @@ namespace TFourMusic.Controllers
     {
         private readonly ILogger<DangNhapController> _logger;
         public static UserModel okok = new UserModel();
+        public string url = "";
         public DangNhapController(ILogger<DangNhapController> logger)
         {
             _logger = logger;
         }
-
-        public IActionResult Index()
+        
+        public IActionResult Index(string returnUrl)
         {
+            ViewData["ReturnUrl"] = returnUrl;
+            url = returnUrl;
             return View();
         }
 
@@ -37,12 +43,38 @@ namespace TFourMusic.Controllers
         {
             return View(new ErrorViewModel { RequestId = Activity.Current?.Id ?? HttpContext.TraceIdentifier });
         }
+
         [Authorize]
-        public IActionResult Login()
+        public async Task<IActionResult> Logout()
         {
 
-          
-            return Ok();
+            await HttpContext.SignOutAsync();
+            return Redirect("/admin");
+        }
+       
+        public async Task<IActionResult> kiemTra([FromBody] kiemtraModel item)
+        {
+            bool ok = false;
+            if ( item.email =="tai@gmail.com" && item.password == "123123")
+            {
+                var claims = new List<Claim>();
+                claims.Add(new Claim("username",item.email));
+                claims.Add(new Claim(ClaimTypes.NameIdentifier, item.email));
+                claims.Add(new Claim(ClaimTypes.Name, item.email));
+                var claimsIdentity = new ClaimsIdentity(claims, CookieAuthenticationDefaults.AuthenticationScheme);
+                var claimsPrincipal = new ClaimsPrincipal(claimsIdentity);
+                await HttpContext.SignInAsync(claimsPrincipal);
+                ok = true;
+                if (item.returnUrl == "")
+                {
+                    item.returnUrl = "/admin/tongquat";
+                    return Json(item);
+                }
+               return Json(item);
+
+            }
+
+            return Json(ok);
         }
         [HttpPost]
         public IActionResult SatThuc([FromBody] UserModel data)
@@ -50,6 +82,14 @@ namespace TFourMusic.Controllers
             okok = data;
             
             return Ok();
+        }
+        
+        public class kiemtraModel
+        {
+           
+            public string email { set; get; }
+            public string password { set; get; }
+            public string returnUrl { set; get; }
         }
         public class UserModel
         {

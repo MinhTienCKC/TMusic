@@ -340,7 +340,7 @@
 }
 
 .dots_account_baihat {
-    font-size: 30px;
+    font-size: 25px;
     padding: 5px;
     border-radius: 50%;
     flex: 1;
@@ -593,11 +593,13 @@
 .hover_remove_playlist_dots {
     padding: 8px;
     border-radius: 50%;
+    cursor:pointer;
 }
 
 .hover_remove_playlist {
     padding: 10px;
     border-radius: 50%;
+    cursor:pointer;
 }
 
 @keyframes hover {

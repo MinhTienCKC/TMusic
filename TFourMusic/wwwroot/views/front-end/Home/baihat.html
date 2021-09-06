@@ -1,5 +1,5 @@
 ﻿
-<div  class="zm-sidebar-scrollbar-big" style="padding:0px 70px 0px 70px; width: 105.8%; top:20px;">
+<div ng-if="taiBaiHatTheoId[0].chedo == 1 || taiBaiHatTheoId[0].nguoidung_id == checklogin.uid"   class="zm-sidebar-scrollbar-big" style="padding:0px 70px 0px 70px; width: 105.8%; top:20px;">
     <div class="zm-sidebar-scrollbar" style=" overflow: overlay; height: 1000px; color:hsla(0,0%,100%,0.5); ">
         <nav class="zm-navbar zm-navbar-main mar-t-5 mar-b-0">
             <div style=" display: flex;">
@@ -50,8 +50,8 @@
                                 <div class="level-item" style=" margin-right: -220px;">
                                     <button class="button-item1" style=" width: 30px; height: 30px; background-color: hsla(0,0%,100%,0.1);">
                                        <i ng-show="!checklogin.dadangnhap" class="ibutton far fa-heart iconmusic" style="font-size: 14px;"></i>
-                                        <i ng-show="taiBaiHatTheoId[0].yeuthich==0" class="ibutton far fa-heart iconmusic" style="font-size: 14px;"></i>
-                                        <i ng-show="taiBaiHatTheoId[0].yeuthich==1" class="fas fa-heart " style="color:#ed2b91;"></i>
+                                        <i ng-show="taiBaiHatTheoId[0].yeuthich==0  " class="ibutton far fa-heart iconmusic" style="font-size: 14px;"></i>
+                                        <i ng-show="taiBaiHatTheoId[0].yeuthich==1  " class="fas fa-heart " style="color:#ed2b91;"></i>
                                     </button>
 
                                 </div>
@@ -144,8 +144,8 @@
                                                     <div class="level-item">
                                                         <button class="button-item1" ng-click="yeuThichChiTietBaiHatUi(); yeuThichBaiHat(taiBaiHatTheoId[0].id)">
                                                             <i ng-show="!checklogin.dadangnhap" class="ibutton far fa-heart iconmusic" style="font-size: 14px;"></i>
-                                                            <i ng-show="taiBaiHatTheoId[0].yeuthich==0" class="ibutton far fa-heart iconmusic" style="font-size: 14px;"></i>
-                                                            <i ng-show="taiBaiHatTheoId[0].yeuthich==1" class="fas fa-heart " style="color:#ed2b91;"></i>
+                                                            <i ng-show="taiBaiHatTheoId[0].yeuthich==0  " class="ibutton far fa-heart iconmusic" style="font-size: 14px;"></i>
+                                                            <i ng-show="taiBaiHatTheoId[0].yeuthich==1  " class="fas fa-heart " style="color:#ed2b91;"></i>
 
 
                                                         </button>
@@ -218,8 +218,8 @@
                                                         <div class="level-item">
                                                             <button class="button-item1" ng-click="yeuThichBaiHatUi($index); yeuThichBaiHat(data.id)">
                                                                 <i ng-show="!checklogin.dadangnhap" class="ibutton far fa-heart iconmusic" style="font-size: 14px;"></i>
-                                                                <i ng-show="data.yeuthich==0" class="ibutton far fa-heart iconmusic" style="font-size: 14px;"></i>
-                                                                <i ng-show="data.yeuthich==1" class="fas fa-heart " style="color:#ed2b91;"></i>
+                                                                <i ng-show="data.yeuthich==0  " class="ibutton far fa-heart iconmusic" style="font-size: 14px;"></i>
+                                                                <i ng-show="data.yeuthich==1  " class="fas fa-heart " style="color:#ed2b91;"></i>
 
 
                                                             </button>
@@ -277,8 +277,8 @@
                                                                         <div class="play1-play3 nut_dsp_tl" style="font-size: 2rem; height: 30px; width: 30px; " ng-click="$event.preventDefault();  yeuThichDanhSachPhatUi($parent.$index,$index);yeuThichDanhSachPhat(dsptl.id)">
                                                                             <!--<i class="far fa-heart iconmusic"></i>-->
                                                                             <i ng-show="!checklogin.dadangnhap" class="far fa-heart iconmusic" style="font-size: 14px;"></i>
-                                                                            <i ng-show="dsptl.yeuthich==0" class="far fa-heart iconmusic" style="font-size: 14px;"></i>
-                                                                            <i ng-show="dsptl.yeuthich==1" class="fas fa-heart " style="color:#ed2b91; font-size: 14px;"></i>
+                                                                            <i ng-show="dsptl.yeuthich==0  " class="far fa-heart iconmusic" style="font-size: 14px;"></i>
+                                                                            <i ng-show="dsptl.yeuthich==1  " class="fas fa-heart " style="color:#ed2b91; font-size: 14px;"></i>
                                                                         </div>
                                                                         <div ng-click="$event.preventDefault(); Play(); " class="play1-play2 nut_dsp_tl vong_tron_play" style="" tabindex="0" ng-show="kiemTraDSPTLClick == dsptl.id">
                                                                             <div ng-show="playmusic == 1 " class="play_baihat_dsptl" style="top: 51%;left: 38%; height: 26px; width: 27px;"> </div>
@@ -342,7 +342,12 @@
 
 </div>
 
-
+<div ng-if="taiBaiHatTheoId[0].chedo == 0 && taiBaiHatTheoId[0].nguoidung_id != checklogin.uid">
+    <div style=" text-align: center;">
+        <img style="width: 400px; height: 400px;" src="../../../image/404-bg123123.png" />
+        <h3 style="font-size: 18px; font-weight: 700; margin-top: 40px; color: white;" class="title-404">WoooW, trang bạn tìm không còn tồn tại hoặc đã có lỗi</h3>
+    </div>
+</div>
 <!--modal - loi bài hát-->
 <div class="modal fade" id="myModal" role="dialog">
     <div class="modal-dialog">

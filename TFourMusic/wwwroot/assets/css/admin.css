@@ -438,3 +438,17 @@ input:checked + .slider1:before {
 .vitrigiua {
     padding-top: 1.5em !important;
 }
+.table thead th {
+    vertical-align: bottom;
+    background: #bdd9f6;
+}
+.chuot {
+    cursor: pointer;
+}
+.sortorder:after {
+    content: '\25b2';
+}
+
+.sortorder.hoatdong:after {
+    content: '\25bc';
+}

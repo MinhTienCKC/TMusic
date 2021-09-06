@@ -2,10 +2,15 @@
 <div class="modal-header" style="margin: 0px 0px 0px 0px;">
     <!--<button type="button" class="close" data-dismiss="modal">&times;</button>-->
     <h4 class="modal-title">Thùng Rác</h4>
-    <input type="text" ng-model="timkiembaihat.object.tenbaihat" name="addTenBaiHat" class="input_upload_baihat" id="feLastName12" maxlength="255" value="Brooks" placeholder="Tìm theo tên bài hát">
+    <input ng-show="taiDanhSachBaiHatDaXoa_ThungRac.length > 0" type="text" ng-model="timkiembaihat.tenbaihat" name="addTenBaiHat" class="input_upload_baihat" id="feLastName12" maxlength="255" value="Brooks" placeholder="Tìm theo tên bài hát">
 </div>
 <div class="modal-body">
-    <form>
+    <div ng-show="taiDanhSachBaiHatDaXoa_ThungRac.length == 0" class="container no-content mar-0" >
+    <div class="no-content-box">
+        <i class="fa fa-music" style="font-size: 80px; margin-bottom: 20px;"></i>
+        <span class="no-content-text">Không có bài hát trong thùng rác !!!</span></div>
+    </div>
+    <form ng-show="taiDanhSachBaiHatDaXoa_ThungRac.length > 0">
         <div class="card-body p-0 pb-3 text-center">
             <table class="table mb-0" style=" max-height: 430px; height: 430px !important;">
                 <thead class="">
@@ -15,7 +20,8 @@
                         <th scope="col" class="border-0"> Ca Sĩ</th>
                         <th scope="col" class="border-0"> Hình Ảnh</th>
                         <!--<th scope="col" class="border-0">Chế Độ</th>-->
-                        <th scope="col" class="border-0">Thêm Vào DSP</th>
+                        <th scope="col" class="border-0">Khôi Phục</th>
+                        <th scope="col" class="border-0">Xóa Vĩnh Viễn</th>
 
 
                     </tr>
@@ -25,7 +31,8 @@
                         <td style=" padding: 1.3em 0.3em 0.3em 0.3em;"><span class="chinhsua">{{data.tenbaihat}}</span></td>
                         <td style=" padding: 1.3em 0.3em 0.3em 0.3em;"><span class="chinhsua">{{data.casi}}</span></td>
                         <td><img src="{{data.linkhinhanh}}" class="icon-category hinhanh"></td>
-                        <td style=" padding: 1.3em 0.3em 0.3em 0.3em;"><span class="chinhsua"> <button ng-click="themBaiHatVaoDSPTL(data,$index)" class="package__btnthem"><i class="fa fa-plus"></i></button></span></td>
+                        <td style=" padding: 1.3em 0.3em 0.3em 0.3em;"><span class="chinhsua"> <button ng-click="khoiPhucBaiHat(data,$index)" class="package__btnthem"><i class="fa fa-reply"></i></button></span></td>
+                        <td style=" padding: 1.3em 0.3em 0.3em 0.3em;"><span class="chinhsua"> <button ng-click="xoaBaiHat(data,$index)" class="package__btnthem"><i class="fa fa-plus"></i></button></span></td>
                     </tr>
 
                 </tbody>
@@ -34,16 +41,16 @@
         </div>
 
 
-        
+
     </form>
 </div>
 <div class="modal-footer" style="margin:0px 0px 0px 0px;">
-    <div class="row" style="padding:0px 0px 0px 15px; margin: 0% 35% 0% 0%;">       
+    <div class="row" style="padding:0px 0px 0px 15px; margin: 0% 35% 0% 0%;" ng-show="taiDanhSachBaiHatDaXoa_ThungRac.length > 0">       
         <nav aria-label="Page navigation example">
             <ul class="pagination pagination-primary" style="padding-left: 0px;">
                 <li class="page-item"><button ng-click="Truoc()" class="package__btnthem">Trước</button></li>
                 <li class="page-item" ng-repeat="a in range(numberOfPages())| limitTo:soLuong track by $index  ">                  
-                    <button ng-click="phanTrang( $index + size )" class="package__btnthem canso">{{$index + 1 + size}}</button>
+                    <button ng-class="{'soTrangChon': $index  == currentPage - size }" ng-click="phanTrang( $index + size )" class="package__btnthem canso">{{$index + 1 + size}}</button>
                 </li>
                 <li class="page-item"><button ng-click="Sau()" class="package__btnthem">Sau</button></li>
             </ul>
@@ -54,6 +61,30 @@
     <button type="submit" ng-click="cancel()" class="package__btn123">Thoát</button>
 </div>
 <style>
+    .no-content.container {
+        width: 100%;
+
+    }
+    .mar-0 {
+        margin: 0 !important;
+    }
+
+    .container {
+        flex-grow: 1;
+        margin: 0 auto;
+        position: relative;
+        width: 100%;
+    }
+    .no-content.container .no-content-box {
+        width: 100%;
+        padding: 30px 0;
+        min-height: 220px;
+        background-color: hsla(0,0%,100%,0.1);
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+    }
     .sotrang {
         -webkit-appearance: media-slider;
         cursor: pointer;
@@ -70,6 +101,9 @@
     }
     .package__btnthem:hover {
         background-color: #273749;
+    }
+    .soTrangChon {
+        background-color: #273749 !important;
     }
     .canso {
         width: 35px !important;
@@ -107,27 +141,30 @@
         color: white;
         max-height: 620px;
         height: 620px;*/
-        border-radius: 40px;
+        /*   border-radius: 40px;
         background-size: cover;
         color: #212529;
         max-height: 630px;
         height: 630px;
         border: 1px solid black;
-        background: #ece8e8;
+        background: #ece8e8;*/
+        border-radius: 30px;
+        border: 1px solid #007bff;
         top: 160px;
+        background: #F5F6F8;
     }
 
     .modal-header {
         display: block;
         color: white;
-        border-bottom: 1px solid #212529 !important;
+        border-bottom: 1px solid #007bff !important;
     }
     .modal-body {
         padding:0px 0px 0px 0px !important;
         
     }
     .modal-footer {
-        border-top: 1px solid #212529 !important;
+        border-top: 1px solid #007bff !important;
     }
     .modal-title {
         color: black;
@@ -162,7 +199,6 @@
         border-collapse: inherit;
     }
     .table td {
-      
-        border-top: 1px solid #212529 !important;
+        border-top: 1px solid #007bff !important;
     }
 </style>

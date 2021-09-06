@@ -93,6 +93,18 @@ app.controller('index', function ($rootScope, $scope, dataservice) {
 
     };
     firebase.initializeApp(config);
+    //var storage = firebase.storage();
+    //var fileUrl =
+    //    'https://firebasestorage.googleapis.com/v0/b/tfourmusic-1e3ff.appspot.com/o/image%2Fnguoidung%2Fimages.png?alt=media&token=7ce24768-7525-43d6-b6a1-4523e11f9118';
+
+    //// Create a reference to the file to delete
+    //var fileRef = storage.refFromURL(fileUrl);
+    //fileRef.delete().then(function () {
+
+    //    alert("Thành công");
+    //}).catch(function (error) {
+    //    // Some Error occurred
+    //});
     //   const storageRef = firebase.storage().ref();
     //var desertRef = storageRef.child('music/admin/Hanh-Phuc-Cuoi-Cung-Truong-Viet-Thai.mp3');
 
@@ -103,7 +115,7 @@ app.controller('index', function ($rootScope, $scope, dataservice) {
     //        // Uh-oh, an error occurred!
     //    });
     const user = firebase.auth().currentUser;
-    var storage = firebase.storage();
+ 
     var audio = document.getElementById('okokok');
     $scope.downLoad = function () {
 

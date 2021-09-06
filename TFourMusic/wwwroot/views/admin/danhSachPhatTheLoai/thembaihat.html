@@ -1,13 +1,13 @@
 ﻿
 <div class="modal-header" style="margin: 0px 0px 0px 0px;">
     <!--<button type="button" class="close" data-dismiss="modal">&times;</button>-->
-    <h4 class="modal-title">{{duLieuDSPTL.object.tendanhsachphattheloai}}</h4>
-    <input type="text" ng-model="timkiembaihat.object.tenbaihat" name="addTenBaiHat" class="input_upload_baihat" id="feLastName12" maxlength="255" value="Brooks" placeholder="Tìm theo tên bài hát">
+    <h4 class="modal-title">{{duLieuDSPTL.tendanhsachphattheloai}}</h4>
+    <input type="text" ng-model="timkiembaihat.tenbaihat" name="addTenBaiHat" class="input_upload_baihat" id="feLastName12" maxlength="255" value="Brooks" placeholder="Tìm theo tên bài hát">
 </div>
 <div class="modal-body">
     <form>
         <div class="card-body p-0 pb-3 text-center">
-            <table class="table mb-0" style=" max-height: 430px; height: 430px !important;">
+            <table class="table mb-0" style=" max-height: 433px; height: 433px !important;">
                 <thead class="">
                     <tr>
                         <!--<th scope="col" class="border-0">id</th>-->
@@ -22,9 +22,9 @@
                 </thead>
                 <tbody>
                     <tr ng-repeat="data in taiDanhSachBaiHatDeThem_DSPTL | filter:timkiembaihat | startFrom:currentPage*pageSize | limitTo:pageSize">
-                        <td style=" padding: 1.3em 0.3em 0.3em 0.3em;"><span class="chinhsua">{{data.object.tenbaihat}}</span></td>
-                        <td style=" padding: 1.3em 0.3em 0.3em 0.3em;"><span class="chinhsua">{{data.object.casi}}</span></td>
-                        <td><img src="{{data.object.linkhinhanh}}" class="icon-category hinhanh"></td>
+                        <td style=" padding: 1.3em 0.3em 0.3em 0.3em;"><span class="chinhsua">{{data.tenbaihat}}</span></td>
+                        <td style=" padding: 1.3em 0.3em 0.3em 0.3em;"><span class="chinhsua">{{data.casi}}</span></td>
+                        <td><img src="{{data.linkhinhanh}}" class="icon-category hinhanh"></td>
                         <td style=" padding: 1.3em 0.3em 0.3em 0.3em;"><span class="chinhsua"> <button ng-click="themBaiHatVaoDSPTL(data,$index)" class="package__btnthem"><i class="fa fa-plus"></i></button></span></td>
                     </tr>
 
@@ -45,7 +45,7 @@
                 <li class="page-item"><button ng-click="Truoc()" class="package__btnthem">Trước</button></li>
                 <li class="page-item" ng-repeat="a in range(numberOfPages())| limitTo:soLuong track by $index  ">
                     <!--<a class="package__btnthem" href="" ng-click="phanTrang( $index + size )">{{$index + 1 + size}}</a>-->
-                    <button ng-click="phanTrang( $index + size )" class="package__btnthem canso">{{$index + 1 + size}}</button>
+                    <button ng-class="{'soTrangChon': $index  == currentPage - size }" ng-click="phanTrang( $index + size )" class="package__btnthem canso">{{$index + 1 + size}}</button>
                 </li>
                 <li class="page-item"><button ng-click="Sau()" class="package__btnthem">Sau</button></li>
             </ul>
@@ -72,6 +72,9 @@
     }
     .package__btnthem:hover {
         background-color: #273749;
+    }
+    .soTrangChon{
+        background-color: #273749 !important;
     }
     .canso {
         width: 35px !important;
@@ -118,27 +121,31 @@
         color: white;
         max-height: 620px;
         height: 620px;*/
-        border-radius: 40px;
+        /*border-radius: 40px;
         background-size: cover;
         color: #212529;
         max-height: 630px;
         height: 630px;
         border: 1px solid black;
         background: #ece8e8;
+        top: 160px;*/
+        border-radius: 30px;
+        border: 1px solid #007bff;
         top: 160px;
+        background: #F5F6F8;
     }
 
     .modal-header {
         display: block;
         color: white;
-        border-bottom: 1px solid #212529 !important;
+        border-bottom: 1px solid #007bff !important;
     }
     .modal-body {
         padding:0px 0px 0px 0px !important;
         
     }
     .modal-footer {
-        border-top: 1px solid #212529 !important;
+        border-top: 1px solid #007bff !important;
     }
     .modal-title {
         color: black;
@@ -156,7 +163,7 @@
         height: 40px;
         width: 100%;
         border-radius: 999px;
-        border: 1px solid black;
+        border: 1px solid #007bff;
         background-color: #ffffff1a;
         padding: 0 15px;
         font-size: 14px;
@@ -173,7 +180,6 @@
         border-collapse: inherit;
     }
     .table td {
-      
-        border-top: 1px solid #212529 !important;
+        border-top: 1px solid #007bff !important;
     }
 </style>

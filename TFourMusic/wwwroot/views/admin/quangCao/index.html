@@ -1,59 +1,105 @@
-﻿<div class="main-content-container container-fluid px-4">
+﻿
+<div class="main-content-container container-fluid px-4">
     <!-- Page Header -->
-    <div class="page-header row no-gutters py-4">
+    <div class="page-header row no-gutters py-4" style="padding-bottom: 0.1rem!important;">
         <div class="col-12 col-sm-4 text-center text-sm-left mb-0">
-            <button type="submit" ng-click="add()" class="btn btn-accent">Tạo Quảng Cáo</button>
-
+            <button id="" type="submit" ng-click="taoQuangCao_index()" class="btn btn-accent " style=""><i class="fa fa-plus"></i>  Tạo Quảng Cáo</button>
+            <button type="submit" ng-show="!hienTimKiem" ng-click="showSearch()" class="btn btn-accent " style=" font-size: 0.75rem; width: 95px;"><i class="fa fa-search"></i>  Tìm Kiếm</button>
+        </div>
+    </div>
+    <div class="page-header row no-gutters py-4" style="padding-top: 0rem !important; padding-bottom: 0.1rem!important;" ng-show="hienTimKiem">
+        <div class="col-12 col-sm-4 text-center text-sm-left mb-0">
+            <input type="text" ng-model="timkiem.tenquangcao" class="form-control " id="feLastName23" placeholder="Tìm theo tên" value="Brooks">
         </div>
         <div class="col-12 col-sm-4 text-center text-sm-left mb-0">
-
-
+            <button type="submit" ng-click="showSearch(); timkiem.tenquangcao = '';" class="btn btn-accent" style="padding: 10px 8px;">Ẩn Tìm Kiếm</button>
         </div>
-        <div class="col-12 col-sm-4 text-center text-sm-left mb-0">
 
 
-        </div>
     </div>
     <!-- End Page Header -->
     <!-- Default Light Table -->
     <div class="row">
 
         <div class="col">
-            <div class="card card-small mb-4 dodai">
+            <div class="card card-small mb-4 dodai" style="height: 575px; max-height: 575px;">
                 <div class="card-header border-bottom">
-                    <h6 class="m-0">Quảng Cáo</h6>
-
+                    <h6 class="m-0">
+                        <span class="chuot" ng-click="sapXep('null'); hoatdong=false; currentPage = 0;">Quảng Cáo</span>
+                    </h6>
                 </div>
                 <div class="card-body p-0 pb-3 text-center">
                     <table class="table mb-0 dodaibang">
                         <thead class="bg-light">
                             <tr>
                                 <!--<th scope="col" class="border-0">id</th>-->
-                                <th scope="col" class="border-0">Tên Quảng Cáo</th>
-                                <th scope="col" class="border-0">Ảnh</th>
-                                <th scope="col" class="border-0">Nội Dung</th>
-                                <!--<th scope="col" class="border-0">Thể Loại</th>-->
+                                <th scope="col" class="border-0 ">
+                                    <span class="chuot" ng-click="sapXep('quangcao.tenquangcao')">Tên Quảng Cáo</span>
+                                    <span class="sortorder" ng-show="tenbien === 'quangcao.tenquangcao'" ng-class="{hoatdong: hoatdong}"></span>
+                                </th>
+                                <!--<th scope="col" class="border-0 ">Tên Quảng Cáo</th>-->
+                                <th scope="col" class="border-0 ">
+                                    <span class="chuot" ng-click="sapXep('quangcao.linkhinhanh')">Ảnh</span>
+                                    <span class="sortorder" ng-show="tenbien === 'quangcao.linkhinhanh'" ng-class="{hoatdong: hoatdong}"></span>
+                                </th>
+                                <th scope="col" class="border-0 ">
+                                    <span class="chuot" ng-click="sapXep('quangcao.noidung')">Nội Dung</span>
+                                    <span class="sortorder" ng-show="tenbien === 'quangcao.noidung'" ng-class="{hoatdong: hoatdong}"></span>
+                                </th>
+                                <th scope="col" class="border-0 ">
+                                    <span class="chuot" ng-click="sapXep('baihat.tenbaihat')">Tên Bài Hát</span>
+                                    <span class="sortorder" ng-show="tenbien === 'baihat.tenbaihat'" ng-class="{hoatdong: hoatdong}"></span>
+                                </th>
+                                <th scope="col" class="border-0 ">
+                                    <span class="chuot" ng-click="sapXep('baihat.casi')">Ca Sĩ</span>
+                                    <span class="sortorder" ng-show="tenbien === 'baihat.casi'" ng-class="{hoatdong: hoatdong}"></span>
+                                </th>
+                                <!--<th scope="col" class="border-0">Ảnh</th>
+
+                                <th scope="col" class="border-0 ">Nội Dung</th>
+
+                                <th scope="col" class="border-0">Tên Bài Hát</th>
+
+                                <th scope="col" class="border-0 ">Ca Sĩ</th>-->
+
                                 <th scope="col" class="border-0">Sửa</th>
                                 <th scope="col" class="border-0">Xóa</th>
+
                             </tr>
                         </thead>
                         <tbody>
-                            <tr ng-repeat="data in dataloadquangcao | startFrom:currentPage*pageSize | limitTo:pageSize">
-                                <!--<td>{{data.Object.key}}</td>-->
-                                <td class="vitrigiua">{{data.object.tenquangcao}}</td>
-                                <td><img src="{{data.object.linkhinhanh}}" class="icon-category hinhanh"></td>
-                                <td class="vitrigiua">{{data.object.noidung}}</td>
-                                <!--<td>{{data.tentheloai}}</td>-->
+                            <tr ng-repeat="data in taiQuangCao | orderBy:tenbien:hoatdong | filter:timkiem | startFrom:currentPage*pageSize | limitTo:pageSize ">
 
-                                <td class="vitrigiua"> <button ng-click="edit(data)" style="width: 25px; height: 25px; padding: 0px;-webkit-box-shadow: 0 2px 5px 0 rgba(85,168,253,0.45);" class="btn btn-accent blue"><i class="fa fa-edit"></i></button>       </td>
-                                <td class="vitrigiua"> <button type="submit" ng-click="delete(data.key)" style="width: 25px; height: 25px; padding: 0px;-webkit-box-shadow: 0 2px 5px 0 rgba(230,60,95,0.45)" class="btn btn-accent red"><i class="fa fa-trash"></i></button></td>
+                                <td class="vitrigiua "><span>{{data.quangcao.tenquangcao}}</span></td>
+
+                                <td>
+                                    <img src="{{data.quangcao.linkhinhanh}}" class="icon-category hinhanh">
+                                    <label style="color: #0479f8;" class="anh">
+                                        <i class="fas fa-camera icon_edit"></i>
+                                        <input type="file" class="" style="display: none;" ng-files="suaHinhAnhQuangCao($files,data.quangcao)" accept="image/png, image/jpeg" required multiple>
+                                    </label>
+                                </td>
+                                <td class="vitrigiua" >
+                                    <p ng-show="data.quangcao.noidung != ''" class="motadsptl" title="{{data.quangcao.noidung}}">{{data.quangcao.noidung}}</p>
+                                    <p ng-show="data.quangcao.noidung == ''" class="motadsptl">Trống !!!</p>
+                                </td>
+                                <!--<td class="vitrigiua "><span >{{data.quangcao.noidung}}</span></td>-->
+                                <td class="vitrigiua "><span>{{data.baihat.tenbaihat}}</span></td>
+                                <td class="vitrigiua "><span>{{data.baihat.casi}}</span></td>
+
+                                <td class="vitrigiua"> <button ng-click="edit(data.quangcao)" style="width: 25px; height: 25px; padding: 0px;-webkit-box-shadow: 0 2px 5px 0 rgba(85,168,253,0.45);" class="btn btn-accent blue "><i class="fa fa-edit"></i></button>       </td>
+                                <td class="vitrigiua"> <button type="submit" ng-click="xoaQuangCao(data.quangcao,($index + ((currentPage+1)*pageSize)-pageSize))" style="width: 25px; height: 25px; padding: 0px;-webkit-box-shadow: 0 2px 5px 0 rgba(230,60,95,0.45)" class="btn btn-accent red "><i class="fa fa-trash"></i></button></td>
 
 
                             </tr>
 
+
                         </tbody>
+
                     </table>
-                    {{currentPage+1}}/{{numberOfPages()}}
+
+                    <span class="khungso"> {{currentPage+1}}/{{numberOfPages()}}</span>
+
 
                 </div>
 
@@ -71,68 +117,56 @@
             <ul class="pagination pagination-primary" style="padding-left: 0px;">
                 <li class="page-item" ng-click="Truoc()"><a class="page-link" href="">Trước</a></li>
                 <li class="page-item" ng-repeat="a in range(numberOfPages())| limitTo:soLuong track by $index  ">
-                    <a class="page-link" href="" ng-click="phanTrang( $index + size )">{{$index + 1 + size}}</a>
+                    <a ng-class="{'soTrangChon': $index  == currentPage - size }" class="page-link" href="" ng-click="phanTrang( $index + size )">{{$index + 1 + size}}</a>
                 </li>
                 <li class="page-item" ng-click="Sau()"><a class="page-link" href="">Sau</a></li>
             </ul>
         </nav>
     </div>
-    <!--<div class="row">
-        <div class="col">
-            <div class="card card-small overflow-hidden mb-4">
-                <div class="card-header bg-dark">
-                    <h6 class="m-0 text-white">Inactive Users</h6>
-                </div>
-                <div class="card-body p-0 pb-3 bg-dark text-center">
-                    <table class="table table-dark mb-0">
-                        <thead class="thead-dark">
-                            <tr>
-                                <th scope="col" class="border-bottom-0">#</th>
-                                <th scope="col" class="border-bottom-0">First Name</th>
-                                <th scope="col" class="border-bottom-0">Last Name</th>
-                                <th scope="col" class="border-bottom-0">Country</th>
-                                <th scope="col" class="border-bottom-0">City</th>
-                                <th scope="col" class="border-bottom-0">Phone</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            <tr>
-                                <td>1</td>
-                                <td>Graham</td>
-                                <td>Brent</td>
-                                <td>Benin</td>
-                                <td>Ripabottoni</td>
-                                <td>1-512-760-9094</td>
-                            </tr>
-                            <tr>
-                                <td>2</td>
-                                <td>Clark</td>
-                                <td>Angela</td>
-                                <td>Estonia</td>
-                                <td>Borghetto di Vara</td>
-                                <td>1-660-850-1647</td>
-                            </tr>
-                            <tr>
-                                <td>3</td>
-                                <td>Wylie</td>
-                                <td>Joseph</td>
-                                <td>Korea, North</td>
-                                <td>Guelph</td>
-                                <td>325-4351</td>
-                            </tr>
-                            <tr>
-                                <td>4</td>
-                                <td>Garth</td>
-                                <td>Clementine</td>
-                                <td>Indonesia</td>
-                                <td>Narcao</td>
-                                <td>722-8264</td>
-                            </tr>
-                        </tbody>
-                    </table>
-                </div>
-            </div>
-        </div>
-    </div>-->
+
     <!-- End Default Dark Table -->
 </div>
+<style>
+    .motadsptl {
+        text-overflow: ellipsis;
+        width: 130px;
+        white-space: nowrap;
+        overflow: hidden;
+        text-align: center;
+        padding-left: 30px;
+    }
+    .soTrangChon {
+        background-color: #006fe6 !important;
+        color: white !important;
+    }
+
+    .page-link:hover {
+        background-color: #006fe6 !important;
+        color: white !important;
+    }
+
+    .khungso {
+        border: 1px solid #006fe6;
+        border-radius: 9px;
+        padding: 6px;
+    }
+
+    .anh {
+        position: relative;
+        display: inline-block;
+        /*         margin-top: 20px;*/
+        cursor: pointer;
+    }
+
+        .anh:hover {
+            color: red !important;
+        }
+
+    table {
+        border-collapse: inherit;
+    }
+
+    .table td {
+        border-top: 1px solid #007bff !important;
+    }
+</style>

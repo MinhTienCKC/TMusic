@@ -5,7 +5,9 @@
         <nav class="zm-navbar zm-navbar-main mar-t-5 mar-b-0">
 
             <div class="cover">
-                <div class="blur" style="background: url(&quot;https://photo-zmp3.zadn.vn/cover/9/a/d/c/9adcf62c1562be1b0de00358329c2b7f.jpg&quot;) center top / cover no-repeat;">
+                <!--<div class="blur" style="background: url(&quot;https://photo-zmp3.zadn.vn/cover/9/a/d/c/9adcf62c1562be1b0de00358329c2b7f.jpg&quot;) center top / cover no-repeat;">
+                </div>-->
+                <div class="blur" style="        background: url(&quot;{{taiTheLoaiTheoId_ChiTietTheLoai[0].linkhinhanh}};) center top / cover no-repeat;">
                 </div>
                 <div class="is-center-vertical">
                 </div>
@@ -14,14 +16,14 @@
 
                 <div class="banners columns is-multiline">
                     <div class="mar-0 column mar-b-30 is-fullhd-6">
-                        <a title="Dance Việt Ngày Nay" href="/#/danhsachphat/{{taiDanhSachPhatTheLoai[4].id}}">
+                        <a title="{{taiDanhSachPhatTheLoai[4].tendanhsachphattheloai}}" href="/#/danhsachphat/{{taiDanhSachPhatTheLoai[4].id}}">
                             <figure class="image is-48x48">
                                 <img style="object-fit: cover;" src="{{taiDanhSachPhatTheLoai[4].linkhinhanh}}" alt="">
                             </figure>
                         </a>
                     </div>
                     <div class="mar-0 column mar-b-30 is-fullhd-6">
-                        <a title="EDM Việt Gây Nghiện" href="/#/danhsachphat/{{taiDanhSachPhatTheLoai[4].id}}">
+                        <a title="{{taiDanhSachPhatTheLoai[2].tendanhsachphattheloai}}" href="/#/danhsachphat/{{taiDanhSachPhatTheLoai[2].id}}">
                             <figure class="image is-48x48">
                             <img style="object-fit: cover;" src="{{taiDanhSachPhatTheLoai[2].linkhinhanh}}" alt="">
                             </figure>
@@ -59,8 +61,8 @@
                                                                     <div class="play1-play3 nut_dsp_tl" style="font-size: 2rem; height: 30px; width: 30px; " ng-click="$event.preventDefault();  yeuThichDanhSachPhatUi($index+size);yeuThichDanhSachPhat(taiDanhSachPhatTheLoai[$index+size].id)">
                                                                         <!--<i class="far fa-heart iconmusic"></i>-->
                                                                         <i ng-show="!checklogin.dadangnhap" class="far fa-heart iconmusic" style="font-size: 14px;"></i>
-                                                                        <i ng-show="dsptl.yeuthich==0" class="far fa-heart iconmusic" style="font-size: 14px;"></i>
-                                                                        <i ng-show="dsptl.yeuthich==1" class="fas fa-heart " style="color:#ed2b91; font-size: 14px;"></i>
+                                                                        <i ng-show="dsptl.yeuthich==0  " class="far fa-heart iconmusic" style="font-size: 14px;"></i>
+                                                                        <i ng-show="dsptl.yeuthich==1  " class="fas fa-heart " style="color:#ed2b91; font-size: 14px;"></i>
                                                                     </div>
                                                                     <div ng-click="$event.preventDefault(); Play(); " class="play1-play2 nut_dsp_tl vong_tron_play" style="" tabindex="0" ng-show="kiemTraDSPTLClick == taiDanhSachPhatTheLoai[$index+size].id">
                                                                         <div ng-show="playmusic == 1 " class="play_baihat_dsptl" style="top: 51%;left: 38%; height: 26px; width: 27px;"> </div>
@@ -148,8 +150,8 @@
                                                     <div class="level-item">
                                                         <button class="button-item1" ng-click="yeuThichBaiHatUi($index); yeuThichBaiHat(data.id)">
                                                             <i ng-show="!checklogin.dadangnhap" class="ibutton far fa-heart iconmusic" style="font-size: 14px;"></i>
-                                                            <i ng-show="data.yeuthich==0" class="ibutton far fa-heart iconmusic" style="font-size: 14px;"></i>
-                                                            <i ng-show="data.yeuthich==1" class="fas fa-heart " style="color:#ed2b91;"></i>
+                                                            <i ng-show="data.yeuthich==0  " class="ibutton far fa-heart iconmusic" style="font-size: 14px;"></i>
+                                                            <i ng-show="data.yeuthich==1  " class="fas fa-heart " style="color:#ed2b91;"></i>
 
 
                                                         </button>

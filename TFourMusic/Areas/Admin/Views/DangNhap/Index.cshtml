@@ -2,6 +2,7 @@
 @{
    
     Layout = null;
+    var returnUrl1 = ViewData["ReturnUrl"] as string;
 }
 <!DOCTYPE html>
 <html lang="en">
@@ -39,9 +40,9 @@
 
 <body class="h-100">
 
-    <div id="contentMain" ng-app="T_Music" ng-controller="T_Music">
-
-        <div style="min-height:100px" ng-view> </div>
+    <div id="contentMain" ng-app="T_Music" ng-controller="T_Music" >
+        <div ng-model="model1.returnUrl = '@returnUrl1'"> </div>
+        <div  style="min-height:100px" ng-view> </div>
 
     </div>
 

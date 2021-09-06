@@ -6,7 +6,7 @@ using System.Web;
 
 namespace TFourMusic.Models
 { 
-    public class binhluanModel
+    public class binhluanchaModel
     {
         [Key]
         public string id { get; set; }
@@ -14,6 +14,8 @@ namespace TFourMusic.Models
         public string baihat_id { get; set; }
 
         public string noidung { get; set; }
+        public DateTime thoigian { get; set; }
+
 
     }
 

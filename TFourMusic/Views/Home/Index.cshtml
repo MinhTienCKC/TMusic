@@ -5,7 +5,7 @@
 <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.6.9/angular.min.js"></script>
 <div id="container" style="width:100vh; height:98vh;">
 
-    <div id="contentMain" class="content " ng-app="App_ESEIM" ng-controller="Ctrl_ESEIM"  ng-init="huyhengioshow = 0;xacthucemail = 0">
+    <div id="contentMain" class="content " ng-app="App_ESEIM" ng-controller="Ctrl_ESEIM" ng-init="huyhengioshow = 0;xacthucemail = 0">
         @*21/07   làm loading tải xuống*@
         @*<div class="loadingdownload" id="loaddingdownload" style="display:none;"></div>*@
         <a id="btntaixuong" href="" download style="display:none;">download thẻ a</a>
@@ -303,9 +303,9 @@
 
                     <li ng-repeat="x in ketQuaTimKiem" class="suggest__item"> <i class="fas fa-search searchitem searchsubitem"></i><span class="item_search"> {{x.tenbaihat}}</span></li>
                     @*<li class="suggest__item"> <i class="fas fa-search searchitem searchsubitem"></i><span class="item_search"> Phía Sau Một Cô Gái 2</span></li>
-                    <li ng-click="clickCloseTimKiem()" class="suggest__item"> <i class="fas fa-search searchitem searchsubitem"></i><span class="item_search"> Phía Sau Một Cô Gái</span></li>
-                    <li class="suggest__item"> <i class="fas fa-search searchitem searchsubitem"></i><span class="item_search"> Phía Sau Một Cô Gái 3</span></li>
-                    <li class="suggest__item"> <i class="fas fa-search searchitem searchsubitem"></i> <span class="item_search">Phía Sau Một Cô Gái 4</span></li>*@
+                        <li ng-click="clickCloseTimKiem()" class="suggest__item"> <i class="fas fa-search searchitem searchsubitem"></i><span class="item_search"> Phía Sau Một Cô Gái</span></li>
+                        <li class="suggest__item"> <i class="fas fa-search searchitem searchsubitem"></i><span class="item_search"> Phía Sau Một Cô Gái 3</span></li>
+                        <li class="suggest__item"> <i class="fas fa-search searchitem searchsubitem"></i> <span class="item_search">Phía Sau Một Cô Gái 4</span></li>*@
                     <li class="suggest__item__song"> </li>
                     <li ng-mousedown="mousedowmTimKiemKq()" ng-repeat="x in ketQuaTimKiem" ng-mouseup="mouseupTimKiemKq($index)" class="suggest__item__song__kq hover_item__song">
                         <div ng-style="{'background-image': 'url(' + x.linkhinhanh + ')'}" class="hinh_baihatmoi_search ">
@@ -347,7 +347,7 @@
                 </div>
             </div>
         </div>
-        <label  ng-if="huyhengioshow == 1" ng-click="huyhengioshow = 0" class="tao_playlist_layout_label_hengio"></label>
+        <label ng-if="huyhengioshow == 1" ng-click="huyhengioshow = 0" class="tao_playlist_layout_label_hengio"></label>
         <div ng-if="huyhengioshow == 1" class="tao_playlist_layout_hengio">
 
             <div class="modal_laylist_layout">
@@ -375,7 +375,7 @@
             </div>
 
         </div>
-        <div class="wapper" >
+        <div class="wapper">
 
             <div ng-show="soGioConLai != '00:00:00' && soGioConLai !=undefined" class="alarm-countdown">
                 <span>Nhạc sẽ dừng sau:</span>
@@ -589,7 +589,7 @@
                                     <i ng-show="x.yeuthich==0" ng-click="$event.preventDefault();yeuThichBaiHat(x.id); x.yeuthich =1;" class="far fa-heart icon_nav_right_first"></i>
                                     <i ng-show="x.yeuthich==1" ng-click="$event.preventDefault();yeuThichBaiHat(x.id);x.yeuthich =0" ng-class="{'active_yeuthich': sttmusic == $index}" class="fas fa-heart icon_account_a"></i>
                                     <i ng-show="!checklogin.dadangnhap" ng-click="$event.preventDefault();yeuThichBaiHat(x.id)" class="far fa-heart icon_nav_right_first"></i>
-                                    <i class="fas fa-ellipsis-v icon_nav_right_end" context-menu1="contextMenuBaiHat_BaiHat" ng-click="moChiTietBaiHat(x)" ></i>
+                                    <i class="fas fa-ellipsis-v icon_nav_right_end" context-menu1="contextMenuBaiHat_BaiHat" ng-click="moChiTietBaiHat(x)"></i>
                                 </div>
 
                             </div>
@@ -762,7 +762,7 @@
                             <div>
                                 <h3 style=" font-size: 14px; margin-bottom: 5px; font-weight: 400;">Tạo tài khoản TMusic thành công</h3>
                                 <h3 style=" font-size: 14px; margin-bottom: 5px; font-weight: 400;">Chúng tôi đã gửi email xác thực tài khoản đến email của bạn. Vui lòng xác nhận email để đăng nhập.   </h3>
-                               
+
                             </div>
 
 
@@ -817,7 +817,135 @@
             </div>
 
         </div>
-       
+
+
+
+
+        @*//comment*@
+        <div class="zm-portal-modal" ng-if="showBinhLuan == true">
+            <div class="modal_comment is-active">
+                <div class="modal-background" style="color:#fff;">
+                    <div class="">
+                        <div class="comment-content">
+                            <div class="header_comment">
+                                <h3 class="title">Bình luận</h3>
+                                <button ng-click="showBL()" style=" background-color: inherit; color:#fff;" class="zm-btn-comment zm-tooltip-btn is-hover-circle button" tabindex="0"><span class="material-icons-outlined">close</span></button>
+                            </div>
+                            <div class="action"><h3 style="margin-left:20px" class="subtitle has-text-weight-bold">{{duLieuBinhLuan.length}} Bình luận</h3></div>
+                            <div class="mar-t-10 comment-list">
+                                <div style="position: relative; overflow: hidden; width: 100%; height: 100%;">
+
+
+                                    <div ng-init="opacity=1;chinhsuabinhluan = false; opacitycon = 1; chinhsuabinhluancon=false" id="modal-scroll" style="position: absolute; inset: 0px;font-size:13px; overflow: hidden scroll; margin-right: 0px; margin-bottom: 0px;margin-left: 20px;  margin-right: 5px;">
+                                        <!--commentitem-->
+
+
+
+                                        <div ng-repeat="x in duLieuBinhLuan | orderBy:x.binhluancha.thoigian:true" class="media comment-item">
+                                            <div ng-style="{'opacity': opacity}" class="media-left">
+                                                <a ng-click="showBL()" href="#/nghesi/{{x.nguoidungcha.uid}}">
+                                                    <figure class="image_comment is-rounded is-50x50">
+                                                        <img src="{{x.nguoidungcha.hinhdaidien}}" alt="">
+                                                    </figure>
+                                                </a>
+                                            </div>
+                                            <div class="media-content_comment">
+                                                <div style="position:relative;display:flex" class="username">
+                                                    <a ng-style="{'opacity': opacity}" ng-click="showBL()" href="#/nghesi/{{x.nguoidungcha.uid}}">{{x.nguoidungcha.hoten}} </a>
+                                                    <span ng-style="{'opacity': opacity}" class="post-time">{{x.binhluancha.thoigian | date:'HH:mm dd-MM-yyyy'}}</span>
+                                                    <div class="privatecmt">
+                                                        <span style="padding-bottom:22px;padding-right:22px; opacity:1" class="material-icons-outlined icondot_commnet">more_horiz</span>
+                                                        <div style="z-index:1;top:0;opacity:1" class="user_profile_comment">
+                                                            <ul style="list-style:none" class="setting-user">
+                                                                <li ng-show="opacity == 1" ng-click="opacity = 0.2" class="item_setting"><span style=" margin: 0px 5px" class="material-icons-outlined">comments_disabled</span><span>Ẩn bình luận</span></li>
+                                                                <li ng-show="opacity == 0.2" ng-click="opacity = 1" class="item_setting"><span style=" margin: 0px 5px" class="material-icons-outlined">comment</span><span>Hiện bình luận</span></li>
+                                                                <li ng-if="x.binhluancha.nguoidung_id == checklogin.uid && checklogin.dadangnhap == true" ng-click="XoaBinhLuanBaiHat(idBHBinhLuan,x.binhluancha.id)" class="item_setting"><span style="margin:0px 5px" class="material-icons-outlined">delete</span> <span> Xóa bình luận</span></li>
+
+                                                                <li ng-click="chinhsuabinhluan = !chinhsuabinhluan" ng-show="x.binhluancha.nguoidung_id == checklogin.uid && checklogin.dadangnhap == true" class="item_setting"><span style="margin:0px 5px" class="material-icons-outlined">edit</span> <span>Chỉnh sửa</span></li>
+
+                                                            </ul>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div ng-show="!chinhsuabinhluan" ng-style="{'opacity': opacity}">{{x.binhluancha.noidung}}</div>
+                                                @*<input ng-if="chinhsuabinhluan  && x.binhluancha.nguoidung_id == checklogin.uid && checklogin.dadangnhap == true"  style="height:30px;width:80%" class="input_playlist ng-pristine ng-untouched ng-valid ng-empty" type="text" maxlength="300" />*@
+                                                <div ng-init="chinhSuaBinhLuan = x.binhluancha.noidung" ng-show="chinhsuabinhluan  && x.binhluancha.nguoidung_id == checklogin.uid && checklogin.dadangnhap == true" class="rep_comment" style="position:relative">
+                                                    <i @*ng-click="BinhLuanConBaiHat()"*@ ng-click="ChinhSuaBinhLuanBaiHat(idBHBinhLuan,x.binhluancha.id,chinhSuaBinhLuan)" style="cursor:pointer; position: absolute; right: 25%; color: #fff; top: 25%; font-size: 16px; transform: rotate( 45deg );" class="fas fa-location-arrow"></i>
+                                                    <input ng-model="chinhSuaBinhLuan" ng-keypress="PhimEnterChinhSuaBinhLuanCha($event,idBHBinhLuan,x.binhluancha.id,chinhSuaBinhLuan)" style="height:30px;width:80%" class="input_playlist ng-pristine ng-untouched ng-valid ng-empty" type="text" maxlength="200" placeholder="Nhập bình luận ..." />
+
+                                                </div>
+                                                <div ng-style="{'opacity': opacity}" class="comment-reply-list-wrapper">
+
+                                                    <div ng-if="x.binhluancon.length > 0 &&  $index < xemthembinhluan " class="media comment-item" ng-repeat="paren in x.binhluancon">
+                                                        <div ng-style="{'opacity': opacitycon}" class="media-left">
+                                                            <a ng-click="showBL()" href="#/nghesi/{{paren.nguoidungcon.uid}}">
+                                                                <figure style="width:40px; height:40px; object-fit:cover" class="image_comment is-rounded is-50x50">
+                                                                    <img src="{{paren.nguoidungcon.hinhdaidien}}" alt="">
+                                                                </figure>
+                                                            </a>
+                                                        </div>
+                                                        <div class="media-content" style="height:auto">
+                                                            <div style="position:relative; display:flex" class="username">
+                                                                <a ng-style="{'opacity': opacitycon}" ng-click="showBL()" href="#/nghesi/{{paren.nguoidungcon.uid}}">{{paren.nguoidungcon.hoten}}</a>
+                                                                <span ng-style="{'opacity': opacitycon}" class="post-time">{{paren.binhluancon.thoigian | date:'HH:mm dd-MM-yyyy'}}</span>
+                                                                <div class="privatecmtcon">
+                                                                    <span style="padding-bottom:22px;padding-right:22px; opacity:1" class="material-icons-outlined icondot_commnet">more_horiz</span>
+                                                                    <div style="z-index:1;top:0;opacity:1" class="user_profile_comment">
+                                                                        <ul style="list-style:none" class="setting-user">
+                                                                            <li ng-show="opacitycon == 1" ng-click="opacitycon = 0.2" class="item_setting"><span style="margin:0px 5px" class="material-icons-outlined">comments_disabled</span> <span>Ẩn bình luận</span></li>
+                                                                            <li ng-show="opacitycon == 0.2" ng-click="opacitycon = 1" class="item_setting"><span style="margin:0px 5px" class="material-icons-outlined">comment</span><span>Hiện bình luận</span></li>
+                                                                            <li ng-if="paren.binhluancon.nguoidung_id == checklogin.uid && checklogin.dadangnhap == true" ng-click="XoaBinhLuanConBaiHat(idBHBinhLuan,paren.binhluancon.id)" class="item_setting"><span style="margin:0px 5px" class="material-icons-outlined">delete</span><span> Xóa bình luận</span></li>
+
+                                                                            <li ng-click="chinhsuabinhluancon = !chinhsuabinhluancon" ng-show="paren.binhluancon.nguoidung_id == checklogin.uid && checklogin.dadangnhap == true" class="item_setting"><span style="margin:0px 5px" class="material-icons-outlined">edit</span> <span>Chỉnh sửa</span></li>
+
+                                                                        </ul>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                            <div ng-show="!chinhsuabinhluancon" ng-style="{'opacity': opacitycon}">{{paren.binhluancon.noidung}}</div>
+                                                            <div  ng-init="chinhSuaBinhLuancon = paren.binhluancon.noidung" ng-show="chinhsuabinhluancon  && paren.binhluancon.nguoidung_id == checklogin.uid && checklogin.dadangnhap == true" class="rep_comment" style="position:relative">
+                                                                <i @*ng-click="BinhLuanConBaiHat()"*@ ng-click="ChinhSuaBinhLuanConBaiHat(idBHBinhLuan,paren.binhluancon.id,chinhSuaBinhLuancon)" style="cursor:pointer; position: absolute; right: 25%; color: #fff; top: 15%; font-size: 16px; transform: rotate( 45deg );" class="fas fa-location-arrow"></i>
+                                                                <input ng-model="chinhSuaBinhLuancon" ng-keypress="PhimEnterChinhSuaBinhLuanConBaiHat($event,idBHBinhLuan,paren.binhluancon.id,chinhSuaBinhLuancon)" style="height:30px;width:80%" class="input_playlist ng-pristine ng-untouched ng-valid ng-empty" type="text" maxlength="200" placeholder="Nhập bình luận ..." />
+                                                                <div ng-click="chinhsuabinhluancon = !chinhsuabinhluancon" class="huy_chinhsua">Hủy bỏ</div>
+                                                            </div>
+                                                            <div class="comment-reply-list-wrapper">
+                                                            </div>
+                                                        </div>
+
+                                                    </div>
+                                                    <div style="display:flex;margin-top:10px;">
+                                                        <div ng-style="{'opacity': opacity}" ng-click="showinputbinhluan=!showinputbinhluan" class="rep_comment_click">Trả Lời</div>
+                                                        <div ng-style="{'opacity': opacity}" ng-show="xemthembinhluan ==1 && x.binhluancon.length > 1" ng-click="xemthembinhluan = x.binhluancon.length" class="rep_comment_click" style="margin-left:12px;"> Xem thêm({{x.binhluancon.length - 1}}) </div>
+                                                        <div ng-style="{'opacity': opacity}" ng-show="xemthembinhluan >1" ng-click="xemthembinhluan = 1" class="rep_comment_click" style="margin-left:12px;">Thu gọn </div>
+                                                    </div>
+                                                    <div ng-show="showinputbinhluan" class="rep_comment" style="position:relative">
+                                                        <i @*ng-click="BinhLuanConBaiHat()"*@ ng-click="BinhLuanConBaiHat(idBHBinhLuan,x.binhluancha.id,dataBinhLuanCon)" style="cursor:pointer; position: absolute; right: 25%; color: #fff; top: 25%; font-size: 16px; transform: rotate( 45deg );" class="fas fa-location-arrow"></i>
+                                                        <input ng-model="dataBinhLuanCon" ng-keypress="PhimEnterBinhLuanCon($event,idBHBinhLuan,x.binhluancha.id,dataBinhLuanCon)" style="height:30px;width:80%" class="input_playlist ng-pristine ng-untouched ng-valid ng-empty" type="text" maxlength="200" placeholder="Nhập bình luận ..." />
+
+                                                    </div>
+
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div style="padding:15px" class="noti-message">
+                            <div style="position:relative;" class="rep_comment">
+                                <i ng-click="BinhLuanBaiHat(idBHBinhLuan,dataBinhLuanCha)" style="position: absolute; right: 5%;cursor:pointer; color: #fff; top: 25%; font-size: 16px; transform: rotate( 45deg );" class="fas fa-location-arrow"></i>
+
+                                <input id="binhluanbh" ng-show="resetBinhLuan" ng-model="dataBinhLuanCha" ng-keypress="PhimEnterBinhLuanCha($event,idBHBinhLuan,dataBinhLuanCha)" style="height:30px;width:100%" class="input_playlist ng-pristine ng-untouched ng-valid ng-empty" type="text" maxlength="200" placeholder="Viết bình luận ..." />
+
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+
+
     </div>
 
 </div>

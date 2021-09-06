@@ -8,7 +8,10 @@ app.factory('dataservice', function ($http) {
             $http.post('/Admin/BaiHat/taoBaiHat',data).then(callback);
         },
         xoaBaiHat: function (data, callback) {
-            $http.post('/Admin/BaiHat/xoaBaiHat?idbaihat=' + data).then(callback);
+            $http.post('/Admin/BaiHat/xoaBaiHat', data).then(callback);
+        },
+        thayDoiCheDoBaiHat: function (data, callback) {
+            $http.post('/Admin/BaiHat/thayDoiCheDoBaiHat', data).then(callback);
         },
         suaBaiHat: function (data, callback) {
             $http.post('/Admin/BaiHat/suaBaiHat', data).then(callback);
@@ -35,6 +38,13 @@ app.factory('dataservice', function ($http) {
         },
         taiDanhSachBaiHatDaXoa_ThungRac: function (callback) {
             $http.post('/Admin/BaiHat/taiDanhSachBaiHatDaXoa_ThungRac').then(callback);
+
+        },
+        khoiPhucBaiHat_ThungRac: function (data, callback) {
+            $http.post('/Admin/BaiHat/khoiPhucBaiHat_ThungRac', data).then(callback);
+        },
+        xoaBaiHatVinhVien_ThungRac: function (data, callback) {
+            $http.post('/Admin/BaiHat/xoaBaiHatVinhVien_ThungRac', data).then(callback);
 
         },
         //LoadBaiHat: function (callback) {
@@ -125,6 +135,27 @@ app.directive('validatekitudacbiet', function () {
         link: link
     };
 });
+app.directive("whenScrolled", function () {
+    return {
+
+        restrict: 'A',
+        link: function (scope, elem, attrs) {
+
+            // we get a list of elements of size 1 and need the first element
+            raw = elem[0];
+
+            // we load more elements when scrolled past a limit
+            elem.bind("scroll", function () {
+                if (raw.scrollTop + raw.offsetHeight + 5 >= raw.scrollHeight) {
+                    scope.loading = true;
+
+                    // we can give any function which loads more elements into the list
+                    scope.$apply(attrs.whenScrolled);
+                }
+            });
+        }
+    }
+});
 app.filter('startFrom', function () {
     return function (input, start) {
         if (!input || !input.length) { return; }
@@ -147,9 +178,40 @@ app.controller('T_Music', function () {
    
 });
 
-app.controller('index', function ($rootScope, $scope, dataservice, $uibModal, $filter) {
-    tippy('[data-tippy-content]');
-   
+app.controller('index', function ($rootScope, $scope, dataservice, $uibModal, $filter, $interval) {
+
+
+    $scope.cheDo = function (data) {
+        dataservice.thayDoiCheDoBaiHat(data, function (rs) {
+            rs = rs.data;
+
+            if (rs == true) {
+                alertify.success("Thay đỗi chế độ thành công.");
+            }
+            else {
+                alertify.success("Thay đỗi chế độ thất bại .");
+            }
+        });
+    }
+
+    var tick = function () {
+        $scope.clock = Date.now();
+    }
+    tick();
+    $interval(tick, 1000);
+    $(".nav-noidung").addClass("active");
+    $scope.tenbien = 'null';
+    $scope.hoatdong = false;
+    $scope.modelsapxep = 'null';
+    $scope.sapXep = function (data) {
+        $scope.hoatdong = ($scope.tenbien === data) ? !$scope.hoatdong : false;
+        $scope.tenbien = data;
+    }
+   // tippy('[data-tippy-content]');
+    tippy('td', {
+        content: 'Global content',
+        trigger: 'click',
+    });
     $scope.hienTimKiem = false;
     $scope.showSearch = function () {
         if (!$scope.hienTimKiem) {
@@ -181,18 +243,42 @@ app.controller('index', function ($rootScope, $scope, dataservice, $uibModal, $f
         dataservice.taiBaiHat($scope.model, function (rs) {
 
             rs = rs.data;
-            $scope.dataloadbaihat = rs;       
+            $scope.taiBaiHat = rs;       
 
            
             $scope.numberOfPages = function () {
-                return Math.ceil($scope.dataloadbaihat.length / $scope.pageSize);
+                return Math.ceil($scope.taiBaiHat.length / $scope.pageSize);
             }
             if ($scope.numberOfPages() < 8) {
                 $scope.soLuong = $scope.numberOfPages();
             }
         });
     };
+    function chuyenDoi(object) {
 
+        return Math.ceil(object.length / 5);;
+    }
+    $scope.layBaiHatAdmin = function (object) {
+        if (chuyenDoi(object) < 8) {
+            $scope.numberOfPages = function () {
+                return chuyenDoi(object);
+            }
+            $scope.soLuong = chuyenDoi(object);
+            $scope.soTrang = chuyenDoi(object)
+            $scope.size = 0;
+            $scope.currentPage = 0;
+        }
+        else {
+            $scope.numberOfPages = function () {
+                return chuyenDoi(object);
+            }
+            $scope.soLuong = 8;
+            $scope.soTrang = chuyenDoi(object)
+            $scope.size = 0;
+            $scope.currentPage = 0;
+            //  $scope.numberOfPages() = chuyenDoi(object);
+        }
+    };
     $scope.initData();
     $scope.timKiem = function () {
 
@@ -223,6 +309,7 @@ app.controller('index', function ($rootScope, $scope, dataservice, $uibModal, $f
                 $scope.size -= 8;
                 $scope.soLuong = 8
             }
+            $scope.currentPage = $scope.size;
         }
 
     }
@@ -238,6 +325,7 @@ app.controller('index', function ($rootScope, $scope, dataservice, $uibModal, $f
                 else {
                     $scope.size += $scope.soLuong;
                 }
+                $scope.currentPage = $scope.size;
             }
             else {
                 $scope.bienTam = $scope.numberOfPages() % 8;
@@ -255,6 +343,7 @@ app.controller('index', function ($rootScope, $scope, dataservice, $uibModal, $f
                     $scope.size += 8;
 
                 }
+                $scope.currentPage = $scope.size;
             }
         }
 
@@ -264,7 +353,7 @@ app.controller('index', function ($rootScope, $scope, dataservice, $uibModal, $f
     
 
 
-    $scope.add = function () {
+    $scope.taoBaiHat_index = function () {
       
         var modalInstance =  $uibModal.open({
             /*animation: true,*/
@@ -281,13 +370,16 @@ app.controller('index', function ($rootScope, $scope, dataservice, $uibModal, $f
           /*  appendTo: document.getElementById("#main-baihat"),*/
             size: '10'
         });
-        modalInstance.result.then(function () {
-            $scope.initData();
+        modalInstance.result.then(function () { 
+            
         }, function () {
+                setTimeout(function () {
+                    $scope.initData();
+                }, 2000);
         });
        
     };
-    $scope.suaBaiHat = function (key) {
+    $scope.edit = function (key) {
      /*   $scope.model.id = key;*/
         var modalInstance =  $uibModal.open({
             animation: true,
@@ -308,6 +400,9 @@ app.controller('index', function ($rootScope, $scope, dataservice, $uibModal, $f
         });
         modalInstance.result.then(function () {
             $scope.initData();
+            //setTimeout(function () {
+               
+            //}, 1500);
         }, function () {
         });
     };
@@ -329,17 +424,22 @@ app.controller('index', function ($rootScope, $scope, dataservice, $uibModal, $f
             size: '10'
         });
         modalInstance.result.then(function () {
-           
+            $scope.initData();
+            //setTimeout(function () {
+               
+            //}, 1500);
         }, function () {
         });
 
     };
-    $scope.xoaBaiHat = function (key) {
+    $scope.xoaBaiHat = function (data,vitribaihat) {
        
-        dataservice.xoaBaiHat(key, function (rs) {
+        dataservice.xoaBaiHat(data, function (rs) {
             rs = rs.data;
             $scope.deletedata = rs;
-            $scope.initData();
+            $scope.taiBaiHat.splice(vitribaihat, 1);
+            alertify.success("Xóa thành công");
+           //// $scope.initData();
         });
 
     }
@@ -350,7 +450,8 @@ app.controller('index', function ($rootScope, $scope, dataservice, $uibModal, $f
         $scope.BienTam = {
             linkhinhanhmoi: '',
             linkhinhanhcu: '',
-            baihat_id: ''
+            baihat_id: '',
+            nguoidung_id:''
         }
         $scope.modelbaihatcs = data;
     
@@ -362,6 +463,7 @@ app.controller('index', function ($rootScope, $scope, dataservice, $uibModal, $f
                 $scope.BienTam.linkhinhanhmoi = rs;
                 $scope.BienTam.linkhinhanhcu = data.linkhinhanh;
                 $scope.BienTam.baihat_id = data.id;
+                $scope.BienTam.nguoidung_id = data.nguoidung_id;
                 dataservice.suaLinkHinhAnhBaiHat($scope.BienTam, function (rs) {
                     rs = rs.data;
                     $scope.modelbaihatcs.linkhinhanh = $scope.BienTam.linkhinhanhmoi;
@@ -494,6 +596,11 @@ app.controller('add', function ($rootScope, $scope, dataservice, $uibModalInstan
        
     }
     $scope.getTheFiles = function ($files) {
+        var mb1 = 1048576;
+        if ($files[0].size > (mb1 * 10)) {
+            alert("Hãy chọn file mp3 < 10mb !!!");
+            return;
+        }
         $scope.addLinkBaiHat = "Đã Chọn Bài Hát";
         duLieuNhac = new FormData();
         duLieuNhac.append("File", $files[0]);  
@@ -579,18 +686,39 @@ app.controller('thungrac', function ($rootScope, $scope, dataservice, $uibModalI
         $scope.currentPage = data;
     };
 
-    $scope.themBaiHatVaoDSPTL = function (data, vitribaihat) {
-        $scope.text.key = data.object.id;
-        $scope.text.uid = $scope.duLieuDSPTL.object.id;
+    $scope.xoaBaiHat = function (data, vitribaihat) {
 
-        //  alert($scope.text.key + " " + $scope.text.uib + " " + vitribaihat);
-        $scope.taiDanhSachBaiHatDeThem_DSPTL.splice(vitribaihat, 1);
-        dataservice.themBaiHatVaoDSPTL_DSPTL($scope.text, function (rs) {
+        
+        dataservice.xoaBaiHatVinhVien_ThungRac(data, function (rs) {
             rs = rs.data;
+            if (rs == true) {
+                alertify.success("Xóa Thành Công");
+                $scope.taiDanhSachBaiHatDaXoa_ThungRac.splice(vitribaihat, 1);
+            }
+            else {
+                alertify.success("Xóa Thất Bại");
+            }
 
         });
     };
+    alertify.set('notifier', 'position', 'bottom-left');
+   
+     
+    $scope.khoiPhucBaiHat = function (data, vitribaihat) {       
+        dataservice.khoiPhucBaiHat_ThungRac(data, function (rs) {
+            rs = rs.data;
 
+            if (rs == true) {
+                alertify.success("Khôi Phục Thành Công");
+                $scope.taiDanhSachBaiHatDaXoa_ThungRac.splice(vitribaihat, 1);
+            }
+            else {
+                alertify.success("Khôi Phục Thất Bại");
+            }
+               
+            $scope.initData();
+        });
+    };
     $scope.currentPage = 0;
     $scope.pageSize = 5;
     $scope.size = 0;

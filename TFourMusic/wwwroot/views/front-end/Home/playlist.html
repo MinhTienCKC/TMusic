@@ -1,12 +1,12 @@
 ﻿
-<div  class="zm-sidebar-scrollbar-big" style="padding:0px 70px 0px 70px; width: 105.8%; top:20px;">
+<div ng-if="taiChiTietPlayList_PlayList[0].chedo == 1 || taiChiTietPlayList_PlayList[0].nguoidung_id == checklogin.uid" class="zm-sidebar-scrollbar-big" style="padding:0px 70px 0px 70px; width: 105.8%; top:20px;">
     <div class="zm-sidebar-scrollbar" style=" overflow: overlay;  height: 1000px; color:hsla(0,0%,100%,0.5); ">
         <nav class="zm-navbar zm-navbar-main mar-t-5 mar-b-0">
-            <div  style=" display: flex;">
+            <div style=" display: flex;">
                 <div style="height:100px;">
                     <div class="media-left" style=" width: 300px; height: 300px;" animatechitiet>
                         <div class="zm-card header-thumbnail">
-                  
+
                             <div class="zm-card-image item" style="height: 300px;" ng-class="{'xoayHinh': kiemTraDSPNguoiDungClick == taiChiTietPlayList_PlayList[0].id && playmusic == 1 }">
                                 <figure class="image is-48x48">
                                     <img style="height: 300px; object-fit: cover;" src="{{taiChiTietPlayList_PlayList[0].linkhinhanh}}" alt="">
@@ -26,7 +26,7 @@
                                     </div>
 
 
-                                </div>                            
+                                </div>
                             </div>
                         </div>
                     </div>
@@ -46,11 +46,11 @@
                             </button>
                             <div class="level">
                                 <!--<div class="level-item" style=" margin-right: -220px;">
-        <button class="button-item1" style=" width: 30px; height: 30px; background-color: hsla(0,0%,100%,0.1);">
-            <i class="ibutton far fa-heart iconmusic" font-size: 14px;></i>
-        </button>
+                                    <button class="button-item1" style=" width: 30px; height: 30px; background-color: hsla(0,0%,100%,0.1);">
+                                        <i class="ibutton far fa-heart iconmusic" font-size: 14px;></i>
+                                    </button>
 
-    </div>-->
+                                </div>-->
                                 <div ng-show="taiChiTietPlayList_PlayList[0].nguoidung_id != checklogin.uid" class="level-item" style=" margin-right: -220px;" ng-click="$event.preventDefault(); yeuThichPlayListChiTietUi(); yeuThichDanhSachPhatNguoiDungID(taiChiTietPlayList_PlayList[0].id)">
                                     <button class="button-item1" style=" width: 30px; height: 30px; background-color: hsla(0,0%,100%,0.1);">
                                         <i ng-show="taiChiTietPlayList_PlayList[0].yeuthich==0 || !checklogin.dadangnhap" class="far fa-heart" style=" color: white;font-size: 1.7rem;"></i>
@@ -79,17 +79,17 @@
                                 </div>
                                 <div class="media-right">
                                     <div class="zm-dropdown zm-group-dropdown mar-r-10">
-                                        <select class="" style="background: #6335a0;  border-radius: 13px;">
-                                            <option class="zm-dropdown-list-item" value="Mặc định">Mặc Định</option>
-                                            <option class="zm-dropdown-list-item" value="Tên ca sĩ (A-Z)">Tên bài hát (A-Z)</option>
-                                            <option class="zm-dropdown-list-item" value="Tên ca sĩ (A-Z)">Tên ca sĩ (A-Z)</option>
+                                        <select ng-model="modelsapxep" class="" style="background: #6335a0;  border-radius: 13px;" ng-change="sapXep(modelsapxep)">
+                                            <option class="zm-dropdown-list-item" value="null">Mặc Định</option>
+                                            <option class="zm-dropdown-list-item" value="tenbaihat">Tên bài hát (A-Z)</option>
+                                            <option class="zm-dropdown-list-item" value="casi">Tên ca sĩ (A-Z)</option>
 
                                         </select>
                                     </div>
 
                                 </div>
                             </div>
-                            <div ng-repeat="data in taiDSBaiHatTheoDSPNguoiDung_PlayList" class="animate">
+                            <div ng-repeat="data in taiDSBaiHatTheoDSPNguoiDung_PlayList | orderBy:tenbien:hoatdong" class="animate">
 
 
                                 <div class="select-item" ng-class="{'clickbaihat': kiemTraBaiHatDangPhat == data.id }" context-menu="contextMenuBaiHatPlaylist" ng-right-click="moChiTietBaiHat(data,$index)">
@@ -167,7 +167,7 @@
                             <h3 class="bottom-info subtitle"><span style="padding-right: 5px;">{{soBaiHat}} bài hát</span>•<span style="padding-left: 5px;">{{tongThoiGianPhat}}</span></h3>
                         </div>
 
-                        <div ng-show="soBaiHat < 10"  class="list mar-b-10 song-list-select">
+                        <div ng-show="soBaiHat < 10" class="list mar-b-10 song-list-select">
                             <div ng-show="taiChiTietPlayList_PlayList[0].nguoidung_id == checklogin.uid" class="section-header" style=" display: flex; align-items: center; justify-content: space-between;">
                                 <h3 class="mar-0 title is-2" style="font-size: 20px; color:white;">Bài hát gợi ý</h3>
                                 <button ng-click="lamMoiGoiY()" class="zm-btn is-outlined active is-small is-upper button" tabindex="0" style="margin: 0; font-size: 12px; padding: 6px 19px; width: 112px; height: 30px;  border-color: #ed2b91; background-color: #ed2b91;">
@@ -176,7 +176,7 @@
                                 </button>
                             </div>
                             <h3 ng-show="taiChiTietPlayList_PlayList[0].nguoidung_id == checklogin.uid" class="mar-b-15 subtitle" style="margin-bottom: 15px !important;">Dựa trên các bài hát trong playlist này</h3>
-                            <h3 ng-show="taiChiTietPlayList_PlayList[0].nguoidung_id != checklogin.uid" class="title is-2" style="color:white; padding-top: 30px;">Có thể bạn quan tâm</h3>
+                            <h3 ng-show="taiChiTietPlayList_PlayList[0].nguoidung_id != checklogin.uid && taiDanhSachBaiHatTheoTheLoai.length > 0" class="title is-2" style="color:white; padding-top: 30px;">Có thể bạn quan tâm</h3>
                             <div ng-repeat="data in taiDanhSachBaiHatTheoTheLoai | limitTo: soLuong ">
                                 <div class="select-item" ng-class="{'clickbaihat': kiemTraBaiHatDangPhat == taiDanhSachBaiHatTheoTheLoai[$index+size].id }" context-menu="contextMenuBaiHat_BaiHat" ng-right-click="moChiTietBaiHat(taiDanhSachBaiHatTheoTheLoai[$index+size])">
                                     <label class="checkbox">
@@ -237,14 +237,14 @@
                                                     </div>
 
                                                     <!--<div class="level-item">
-    <button class="button-item1">-->
+                                                    <button class="button-item1">-->
                                                     <!--<i class="ibutton far fa-heart iconmusic" style="font-size: 14px;"></i>-->
                                                     <!--<i ng-show="!checklogin.dadangnhap" class="ibutton far fa-heart iconmusic" style="font-size: 14px;"></i>
-            <i ng-show="data.yeuthich==0 " class="ibutton far fa-heart iconmusic" style="font-size: 14px;"></i>
-            <i ng-show="data.yeuthich==1" ng-class="{'active_yeuthich': sttmusic == $index}" class="fas fa-heart icon_account_a" style="color:#ed2b91;"></i>
-        </button>
+                                                            <i ng-show="data.yeuthich==0 " class="ibutton far fa-heart iconmusic" style="font-size: 14px;"></i>
+                                                            <i ng-show="data.yeuthich==1" ng-class="{'active_yeuthich': sttmusic == $index}" class="fas fa-heart icon_account_a" style="color:#ed2b91;"></i>
+                                                        </button>
 
-    </div>-->
+                                                    </div>-->
                                                     <div ng-show="taiChiTietPlayList_PlayList[0].nguoidung_id == checklogin.uid" class="level-item">
                                                         <button class="button-item1" ng-click="themBaiHatVaoPlaylistHienTai(taiDanhSachBaiHatTheoTheLoai[$index+size],$index+size)">
                                                             <i class="ibutton fa fa-plus" style="font-size: 14px;"></i>
@@ -264,7 +264,7 @@
 
                         </div>
 
-                     
+
                     </div>
                 </div>
             </div>
@@ -344,11 +344,11 @@
                                     </div>
                                 </div>
                                 <!--<button class="zm-btn zm-carousel-control-prev zm-disabled is-hide button" tabindex="0">
-                        <i class="icon ic-go-left"></i>
-                    </button>
-                    <button class="zm-btn zm-carousel-control-next zm-disabled is-hide button" tabindex="0">
-                        <i class="icon ic-go-right"></i>
-                    </button>-->
+                                    <i class="icon ic-go-left"></i>
+                                </button>
+                                <button class="zm-btn zm-carousel-control-next zm-disabled is-hide button" tabindex="0">
+                                    <i class="icon ic-go-right"></i>
+                                </button>-->
                             </div>
                         </div>
                     </div>
@@ -360,12 +360,20 @@
 
             </div>
         </nav>
-    
+
 
 
     </div>
 
 </div>
+
+<div ng-if="taiChiTietPlayList_PlayList[0].chedo == 0 && taiChiTietPlayList_PlayList[0].nguoidung_id != checklogin.uid">
+    <div style=" text-align: center;">
+        <img style="width: 400px; height: 400px;" src="../../../image/404-bg123123.png" />
+        <h3 style="font-size: 18px; font-weight: 700; margin-top: 40px; color: white;" class="title-404">WoooW, trang bạn tìm không còn tồn tại hoặc đã có lỗi</h3>
+    </div>
+</div>
+
 <div class="modal fade" id="myModal" role="dialog">
     <div class="modal-dialog">
 

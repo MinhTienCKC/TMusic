@@ -5,22 +5,26 @@ var app = angular.module('T_Music', ["ui.bootstrap", "ngRoute"]);
 app.factory('dataservice', function ($http) {
     return {     
         suaTop20: function (data, callback) {
-            $http.post('/Admin/Top20/SuaTop20', data).then(callback);
+            $http.post('/Admin/Top20/suaTop20', data).then(callback);
         },
         taiTop20: function (callback) {
-            $http.post('/Admin/Top20/TaiTop20').then(callback); 
+            $http.post('/Admin/Top20/taiTop20').then(callback); 
         },
-        loadtheloai: function (callback) {
-            $http.post('/Admin/DanhSachPhatTheLoai/LoadTheloai').then(callback);
+        taiTheLoai: function (callback) {
+            $http.post('/Admin/Top20/taiTheloai').then(callback);
 
         },
-       
-
+        suaLinkHinhAnhDanhSachPhatTop20: function (data, callback) {
+            $http.post('/Admin/Top20/suaLinkHinhAnhDanhSachPhatTop20', data).then(callback);
+        },
+        thayDoiTrangThaiTop20: function (data, callback) {
+            $http.post('/Admin/Top20/thayDoiTrangThaiTop20', data).then(callback);
+        },
         
         uploadHinhAnh: function (data, callback) {
             $http({
                 method: 'post',
-                url: '/Admin/DanhSachPhatTheLoai/GetLinkHinhAnh',
+                url: '/Admin/Top20/GetLinkHinhAnh',
                 headers: {
                     'Content-Type': undefined
                 },
@@ -69,7 +73,27 @@ app.controller('T_Music', function () {
 
 });
 app.controller('index', function ($rootScope, $scope, dataservice, $uibModal) {
-     
+    $scope.tenbien = 'null';
+    $scope.hoatdong = false;
+    $scope.modelsapxep = 'null';
+    $scope.sapXep = function (data) {
+        $scope.hoatdong = ($scope.tenbien === data) ? !$scope.hoatdong : false;
+        $scope.tenbien = data;
+    }
+
+    $(".nav-noidung").addClass("active");
+    $scope.trangThai = function (data) {  
+        dataservice.thayDoiTrangThaiTop20(data, function (rs) {
+            rs = rs.data;
+
+            if (rs == true) {
+                alertify.success("Thay đỗi trang thái thành công.");
+            }
+            else {
+                alertify.success("Thay đỗi trạng thái thất bại .");
+            }
+        });
+    }
     $scope.model = {
         id: '',
         theloai_id: '',
@@ -82,29 +106,19 @@ app.controller('index', function ($rootScope, $scope, dataservice, $uibModal) {
     }
     $scope.rong = '';
     $scope.initData = function () {
-        dataservice.loadtheloai(function (rs) {
+        dataservice.taiTheLoai(function (rs) {
 
 
             rs = rs.data;
-            $scope.dataloadtheloai = rs;
+            $scope.taiTheLoai = rs;
             $scope.valueTheLoai = $scope.rong;
-           
-          //  $scope.text.key = $scope.valueTheLoai;
-           
+                      
         });
         dataservice.taiTop20(function (rs) {
 
             rs = rs.data;
             $scope.taiTop20 = rs;
-
-            $scope.q = '';
-
-            $scope.getData = function () {
-
-                return $filter('filter')($scope.taiTop20, $scope.q)
-
-            }
-
+          
             $scope.numberOfPages = function () {
                 return Math.ceil($scope.taiTop20.length / $scope.pageSize);
             }
@@ -117,10 +131,7 @@ app.controller('index', function ($rootScope, $scope, dataservice, $uibModal) {
     };
 
     $scope.initData();
-    //$scope.timKiem = function () {
-
-    //    $scope.initData();
-    //};
+   
     function chuyenDoi(object) {
        
         return Math.ceil(object.length / 5);;
@@ -142,10 +153,7 @@ app.controller('index', function ($rootScope, $scope, dataservice, $uibModal) {
         }
        // $scope.timkiem.object.theloai_id = $scope.valueTheLoai;
     };
-    //$scope.timKiem = function () {
-
-    //    $scope.initData();
-    //};
+   
 
     $scope.range = function (n) {
         return new Array(n);
@@ -211,76 +219,41 @@ app.controller('index', function ($rootScope, $scope, dataservice, $uibModal) {
 
 
     }
-    $scope.edit = function (key) {
-     /*   $scope.model.id = key;*/
-        var modalInstance =  $uibModal.open({
-            animation: true,
-            templateUrl: ctxfolderurl + '/edit.html',
-            controller: 'edit',
-            backdrop: 'true',
-            backdropClass: ".fade:not(.show)",
-            backdropClass: ".modal-backdrop",
-            backdropClass: ".col-lg-8",
-            backdropClass: ".modal-content",
 
-            size: '100',
-            resolve: {
-                para: function () {
-                    return key;
-                }
-            }
-        });
-        modalInstance.result.then(function () {
-            
-        }, function () {
-        });
-    };
-   
 
-});
-app.controller('edit', function ($rootScope, $scope, $uibModalInstance, dataservice,para) {
-    $scope.cancel = function () {
-        $uibModalInstance.dismiss('cancel');
-    }
-    $scope.data1 = para;  
-    $scope.model = {
-        id: '',
-        theloai_id: '',
-        tendanhsachphattheloai: '',
-        mota: '',
-        linkhinhanh: ''
-    }
-    $scope.initData = function () {
-        $scope.kt = 0;
-    };
-    $scope.initData();
-    var formData = new FormData();
-    $scope.submit = function () {
-        $scope.model = $scope.data1;
-        if ($scope.kt == 1) {
-                 dataservice.uploadHinhAnh(formData, function (rs) {
+    $scope.suaHinhAnhDanhSachPhatTop20 = function ($files, data) {
+        $scope.BienTam = {
+            linkhinhanhmoi: '',
+            linkhinhanhcu: '',
+            danhsachphattheloai_id: '',
+            danhsachphattop20_id: '',
+            theloai_id: ''
+        }
+        $scope.modelDanhSachPhatTop20cs = data;
+
+        if ($files[0].type == "image/png" || $files[0].type == "image/jpeg") {
+            duLieuHinh = new FormData();
+            duLieuHinh.append("File1", $files[0]);
+            dataservice.uploadHinhAnh(duLieuHinh, function (rs) {
                 rs = rs.data;
-                $scope.model.object.linkhinhanh = rs;
-
-                dataservice. suaDanhSachPhatTheLoai($scope.model.object, function (rs) {
+                $scope.BienTam.linkhinhanhmoi = rs;
+                $scope.BienTam.linkhinhanhcu = data.linkhinhanh;
+                $scope.BienTam.danhsachphattheloai_id = data.danhsachphattheloai_id;
+                $scope.BienTam.danhsachphattop20_id = data.id;
+                $scope.BienTam.theloai_id = data.theloai_id;
+                dataservice.suaLinkHinhAnhDanhSachPhatTop20($scope.BienTam, function (rs) {
                     rs = rs.data;
-                    $scope.EditItem = rs;
-
+                    $scope.modelDanhSachPhatTop20cs.linkhinhanh = $scope.BienTam.linkhinhanhmoi;
                 });
-                 })
-            $uibModalInstance.dismiss('cancel');
+            });
         } else {
-            dataservice.suaDanhSachPhatTheLoai($scope.model.object, function (rs) {
-                             rs = rs.data;
-                             $scope.EditItem = rs;
+            alert("Sai định đạng ảnh (*.jpg, *.png)");
+        }
 
-                         });
-            $uibModalInstance.dismiss('cancel');
-        }                                  
+        //for (var i = 0; i < $files.length; i++) {
+        //    formData.append("File", $files[i]);
+        //}
+
     }
-    $scope.getTheFilesHinhAnh = function ($files) {    
-        formData = new FormData();
-        formData.append("File", $files[0]); 
-        $scope.kt = 1;
-    }
+
 });

@@ -358,7 +358,7 @@
                         <!--<label class="label_account">
                             <i class="far fa-heart icon_account_notfocus"></i>
                         </label>-->
-                        <span context-menu1="contextMenuBaiHat_BaiHat" ng-click="moChiTietBaiHat(x)" class="material-icons-outlined dots_account_baihat">
+                        <span style="flex:0" context-menu1="contextMenuBaiHat_BaiHat" ng-click="moChiTietBaiHat(x)" class="material-icons-outlined dots_account_baihat">
                             more_horiz
                         </span>
                     </div>
@@ -582,7 +582,7 @@
                 </div>
             </div>
         </div>
-        <div ng-if="listDaTaiXuong_CaNhan.length > 0" class="item_nhac_da_luu" ng-class="{'active_baihat_timkiem' : kiemTraBaiHatDangPhat==x.id  }" ng-repeat="x in listDaTaiXuong_CaNhan" animate>
+        <div ng-if="listDaTaiXuong_CaNhan.length > 0" class="item_nhac_da_luu" ng-class="{'active_baihat_timkiem' : kiemTraBaiHatDangPhat==x.id  }" ng-repeat="x in listDaTaiXuong_CaNhan" animate context-menu="contextMenuBaiHat_BaiHat" ng-right-click="moChiTietBaiHat(x)">
             <div class="border_nhac_luu">
                 <div class="media_luu_baihat">
                     <div class="media_luu_left_baihat">
@@ -608,14 +608,14 @@
                     <div class="media_luu_content"><div class="time_bai_hat">{{x.thoiluongbaihat}}</div></div>
                     <div class="media_luu_right">
                         <label class="label_account" ng-click="toggleYeuThichBHDaLuu_CaNhan($index)">
-                            <i ng-show="x.yeuthich==0" class="far fa-heart icon_nav_right_first_canhan"></i>
-                            <i ng-show="x.yeuthich==1" class="fas fa-heart icon_active_yeuthich"></i>
+                            <i style="        right: 150px;" ng-show="x.yeuthich==0" class="far fa-heart icon_nav_right_first_canhan"></i>
+                            <i style="        right: 150px;" ng-show="x.yeuthich==1" class="fas fa-heart icon_active_yeuthich"></i>
 
                         </label>
                         <!--<label class="label_account">
                             <i class="far fa-heart icon_account_notfocus"></i>
                         </label>-->
-                        <span class="material-icons-outlined dots_account_baihat">
+                        <span style="flex:0" context-menu1="contextMenuBaiHat_BaiHat" ng-click="moChiTietBaiHat(x)" class="material-icons-outlined dots_account_baihat">
                             more_horiz
                         </span>
                     </div>
@@ -655,7 +655,7 @@
                     </div>
                 </div>
             </div>
-            <div ng-if="playlist_canhan.length > 0" class="item_ds_chitiet_item" ng-repeat="x in playlist_canhan">
+            <div ng-if="playlist_canhan.length > 0" class="item_ds_chitiet_item" ng-repeat="x in playlist_canhan" context-menu="contextMenuPlaylist" ng-right-click="moChiTietDSP_TheLoai(x)">
                 <div class="tao_playlist_item">
                     <a href="/#/playlist/{{x.id}}" class="item_tao_playlist_curent">
                         <div class="img_playlist" ng-style="{'background-image': 'url(' + x.linkhinhanh + ')'}"></div>
@@ -725,7 +725,7 @@
                 </div>
             </div>
         </div>
-        <div ng-if="listBaiHatDaTaiLen.length > 0" class="item_nhac_da_luu" ng-class="{'active_baihat_timkiem' : kiemTraBaiHatDangPhat==x.id  }" ng-repeat="x in listBaiHatDaTaiLen" animate>
+        <div ng-if="listBaiHatDaTaiLen.length > 0" class="item_nhac_da_luu" ng-class="{'active_baihat_timkiem' : kiemTraBaiHatDangPhat==x.id  }" ng-repeat="x in listBaiHatDaTaiLen" animate context-menu="contextMenuBaiHat_BaiHat" ng-right-click="moChiTietBaiHat(x)">
             <div class="border_nhac_luu">
                 <div class="media_luu_baihat">
                     <div class="media_luu_left_baihat">
@@ -779,14 +779,14 @@
 
                     <div class="media_luu_right">
                         <label class="label_account" ng-click="toggleYeuThichBHDaTaiLen_CaNhan($index)">
-                            <i ng-show="x.yeuthich==0" class="far fa-heart icon_nav_right_first_canhan"></i>
-                            <i ng-show="x.yeuthich==1" class="fas fa-heart icon_active_yeuthich"></i>
+                            <i style="        right: 150px;" ng-show="x.yeuthich==0" class="far fa-heart icon_nav_right_first_canhan"></i>
+                            <i style="        right: 150px;" ng-show="x.yeuthich==1" class="fas fa-heart icon_active_yeuthich"></i>
 
                         </label>
                         <!--<label class="label_account">
                             <i class="far fa-heart icon_account_notfocus"></i>
                         </label>-->
-                        <span class="material-icons-outlined dots_account_baihat">
+                        <span style="flex:0" context-menu1="contextMenuBaiHat_BaiHat" ng-click="moChiTietBaiHat(x)" class="material-icons-outlined dots_account_baihat">
                             more_horiz
                         </span>
                     </div>

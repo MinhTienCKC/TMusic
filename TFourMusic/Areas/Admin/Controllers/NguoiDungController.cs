@@ -7,6 +7,7 @@ using System.Threading.Tasks;
 using System.Web;
 using Newtonsoft.Json;
 using TFourMusic.Models;
+
 using Microsoft.Extensions.Logging;
 using System.Diagnostics;
 using Firebase.Auth;
@@ -18,25 +19,27 @@ using Microsoft.AspNetCore.Http;
 using Firebase.Database;
 
 
-
-using FirebaseConfig = Firebase.Auth.FirebaseConfig;
+using FirebaseConfig123 = Firebase.Auth.FirebaseConfig;
+//using FirebaseConfig = Firebase.Auth.FirebaseConfig;
 using Firebase.Database.Query;
 using Microsoft.AspNetCore.Authorization;
+using System.Net;
+using FireSharp.Interfaces;
+using FireSharp.Response;
+using Newtonsoft.Json.Linq;
 
 namespace TFourMusic.Controllers
 {
     [Area("Admin")]
-  
+
     public class NguoiDungController : Controller
     {
-        //IFirebaseConfig config = new FirebaseConfig
-        //{
-        //    AuthSecret = "MGsNSiHdXu6J2xSZoGqfod4KLmpg9dG0PSEOyoEe",
-        //    BasePath = "https://musictt-9aa5f-default-rtdb.firebaseio.com/"
-
-        //};
-
-        //IFirebaseClient client;
+        IFirebaseConfig config = new FireSharp.Config.FirebaseConfig
+        {
+            AuthSecret = "vHcXcNH4jYpiScpS8Fw3mSJhUj6lX3zp4kgpIM7T",
+            BasePath = "https://tfourmusic-1e3ff-default-rtdb.firebaseio.com/"
+        };
+        IFirebaseClient client;
         //private readonly ILogger<BaiHatController> _logger;
         private readonly IHostingEnvironment _env;
         //private static string ApiKey = "AIzaSyDXD0kXjDA_uoPLbK7fIIuxtKJC94AUnrQ";
@@ -46,7 +49,7 @@ namespace TFourMusic.Controllers
         private static string AuthEmail = "dang60780@gmail.com";
         private static string AuthPassword = "0362111719@TTai";
         private string Key = " https://tfourmusic-1e3ff-default-rtdb.firebaseio.com/";
-       
+
         //public BaiHatController(ILogger<BaiHatController> logger)
         //{
         //    _logger = logger;
@@ -55,7 +58,7 @@ namespace TFourMusic.Controllers
         {
             _env = env;
         }
-        
+
         public IActionResult Index()
         {
             return View();
@@ -74,239 +77,88 @@ namespace TFourMusic.Controllers
 
 
 
-       
-        [HttpPost]
-        public async Task<IActionResult> CreateNguoiDung([FromBody]nguoidungModel item)
+        //[HttpPost]
+        //public async Task<IActionResult> thayDoiTrangThaiNguoiDung([FromBody] nguoidungModel item)
+        //{
+
+        //    bool success = true;
+        //    try
+        //    {
+        //        client = new FireSharp.FirebaseClient(config);
+        //        object p = client.Set("csdlmoi/danhsachphat/danhsachphatNguoiDung/" + item.theloai_id + "/" + item.id + "/" + "daxoa", item.daxoa);
+        //        success = true;
+        //    }
+        //    catch (Exception ex)
+        //    {
+        //        success = false;
+        //    }
+
+        //    return Json(success);
+        //}
+        public class Text
         {
-            bool success = true;
-            item.online = 0;
-            item.thoigian = DateTime.Now;
+            public string key { get; set; }
+        }
+        public List<nguoidungModel> LayBangNguoiDung(string uid = null)
+        {
             try
             {
+                if (uid == null)
+                {
+                    client = new FireSharp.FirebaseClient(config);
+                    FirebaseResponse response = client.Get("csdlmoi/nguoidung");
+                    var data = JsonConvert.DeserializeObject<dynamic>(response.Body);
+                    var list = new List<nguoidungModel>();
 
-                var firebase = new FirebaseClient(Key);
+                    if (data != null)
+                    {
+                        foreach (var item in data)
+                        {
+                            list.Add(JsonConvert.DeserializeObject<nguoidungModel>(((JProperty)item).Value.ToString()));
 
-                // add new item to list of data and let the client generate new key for you (done offline)
-                var dino = await firebase
-                  .Child("nguoidung")
-                  .PostAsync(item)
-                  ;
-              
-                string kk = dino.Key.ToString();
-                item.id = kk;
-                 await firebase
-                    .Child("nguoidung")
-                    .Child(kk)
-                    .PutAsync(item);
-                
+                        }
+                    }
+
+                    return list;
+                }
+                else
+                {
+
+                    //return list;
+                    client = new FireSharp.FirebaseClient(config);
+                    FirebaseResponse response = client.Get("csdlmoi/nguoidung/" + uid);
+                    var data = JsonConvert.DeserializeObject<nguoidungModel>(response.Body);
+                    List<nguoidungModel> list = new List<nguoidungModel>();
+                    if (data != null)
+                    {
+                        list.Add(data);
+                    }
+
+                    return list;
+                }
             }
-            catch (Exception ex)
+            catch
             {
-                success = false;
+                List<nguoidungModel> list = new List<nguoidungModel>();
+                return list;
             }
 
-            return Json(success);
         }
         [HttpPost]
-        public async Task<IActionResult> DeleteNguoiDung([FromBody] nguoidungModel item)
-        {
-            bool success = true;
-           
-            try
-            {
-
-                var firebase = new FirebaseClient(Key);
-
-                // add new item to list of data and let the client generate new key for you (done offline)
-
-                await firebase
-                   .Child("nguoidung")
-                   .Child(item.id)
-                   .DeleteAsync();
-
-                // Create a reference to the file to delete
-                // var   auth = new FirebaseAuthProvider(new FirebaseConfig(ApiKey));
-                //var a = await auth.SignInWithEmailAndPasswordAsync(AuthEmail, AuthPassword);
-                //var task = new FirebaseStorage(Bucket, new FirebaseStorageOptions
-                //{
-                //    AuthTokenAsyncFactory = () => Task.FromResult(a.FirebaseToken),
-                //    ThrowOnCancel = true
-                //}).Child("image").Child("sdfdsf").DeleteAsync();
-               
-                
-                // Delete the file
-                
-            }
-            catch (Exception ex)
-            {
-                success = false;
-            }
-
-            return Json(success);
-        }
-       
-        [HttpPost]
-        public async Task<IActionResult> EditNguoiDung([FromBody] nguoidungModel item)
-        {
-
-          bool success = true;
-          
-            try
-            {
-
-                var firebase = new FirebaseClient(Key);
-
-                // add new item to list of data and let the client generate new key for you (done offline)
-
-                await firebase
-                   .Child("nguoidung")
-                   .Child(item.id)
-                  .PutAsync(item);
-
-            }
-            catch (Exception ex)
-            {
-                success = false;
-            }
-
-            return Json(success);
-           
-
-            //var observable = firebase
-            //    .Child("baihat")
-            //    .AsObservable<baihatModel>();
-        }
-       
-        [HttpPost]
-        public async Task<IActionResult> LoadNguoiDung()
-        {
-            
-                var firebase = new FirebaseClient(Key);
-
-                // add new item to list of data and let the client generate new key for you (done offline)
-                var dino = await firebase
-                  .Child("nguoidung")
-                  .OnceAsync<nguoidungModel>();
-            //    var theloai = await firebase
-            //     .Child("theloai")
-            //     .OnceAsync<theloaiModel>();
-            //var dino = from chude1 in chude
-            //            join theloai1 in theloai on chude1.Object.theloai_id equals theloai1.Object.id                       
-            //            select new
-            //            {
-            //                id = chude1.Object.id,
-            //                tenchude = chude1.Object.tenchude,
-            //                linkhinhanh = chude1.Object.linkhinhanh,
-            //                tentheloai = theloai1.Object.tentheloai
-
-            //            };
-
-            //var data = data1.OrderBy(c => c.Id).DistinctBy(i => new { i.Id });
-          
-            //var observable = firebase
-            //    .Child("baihat")
-            //    .AsObservable<baihatModel>();
-
-
-            return Json(dino);
-        }
-        [HttpPost]
-        public async Task<IActionResult> LoadTheLoai()
+        public async Task<IActionResult> taiNguoiDung()
         {
 
             var firebase = new FirebaseClient(Key);
 
-            var dino = await firebase
-              .Child("theloai")     
-              .OnceAsync<theloaiModel>();
+            var NguoiDung = LayBangNguoiDung();
 
-            return Json(dino);
+            var data = from t20 in NguoiDung
+                         
+                       select t20;
+
+            return Json(data);
         }
-        [HttpPost]
-        public async Task<IActionResult> GetLinkHinhAnh([FromForm] IFormCollection file)
-        {
-
-            long size = file.Files.Sum(f => f.Length);
-            string pathName = "Access";
-            string link = "";
-            var path = Path.Combine(_env.WebRootPath, $"image/{pathName}");
-            try
-            {
-                foreach (var item in file.Files)
-                {
-                    DateTime aDateTime = DateTime.Now;
-                    string tg = "(nguoidung)" + aDateTime.Day.ToString() + aDateTime.Month.ToString()
-                        + aDateTime.Year.ToString() + aDateTime.Hour.ToString()
-                        + aDateTime.Minute.ToString() + aDateTime.Second.ToString() + aDateTime.DayOfYear.ToString();
-                    if (item.Length > 0)
-                    {
-                        if (Directory.Exists(path))
-                        {
-                            using (FileStream fs = new FileStream(Path.Combine(path, item.FileName), FileMode.Create))
-                            {
-                                await item.CopyToAsync(fs);
-                            }
-                            using (FileStream fs = new FileStream(Path.Combine(path, item.FileName), FileMode.Open, FileAccess.Read, FileShare.ReadWrite))
-                            {
-
-
-                                link = await Task.Run(() => UploadHinhAnh(fs, tg));
-                              
-                            }
-                            System.IO.File.Delete(Path.Combine(path, item.FileName));
-                        }
-                        else
-                        {
-                            Directory.CreateDirectory(path);
-                            using (FileStream fs = new FileStream(Path.Combine(path, item.FileName), FileMode.Create))
-                            {
-                                await item.CopyToAsync(fs);
-                            }
-                            using (FileStream fs = new FileStream(Path.Combine(path, item.FileName), FileMode.Open, FileAccess.Read, FileShare.ReadWrite))
-                            {
-
-                                link = await Task.Run(() => UploadHinhAnh(fs, tg));
-                               
-                            }
-                            System.IO.File.Delete(Path.Combine(path, item.FileName));
-                        }
-
-                    }
-
-
-                }
-            }
-            catch (Exception e)
-            {
-
-            }
-            return Json(link);
-        }
-        public async Task<string> UploadHinhAnh(FileStream stream, string filename)
-        {
-            var auth = new FirebaseAuthProvider(new FirebaseConfig(ApiKey));
-            var a = await auth.SignInWithEmailAndPasswordAsync(AuthEmail, AuthPassword);
-
-            // cancel upload midway
-
-            var cancel = new CancellationTokenSource();
-            var task = new FirebaseStorage(Bucket, new FirebaseStorageOptions
-            {
-                AuthTokenAsyncFactory = () => Task.FromResult(a.FirebaseToken),
-                ThrowOnCancel = true
-            }).Child("image").Child("nguoidung").Child(filename).PutAsync(stream, cancel.Token);
-            try
-            {
-                string link = await task;
-                return link;
-
-            }
-            catch (Exception e)
-            {
-                return "";
-            }
-
-        }
+       
     }
 }
 

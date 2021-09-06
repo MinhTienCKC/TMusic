@@ -1,29 +1,59 @@
 ﻿
-<div class="col-lg-8">
-    <div class="card card-small mb-4">
-        <div class="card-header border-bottom">
-            <h6 class="m-0">Account Details</h6>
-        </div>
-        <ul class="list-group list-group-flush">
-            <li class="list-group-item p-3">
-                <div class="row">
-                    <div class="col">
-                        <form>
 
-                            <div class="form-row">
-
-                                <div class="form-group col-md-6">
-                                    <label for="feLastName">Tên bài hát</label>
-                                    <input type="text" ng-model="data1.object.tentheloai" class="form-control" id="feLastName" value="Brooks">
-                                </div>
-                            </div>
-                           
-                            <button type="submit" ng-click="submit()" class="btn btn-accent">Sữa Thể Loại</button>
-                            <button type="submit" ng-click="cancel()" class="btn btn-accent">Thoát</button>
-                        </form>
-                    </div>
-                </div>
-            </li>
-        </ul>
-    </div>
+<div class="modal-header" style="margin: 0px 0px 0px 0px;">
+    <h6 class="m-0">Sữa Thể Loại</h6>
+    <button type="submit" id="btntext" style="display:none;" class="btn btn-accent"></button>
 </div>
+<div class="modal-body" style="padding: 15px 30px 0px 30px !important;">
+    <form name="editTheLoai">
+        <div class="form-row kiemtra">
+            <div class="form-group col-md-6">
+                <label for="feLastName">Tên Thể Loại</label>
+                <input style="width:200%;" type="text" validatekitudacbiet ng-model="editTenTheLoai" name="editTenTheLoai" class="form-control" id="feLastName12" maxlength="255" value="Brooks" required>
+                <span class="thong_bao_sai" ng-show="editTheLoai.editTenTheLoai.$touched && editTheLoai.editTenTheLoai.$invalid">Tên Chủ Đề không hợp lệ.</span>
+            </div>
+        </div>
+
+    </form>
+</div>
+<div class="modal-footer" style="margin:0px 0px 0px 0px;">
+
+    <button type="submit" ng-click="submit()" class="btn btn-accent" id="submitcd">Sữa Thể Loại</button>
+    <button type="submit" ng-click="cancel()" class="btn btn-accent">Thoát</button>
+</div>
+<style>
+    .modal-content {
+        border-radius: 30px;
+        border: 1px solid #007bff;
+        top: 160px;
+        background: #F5F6F8;
+        width: 100%;
+    }
+
+    .thong_bao_sai {
+        color: red;
+        font-size: 11px;
+    }
+
+    .kiemtra, .kiemtra.form-group {
+        height: 88px !important;
+        max-height: 88px !important;
+        margin-bottom: 0.1rem !important;
+    }
+
+    .modal-header {
+        display: block;
+        color: white;
+        border-bottom: 1px solid #007bff !important;
+    }
+
+    .modal-body {
+        padding: 0px 0px 0px 0px !important;
+    }
+
+    .modal-footer {
+        border-top: 1px solid #007bff !important;
+    }
+</style>
+
+

@@ -260,7 +260,8 @@
     font-size: 20px;
     padding: 5px;
     border-radius: 50%;
-    /* background-color: #381735; */
+    cursor: pointer;
+    background-color: ##ffffff1a; 
     /* color: #fff; */
     color: rgb(255 255 255 / 50%);
 }
@@ -448,6 +449,8 @@
         overflow: hidden;
         width: 140px;
         height: 140px;
+        padding:0;
+        margin:0;
     }
 
 figure_timkiem {
@@ -684,12 +687,13 @@ icon_nav_right_first_timkiem_tab1 {
     left: 30px;
 }
 .icon_nav_right_first_timkiem_a {
-    margin-top: 10px;
+    margin-top: 1px;
     /* position: absolute; */
     right: 153px;
     /* opacity: 0; */
     font-size: 21px;
     color: #fff;
+    cursor:pointer;
 }
 .active_baihat_timkiem {
     background-color: rgb(255 255 255 / 10%);

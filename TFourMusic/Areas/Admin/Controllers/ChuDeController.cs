@@ -7,6 +7,7 @@ using System.Threading.Tasks;
 using System.Web;
 using Newtonsoft.Json;
 using TFourMusic.Models;
+
 using Microsoft.Extensions.Logging;
 using System.Diagnostics;
 using Firebase.Auth;
@@ -19,9 +20,14 @@ using Firebase.Database;
 
 
 
-using FirebaseConfig = Firebase.Auth.FirebaseConfig;
+using FirebaseConfig123 = Firebase.Auth.FirebaseConfig;
+//using FirebaseConfig = Firebase.Auth.FirebaseConfig;
 using Firebase.Database.Query;
 using Microsoft.AspNetCore.Authorization;
+using System.Net;
+using FireSharp.Interfaces;
+using FireSharp.Response;
+using Newtonsoft.Json.Linq;
 
 namespace TFourMusic.Controllers
 {
@@ -29,14 +35,12 @@ namespace TFourMusic.Controllers
   
     public class ChuDeController : Controller
     {
-        //IFirebaseConfig config = new FirebaseConfig
-        //{
-        //    AuthSecret = "MGsNSiHdXu6J2xSZoGqfod4KLmpg9dG0PSEOyoEe",
-        //    BasePath = "https://musictt-9aa5f-default-rtdb.firebaseio.com/"
-
-        //};
-
-        //IFirebaseClient client;
+        IFirebaseConfig config = new FireSharp.Config.FirebaseConfig
+        {
+            AuthSecret = "vHcXcNH4jYpiScpS8Fw3mSJhUj6lX3zp4kgpIM7T",
+            BasePath = "https://tfourmusic-1e3ff-default-rtdb.firebaseio.com/"
+        };
+        IFirebaseClient client;
         //private readonly ILogger<BaiHatController> _logger;
         private readonly IHostingEnvironment _env;
         //private static string ApiKey = "AIzaSyDXD0kXjDA_uoPLbK7fIIuxtKJC94AUnrQ";
@@ -76,7 +80,7 @@ namespace TFourMusic.Controllers
 
        
         [HttpPost]
-        public async Task<IActionResult> CreateChuDe([FromBody]chudeModel item)
+        public async Task<IActionResult> taoChuDe([FromBody]chudeModel item)
         {
             bool success = true;
           
@@ -87,17 +91,19 @@ namespace TFourMusic.Controllers
 
                 // add new item to list of data and let the client generate new key for you (done offline)
                 var dino = await firebase
-                  .Child("chude")
-                  .PostAsync(item)
-                  ;
+                    .Child("csdlmoi")
+                    .Child("chude")
+                    .PostAsync(item);
               
                 string kk = dino.Key.ToString();
                 item.id = kk;
                  await firebase
+                    .Child("csdlmoi")
                     .Child("chude")
                     .Child(kk)
                     .PutAsync(item);
-                
+                success = true;
+
             }
             catch (Exception ex)
             {
@@ -106,34 +112,92 @@ namespace TFourMusic.Controllers
 
             return Json(success);
         }
+        public List<baihatModel> LayBangBaiHat(string uid = null)
+        {
+            try
+            {
+                if (uid == null)
+                {
+                    client = new FireSharp.FirebaseClient(config);
+                    FirebaseResponse response = client.Get("csdlmoi/baihat");
+                    var data = JsonConvert.DeserializeObject<dynamic>(response.Body);
+                    var list = new List<baihatModel>();
+
+
+                    if (data != null)
+                    {
+                        foreach (var item in data)
+                        {
+                            foreach (var x in item)
+                            {
+                                foreach (var y in x)
+
+                                {
+                                    list.Add(JsonConvert.DeserializeObject<baihatModel>(((JProperty)y).Value.ToString()));
+
+                                }
+
+                            }
+
+                        }
+                    }
+                    return list;
+                }
+                else
+                {
+                    client = new FireSharp.FirebaseClient(config);
+                    FirebaseResponse response = client.Get("csdlmoi/baihat/" + uid);
+                    var data = JsonConvert.DeserializeObject<dynamic>(response.Body);
+                    var list = new List<baihatModel>();
+
+                    if (data != null)
+                    {
+                        foreach (var item in data)
+                        {
+                            list.Add(JsonConvert.DeserializeObject<baihatModel>(((JProperty)item).Value.ToString()));
+
+                        }
+                    }
+                    return list;
+                }
+            }
+            catch
+            {
+                return null;
+            }
+
+        }
         [HttpPost]
-        public async Task<IActionResult> DeleteChuDe([FromBody] chudeModel item)
+        public async Task<IActionResult> xoaChuDe([FromBody] chudeModel item)
         {
             bool success = true;
            
             try
             {
+                var baihat = LayBangBaiHat();
+                var data = (from bh in baihat
+                           where bh.chude_id.Equals(item.id.ToString())
+                           select bh).ToList();
+                if(data.Count == 0 )
+                {
+                    if (item.linkhinhanh != "")
+                    {
+                        var xoaHinhAnhStorage = xoaStorageBangLink(item.linkhinhanh.ToString());
+                    }                   
+                    var firebase = new FirebaseClient(Key);
+                    await firebase
+                        .Child("csdlmoi")
+                        .Child("chude")
+                       .Child(item.id)
+                       .DeleteAsync();
+                    success = true;
+                }
+                else
+                {
+                    success = false;
+                }
 
-                var firebase = new FirebaseClient(Key);
-
-                // add new item to list of data and let the client generate new key for you (done offline)
-
-                await firebase
-                   .Child("chude")
-                   .Child(item.id)
-                   .DeleteAsync();
-
-                // Create a reference to the file to delete
-                // var   auth = new FirebaseAuthProvider(new FirebaseConfig(ApiKey));
-                //var a = await auth.SignInWithEmailAndPasswordAsync(AuthEmail, AuthPassword);
-                //var task = new FirebaseStorage(Bucket, new FirebaseStorageOptions
-                //{
-                //    AuthTokenAsyncFactory = () => Task.FromResult(a.FirebaseToken),
-                //    ThrowOnCancel = true
-                //}).Child("image").Child("sdfdsf").DeleteAsync();
-               
                 
-                // Delete the file
                 
             }
             catch (Exception ex)
@@ -143,84 +207,125 @@ namespace TFourMusic.Controllers
 
             return Json(success);
         }
-       
+        public class BienTam
+        {
+            public string linkhinhanhmoi { get; set; }
+            public string linkhinhanhcu { get; set; }
+            public string chude_id { get; set; }
+
+
+        }
         [HttpPost]
-        public async Task<IActionResult> EditChuDe([FromBody] chudeModel item)
+        public async Task<IActionResult> suaLinkHinhAnhChuDe([FromBody] BienTam item)
+        {
+            bool success = true;
+            try
+            {
+
+                if (item.linkhinhanhcu != "")
+                {
+                    var xoaHinhAnhStorage = xoaStorageBangLink(item.linkhinhanhcu.ToString());
+                }
+                client = new FireSharp.FirebaseClient(config);
+                object p = client.Set("csdlmoi/chude/"  + item.chude_id + "/" + "linkhinhanh", item.linkhinhanhmoi);
+                success = true;
+            }
+            catch (Exception ex)
+            {
+                success = false;
+            }
+
+            return Json(success);
+        }
+        public async Task<IActionResult> xoaStorageBangLink(string link)
+        {
+            bool success = true;
+            try
+            {
+                if (link != "")
+                {
+                    var auth = new FirebaseAuthProvider(new FirebaseConfig(ApiKey));
+                    var a = await auth.SignInWithEmailAndPasswordAsync(AuthEmail, AuthPassword);
+
+                    var opiton = new FirebaseStorage(Bucket, new FirebaseStorageOptions
+                    {
+                        AuthTokenAsyncFactory = () => Task.FromResult(a.FirebaseToken),
+                        ThrowOnCancel = true
+                    });
+                    var resultContent = "N/A";
+                    // var link = "https://firebasestorage.googleapis.com/v0/b/tfourmusic-1e3ff.appspot.com/o/music%2Fnguoidung%2Fa%20whole%20new%20world.mp3?alt=media&token=bececcb8-1a5b-4a5e-bff5-2df24235c621";
+                    using (var http = await opiton.Options.CreateHttpClientAsync().ConfigureAwait(false))
+                    {
+                        var result = await http.DeleteAsync(link).ConfigureAwait(false);
+
+                        resultContent = await result.Content.ReadAsStringAsync().ConfigureAwait(false);
+
+                        result.EnsureSuccessStatusCode();
+                    }
+                    success = true;
+                }
+                else
+                {
+                    success = false;
+                }
+
+
+            }
+            catch (Exception ex)
+            {
+                success = false;
+            }
+            return Json(success);
+        }
+        [HttpPost]
+        public async Task<IActionResult> suaChuDe([FromBody] chudeModel item)
         {
 
           bool success = true;
           
             try
             {
-
-                var firebase = new FirebaseClient(Key);
-
-                // add new item to list of data and let the client generate new key for you (done offline)
-
-                await firebase
-                   .Child("chude")
-                   .Child(item.id)
-                  .PutAsync(item);
-
+                client = new FireSharp.FirebaseClient(config);
+                object p = client.Set("csdlmoi/chude/" + item.id + "/" + "tenchude", item.tenchude);
+                success = true;
+         
             }
             catch (Exception ex)
             {
                 success = false;
             }
 
-            return Json(success);
-           
-
-            //var observable = firebase
-            //    .Child("baihat")
-            //    .AsObservable<baihatModel>();
+            return Json(success);                     
         }
        
         [HttpPost]
-        public async Task<IActionResult> LoadChuDe()
+        public async Task<IActionResult> taiChuDe()
         {
+
             
                 var firebase = new FirebaseClient(Key);
 
                 // add new item to list of data and let the client generate new key for you (done offline)
                 var chude = await firebase
+                  .Child("csdlmoi")
                   .Child("chude")
+                  
                   .OnceAsync<chudeModel>();
-            //    var theloai = await firebase
-            //     .Child("theloai")
-            //     .OnceAsync<theloaiModel>();
-            //var dino = from chude1 in chude
-            //            join theloai1 in theloai on chude1.Object.theloai_id equals theloai1.Object.id                       
-            //            select new
-            //            {
-            //                id = chude1.Object.id,
-            //                tenchude = chude1.Object.tenchude,
-            //                linkhinhanh = chude1.Object.linkhinhanh,
-            //                tentheloai = theloai1.Object.tentheloai
 
-            //            };
+                var chude112 = await firebase
+                  .Child("csdlmoi")
+                  .Child("chude")
+                  
+                  .OnceAsync<chudeModel>();
 
-            //var data = data1.OrderBy(c => c.Id).DistinctBy(i => new { i.Id });
-          
-            //var observable = firebase
-            //    .Child("baihat")
-            //    .AsObservable<baihatModel>();
+            var data = (from cd in chude
+                       select cd.Object).ToList();
 
 
-            return Json(chude);
+
+            return Json(data);
         }
-        [HttpPost]
-        public async Task<IActionResult> LoadTheLoai()
-        {
-
-            var firebase = new FirebaseClient(Key);
-
-            var dino = await firebase
-              .Child("theloai")     
-              .OnceAsync<theloaiModel>();
-
-            return Json(dino);
-        }
+       
         [HttpPost]
         public async Task<IActionResult> GetLinkHinhAnh([FromForm] IFormCollection file)
         {
@@ -283,7 +388,7 @@ namespace TFourMusic.Controllers
         }
         public async Task<string> UploadHinhAnh(FileStream stream, string filename)
         {
-            var auth = new FirebaseAuthProvider(new FirebaseConfig(ApiKey));
+            var auth = new FirebaseAuthProvider(new FirebaseConfig123(ApiKey));
             var a = await auth.SignInWithEmailAndPasswordAsync(AuthEmail, AuthPassword);
 
             // cancel upload midway

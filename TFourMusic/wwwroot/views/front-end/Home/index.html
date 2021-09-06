@@ -29,7 +29,7 @@
                     <i ng-show="kiemTraBaiHatDangPhat!=x.id" ng-click="playMotBanNhac(x) " class="far fa-play-circle  play_baihat_moi_hover add-to-cart"></i>
                     <div ng-click="Play()" ng-show=" kiemTraBaiHatDangPhat==x.id && playmusic==1" class="play_baihat"> </div>
                     <i ng-click="Play()" ng-show="kiemTraBaiHatDangPhat==x.id && playmusic==0 " class="far fa-play-circle play_baihat_moi"></i>
-                    <img src="{{x.linkhinhanh}} " hidden />
+                    <img src="{{x.linkhinhanh}} " hidden style="width: 0; height:0;object-fit:cover" />
                 </div>
                 <div class="thongtin_baihat_moi">
                     <div class="ten_bai_hat_moi">{{x.tenbaihat}}</div>
@@ -62,7 +62,7 @@
                                 <i ng-show="kiemTraBaiHatDangPhat!=x.id" ng-click="playMotBanNhac(x)" class="far fa-play-circle  play_baihat_moi_hover add-to-cart"></i>
                                 <div ng-click="Play()" ng-show="kiemTraBaiHatDangPhat==x.id && playmusic==1" class="play_baihat"> </div>
                                 <i ng-click="Play()" ng-show="kiemTraBaiHatDangPhat==x.id && playmusic==0" class="far fa-play-circle play_baihat_moi"></i>
-                                <img src="{{x.linkhinhanh}} " hidden />
+                                <img src="{{x.linkhinhanh}} " hidden style="width: 0; height:0;object-fit:cover"  />
                             </div>
                             <div class="thongtin_baihat_moi">
                                 <div class="ten_bai_hat_moi">{{x.tenbaihat}}</div>
@@ -86,7 +86,7 @@
                                 <i ng-show="kiemTraBaiHatDangPhat!=x.id" ng-click="playMotBanNhac(x)" class="far fa-play-circle  play_baihat_moi_hover add-to-cart"></i>
                                 <div ng-click="Play()" ng-show="kiemTraBaiHatDangPhat==x.id && playmusic==1" class="play_baihat"> </div>
                                 <i ng-click="Play()" ng-show="kiemTraBaiHatDangPhat==x.id && playmusic==0" class="far fa-play-circle play_baihat_moi"></i>
-                                <img src="{{x.linkhinhanh}} " hidden />
+                                <img src="{{x.linkhinhanh}} " hidden style="width: 0; height:0;object-fit:cover" />
                             </div>
                             <div class="thongtin_baihat_moi">
                                 <div class="ten_bai_hat_moi">{{x.tenbaihat}}</div>
@@ -109,7 +109,7 @@
                                 <i ng-show="kiemTraBaiHatDangPhat!=x.id" ng-click="playMotBanNhac(x)" class="far fa-play-circle  play_baihat_moi_hover add-to-cart"></i>
                                 <div ng-click="Play()" ng-show="kiemTraBaiHatDangPhat==x.id && playmusic==1" class="play_baihat"> </div>
                                 <i ng-click="Play()" ng-show="kiemTraBaiHatDangPhat==x.id&& playmusic==0" class="far fa-play-circle play_baihat_moi"></i>
-                                <img src="{{x.linkhinhanh}} " hidden />
+                                <img src="{{x.linkhinhanh}} " hidden style="width: 0; height:0;object-fit:cover" />
                             </div>
                             <div class="thongtin_baihat_moi">
                                 <div class="ten_bai_hat_moi">{{x.tenbaihat}}</div>
@@ -151,8 +151,8 @@
                                                 <div class="play1-play3 nut_dsp_tl" style="font-size: 2rem; height: 30px; width: 30px; " ng-click="$event.preventDefault();  yeuThichTop20Ui($index); yeuThichTop20(dsptl.id)">
                                                     <!--<i class="far fa-heart iconmusic"></i>-->
                                                     <i ng-show="!checklogin.dadangnhap" class="far fa-heart iconmusic" style="font-size: 14px;"></i>
-                                                    <i ng-show="dsptl.yeuthich==0" class="far fa-heart iconmusic" style="font-size: 14px;"></i>
-                                                    <i ng-show="dsptl.yeuthich==1" class="fas fa-heart " style="color:#ed2b91; font-size: 14px;"></i>
+                                                    <i ng-show="dsptl.yeuthich==0 && checklogin.dadangnhap == true" class="far fa-heart iconmusic" style="font-size: 14px;"></i>
+                                                    <i ng-show="dsptl.yeuthich==1 && checklogin.dadangnhap ==true" class="fas fa-heart " style="color:#ed2b91; font-size: 14px;"></i>
                                                 </div>
                                                 <div ng-click="$event.preventDefault(); Play(); " class="play1-play2 nut_dsp_tl vong_tron_play" style="" tabindex="0" ng-show="kiemTraDSPTop20Click == dsptl.danhsachphattheloai_id">
                                                     <div ng-show="playmusic == 1 " class="play_baihat_dsptl" style="top: 51%;left: 38%; height: 26px; width: 27px;"> </div>

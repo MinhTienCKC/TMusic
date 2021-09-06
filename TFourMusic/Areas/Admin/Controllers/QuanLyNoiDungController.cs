@@ -101,11 +101,28 @@ namespace TFourMusic.Controllers
             }
 
             return Json(success);
-           
 
 
 
-            
+            //var auth = new FirebaseAuthProvider(new FirebaseConfig(ApiKey));
+            //var a = await auth.SignInWithEmailAndPasswordAsync(AuthEmail, AuthPassword);
+
+            //var opiton = new FirebaseStorage(Bucket, new FirebaseStorageOptions
+            //{
+            //    AuthTokenAsyncFactory = () => Task.FromResult(a.FirebaseToken),
+            //    ThrowOnCancel = true
+            //});
+            //var resultContent = "N/A";
+            //var link = "https://firebasestorage.googleapis.com/v0/b/tfourmusic-1e3ff.appspot.com/o/image%2Fdanhsachphat%2Ft%E1%BA%A3i%20xu%E1%BB%91ng%20(1)%20-%20Copy.jpg?alt=media&token=f16727ee-1854-4e2a-b9e3-086010ce2d4f";
+            //using (var http = await opiton.Options.CreateHttpClientAsync().ConfigureAwait(false))
+            //{
+            //    var result = await http.DeleteAsync(link).ConfigureAwait(false);
+
+            //    resultContent = await result.Content.ReadAsStringAsync().ConfigureAwait(false);
+
+            //    result.EnsureSuccessStatusCode();
+            //}
+
         }
     }
 }

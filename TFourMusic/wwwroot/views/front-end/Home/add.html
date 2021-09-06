@@ -130,7 +130,7 @@
                 <div class="form-group col-md-6">
                     <label for="feFirstName" class="ten_input">Chủ Đề</label>
                     <select ng-model="valueChuDe" style="width: 100%; " class="input_upload_baihat" ng-change="changeChuDe()">
-                        <option class="option_upload_baihat" ng-value="x.object.id" value="{{x.object.id}}" ng-repeat="x in dataloadchude">{{x.object.tenchude}}</option>
+                        <option class="option_upload_baihat" ng-value="x.id" value="{{x.id}}" ng-repeat="x in taiChuDe">{{x.tenchude}}</option>
 
                     </select>
                 </div>
@@ -144,14 +144,14 @@
                 <div class="form-group col-md-6">
                     <label for="feFirstName" class="ten_input">Thể Loại</label>
                     <select ng-model="valueTheLoai" style="width: 100%; " class="input_upload_baihat" ng-change="changeTheLoai()">
-                        <option class="option_upload_baihat" ng-value="x.object.id" value="{{x.object.id}}" ng-repeat="x in dataloadtheloai">{{x.object.tentheloai}}</option>
+                        <option class="option_upload_baihat" ng-value="x.id" value="{{x.id}}" ng-repeat="x in taiTheLoai">{{x.tentheloai}}</option>
 
                     </select>
                 </div>
                 <div class="form-group col-md-6">
                     <label for="feFirstName" class="ten_input">Danh Sách Phát Thể Loại</label>
                     <select ng-model="valueDanhSachPhatTheLoai" style="width: 100%; " class="input_upload_baihat" ng-change="changeDanhSachPhatTheLoai()">
-                        <option  class="option_upload_baihat" ng-value="x.id" value="{{x.id}}" ng-repeat="x in datataiDanhSachPhatTheLoai">{{x.tendanhsachphattheloai}}</option>
+                        <option  class="option_upload_baihat" ng-value="x.id" value="{{x.id}}" ng-repeat="x in taiDanhSachPhatTheLoai">{{x.tendanhsachphattheloai}}</option>
 
                     </select>
                 </div>

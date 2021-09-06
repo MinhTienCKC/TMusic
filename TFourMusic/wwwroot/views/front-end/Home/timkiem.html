@@ -105,7 +105,7 @@
                             <!--<label class="label_account">
                                 <i class="far fa-heart icon_account_notfocus"></i>
                             </label>-->
-                            <span class="material-icons-outlined dots_account_baihat_timkiem"context-menu1="contextMenuBaiHat_BaiHat" ng-click="moChiTietBaiHat(x)">
+                            <span style="cursor:pointer" class="material-icons-outlined dots_account_baihat_timkiem"context-menu1="contextMenuBaiHat_BaiHat" ng-click="moChiTietBaiHat(x)">
                                 more_horiz
                             </span>
                         </div>
@@ -229,9 +229,9 @@
                     <div class="media_luu_content_timkiem"><div class="time_bai_hat_timkiem">{{x.thoiluongbaihat}}</div></div>
                     <div class="media_luu_right">
                         <label class="label_account" ng-click="toggleYeuThichBH_TimKiem($index)">
-                            <i ng-show="x.yeuthich==0" class="far fa-heart icon_nav_right_first_timkiem_TAB"></i>
+                            <i ng-show="x.yeuthich==0" style="right:141px" class="far fa-heart icon_nav_right_first_timkiem_TAB"></i>
                             <i ng-show="x.yeuthich==1" style="position: inherit;" class="fas fa-heart icon_active_yeuthich_timkiem"></i>
-                            <i ng-show="!checklogin.dadangnhap" class="far fa-heart icon_nav_right_first_timkiem_TAB"></i>
+                            <i ng-show="!checklogin.dadangnhap" style="right:141px"  class="far fa-heart icon_nav_right_first_timkiem_TAB"></i>
                         </label>
                         <!--<label class="label_account">
                             <i class="far fa-heart icon_account_notfocus"></i>
