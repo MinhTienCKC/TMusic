@@ -1,6 +1,8 @@
-﻿var ctxfolderurl = "/views/front-end/Home";
+﻿
 
-var app = angular.module('App_ESEIM', ['ui.bootstrap', 'ngRoute', 'slick', 'ngCookies', 'ngAnimate']);
+var ctxfolderurl = "/views/front-end/Home";
+
+var app = angular.module('App_ESEIM', ['ui.bootstrap', 'ngRoute', 'slick', 'ngCookies', 'ngAnimate','ui.directives', 'ui.filters']);
 
 app.config(function ($routeProvider, $locationProvider) {
     $locationProvider.hashPrefix('');
@@ -11,10 +13,10 @@ app.config(function ($routeProvider, $locationProvider) {
             templateUrl: ctxfolderurl + '/index.html',
             controller: 'index'
         })
-        .when('/zingchart', {
-            feature: 'zingchart',
-            templateUrl: ctxfolderurl + '/zingchart.html',
-            controller: 'zingchart'
+        .when('/toptrending', {
+            feature: 'toptrending',
+            templateUrl: ctxfolderurl + '/toptrending.html',
+            controller: 'toptrending'
         })
         .when('/canhan', {
             feature: 'canhan',
@@ -199,6 +201,7 @@ app.factory('dataservice', function ($http) {
         timKiemNgheSi: function (data, callback) {
             $http.post('/Home/timKiemNgheSi', data).then(callback);
         },
+
         taoNguoiDungXacThuc: function (data, callback) {
             $http.post('/Home/TaoNguoiDungVoiXacThuc', data).then(callback);
         },
@@ -243,6 +246,9 @@ app.factory('dataservice', function ($http) {
         },
         getListDanhSachPhatNguoiDung: function (data, callback) {
             $http.post('/Home/getListDanhSachPhatNguoiDung', data).then(callback);
+        },
+        getListDanhSachPhatNgheSi: function (data, callback) {
+            $http.post('/Home/getListDanhSachPhatNgheSi', data).then(callback);
         },
         getListBaiHatYeuThich: function (data, callback) {
             $http.post('/Home/getListBaiHatYeuThich?uid=' + data).then(callback);
@@ -354,6 +360,16 @@ app.factory('dataservice', function ($http) {
             $http.post('/Home/theoDoiNguoiDung', data).then(callback);
 
         },
+        // top trending
+        themLuotNgheToptrending: function (data, callback) {
+            $http.post('/Home/themLuotNgheToptrending', data).then(callback);
+        },
+        DanhSachTopTrending: function (data, callback) {
+            $http.post('/Home/DanhSachTopTrending?uid=' + data).then(callback);
+
+        },
+
+
         // 13/07 taiChiTietPlayList_PlayList
         taiChiTietPlayList_PlayList: function (data, callback) {
             $http.post('/Home/taiChiTietPlayList_PlayList', data).then(callback);
@@ -542,7 +558,7 @@ app.controller('Ctrl_ESEIM', function ($scope, dataservice, $uibModal, $rootScop
             if ($location.path() == "/") {
                 $scope.modelnav = 2;
             }
-            if ($location.path() == "/zingchart") {
+            if ($location.path() == "/toptrending") {
                 $scope.modelnav = 3;
             }
             if ($location.path() == "/theodoi") {
@@ -639,7 +655,7 @@ app.controller('Ctrl_ESEIM', function ($scope, dataservice, $uibModal, $rootScop
                 if ($location.path() == "/") {
                     $scope.modelnav = 2;
                 }
-                if ($location.path() == "/zingchart") {
+                if ($location.path() == "/toptrending") {
                     $scope.modelnav = 3;
                 }
                 if ($location.path() == "/theodoi") {
@@ -681,30 +697,26 @@ app.controller('Ctrl_ESEIM', function ($scope, dataservice, $uibModal, $rootScop
 
         firebase.auth().signInWithPopup(ggProvider).then(function (result) {
             $scope.modellogin = {
-                id: '',
                 daxacthuc: '1',
                 matkhau: '',
                 email: '',
                 hoten: '',
-                quocgia: 'null',
-                thanhpho: 'null',
-                website: 'null',
                 mota: 'null',
                 ngaysinh: '',
-                facebook: 'null',
                 hinhdaidien: '',
-                cover: 'null',
-                gioitinh: '',
+                gioitinh: '1',
                 online: 0,
                 vip: 0,
                 hansudung: '',
-                uid: ''
+                uid: '',
+                vohieuhoa: '0',
+                daxoa:'0'
             }
             var user = result.user;
             $scope.modellogin.email = user.email;
             $scope.modellogin.hoten = user.displayName;
             $scope.modellogin.uid = user.uid;
-            $scope.modellogin.hinhdaidien = user.photoURL;
+            //$scope.modellogin.hinhdaidien = user.photoURL;
             dataservice.taoNguoiDungXacThuc($scope.modellogin, function (rs) {
                 rs = rs.data;
                 if (rs.Error) { }
@@ -746,24 +758,21 @@ app.controller('Ctrl_ESEIM', function ($scope, dataservice, $uibModal, $rootScop
             // This gives you a Facebook Access Token. You can use it to access the Facebook API.
 
             $scope.modellogin = {
-                id: '',
+         
                 daxacthuc: '1',
                 matkhau: '',
                 email: '',
                 hoten: '',
-                quocgia: 'null',
-                thanhpho: 'null',
-                website: 'null',
                 mota: 'null',
                 ngaysinh: '',
-                facebook: 'null',
                 hinhdaidien: '',
-                cover: 'null',
-                gioitinh: '',
+                gioitinh: '1',
                 online: 0,
                 vip: 0,
                 hansudung: '',
-                uid: ''
+                uid: '',
+                vohieuhoa: '0',
+                daxoa: '0'
             }
             var user = result.user;
             if (user.email != null) {
@@ -775,7 +784,7 @@ app.controller('Ctrl_ESEIM', function ($scope, dataservice, $uibModal, $rootScop
 
             $scope.modellogin.hoten = user.displayName;
             $scope.modellogin.uid = user.uid;
-            $scope.modellogin.hinhdaidien = user.photoURL;
+           // $scope.modellogin.hinhdaidien = user.photoURL;
             dataservice.taoNguoiDungXacThuc($scope.modellogin, function (rs) {
                 rs = rs.data;
                 if (rs.Error) { }
@@ -964,6 +973,9 @@ app.controller('Ctrl_ESEIM', function ($scope, dataservice, $uibModal, $rootScop
                             rs = rs.data;
                             idBaiHatDangNghe = "";
                         })
+                        dataservice.themLuotNgheToptrending($rootScope.BaiHatDangPhat, function (rs) {
+                            rs = rs.data;
+                        });
 
                     }, thoiGian)
 
@@ -1167,24 +1179,20 @@ app.controller('Ctrl_ESEIM', function ($scope, dataservice, $uibModal, $rootScop
         $scope.disabledbutton = false;
     }
     $scope.model = {
-        id: '',
-        daxacthuc: '0',
+        daxacthuc: '1',
         matkhau: '',
         email: '',
         hoten: '',
-        quocgia: 'null',
-        thanhpho: 'null',
-        website: 'null',
         mota: 'null',
-        ngaysinh: new Date(),
-        facebook: 'null',
+        ngaysinh: '',
         hinhdaidien: '',
-        cover: 'null',
-        gioitinh: '',
+        gioitinh: '1',
         online: 0,
         vip: 0,
-        hansudung: '0',
-        uid: 'null'
+        hansudung: '',
+        uid: '',
+        vohieuhoa: '0',
+        daxoa: '0'
     }
     $scope.dangky = function () {
         $("#loading_main").css("display", "block");
@@ -1231,31 +1239,27 @@ app.controller('Ctrl_ESEIM', function ($scope, dataservice, $uibModal, $rootScop
                         $rootScope.closelogin = false;
                     }, 1450);
                     $scope.modellogin = {
-                        id: '',
                         daxacthuc: '1',
                         matkhau: '',
                         email: '',
                         hoten: '',
-                        quocgia: 'null',
-                        thanhpho: 'null',
-                        website: 'null',
                         mota: 'null',
                         ngaysinh: '',
-                        facebook: 'null',
                         hinhdaidien: '',
-                        cover: 'null',
-                        gioitinh: '',
+                        gioitinh: '1',
                         online: 0,
                         vip: 0,
                         hansudung: '',
-                        uid: ''
+                        uid: '',
+                        vohieuhoa: '0',
+                        daxoa: '0'
                     }
                     var user = result.user;
                     $scope.modellogin.email = user.email;
                     $scope.modellogin.hoten = user.displayName;
                     $scope.modellogin.uid = user.uid;
                     if (user.photoURL != null) {
-                        $scope.modellogin.hinhdaidien = user.photoURL;
+                      //  $scope.modellogin.hinhdaidien = user.photoURL;
                     }
 
                     dataservice.taoNguoiDungXacThuc($scope.modellogin, function (rs) {
@@ -1307,31 +1311,27 @@ app.controller('Ctrl_ESEIM', function ($scope, dataservice, $uibModal, $rootScop
                             $rootScope.closelogin = false;
                         }, 1450);
                         $scope.modellogin = {
-                            id: '',
                             daxacthuc: '1',
                             matkhau: '',
                             email: '',
                             hoten: '',
-                            quocgia: 'null',
-                            thanhpho: 'null',
-                            website: 'null',
                             mota: 'null',
                             ngaysinh: '',
-                            facebook: 'null',
                             hinhdaidien: '',
-                            cover: 'null',
-                            gioitinh: '',
+                            gioitinh: '1',
                             online: 0,
                             vip: 0,
                             hansudung: '',
-                            uid: ''
+                            uid: '',
+                            vohieuhoa: '0',
+                            daxoa: '0'
                         }
                         var user = result.user;
                         $scope.modellogin.email = user.email;
                         $scope.modellogin.hoten = user.displayName;
                         $scope.modellogin.uid = user.uid;
                         if (user.photoURL != null) {
-                            $scope.modellogin.hinhdaidien = user.photoURL;
+                          //  $scope.modellogin.hinhdaidien = user.photoURL;
                         }
 
                         dataservice.taoNguoiDungXacThuc($scope.modellogin, function (rs) {
@@ -1380,31 +1380,27 @@ app.controller('Ctrl_ESEIM', function ($scope, dataservice, $uibModal, $rootScop
                                 $rootScope.closelogin = false;
                             }, 1450);
                             $scope.modellogin = {
-                                id: '',
                                 daxacthuc: '1',
                                 matkhau: '',
                                 email: '',
                                 hoten: '',
-                                quocgia: 'null',
-                                thanhpho: 'null',
-                                website: 'null',
                                 mota: 'null',
                                 ngaysinh: '',
-                                facebook: 'null',
                                 hinhdaidien: '',
-                                cover: 'null',
-                                gioitinh: '',
+                                gioitinh: '1',
                                 online: 0,
                                 vip: 0,
                                 hansudung: '',
-                                uid: ''
+                                uid: '',
+                                vohieuhoa: '0',
+                                daxoa: '0'
                             }
                             var user = result.user;
                             $scope.modellogin.email = user.email;
                             $scope.modellogin.hoten = user.displayName;
                             $scope.modellogin.uid = user.uid;
                             if (user.photoURL != null) {
-                                $scope.modellogin.hinhdaidien = user.photoURL;
+                              //  $scope.modellogin.hinhdaidien = user.photoURL;
                             }
 
                             dataservice.taoNguoiDungXacThuc($scope.modellogin, function (rs) {
@@ -2777,7 +2773,7 @@ app.controller('index', function ($scope, dataservice, $rootScope, $location) {
             dataservice.getListBaiHatMoi($rootScope.checklogin.uid, function (rs) {
                 rs = rs.data;
                 $scope.baiHatMoi = rs;
-                $rootScope.songs = rs;
+               // $rootScope.songs = rs;
 
             })
             dataservice.getListBaiHatNgheNhieuNhat($rootScope.checklogin.uid, function (rs) {
@@ -3814,7 +3810,7 @@ app.controller('nghesi', function ($scope, $routeParams, dataservice, $rootScope
                         $scope.listDaTaiLenNgheSi = rs;
                     }
                 })
-                dataservice.getListDanhSachPhatNguoiDung($scope.text, function (rs) {
+                dataservice.getListDanhSachPhatNgheSi($scope.text, function (rs) {
                     rs = rs.data;
                     if (rs.Error) { } else {
                         $scope.listDSPNgheSi = rs;
@@ -4086,6 +4082,51 @@ app.directive("animatechitiet", function () {
     return animatechitiet;
 });
 
+//17/08 ĐÃ SỮA CSDL MỚI
+app.controller('toptrending', function ($scope, dataservice, $rootScope, $location) {
+
+    $scope.text = {
+        key: '',
+        uid: ''
+    }
+    $scope.initData = function () {
+        $scope.date = new Date();
+        var promise = new Promise(function (resolve, reject) {
+            firebase.auth().onAuthStateChanged(function (userlogin) {
+                if (userlogin) {
+                    const user = firebase.auth().currentUser;
+                    if (user != null) {
+                        $rootScope.checklogin.uid = user.uid;
+                        dataservice.getUser(user.uid, function (rs) {
+                            rs = rs.data;
+                            if (rs.Error) { } else {
+                                $rootScope.checklogin.hovaten = rs.hoten;
+
+                                $rootScope.checklogin.hinhanh = rs.hinhdaidien;
+                                $rootScope.checklogin.dadangnhap = true;
+                                $rootScope.checklogin.mota = rs.mota;
+                                $rootScope.checklogin.vip = rs.vip;
+                            }
+                        })
+                    }
+                }
+                else {
+
+                }
+                resolve();
+            });
+        });
+        promise.then(function () {
+            dataservice.DanhSachTopTrending($rootScope.checklogin.uid, function (rs) {
+                rs = rs.data;
+                if (rs.Error) { } else {
+                    $scope.DataDanhSachTopTrenDing = rs;
+                }
+            })
+        })
+    }
+    $scope.initData();
+})
 
 app.controller('add', function ($rootScope, $scope, dataservice, $uibModalInstance) {
     $scope.cancel = function () {

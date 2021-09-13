@@ -111,12 +111,13 @@
                                 <td class="vitrigiua">{{data.casi}}</td>
                                 <td class="vitrigiua">{{data.luotnghe}}</td>
                                 <td class="vitrigiua">{{data.luottaixuong}}</td>
-                                <td class="vitrigiua">{{data.luotthich}}</td>
+                                <!--<td class="vitrigiua">{{data.luotthich}}</td>-->
                                 <td ng-if="timkiem.nguoidung_id == 'admin'" class="vitrigiua">
                                     <label class="switch1">
                                         <input ng-change="cheDo(data)" type="checkbox" ng-model="data.chedo"
                                                ng-true-value="1" ng-false-value="0">
-                                        <span class="slider1 round"></span>
+                                        <span ng-if="data.chedo == 1" class="slider1 round" title="Công Khai"></span>
+                                        <span ng-if="data.chedo == 0" class="slider1 round" title="Cá Nhân"></span>
                                     </label>
                                 </td>
                                 <td class="vitrigiua"> <button ng-click="edit(data)" style="width: 25px; height: 25px; padding: 0px;-webkit-box-shadow: 0 2px 5px 0 rgba(85,168,253,0.45);" class="btn btn-accent blue "><i class="fa fa-edit"></i></button>       </td>

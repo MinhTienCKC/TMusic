@@ -2,12 +2,12 @@
 <div class="header_account" ng-init="checkmusic = false;">
     <div ng-if="checklogin.mota.length > 5" style=" position: absolute; color: #fff; width: 440px; left: 37px; top: 15px;" class="mota_nghesi_scoll">
         {{checklogin.mota}}
-        <span ng-click="clickedit()" class="edit_mota"> Chỉnh sữa  </span>
+        <span ng-click="clickedit()" class="edit_mota"> Chỉnh sửa  </span>
 
     </div>
     <div ng-if="checklogin.mota.length < 5 " style=" position: absolute; color: #fff; width: 440px; left: 37px; top: 15px;" class="mota_nghesi_scoll">
         Chưa có thông tin mô tả.
-        <span ng-click="clickedit()" class="edit_mota"> Chỉnh sữa  </span>
+        <span ng-click="clickedit()" class="edit_mota"> Chỉnh sửa  </span>
     </div>
     <div style="position: absolute; color: #fff; width: 396px; right: 37px; top: 76px;" class="mota_nghesi_scoll_vip">
         <ul>
@@ -272,11 +272,11 @@
     <div class="modal_laylist_layout">
         <div class="modal_laylist_layout_item">
             <div class="modal_content">
-                <h3 style=" font-size: 18px; margin-bottom: 15px;">Chỉnh Sữa Họ Tên</h3>
+                <h3 style=" font-size: 18px; margin-bottom: 15px;">Chỉnh Sửa Họ Tên</h3>
                 <input class="input_playlist " validatekitudacbiet ng-model="modelhoten" maxlength="30" type="text" placeholder="Nhập họ tên mới" />
                 <div class="option_playlist">
                 </div>
-                <button ng-click="chinhSuaHoTen()" ng-disabled="modelhoten.length < 1 || modelhoten == undefined " ng-class="{'disable_button': modelhoten.length < 1 ||modelhoten == undefined   }" class="button_create_playlist">Chỉnh sữa</button>
+                <button ng-click="chinhSuaHoTen()" ng-disabled="modelhoten.length < 1 || modelhoten == undefined " ng-class="{'disable_button': modelhoten.length < 1 ||modelhoten == undefined   }" class="button_create_playlist">Chỉnh sửa</button>
             </div>
         </div>
     </div>
@@ -288,11 +288,11 @@
     <div class="modal_laylist_layout">
         <div class="modal_laylist_layout_item">
             <div class="modal_content" style="width: 555px;">
-                <h3 style=" font-size: 18px; margin-bottom: 15px;">Chỉnh Sữa mô tả</h3>
+                <h3 style=" font-size: 18px; margin-bottom: 15px;">Chỉnh sửa mô tả</h3>
                 <textarea class="input_playlist " validatekitudacbiet ng-model="modelmota" maxlength="350" type="text" style="height: 206px;border-radius:10px;" placeholder="Nhập mô tả" />
                 <div class="option_playlist">
                 </div>
-                <button ng-click="chinhSuaMoTa()" ng-disabled="modelmota.length < 10 || modelmota == undefined " ng-class="{'disable_button': modelmota.length < 10 ||modelmota == undefined   }" class="button_create_playlist">Chỉnh sữa</button>
+                <button ng-click="chinhSuaMoTa()" ng-disabled="modelmota.length < 10 || modelmota == undefined " ng-class="{'disable_button': modelmota.length < 10 ||modelmota == undefined   }" class="button_create_playlist">Chỉnh sửa</button>
             </div>
         </div>
     </div>
