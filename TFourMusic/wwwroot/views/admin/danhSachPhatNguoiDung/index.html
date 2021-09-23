@@ -1,67 +1,201 @@
-﻿<div class="main-content-container container-fluid px-4">
+﻿<!--<div class="main-content-container container-fluid px-4">-->
+<!-- Page Header -->
+<!--<div class="page-header row no-gutters py-4">
+    <div class="col-12 col-sm-4 text-center text-sm-left mb-0">
+        <button type="submit" ng-click="add()" class="btn btn-accent">Tạo Người Dùng</button>
+
+    </div>
+    <div class="col-12 col-sm-4 text-center text-sm-left mb-0">
+
+
+    </div>
+    <div class="col-12 col-sm-4 text-center text-sm-left mb-0">
+
+
+    </div>
+</div>-->
+<!-- End Page Header -->
+<!-- Default Light Table -->
+<!--<div class="row">
+
+    <div class="col">
+        <div class="card card-small mb-4 dodai">
+            <div class="card-header border-bottom">
+                <h6 class="m-0">Người Dùng</h6>
+
+            </div>
+            <div class="card-body p-0 pb-3 text-center">
+                <table class="table mb-0 dodaibang">
+                    <thead class="bg-light">
+                        <tr>-->
+<!--<th scope="col" class="border-0">id</th>-->
+<!--<th scope="col" class="border-0">Họ Tên</th>
+<th scope="col" class="border-0">Ảnh</th>-->
+<!--<th scope="col" class="border-0">Thể Loại</th>-->
+<!--<th scope="col" class="border-0">Email</th>
+        <th scope="col" class="border-0">Ngày Sinh</th>
+        <th scope="col" class="border-0">Sửa</th>
+        <th scope="col" class="border-0">Xóa</th>
+    </tr>
+</thead>
+<tbody>
+    <tr ng-repeat="data in dataloadnguoidung | startFrom:currentPage*pageSize | limitTo:pageSize">-->
+<!--<td>{{data.Object.key}}</td>-->
+<!--<td class="vitrigiua">{{data.object.hoten}}</td>
+<td><img src="{{data.object.hinhdaidien}}" class="icon-category hinhanh"></td>
+<td class="vitrigiua">{{data.object.email}}</td>
+<td class="vitrigiua">{{data.object.ngaysinh | date:'dd/MM/yyyy' }}</td>-->
+<!--<td>{{data.tentheloai}}</td>-->
+<!--<td class="vitrigiua"> <button ng-click="edit(data)" style="width: 25px; height: 25px; padding: 0px;-webkit-box-shadow: 0 2px 5px 0 rgba(85,168,253,0.45);" class="btn btn-accent blue"><i class="fa fa-edit"></i></button>       </td>
+                            <td class="vitrigiua"> <button type="submit" ng-click="delete(data.key)" style="width: 25px; height: 25px; padding: 0px;-webkit-box-shadow: 0 2px 5px 0 rgba(230,60,95,0.45)" class="btn btn-accent red"><i class="fa fa-trash"></i></button></td>
+
+
+                        </tr>
+
+                    </tbody>
+                </table>
+                {{currentPage+1}}/{{numberOfPages()}}
+
+            </div>
+
+        </div>
+
+
+    </div>
+
+</div>-->
+<!-- End Default Light Table -->
+<!-- Default Dark Table -->
+<!--<div class="row" style="padding:0px 0px 0px 15px">
+
+    <nav aria-label="Page navigation example">
+        <ul class="pagination pagination-primary" style="padding-left: 0px;">
+            <li class="page-item" ng-click="Prev()"><a class="page-link" href="">Trước</a></li>
+            <li class="page-item" ng-repeat="a in range(numberOfPages()) track by $index">
+                <a class="page-link" href="" ng-click="phanTrang( $index )">{{$index + 1}}</a>
+            </li>
+            <li class="page-item" ng-click="Next()"><a class="page-link" href="">Sau</a></li>
+        </ul>
+    </nav>
+</div>-->
+<!--<div class="row">
+    <div class="col">
+        <div class="card card-small overflow-hidden mb-4">
+            <div class="card-header bg-dark">
+                <h6 class="m-0 text-white">Inactive Users</h6>
+            </div>
+            <div class="card-body p-0 pb-3 bg-dark text-center">
+                <table class="table table-dark mb-0">
+                    <thead class="thead-dark">
+                        <tr>
+                            <th scope="col" class="border-bottom-0">#</th>
+                            <th scope="col" class="border-bottom-0">First Name</th>
+                            <th scope="col" class="border-bottom-0">Last Name</th>
+                            <th scope="col" class="border-bottom-0">Country</th>
+                            <th scope="col" class="border-bottom-0">City</th>
+                            <th scope="col" class="border-bottom-0">Phone</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>1</td>
+                            <td>Graham</td>
+                            <td>Brent</td>
+                            <td>Benin</td>
+                            <td>Ripabottoni</td>
+                            <td>1-512-760-9094</td>
+                        </tr>
+                        <tr>
+                            <td>2</td>
+                            <td>Clark</td>
+                            <td>Angela</td>
+                            <td>Estonia</td>
+                            <td>Borghetto di Vara</td>
+                            <td>1-660-850-1647</td>
+                        </tr>
+                        <tr>
+                            <td>3</td>
+                            <td>Wylie</td>
+                            <td>Joseph</td>
+                            <td>Korea, North</td>
+                            <td>Guelph</td>
+                            <td>325-4351</td>
+                        </tr>
+                        <tr>
+                            <td>4</td>
+                            <td>Garth</td>
+                            <td>Clementine</td>
+                            <td>Indonesia</td>
+                            <td>Narcao</td>
+                            <td>722-8264</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>-->
+<!-- End Default Dark Table -->
+<!--</div>-->
+<div class="main-content-container container-fluid px-4">
     <!-- Page Header -->
     <div class="page-header row no-gutters py-4">
-        <!--<div class="col-12 col-sm-4 text-center text-sm-left mb-0">
-            <button type="submit" ng-click="add()" class="btn btn-accent">Tạo Danh Sách Phát Người Dùng</button>
-
-        </div>-->
         <div class="col-12 col-sm-4 text-center text-sm-left mb-0">
 
 
         </div>
         <div class="col-12 col-sm-4 text-center text-sm-left mb-0">
-
-
         </div>
     </div>
     <!-- End Page Header -->
     <!-- Default Light Table -->
     <div class="row">
-
         <div class="col">
-            <div class="card card-small mb-4 dodai">
+            <div class="card card-small mb-4 dodai" style="height:520px; max-height:520px;">
                 <div class="card-header border-bottom">
-                    <h6 class="m-0">Danh Sách Phát Người Dùng (Playlist)</h6>
+                    <h6 class="m-0">Người Dùng</h6>
                 </div>
                 <div class="card-body p-0 pb-3 text-center">
-                    <table class="table mb-0 dodaibang">
+                    <table class="table mb-0 dodaibang" style="">
                         <thead class="bg-light">
                             <tr>
                                 <!--<th scope="col" class="border-0">id</th>-->
                                 <th scope="col" class="border-0">Tên Danh Sách Phát</th>
-                                <th scope="col" class="border-0">Mô Tả</th>
-                                <th scope="col" class="border-0">Chế Độ</th>
-                                <th scope="col" class="border-0">Sửa</th>
-                                <th scope="col" class="border-0">Xóa</th>
+                                <th scope="col" class="border-0">Hình Ảnh</th>
+                                <th scope="col" class="border-0">Thời Gian</th>
+                                <th scope="col" class="border-0" title="Vô hiệu hóa danh sách phát">Vô Hiệu Hóa</th>
 
                             </tr>
                         </thead>
                         <tbody>
-                            <tr ng-repeat="data in dataDanhSachPhatNguoiDung | startFrom:currentPage*pageSize | limitTo:pageSize">
+                            <tr style="" ng-repeat="data in taiDanhSachPhatNguoiDung | filter:timkiem | startFrom:currentPage*pageSize | limitTo:pageSize">
+                                <td class="vitrigiua">{{data.tendanhsachphatnguoidung}}</td>
+                                <td>
+                                    <img ng-if="data.linkhinhanh != ''" src="{{data.linkhinhanh}}" class="icon-category hinhanh" />
 
-                                <td class="vitrigiua">{{data.object.tendanhsachphat}}</td>
-                                <td class="vitrigiua">{{data.object.mota}}</td>
+                                    <img ng-if="data.linkhinhanh == ''" class="icon-category hinhanh" src="https://s120-ava-talk.zadn.vn/0/5/1/5/0/120/4ff9b54b6eb2292f46483676eda192ae.jpg" />
+                                </td>
+                                <td>
+                                    <img ng-if="data.vip == 0" src="../../../image/khongvip.png" class="icon-category iconvip" />
+                                    <img ng-if="data.vip == 1" src="../../../image/iconvip.png" class="icon-category iconvip">
+                                </td>
                                 <td class="vitrigiua">
                                     <label class="switch1">
-                                        <input type="checkbox">
-                                        <span class="slider1 round"></span>
+                                        <input ng-change="voHieuHoa(data)" type="checkbox" ng-model="data.vohieuhoa"
+                                               ng-true-value="1" ng-false-value="0">
+                                        <!--<span class="slider1 round"></span>-->
+                                        <span ng-if="data.vohieuhoa == 1" class="slider1 round" title="Đã vô hiệu hóa"></span>
+                                        <span ng-if="data.vohieuhoa == 0" class="slider1 round" title="Chưa vô hiệu hóa"></span>
                                     </label>
                                 </td>
-                                <td class="vitrigiua"> <button ng-click="edit(data)" style="width: 25px; height: 25px; padding: 0px;-webkit-box-shadow: 0 2px 5px 0 rgba(85,168,253,0.45);" class="btn btn-accent blue"><i class="fa fa-edit"></i></button>       </td>
-                                <td class="vitrigiua"> <button type="submit" ng-click="delete(data.key)" style="width: 25px; height: 25px; padding: 0px;-webkit-box-shadow: 0 2px 5px 0 rgba(230,60,95,0.45)" class="btn btn-accent red"><i class="fa fa-trash"></i></button></td>
                             </tr>
-
                         </tbody>
                     </table>
-                    {{currentPage+1}}/{{numberOfPages()}}
 
+                    <span class="khungso"> {{currentPage+1}}/{{numberOfPages()}}</span>
                 </div>
-
             </div>
-
-
         </div>
-
     </div>
     <!-- End Default Light Table -->
     <!-- Default Dark Table -->
@@ -71,12 +205,60 @@
             <ul class="pagination pagination-primary" style="padding-left: 0px;">
                 <li class="page-item" ng-click="Truoc()"><a class="page-link" href="">Trước</a></li>
                 <li class="page-item" ng-repeat="a in range(numberOfPages())| limitTo:soLuong track by $index  ">
-                    <a class="page-link" href="" ng-click="phanTrang( $index + size )">{{$index + 1 + size}}</a>
+                    <a ng-class="{'soTrangChon': $index  == currentPage - size }" class="page-link" href="" ng-click="phanTrang( $index + size )">{{$index + 1 + size}}</a>
                 </li>
                 <li class="page-item" ng-click="Sau()"><a class="page-link" href="">Sau</a></li>
             </ul>
         </nav>
     </div>
-
-    <!-- End Default Dark Table -->
 </div>
+<style>
+
+    .iconvip {
+        height: 40px;
+        width: 40px;
+        border-radius: 10px;
+        object-fit: cover;
+    }
+
+    .motadsptl {
+        text-overflow: Ellipsis;
+        width: 370px;
+        white-space: nowrap;
+        overflow: hidden;
+    }
+
+    .soTrangChon {
+        background-color: #006fe6 !important;
+        color: white !important;
+    }
+
+    .page-link:hover {
+        background-color: #006fe6 !important;
+        color: white !important;
+    }
+
+    .khungso {
+        border: 1px solid #006fe6;
+        border-radius: 9px;
+        padding: 6px;
+    }
+
+    .anh {
+        position: relative;
+        display: inline-block;
+        cursor: pointer;
+    }
+
+        .anh:hover {
+            color: red !important;
+        }
+
+    table {
+        border-collapse: inherit;
+    }
+
+    .table td {
+        border-top: 1px solid #007bff !important;
+    }
+</style>

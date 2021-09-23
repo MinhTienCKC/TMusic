@@ -62,7 +62,7 @@
                         </li>
                         <li ng-class="{'zm-navbar-itemclick': modelnav == 3}" class="zm-navbar-item">
                             <a ng-class="{'hover-item-nav':modelnav == 3}" class="item-navbar-hover" href="#/toptrending" title="#toptrending">
-                                <i class="fas fa-trophy icon_index"></i><span class="">Top Trending</span>
+                                <i class="fas fa-trophy icon_index"></i><span class="">Xu Hướng</span>
                             </a>
                         </li>
                         <li ng-class="{'zm-navbar-itemclick': modelnav == 4}" class="zm-navbar-item">
@@ -297,11 +297,11 @@
                     <input id="tim_kiem_bai_hat" type="text" style="border: none" ng-keypress="suKienNhanPhimEnter($event)" ng-change="loadKetQuaTimKiem()" ng-model="timKiem" ng-blur="blurTimKiem()" ng-focus="focusTimKiemBaiHat(1)" class="form-search" placeholder="Nhập tên bài hát, Nghệ sĩ hoặc MV...">
                     <i ng-mousedown="mousedowmTimKiem()" ng-mouseup="mouseupTimKiem()" ng-show="timKiemBaiHat" ng-click="clickCloseTimKiem()" class="fas fa-times searchitem searchitemclose"></i>
                 </div>
-                <ul class="suggest__list" style="z-index:9999;" ng-show="timKiemBaiHat">
+                <ul  class="suggest__list" style="z-index:9999;" ng-show="timKiemBaiHat">
 
-                    <li ng-show="timKiem.length > 0" class="suggest__item"> <i class="fas fa-search searchitem searchsubitem"></i><span class="item_search">Tìm Kiếm "{{timKiem}}"</span></li>
+                    <li ng-mousedown="mousedowmTimKiemKq()" ng-mouseup="mouseupTimKiem(timKiem)" ng-show="timKiem.length > 0" class="suggest__item"> <i class="fas fa-search searchitem searchsubitem"></i><span class="item_search">Tìm Kiếm "{{timKiem}}"</span></li>
 
-                    <li ng-repeat="x in ketQuaTimKiem" class="suggest__item"> <i class="fas fa-search searchitem searchsubitem"></i><span class="item_search"> {{x.tenbaihat}}</span></li>
+                    <li ng-mousedown="mousedowmTimKiemKq()" ng-mouseup="mouseupTimKiem(x.tenbaihat)" ng-repeat="x in ketQuaTimKiem" class="suggest__item"> <i class="fas fa-search searchitem searchsubitem"></i><span class="item_search"> {{x.tenbaihat}}</span></li>
                     @*<li class="suggest__item"> <i class="fas fa-search searchitem searchsubitem"></i><span class="item_search"> Phía Sau Một Cô Gái 2</span></li>
                         <li ng-click="clickCloseTimKiem()" class="suggest__item"> <i class="fas fa-search searchitem searchsubitem"></i><span class="item_search"> Phía Sau Một Cô Gái</span></li>
                         <li class="suggest__item"> <i class="fas fa-search searchitem searchsubitem"></i><span class="item_search"> Phía Sau Một Cô Gái 3</span></li>
@@ -365,9 +365,9 @@
 
                         </div>
                         <div style="display: flex; padding-top: 20px;">
-                            <button ng-click="huyhengioshow = 0" style="display: flex; justify-content: center; align-items: center; font-weight: 400; background-color: #ffffff1a; border: 1px solid #ffffff1a; color: rgb(255 255 255); margin: 0 auto;" class="button_create_playlist">Không</button>
+                            <button ng-click="huyHenGioShow()" style="display: flex; justify-content: center; align-items: center; font-weight: 400; background-color: #ffffff1a; border: 1px solid #ffffff1a; color: rgb(255 255 255); margin: 0 auto;" class="button_create_playlist">Không</button>
 
-                            <button ng-click="huyHenGio();huyhengioshow = 0" class="button_create_playlist">Có</button>
+                            <button ng-click="huyHenGio();" class="button_create_playlist">Có</button>
                         </div>
 
                     </div>
@@ -688,7 +688,7 @@
                                         <label ng-class="{'xacthucemail':xacthucemail}" style="color: red;margin: 1px; margin-left: 10px; font-size:12px; opacity:0;">Email của bạn chưa xác thực. Vui lòng xác thực mới đăng nhập</label>
                                         <div class="group">  <label style="color:#fff;margin-left: 31%; margin-top: 15px;">Hoặc đăng nhập bằng</label> </div>
                                         <div class="login_fb_gg">
-                                            <a class="logins  " id="btnGoogle" ng-click="btnGoogle()"><img class="login_or_gg" src="~/image/icon_google.png" alt="GOOGLE"></a>
+                                            <a class="logins  " id="btnGoogle" ng-click="btnGoogle()"><img class="login_or_gg" src="~/image/7123953_logo_google_g_icon.png" alt="GOOGLE"></a>
                                             <a class="logins login_or" id="btnFacebook" ng-click="loginFb()"> <span class="material-icons-outlined login_facebook">facebook</span></a>
 
                                         </div>

@@ -25,6 +25,7 @@ using PayPalCheckoutSdk.Orders;
 using static MoreLinq.Extensions.LagExtension;
 using static MoreLinq.Extensions.LeadExtension;
 using MoreLinq;
+using System.Globalization;
 
 namespace TFourMusic.Controllers
 {
@@ -53,7 +54,7 @@ namespace TFourMusic.Controllers
         private string AuthPassword = "0362111719@TTai";
         private string Key = " https://tfourmusic-1e3ff-default-rtdb.firebaseio.com/";
 
-
+        private static int ngayUpdatexuhuong = 16, namUpdatexuhuong = 2018;
 
         // paypal 
         static hoadonthanhtoanModel hoadontam;
@@ -1730,11 +1731,11 @@ namespace TFourMusic.Controllers
             for (int item = 0; item < list.Count(); item++)
             {
                 nguoidungcustomModel nguoidung = new nguoidungcustomModel();
-              //  nguoidung.cover = list[item].cover;
+                //  nguoidung.cover = list[item].cover;
                 nguoidung.daxacthuc = list[item].daxacthuc;
                 nguoidung.email = list[item].email;
-               // nguoidung.facebook = list[item].facebook;
-                nguoidung.id = list[item].id;
+                // nguoidung.facebook = list[item].facebook;
+                // nguoidung.id = list[item].id;
                 nguoidung.gioitinh = list[item].gioitinh;
                 nguoidung.hansudungvip = list[item].hansudungvip;
                 nguoidung.hinhdaidien = list[item].hinhdaidien;
@@ -1743,12 +1744,12 @@ namespace TFourMusic.Controllers
                 nguoidung.mota = list[item].mota;
                 nguoidung.ngaysinh = list[item].ngaysinh;
                 nguoidung.online = list[item].online;
-              //  nguoidung.quocgia = list[item].quocgia;
-              //  nguoidung.thanhpho = list[item].thanhpho;
+                //  nguoidung.quocgia = list[item].quocgia;
+                //  nguoidung.thanhpho = list[item].thanhpho;
                 nguoidung.thoigian = list[item].thoigian;
                 nguoidung.uid = list[item].uid;
                 nguoidung.vip = list[item].vip;
-              //  nguoidung.website = list[item].website;
+                //  nguoidung.website = list[item].website;
                 bool checkYeuThich = false;
                 for (int j = 0; j < listyeuthich.Count(); j++)
                 {
@@ -1786,10 +1787,10 @@ namespace TFourMusic.Controllers
             for (int item = 0; item < list.Count(); item++)
             {
                 nguoidungchualogincustomModel nguoidung = new nguoidungchualogincustomModel();
-             //   nguoidung.cover = list[item].cover;
+                //   nguoidung.cover = list[item].cover;
                 nguoidung.daxacthuc = list[item].daxacthuc;
                 nguoidung.email = list[item].email;
-             //   nguoidung.facebook = list[item].facebook;
+                //   nguoidung.facebook = list[item].facebook;
                 nguoidung.id = list[item].id;
                 nguoidung.gioitinh = list[item].gioitinh;
                 nguoidung.hansudungvip = list[item].hansudungvip;
@@ -1799,12 +1800,12 @@ namespace TFourMusic.Controllers
                 nguoidung.mota = list[item].mota;
                 nguoidung.ngaysinh = list[item].ngaysinh;
                 nguoidung.online = list[item].online;
-             //   nguoidung.quocgia = list[item].quocgia;
-             //   nguoidung.thanhpho = list[item].thanhpho;
+                //   nguoidung.quocgia = list[item].quocgia;
+                //   nguoidung.thanhpho = list[item].thanhpho;
                 nguoidung.thoigian = list[item].thoigian;
                 nguoidung.uid = list[item].uid;
                 nguoidung.vip = list[item].vip;
-             //   nguoidung.website = list[item].website;
+                //   nguoidung.website = list[item].website;
                 nguoidung.soluongtheodoi = (from yeuthich in listyeuthichtong
                                             where yeuthich.nguoidung_theodoi_id == list[item].uid
                                             select yeuthich).Count();
@@ -2256,6 +2257,11 @@ namespace TFourMusic.Controllers
             try
             {
                 baihat.luotnghe = 1;
+                xuhuongModel xuhuong = new xuhuongModel();
+                xuhuong.baihat_id = baihat.id;
+                xuhuong.luotnghe = baihat.luotnghe;
+                xuhuong.nguoidung_id = baihat.nguoidung_id;
+                
                 //int week = DateTime.Now.Day;
                 //int monthh = DateTime.Now.Month;
                 //int year = DateTime.Now.Year;
@@ -2263,43 +2269,81 @@ namespace TFourMusic.Controllers
                 if (baihat != null)
                 {
                     client = new FireSharp.FirebaseClient(config);
-                    FirebaseResponse response = client.Get("csdlmoi/toptrending/" + DateTime.Now.Year.ToString() + "/" + DateTime.Now.Month.ToString() + "/" + DateTime.Now.Day.ToString());
+                    FirebaseResponse response = client.Get("csdlmoi/xuhuong/" + DateTime.Now.Year.ToString() + "/" + DateTime.Now.Month.ToString() + "/" + DateTime.Now.Day.ToString());
                     //FirebaseResponse response = client.Get("csdlmoi/baihat");
                     var data = JsonConvert.DeserializeObject<dynamic>(response.Body);
-                    var list = new List<baihatModel>();
+                    var list = new List<xuhuongModel>();
                     var firebase = new FirebaseClient(Key);
 
                     if (data != null)
                     {
                         foreach (var item in data)
                         {
-                            list.Add(JsonConvert.DeserializeObject<baihatModel>(((JProperty)item).Value.ToString()));
+                            list.Add(JsonConvert.DeserializeObject<xuhuongModel>(((JProperty)item).Value.ToString()));
 
                         }
 
                         list = (from bh in list
-                                where bh.id == baihat.id
+                                where bh.baihat_id == xuhuong.baihat_id
                                 select bh).ToList();
                         if (list.Count > 0)
                         {
                             list[0].luotnghe += 1;
 
-                            SetResponse setresponse = client.Set("csdlmoi/toptrending/" + DateTime.Now.Year.ToString() + "/" + DateTime.Now.Month.ToString() + "/" + DateTime.Now.Day.ToString() + "/" + baihat.id, list[0]);
+                            SetResponse setresponse = client.Set("csdlmoi/xuhuong/" + DateTime.Now.Year.ToString() + "/" + DateTime.Now.Month.ToString() + "/" + DateTime.Now.Day.ToString() + "/" + list[0].id, list[0]);
                             return true;
                         }
                         else
                         {
 
+                            var dino = await firebase
+                          .Child("csdlmoi")
+                     .Child("xuhuong")
+                     .Child(DateTime.Now.Year.ToString())
+                     .Child(DateTime.Now.Month.ToString())
+                     .Child(DateTime.Now.Day.ToString())
+                         .PostAsync(xuhuong)
+                         ;
+
+                            string idkey = dino.Key.ToString();
+                            xuhuong.id = idkey;
+                            await firebase
+                              .Child("csdlmoi")
+                     .Child("xuhuong")
+                     .Child(DateTime.Now.Year.ToString())
+                     .Child(DateTime.Now.Month.ToString())
+                     .Child(DateTime.Now.Day.ToString())
+                               .Child(idkey)
+                               .PutAsync(xuhuong);
                             //  PushResponse setresponse = client.Push("csdlmoi / toptrending / " + DateTime.Now.Year.ToString() + " / " + DateTime.Now.Month.ToString() + " / " + DateTime.Now.Day.ToString() + "/" + baihat.id, baihat);
-                            await firebase.Child("csdlmoi").Child("toptrending").Child(DateTime.Now.Year.ToString()).Child(DateTime.Now.Month.ToString()).Child(DateTime.Now.Day.ToString()).Child(baihat.id.ToString()).PutAsync(baihat);
+                            //await firebase.Child("csdlmoi").Child("xuhuong").Child(DateTime.Now.Year.ToString()).Child(DateTime.Now.Month.ToString()).Child(DateTime.Now.Day.ToString()).Child(xuhuong.id.ToString()).PutAsync(xuhuong);
                             return true;
                         }
-                        return false;
+                        //return false;
 
                     }
                     else
                     {
-                        await firebase.Child("csdlmoi").Child("toptrending").Child(DateTime.Now.Year.ToString()).Child(DateTime.Now.Month.ToString()).Child(DateTime.Now.Day.ToString()).Child(baihat.id.ToString()).PutAsync(baihat);
+                        //await firebase.Child("csdlmoi").Child("xuhuong").Child(DateTime.Now.Year.ToString()).Child(DateTime.Now.Month.ToString()).Child(DateTime.Now.Day.ToString()).Child(baihat.id.ToString()).PutAsync(baihat);
+                        var dino = await firebase
+                        .Child("csdlmoi")
+                   .Child("xuhuong")
+                   .Child(DateTime.Now.Year.ToString())
+                   .Child(DateTime.Now.Month.ToString())
+                   .Child(DateTime.Now.Day.ToString())
+                       .PostAsync(xuhuong)
+                       ;
+
+                        string idkey = dino.Key.ToString();
+                        xuhuong.id = idkey;
+                        await firebase
+                          .Child("csdlmoi")
+                 .Child("xuhuong")
+                 .Child(DateTime.Now.Year.ToString())
+                 .Child(DateTime.Now.Month.ToString())
+                 .Child(DateTime.Now.Day.ToString())
+                           .Child(idkey)
+                           .PutAsync(xuhuong);
                         return true;
                     }
                 }
@@ -2315,127 +2359,193 @@ namespace TFourMusic.Controllers
             }
         }
         [HttpPost]
-        public object DanhSachTopTrending(string uid)
+        public async Task<object> DanhSachTopTrending24h([FromBody] Text model)
         {
             try
             {
                 client = new FireSharp.FirebaseClient(config);
-                FirebaseResponse response = client.Get("csdlmoi/toptrending/" + DateTime.Now.Year.ToString() + "/" + DateTime.Now.Month.ToString() + "/" + DateTime.Now.Day.ToString());
+                var firebase = new FirebaseClient(Key);
+                DateTime update = DateTime.Parse(model.key);
+                //update = update.AddDays(-1);
+                FirebaseResponse response = client.Get("csdlmoi/xuhuong/" + update.Year.ToString() + "/" + update.Month.ToString() + "/" + update.Day.ToString());
                 //FirebaseResponse response = client.Get("csdlmoi/baihat");
                 var data = JsonConvert.DeserializeObject<dynamic>(response.Body);
-                var list = new List<baihatModel>();
-                var firebase = new FirebaseClient(Key);
+                var list = new List<xuhuongModel>();
+                DateTime updatexh = DateTime.Now;
+                var date = DateTime.Now;
+                if (date.Day > ngayUpdatexuhuong)
+                {
+                   
+                    update = updatexh.AddDays(-1);
+                    FirebaseResponse responsexh = client.Get("csdlmoi/xuhuong/" + updatexh.Year.ToString() + "/" + updatexh.Month.ToString() + "/" + updatexh.Day.ToString());
+                    //FirebaseResponse response = client.Get("csdlmoi/baihat");
+                    var dataxh = JsonConvert.DeserializeObject<dynamic>(responsexh.Body);
+                    var listxh = new List<xuhuongModel>();
+                    var firebasec = new FirebaseClient(Key);
+                    if (dataxh != null)
+                    {
+                        foreach (var item in dataxh)
+                        {
+                            listxh.Add(JsonConvert.DeserializeObject<xuhuongModel>(((JProperty)item).Value.ToString()));
 
+                        }
+
+                        listxh = (from bh in listxh
+                                select bh).OrderByDescending(x => x.luotnghe).Take(20).ToList();
+                        if (listxh.Count > 20)
+                        {
+                            FirebaseResponse responseupdate = client.Delete("csdlmoi/xuhuong/" + updatexh.Year.ToString() + "/" + updatexh.Month.ToString() + "/" + updatexh.Day.ToString());
+                            for (int i = 0; i < listxh.Count; i++)
+                            {
+                                await firebasec.Child("csdlmoi").Child("xuhuong").Child(updatexh.Year.ToString()).Child(updatexh.Month.ToString()).Child(updatexh.Day.ToString()).Child(list[i].id).PutAsync(list[i]);
+
+                            }
+                        }
+                    }
+                    ngayUpdatexuhuong = date.Day;
+                }
+                if (date.Year - 3 > namUpdatexuhuong)
+                {
+                    //  var firebase = new FirebaseClient(Key);
+                    FirebaseResponse responseupdate = client.Delete("csdlmoi/xuhuong/" + namUpdatexuhuong);
+                    namUpdatexuhuong++;
+                }
+
+           
                 if (data != null)
                 {
+                    List<baihatModel> listbh = new List<baihatModel>();
                     foreach (var item in data)
                     {
-                        list.Add(JsonConvert.DeserializeObject<baihatModel>(((JProperty)item).Value.ToString()));
+                        list.Add(JsonConvert.DeserializeObject<xuhuongModel>(((JProperty)item).Value.ToString()));
 
                     }
-                    list = (from bh in list
-                            select bh).ToList().OrderByDescending(x => x.luotnghe).Take(20).ToList();
-
-                    if (list.Count < 20)
+                    if (list.Count > 0)
                     {
-                        int itam = -1;
-                        // var list1 = new List<baihatModel>();
-                        do
+                        foreach (var item in list)
                         {
-                            int day = DateTime.Now.AddDays(itam).Day;
-                            FirebaseResponse response1 = client.Get("csdlmoi/toptrending/" + DateTime.Now.Year.ToString() + "/" + DateTime.Now.Month.ToString() + "/" + day.ToString());
-                            //FirebaseResponse response = client.Get("csdlmoi/baihat");
-                            var data1 = JsonConvert.DeserializeObject<dynamic>(response1.Body);
-                            var listtam = new List<baihatModel>();
-                            if (data1 != null)
+                            FirebaseResponse rp = client.Get("csdlmoi/baihat/" + item.nguoidung_id.ToString() + "/" + item.baihat_id.ToString());
+                            var datarp = JsonConvert.DeserializeObject<baihatModel>(rp.Body);
+
+                            if (datarp != null)
                             {
-                                foreach (var item in data1)
-                                {
-                                    listtam.Add(JsonConvert.DeserializeObject<baihatModel>(((JProperty)item).Value.ToString()));
-
-                                }
-                                listtam = (from bh in listtam
-                                           select bh).ToList().OrderByDescending(x => x.luotnghe).Take(20).ToList();
-
+                                datarp.luotnghe = item.luotnghe;
+                                listbh.Add(datarp);
                             }
-                            if (listtam.Count < 20)
-                            {
-                                itam--;
-                            }
-                            if (listtam.Count > 0)
-                            {
-                                list.AddRange(listtam);
-                            }
-                        } while (list.Count < 20 && itam > -3);
-
-
-                        list = list.DistinctBy(x => x.id).ToList();
-                        if (uid != null && uid != "null")
-                        {
-                            return convertBaiHat(list, uid);
                         }
-                        else
+                        if (listbh.Count > 0)
                         {
-                            return list;
+
+                            listbh = (from bh in listbh
+                                      select bh).OrderByDescending(x=>x.luotnghe).Take(20).ToList();
+                            
+                            if(model.uid != null && model.uid != "null")
+                            {
+                                return convertBaiHat(listbh, model.uid);
+                            }
+                            else
+                            {
+                                return listbh;
+                            }
+                            
                         }
                     }
-                    else
-                    {
-                        if (uid != null && uid != "null")
-                        {
-                            return convertBaiHat(list, uid);
-                        }
-                        return list;
-                    }
-
-
+                   
                 }
-                else
-                {
-                    int itam = -1;
-                    var list1 = new List<baihatModel>();
-                    do
-                    {
-                        int day = DateTime.Now.AddDays(itam).Day;
-                        FirebaseResponse response1 = client.Get("csdlmoi/toptrending/" + DateTime.Now.Year.ToString() + "/" + DateTime.Now.Month.ToString() + "/" + day.ToString());
-                        //FirebaseResponse response = client.Get("csdlmoi/baihat");
-                        var data1 = JsonConvert.DeserializeObject<dynamic>(response1.Body);
-                        var listtam = new List<baihatModel>();
-                        if (data1 != null)
-                        {
-                            foreach (var item in data1)
-                            {
-                                listtam.Add(JsonConvert.DeserializeObject<baihatModel>(((JProperty)item).Value.ToString()));
+                return false;
+         
 
-                            }
-                            listtam = (from bh in listtam
-                                       select bh).ToList().OrderByDescending(x => x.luotnghe).Take(20).ToList();
-
-                        }
-                        if (listtam.Count < 20)
-                        {
-                            itam--;
-                        }
-                        list1.AddRange(listtam);
-
-                    } while (list1.Count < 20 && itam > -3);
-                    list1 = list1.DistinctBy(x => x.id).ToList();
-                    if (uid != null && uid != "null")
-                    {
-                        return convertBaiHat(list1, uid);
-                    }
-                    else
-                    {
-                        return list1;
-                    }
-
-                }
             }
             catch (Exception ex)
             {
                 return false;
             }
         }
+        [HttpPost]
+        public object DanhSachXuHuongThang([FromBody] Text model)
+        {
+            client = new FireSharp.FirebaseClient(config);
+            var firebase = new FirebaseClient(Key);
+            DateTime update = DateTime.Parse(model.key);
+            //update = update.AddDays(-1);
+            FirebaseResponse response = client.Get("csdlmoi/xuhuong/" + update.Year.ToString() + "/" + update.Month.ToString() );
+            //FirebaseResponse response = client.Get("csdlmoi/baihat");
+            var data = JsonConvert.DeserializeObject<dynamic>(response.Body);
+            var list = new List<xuhuongModel>();
+            if (data != null)
+            {
+                foreach (var item in data)
+                {
+                    foreach (var x in item)
+                    {
+                        foreach (var y in x)
+
+                        {
+                            list.Add(JsonConvert.DeserializeObject<xuhuongModel>(((JProperty)y).Value.ToString()));
+
+                        }
+
+                    }
+
+                }
+            }
+            if(list.Count > 0)
+            {
+                List<xuhuongModel> listxh = new List<xuhuongModel>();
+                List<baihatModel> listbh = new List<baihatModel>();
+                var tongbh = (from xh in list
+                          group xh by xh.baihat_id into idbaihat
+                          select idbaihat).ToList();
+                foreach(var item in tongbh)
+                {
+                    listxh.Add(congLuotNgheThang(list, item.Key.ToString()));
+                }
+                foreach (var item in listxh)
+                {
+                    FirebaseResponse rp = client.Get("csdlmoi/baihat/" + item.nguoidung_id.ToString() + "/" + item.baihat_id.ToString());
+                    var datarp = JsonConvert.DeserializeObject<baihatModel>(rp.Body);
+
+                    if (datarp != null)
+                    {
+                        datarp.luotnghe = item.luotnghe;
+                        listbh.Add(datarp);
+                    }
+                }
+                if (listbh.Count > 0)
+                {
+
+                    listbh = (from bh in listbh
+                              select bh).OrderByDescending(x => x.luotnghe).Take(20).ToList();
+
+                    if (model.uid != null && model.uid != "null")
+                    {
+                        return convertBaiHat(listbh, model.uid);
+                    }
+                    else
+                    {
+                        return listbh;
+                    }
+
+                }
+
+            }    
+            return false;
+        }    
+        public xuhuongModel congLuotNgheThang(List<xuhuongModel> xuhuongs,string idbh)
+        {
+            List<xuhuongModel> result = (from xh in xuhuongs
+                                         where xh.baihat_id == idbh
+                                         select xh).ToList();
+            xuhuongModel xuhuong =result[0];
+            foreach(var item in result)
+            {
+                xuhuong.luotnghe += item.luotnghe;
+            }
+            return xuhuong;
+
+        }
+        //[HttpPost]
+        //public object
         // thêm lượt nghe bài hát 
         //1808 Đã Sữa CSDL Mới
         [HttpPost]

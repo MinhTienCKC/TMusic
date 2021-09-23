@@ -76,14 +76,13 @@ namespace TFourMusic.Controllers
 
         public class nguoidungcustommodel 
         {
-            public string id { get; set; }
             public int daxacthuc { get; set; }
             public string matkhau { get; set; }
             public string email { get; set; }
-            public string hoten { get; set; }                  
+            public string hoten { get; set; }
             public string mota { get; set; }
             public string ngaysinh { get; set; }
-            public string hinhdaidien { get; set; }  
+            public string hinhdaidien { get; set; }
             public string gioitinh { get; set; }
             public DateTime thoigian { get; set; }
             public int online { get; set; }
@@ -91,6 +90,7 @@ namespace TFourMusic.Controllers
             public DateTime hansudungvip { get; set; }
             public string uid { get; set; }
             public int daxoa { get; set; }
+            public int vohieuhoa { get; set; }
         }
         public class binhluanchaModel
         {
@@ -156,34 +156,7 @@ namespace TFourMusic.Controllers
                                             select blc1 ).ToList()
         }).ToList();
           
-            //var nguoidung = LayBangNguoiDung();
-            //nguoidungcustommodel ng = new nguoidungcustommodel();
-            //foreach (var item in nguoidung)
-            //{
-
-            //    ng.id = item.id;         
-            //    ng.daxacthuc = item.daxacthuc;
-            //    ng.daxoa = 0;
-            //    ng.email = item.email;              
-            //    ng.gioitinh = item.gioitinh;
-            //    ng.hansudungvip = item.hansudungvip;
-            //    ng.hinhdaidien = item.hinhdaidien;
-            //    ng.hoten = item.hoten;
-            //    ng.matkhau = item.matkhau;
-            //    ng.mota = item.mota;
-            //    ng.ngaysinh = item.ngaysinh;
-            //    ng.online = item.online;
-            //    ng.uid = item.uid;
-            //    ng.vip = item.vip;
-            //    ng.thoigian = item.thoigian;
-            //    await firebase
-            //        .Child("csdlmoi")
-            //        .Child("nguoidung")
-            //        .Child(ng.uid)
-            //        .PutAsync(ng);
-
-            //    ng = new nguoidungcustommodel();
-            //}
+          
 
             return Json(data);
         }

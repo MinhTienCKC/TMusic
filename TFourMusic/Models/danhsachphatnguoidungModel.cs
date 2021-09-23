@@ -16,6 +16,7 @@ namespace TFourMusic.Models
         public DateTime thoigian { get; set; }
 
         public string linkhinhanh { get; set; }
+        public int vohieuhoa { get; set; }
 
     }
 

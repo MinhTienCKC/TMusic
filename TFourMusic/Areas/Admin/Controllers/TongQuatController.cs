@@ -26,6 +26,8 @@ using System.Net;
 using FireSharp.Interfaces;
 using FireSharp.Response;
 using Newtonsoft.Json.Linq;
+using FirebaseAdmin.Auth;
+
 
 namespace TFourMusic.Controllers
 {
@@ -76,7 +78,7 @@ namespace TFourMusic.Controllers
 
         public class nguoidungcustommodel 
         {
-            public string id { get; set; }
+       
             public int daxacthuc { get; set; }
             public string matkhau { get; set; }
             public string email { get; set; }
@@ -91,6 +93,48 @@ namespace TFourMusic.Controllers
             public DateTime hansudungvip { get; set; }
             public string uid { get; set; }
             public int daxoa { get; set; }
+            public int vohieuhoa { get; set; }
+
+        }
+        public class baihatcustommodel:baihatModel
+        {
+
+            //public string id { get; set; }
+            //public string nguoidung_id { get; set; }
+            //public string tenbaihat { get; set; }
+            //public string mota { get; set; }
+            //public int luottaixuong { get; set; }
+            //public DateTime thoigian { get; set; }
+            //public int chedo { get; set; }
+            //public int luotthich { get; set; }
+            //public string casi { get; set; }
+            //public string loibaihat { get; set; }
+            //public int luotnghe { get; set; }
+            //public string theloai_id { get; set; }
+            //public string chude_id { get; set; }
+            //public string danhsachphattheloai_id { get; set; }
+            //public string quangcao { get; set; }
+            //public string thoiluongbaihat { get; set; }
+            //public string link { get; set; }
+            //public string linkhinhanh { get; set; }
+            //public int daxoa { get; set; }
+            //public DateTime thoigianxoa { get; set; }
+
+            public int vohieuhoa { get; set; }
+        }
+        public class dspnguoidungcustommodel
+        {
+
+            public string id { get; set; }
+            public string nguoidung_id { get; set; }
+            public string tendanhsachphat { get; set; }
+            public int chedo { get; set; }
+            public DateTime thoigian { get; set; }
+
+            public string linkhinhanh { get; set; }
+
+            public int vohieuhoa { get; set; }
+
         }
         public class binhluanchaModel
         {
@@ -133,8 +177,151 @@ namespace TFourMusic.Controllers
         [HttpPost]
         public async Task<IActionResult> taiThongKe([FromBody] modelthongke item)
         {
+            //  var auth = new FirebaseAuthProvider(new FirebaseConfig123(ApiKey));
+            // var a = await auth.SignInWithEmailAndPasswordAsync(AuthEmail, AuthPassword);
+            //var ok = await FirebaseAuth123
+            //   UserRecord user = await FirebaseAdmin.Auth.FirebaseAuth.DefaultInstance.GetUserAsync("6arN66zteAM2PEeDlACJAjSiRD42");
+            //UserRecordArgs args = new UserRecordArgs()
+            //{
+            //    Uid = "6arN66zteAM2PEeDlACJAjSiRD42",
+            //    Disabled = false,
+            //};
+            //  UserRecord userRecord = await FirebaseAdmin.Auth.FirebaseAuth.DefaultInstance.UpdateUserAsync(args);
+            var firebase = new FirebaseClient(Key);
+            //var nguoidung = await firebase
+            //      .Child("csdlmoi")
+            //      .Child("xuhuong")
+            //      .Child("2021")
+            //         .Child("9")
+            //            .Child("16")
+            //      .OnceAsync<baihatModel>();
+            ////var dspnguoidung = LayBangDanhSachPhatNguoiDung();
+            //xuhuongModel ng = new xuhuongModel();
+            //foreach (var item1 in nguoidung)
+            //{
+
+
+            //    //ng.daxacthuc = item1.daxacthuc;
+                
+            //    //ng.email = item1.email;
+            //    //ng.gioitinh = item1.gioitinh;
+            //    //ng.hansudungvip = item1.hansudungvip;
+            //    //ng.hinhdaidien = item1.hinhdaidien;
+            //    ng.luotnghe = item1.Object.luotnghe;
+            //    ng.baihat_id = item1.Object.id;              
+            //    ng.nguoidung_id = item1.Object.nguoidung_id;
+
+            //    //ng.matkhau = item1.matkhau;
+            //    //ng.mota = item1.mota;
+            //    //ng.ngaysinh = item1.ngaysinh;
+            //    //ng.online = item1.online;
+            //    //ng.uid = item1.uid;
+            //    //ng.vip = item1.vip;
+            //    //ng.thoigian = item1.thoigian;
+            //    //ng.vohieuhoa = 0;
+            //    var dino = await firebase
+            //      .Child("csdlmoi")
+            //      .Child("xuhuong")
+            //      .Child("2021")
+            //         .Child("9")
+            //            .Child("16")    
+            //     .PostAsync(ng)
+            //     ;
+
+            //    string kk = dino.Key.ToString();
+            //    ng.id = kk;
+            //    await firebase
+            //    .Child("csdlmoi")
+            //      .Child("xuhuong")
+            //      .Child("2021")
+            //         .Child("9")
+            //            .Child("16")
+            //       .Child(kk)
+            //       .PutAsync(ng);
+            //    await firebase
+            //      .Child("csdlmoi")
+            //      .Child("xuhuong")
+            //      .Child("2021")
+            //         .Child("9")
+            //            .Child("16")
+            //            .Child(ng.baihat_id)
+            //      .DeleteAsync();
+
+            //    //await firebase
+            //    //   .Child("2021")
+            //    //     .Child("9")
+            //    //        .Child("15")                   
+            //    //    .PutAsync(ng);
+            //    ng = new xuhuongModel();
+            //}
+            //var nguoidung = LayBangNguoiDung();
+            //nguoidungcustommodel ng = new nguoidungcustommodel();
+            //foreach (var item1 in nguoidung)
+            //{
+
+
+            //    ng.daxacthuc = item1.daxacthuc;
+            //    ng.daxoa = 0;
+            //    ng.email = item1.email;
+            //    ng.gioitinh = item1.gioitinh;
+            //    ng.hansudungvip = item1.hansudungvip;
+            //    ng.hinhdaidien = item1.hinhdaidien;
+            //    ng.hoten = item1.hoten;
+            //    ng.matkhau = item1.matkhau;
+            //    ng.mota = item1.mota;
+            //    ng.ngaysinh = item1.ngaysinh;
+            //    ng.online = item1.online;
+            //    ng.uid = item1.uid;
+            //    ng.vip = item1.vip;
+            //    ng.thoigian = item1.thoigian;
+            //    ng.vohieuhoa = 0;
+            //    await firebase
+            //        .Child("csdlmoi")
+            //        .Child("nguoidung")
+            //        .Child(ng.uid)
+            //        .PutAsync(ng);
+
+            //    ng = new nguoidungcustommodel();
+            //}
+            //var nguoidung = LayBangBaiHat();
+            //baihatcustommodel ng = new baihatcustommodel();
+            //foreach (var item1 in nguoidung)
+            //{
+            //    ng.id = item1.id;
+            //    ng.nguoidung_id = item1.nguoidung_id;
+            //    ng.tenbaihat = item1.tenbaihat;
+            //    ng.casi = item1.casi;
+            //    ng.chedo = item1.chedo;
+            //    ng.chude_id = item1.chude_id;
+            //    ng.danhsachphattheloai_id = item1.danhsachphattheloai_id;
+            //    ng.daxoa = item1.daxoa;
+            //    ng.link = item1.link;
+            //    ng.linkhinhanh = item1.linkhinhanh;
+            //    ng.loibaihat = item1.loibaihat;
+            //    ng.luotnghe = item1.luotnghe;
+            //    ng.luottaixuong = item1.luottaixuong;
+            //    ng.luotthich = item1.luotthich;
+            //    ng.mota = item1.mota;
+            //    ng.quangcao = item1.quangcao;
+            //    ng.theloai_id = item1.theloai_id;
+            //    ng.thoigian = item1.thoigian;
+            //    ng.thoigianxoa = item1.thoigianxoa;
+            //    ng.thoiluongbaihat = item1.thoiluongbaihat;
+            //    ng.vohieuhoa = 0;
+
+
+
+            //    await firebase
+            //        .Child("csdlmoi")
+            //        .Child("baihat")
+            //        .Child(ng.nguoidung_id)
+            //        .Child(ng.id)
+            //        .PutAsync(ng);
+
+            //    ng = new baihatcustommodel();
+            //}
             var hoadonthanhtoan1 = LayBangHoaDonThanhToan();
-          //  var nguoidung = LayBangNguoiDung();
+         //   var nguoidung = LayBangNguoiDung();
           //  var hoadon = from hdtt in hoadonthanhtoan1
                        //  join nd in nguoidung on hdtt.nguoidung_id equals nd.uid
                       //   select new { hdtt, email = nd.email };
@@ -143,9 +330,12 @@ namespace TFourMusic.Controllers
             //var hdtt = (from bh in hoadonthanhtoan
             //            where DateTime.Parse(bh.thoigian.ToString("MM-yyyy")) == DateTime.Parse(DateTime.Now.ToString("MM/yyyy"))
             //            select bh).ToList();
+
+
+
+
             try
             {
-               
                     DateTime ngaybatdau = DateTime.Parse(item.ngaybatdau.ToString("dd-MM-yyyy"));
                     DateTime ngayketthuc = DateTime.Parse(item.ngayketthuc.ToString("dd-MM-yyyy"));
                     var hdttd1 = (from hoadon1 in hoadonthanhtoan1

@@ -88,7 +88,7 @@
                                 <th scope="col" class="border-0">Lượt Nghe</th>
                                 <th scope="col" class="border-0">Lượt Tải Xuống</th>
                                 <th scope="col" class="border-0">Lượt Thích</th>-->
-                                <th ng-if="timkiem.nguoidung_id == 'admin'" scope="col" class="border-0">Chế Độ</th>
+                                <th ng-if="timkiem.nguoidung_id == 'admin'" scope="col" title="chế độ công khai hoặc cá nhân" class="border-0">Chế Độ</th>
                                 <th scope="col" class="border-0">Sửa</th>
                                 <th scope="col" class="border-0">Xóa</th>
 
@@ -111,7 +111,7 @@
                                 <td class="vitrigiua">{{data.casi}}</td>
                                 <td class="vitrigiua">{{data.luotnghe}}</td>
                                 <td class="vitrigiua">{{data.luottaixuong}}</td>
-                                <!--<td class="vitrigiua">{{data.luotthich}}</td>-->
+                                <td class="vitrigiua">{{data.luotthich}}</td>
                                 <td ng-if="timkiem.nguoidung_id == 'admin'" class="vitrigiua">
                                     <label class="switch1">
                                         <input ng-change="cheDo(data)" type="checkbox" ng-model="data.chedo"

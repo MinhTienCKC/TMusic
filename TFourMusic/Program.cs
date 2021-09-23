@@ -1,3 +1,5 @@
+using FirebaseAdmin;
+using Google.Apis.Auth.OAuth2;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Hosting;
@@ -13,6 +15,10 @@ namespace TFourMusic
     {
         public static void Main(string[] args)
         {
+            FirebaseApp.Create(new AppOptions()
+            {
+                Credential = GoogleCredential.FromFile("../TFourMusic/tfourmusic-1e3ff-firebase-adminsdk-b8byd-fb95ff4dbc.json"),
+            });
             CreateHostBuilder(args).Build().Run();
         }
 

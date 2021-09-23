@@ -193,7 +193,7 @@ app.controller('index', function ($rootScope, $scope, dataservice, $uibModal, $f
             }
         });
     }
-
+    alertify.set('notifier', 'position', 'bottom-left');
     var tick = function () {
         $scope.clock = Date.now();
     }

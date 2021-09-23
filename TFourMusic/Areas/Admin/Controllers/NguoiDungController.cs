@@ -1,32 +1,30 @@
-﻿
-using Microsoft.AspNetCore.Mvc;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-using System.Web;
-using Newtonsoft.Json;
-using TFourMusic.Models;
-
-using Microsoft.Extensions.Logging;
-using System.Diagnostics;
-using Firebase.Auth;
-using System.Threading;
-using Firebase.Storage;
-using System.IO;
-using Microsoft.AspNetCore.Hosting;
-using Microsoft.AspNetCore.Http;
+﻿using Firebase.Auth;
 using Firebase.Database;
-
-
-using FirebaseConfig123 = Firebase.Auth.FirebaseConfig;
-//using FirebaseConfig = Firebase.Auth.FirebaseConfig;
 using Firebase.Database.Query;
-using Microsoft.AspNetCore.Authorization;
-using System.Net;
+using Firebase.Storage;
 using FireSharp.Interfaces;
 using FireSharp.Response;
+using Microsoft.AspNetCore.Hosting;
+using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Mvc;
+using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
+using System;
+using System.Collections.Generic;
+using System.Diagnostics;
+using System.IO;
+using System.Linq;
+using System.Net;
+using System.Threading;
+using System.Threading.Tasks;
+using TFourMusic.Models;
+using PayPalHttp;
+using FirebaseConfig1 = Firebase.Auth.FirebaseConfig;
+using PayPalCheckoutSdk.Core;
+using PayPalCheckoutSdk.Orders;
+using FirebaseAdmin.Auth;
+using FirebaseAdmin;
+using Google.Apis.Auth.OAuth2;
 
 namespace TFourMusic.Controllers
 {
@@ -54,6 +52,7 @@ namespace TFourMusic.Controllers
         //{
         //    _logger = logger;
         //}
+        
         public NguoiDungController(IHostingEnvironment env)
         {
             _env = env;
@@ -155,10 +154,278 @@ namespace TFourMusic.Controllers
             var data = from t20 in NguoiDung
                          
                        select t20;
+            var auth = new FirebaseConfig1(ApiKey);
+            
 
+            //UserRecordArgs args = new UserRecordArgs()
+            //{
+            //    Uid = userRecord.Uid,
+            //    Email = userRecord.Email,
+            //    PhoneNumber = userRecord.PhoneNumber,
+            //    EmailVerified = userRecord.EmailVerified,
+            //    Password = userRecord.Passw,
+            //    DisplayName = "Jane Doe",
+            //    PhotoUrl = "http://www.example.com/12345678/photo.png",
+            //    Disabled = true,
+            //};
+
+            //   UserRecord userRecord123 = await FirebaseAuth123.DefaultInstance.UpdateUserAsync(args);
             return Json(data);
         }
-       
+
+        [HttpPost]
+        public async Task<IActionResult> voHieuHoa([FromBody] nguoidungModel item)
+        {
+
+
+            bool success = true;
+            try
+            {
+                
+                if (item.vohieuhoa == 0)
+                {
+                    UserRecordArgs args = new UserRecordArgs()
+                    {
+                        Uid = item.uid,
+                        Disabled = false,
+                    };
+                    UserRecord userRecord = await FirebaseAdmin.Auth.FirebaseAuth.DefaultInstance.UpdateUserAsync(args);
+                    client = new FireSharp.FirebaseClient(config);
+                    object p = client.Set("csdlmoi/nguoidung/" + item.uid + "/" + "vohieuhoa", item.vohieuhoa);
+                }
+                else
+                {
+                    UserRecordArgs args = new UserRecordArgs()
+                    {
+                        Uid = item.uid,
+                        Disabled = true,
+                    };
+                    UserRecord userRecord = await FirebaseAdmin.Auth.FirebaseAuth.DefaultInstance.UpdateUserAsync(args);
+                    client = new FireSharp.FirebaseClient(config);
+                    object p = client.Set("csdlmoi/nguoidung/" + item.uid + "/" + "vohieuhoa", item.vohieuhoa);
+                }
+                success = true;
+            }
+            catch (Exception ex)
+            {
+                success = false;
+            }
+
+            return Json(success);
+        }
+        [HttpPost]
+        public async Task<IActionResult> voHieuHoaBaiHatNguoiDung([FromBody]baihatModel item)
+        {
+
+
+            bool success = true;
+            try
+            {
+
+                if (item.vohieuhoa == 0)
+                {
+                    
+                    client = new FireSharp.FirebaseClient(config);
+                    object p = client.Set("csdlmoi/baihat/" + item.nguoidung_id + "/" + item.id + "/" + "vohieuhoa", item.vohieuhoa);
+                }
+                else
+                {
+                   
+                    client = new FireSharp.FirebaseClient(config);
+                    object p = client.Set("csdlmoi/baihat/" + item.nguoidung_id + "/" + item.id + "/" + "vohieuhoa", item.vohieuhoa);
+                }
+                success = true;
+            }
+            catch (Exception ex)
+            {
+                success = false;
+            }
+
+            return Json(success);
+        }
+        [HttpPost]
+        public async Task<IActionResult> voHieuHoaDanhSachPhatNguoiDung([FromBody]danhsachphatnguoidungModel item)
+        {
+
+
+            bool success = true;
+            try
+            {
+
+                if (item.vohieuhoa == 0)
+                {
+                   
+                    client = new FireSharp.FirebaseClient(config);
+                    object p = client.Set("csdlmoi/danhsachphatnguoidung/" + item.nguoidung_id + "/" + item.id + "/" + "vohieuhoa", item.vohieuhoa);
+                }
+                else
+                {
+                   
+                    client = new FireSharp.FirebaseClient(config);
+                    object p = client.Set("csdlmoi/danhsachphatnguoidung/" + item.nguoidung_id + "/" + item.id + "/" + "vohieuhoa", item.vohieuhoa);
+                }
+                success = true;
+            }
+            catch (Exception ex)
+            {
+                success = false;
+            }
+
+            return Json(success);
+        }
+        public List<danhsachphatnguoidungModel> LayBangDanhSachPhatNguoiDung(string uid = null)
+        {
+            if (uid == null)
+            {
+                client = new FireSharp.FirebaseClient(config);
+                FirebaseResponse response = client.Get("csdlmoi/danhsachphatnguoidung");
+                var data = JsonConvert.DeserializeObject<dynamic>(response.Body);
+                var list = new List<danhsachphatnguoidungModel>();
+
+                if (data != null)
+                {
+
+                    foreach (var item in data)
+                    {
+                        foreach (var x in item)
+                        {
+                            foreach (var y in x)
+
+                            {
+                                list.Add(JsonConvert.DeserializeObject<danhsachphatnguoidungModel>(((JProperty)y).Value.ToString()));
+
+                            }
+
+                        }
+
+                    }
+                }
+
+
+                return list;
+            }
+            else
+            {
+                client = new FireSharp.FirebaseClient(config);
+                FirebaseResponse response = client.Get("csdlmoi/danhsachphatnguoidung/" + uid);
+                var data = JsonConvert.DeserializeObject<dynamic>(response.Body);
+                var list = new List<danhsachphatnguoidungModel>();
+
+                if (data != null)
+                {
+                    foreach (var item in data)
+                    {
+                        list.Add(JsonConvert.DeserializeObject<danhsachphatnguoidungModel>(((JProperty)item).Value.ToString()));
+
+                    }
+                }
+                return list;
+            }
+
+
+
+        }
+        public List<baihatModel> LayBangBaiHat(string uid = null)
+        {
+            try
+            {
+                if (uid == null)
+                {
+                    client = new FireSharp.FirebaseClient(config);
+                    FirebaseResponse response = client.Get("csdlmoi/baihat");
+                    var data = JsonConvert.DeserializeObject<dynamic>(response.Body);
+                    var list = new List<baihatModel>();
+
+
+                    if (data != null)
+                    {
+                        foreach (var item in data)
+                        {
+                            foreach (var x in item)
+                            {
+                                foreach (var y in x)
+
+                                {
+                                    list.Add(JsonConvert.DeserializeObject<baihatModel>(((JProperty)y).Value.ToString()));
+
+                                }
+
+                            }
+
+                        }
+                    }
+                    return list;
+                }
+                else
+                {
+                    client = new FireSharp.FirebaseClient(config);
+                    FirebaseResponse response = client.Get("csdlmoi/baihat/" + uid);
+                    var data = JsonConvert.DeserializeObject<dynamic>(response.Body);
+                    var list = new List<baihatModel>();
+
+                    if (data != null)
+                    {
+                        foreach (var item in data)
+                        {
+                            list.Add(JsonConvert.DeserializeObject<baihatModel>(((JProperty)item).Value.ToString()));
+
+                        }
+                    }
+                    return list;
+                }
+            }
+            catch
+            {
+                return null;
+            }
+
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> xemBaiHatNguoiDung([FromBody] nguoidungModel item)
+        {
+            try
+            {
+                if (item.uid != null && item.uid != "null")
+                {
+                    var baihat = LayBangBaiHat(item.uid);
+                    return Json(baihat);
+                }
+                else
+                {
+                    return Json("null");
+                }
+             
+            }
+            catch (Exception ex)
+            {
+                return Json(ex.Message.ToString());
+            }
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> xemDanhSachPhatNguoiDung([FromBody] nguoidungModel item)
+        {
+
+
+            try
+            {
+                if (item.uid != null && item.uid != "null")
+                {
+                    var danhsachphat = LayBangDanhSachPhatNguoiDung(item.uid);
+                    return Json(danhsachphat);
+                }
+                else
+                {
+                    return Json("null");
+                }
+
+            }
+            catch (Exception ex)
+            {
+                return Json(ex.Message.ToString());
+            }
+        }
     }
 }
 

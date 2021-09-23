@@ -30,7 +30,7 @@ namespace TFourMusic.Models
         public int daxoa { get; set; }
         public DateTime thoigianxoa { get; set; }
         // THÊM TRƯỜNG QUẢNG CÁO
-
+        public int vohieuhoa { get; set; }
     }
 
 

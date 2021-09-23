@@ -1,8 +1,7 @@
 ﻿
-
 var ctxfolderurl = "/views/front-end/Home";
 
-var app = angular.module('App_ESEIM', ['ui.bootstrap', 'ngRoute', 'slick', 'ngCookies', 'ngAnimate','ui.directives', 'ui.filters']);
+var app = angular.module('App_ESEIM', ['ui.bootstrap', 'ngRoute', 'slick', 'ngCookies', 'ngAnimate']);
 
 app.config(function ($routeProvider, $locationProvider) {
     $locationProvider.hashPrefix('');
@@ -364,11 +363,14 @@ app.factory('dataservice', function ($http) {
         themLuotNgheToptrending: function (data, callback) {
             $http.post('/Home/themLuotNgheToptrending', data).then(callback);
         },
-        DanhSachTopTrending: function (data, callback) {
-            $http.post('/Home/DanhSachTopTrending?uid=' + data).then(callback);
+        DanhSachTopTrending24h: function (data, callback) {
+            $http.post('/Home/DanhSachTopTrending24h' , data).then(callback);
 
         },
+        DanhSachXuHuongThang: function (data, callback) {
+            $http.post('/Home/DanhSachXuHuongThang', data).then(callback);
 
+        },
 
         // 13/07 taiChiTietPlayList_PlayList
         taiChiTietPlayList_PlayList: function (data, callback) {
@@ -524,7 +526,7 @@ app.controller('Ctrl_ESEIM', function ($scope, dataservice, $uibModal, $rootScop
     let total_duration = document.getElementById("process__end_time");
     let audio = document.createElement("audio");
     var idBaiHatDangNghe;
-    var timeOutCongLuotNghe;
+    let timeOutCongLuotNghe;
 
     $rootScope.BaiHatDangPhat;
     $rootScope.kiemTraBaiHatDangPhat = '';//  23.7.2021 biến này để lưu id bài hát khi phát nhạc để check vị trí bài hát đang phát
@@ -949,15 +951,32 @@ app.controller('Ctrl_ESEIM', function ($scope, dataservice, $uibModal, $rootScop
         });
     cdThumbAnimate.pause();
     $scope.Play = function () {
+       /* $timeout.cancel(timeOutCongLuotNghe);*/
+        //palert("cancel");
+        console.log("vào hàm play()");
         if ($scope.playmusic == 0) {
             audio.play();
             $scope.playmusic = 1;
             cdThumbAnimate.play();
-            timeOutCongLuotNghe = undefined;
-            /*$timeout.cancel(timeOutCongLuotNghe);*/
+           /* timeOutCongLuotNghe = undefined;*/
+        /*$timeout.cancel(timeOutCongLuotNghe);*/
+      
             if (idBaiHatDangNghe.length > 5) {
                 var thoiGian;
-
+                //console.log("cancel length");
+                //$timeout.cancel(timeOutCongLuotNghe);
+                //$scope.$on("$destroy", function (event) {
+           
+                //    $timeout.cancel(timeOutCongLuotNghe);
+                //});
+                $timeout.cancel(timeOutCongLuotNghe);
+                //for (var i = 0; i < timeOutCongLuotNghe; i++) {
+                //    $timeout.cancel(i);
+                //    console.log(i);
+                //}
+                //$scope.$apply();
+                console.log("vào time out");
+                console.log("bai hat vao timeout:" + $rootScope.BaiHatDangPhat.tenbaihat); 
                 var promise = new Promise(function (resolve, reject) {
                     $timeout(function () {
                         thoiGian = (audio.duration * 1000) / 2;
@@ -967,7 +986,8 @@ app.controller('Ctrl_ESEIM', function ($scope, dataservice, $uibModal, $rootScop
 
                 })
                 promise.then(function () {
-
+             
+                   
                     timeOutCongLuotNghe = $timeout(function () {
                         dataservice.themLuotNghe(idBaiHatDangNghe, function (rs) {
                             rs = rs.data;
@@ -976,7 +996,10 @@ app.controller('Ctrl_ESEIM', function ($scope, dataservice, $uibModal, $rootScop
                         dataservice.themLuotNgheToptrending($rootScope.BaiHatDangPhat, function (rs) {
                             rs = rs.data;
                         });
-
+                        console.log("da cong luot nghe");
+                        //$timeout.cancel(timeOutCongLuotNghe);
+                        $timeout.cancel(timeOutCongLuotNghe);
+                        console.log("Da cong luot nghe bai hat:" + $rootScope.BaiHatDangPhat.tenbaihat);
                     }, thoiGian)
 
                 });
@@ -985,6 +1008,7 @@ app.controller('Ctrl_ESEIM', function ($scope, dataservice, $uibModal, $rootScop
 
 
             }
+               
 
         }
         else {
@@ -992,7 +1016,10 @@ app.controller('Ctrl_ESEIM', function ($scope, dataservice, $uibModal, $rootScop
             audio.pause();
             cdThumbAnimate.pause();
             //console.log("cancel");
+            console.log(timeOutCongLuotNghe);
             $timeout.cancel(timeOutCongLuotNghe);
+           // $scope.$apply();
+           // alert("cancel");
         }
     }
     $scope.changeThoiGianNhac = function () {
@@ -1552,6 +1579,12 @@ app.controller('Ctrl_ESEIM', function ($scope, dataservice, $uibModal, $rootScop
             $scope.ketQuaTimKiem = null;
         }
     }
+    $scope.mouseupTimKiem = function (tukhoa) {
+        $scope.timkiemfocus = false;
+        $scope.blurTimKiem();
+        $location.path("/timkiem/" + tukhoa);
+
+    }
     $scope.loadBinhLuanBaiHat = function (idbh) {
         $("#loading_main").css("display", "block");
         if (idbh != null && idbh != "") {
@@ -1969,6 +2002,7 @@ app.controller('Ctrl_ESEIM', function ($scope, dataservice, $uibModal, $rootScop
         }, 1000)
     }
     $scope.huyHenGio = function () {
+        $scope.huyhengioshow = 0;
         $timeout.cancel(HenGioTimeOut);
         $interval.cancel(henGioInterval);
         $rootScope.soGioConLai = "00:00:00";
@@ -1976,6 +2010,9 @@ app.controller('Ctrl_ESEIM', function ($scope, dataservice, $uibModal, $rootScop
         $scope.henGioSoGio = "00";
         $scope.henGioSoPhut = "00";
 
+    }
+    $scope.huyHenGioShow = function () {
+        $scope.huyhengioshow = 0;
     }
     $scope.blurhengio = function () {
         if (!$scope.hengiofocus) {
@@ -2141,7 +2178,7 @@ app.controller('Ctrl_ESEIM', function ($scope, dataservice, $uibModal, $rootScop
 
     //  phát bài hát có thể 1 bài hát hoặc 1 list bài hát
     $scope.playMotBanNhac = function (song, vitri) {
-
+        /*$("#loading_main").css("display", "block");*/
 
         if (song instanceof Array) {
             if (vitri == null) {
@@ -2150,27 +2187,37 @@ app.controller('Ctrl_ESEIM', function ($scope, dataservice, $uibModal, $rootScop
             $rootScope.songs = song;
             $scope.sttmusic = vitri;
             $scope.loaddefaultmusic(vitri);
-            $scope.setAutoPlayNhac();
-            $scope.Play();
+            $timeout(function () {
+                $scope.setAutoPlayNhac();
+                $scope.Play();
+                /*$("#loading_main").css("display", "none");*/
+            }, 1000);
+          
         }
         else {
-            $scope.flag = false;
+            $scope.flag = true;
             angular.forEach($rootScope.songs, function (val, index) {
                 if (val.id == song.id) {
                     $scope.sttmusic = index;
                     $scope.loaddefaultmusic($scope.sttmusic);
-                    $scope.setAutoPlayNhac();
-                    $scope.Play();
-                    flag = true;
+                    $timeout(function () {
+                        $scope.setAutoPlayNhac();
+                        $scope.Play();
+                      /*  $("#loading_main").css("display", "none");*/
+                    }, 1000);
+                    $scope.flag = false;
                 }
             });
-            if (!$scope.flag) {
-
+            if ($scope.flag) {
+              /*  console.log($rootScope.songs);*/
                 $rootScope.songs = $rootScope.songs.concat(song);
                 $scope.sttmusic = $rootScope.songs.length - 1;
                 $scope.loaddefaultmusic($scope.sttmusic);
-                $scope.setAutoPlayNhac();
-                $scope.Play();
+                $timeout(function () {
+                    $scope.setAutoPlayNhac();
+                    $scope.Play();
+                 /*   $("#loading_main").css("display", "none");*/
+                }, 1000);
             }
         }
 
@@ -2181,8 +2228,10 @@ app.controller('Ctrl_ESEIM', function ($scope, dataservice, $uibModal, $rootScop
 
         $scope.sttmusic = song
         $scope.loaddefaultmusic(song);
-        $scope.setAutoPlayNhac();
-        $scope.Play();
+        $timeout(function () {
+            $scope.setAutoPlayNhac();
+            $scope.Play();
+        }, 2000);
     }
 
 
@@ -4089,8 +4138,43 @@ app.controller('toptrending', function ($scope, dataservice, $rootScope, $locati
         key: '',
         uid: ''
     }
+    // Returns the ISO week of the date.
+   
+    //function daysInMonth(month, year) {
+    //    return new Date(year, month, 0).getDate();
+    //};
+    //$scope.getNumber = function (num) {
+    //    return new Array(num);
+    //}
     $scope.initData = function () {
-        $scope.date = new Date();
+        var dateu = new Date();
+        var datethang = new Date();
+        datethang.setMonth(datethang.getMonth() - 1);
+        
+        dateu.setDate(dateu.getDate() - 1);
+        $scope.date = dateu.setDate(dateu.getDate());
+        $scope.ThangActive = datethang.getMonth() + 1;
+        $scope.listThang = [];
+        for (var a = datethang.getMonth()+1; a > 0; a--) {
+           
+            $scope.listThang.push(a);
+        }
+        $scope.activeXuHuong = 0;
+        //$scope.danhSachTuan = [];
+       // $scope.soNgayCuaThang = daysInMonth($scope.date.getFullYear(), $scope.date.getMonth());
+        $scope.trauCuuTheoNgay = dateu.getDate();
+        $scope.listdate = [];
+        for (var a = $scope.trauCuuTheoNgay; a > 0; a--) {
+            var b = new Date(dateu);
+            b.setDate(a);
+            $scope.listdate.push(b);
+        }
+     
+        //console.log($scope.listdate);
+        $scope.dateactive = 0;
+     
+        $scope.showdate = false;
+       // $scope.activeTraCuu = $scope.date.setDate($scope.trauCuuTheoNgay);
         var promise = new Promise(function (resolve, reject) {
             firebase.auth().onAuthStateChanged(function (userlogin) {
                 if (userlogin) {
@@ -4117,15 +4201,99 @@ app.controller('toptrending', function ($scope, dataservice, $rootScope, $locati
             });
         });
         promise.then(function () {
-            dataservice.DanhSachTopTrending($rootScope.checklogin.uid, function (rs) {
+            
+            $scope.modelTrendDing = {
+                uid: $rootScope.checklogin.uid,
+                key: dateu,
+
+            }
+            $scope.modelTrendDingMonth = {
+                uid: $rootScope.checklogin.uid,
+                key: datethang,
+
+            }
+            dataservice.DanhSachTopTrending24h($scope.modelTrendDing, function (rs) {
                 rs = rs.data;
                 if (rs.Error) { } else {
                     $scope.DataDanhSachTopTrenDing = rs;
                 }
             })
+            dataservice.DanhSachXuHuongThang($scope.modelTrendDingMonth, function (rs) {
+                rs = rs.data;
+                if (rs.Error) { } else {
+                    $scope.DataDanhSachTopTrenDingThang = rs;
+                }
+            })
+  
+            
+
+            
+        })
+
+    }
+    $scope.taiXuHuongTheoNgay = function (date, index) {
+        $scope.dateactive = index;
+        $scope.date = date;
+        $scope.showdate = false;
+        $("#loading_main").css("display", "block");
+        $scope.modelTrendDing = {
+            uid: $rootScope.checklogin.uid,
+            key: date,
+
+        }
+        dataservice.DanhSachTopTrending24h($scope.modelTrendDing, function (rs) {
+            rs = rs.data;
+            if (rs.Error) { } else {
+                $("#loading_main").css("display", "none");
+                $scope.DataDanhSachTopTrenDing = rs;
+            }
+        })
+    }
+    $scope.taiXuHuongTheoThang = function (index) {
+        $scope.ThangActive = index;
+        $scope.showdate = false;
+        $("#loading_main").css("display", "block");
+        var dateoption = new Date();
+        dateoption.setMonth(dateoption.getMonth() - 1);
+         dateoption.setMonth(index - 1);
+        $scope.modelTrendDing = {
+            uid: $rootScope.checklogin.uid,
+            key: dateoption,
+
+        }
+        dataservice.DanhSachXuHuongThang($scope.modelTrendDing, function (rs) {
+            rs = rs.data;
+            if (rs.Error) { } else {
+                $("#loading_main").css("display", "none");
+                $scope.DataDanhSachTopTrenDingThang = rs;
+            }
         })
     }
     $scope.initData();
+    $scope.tuyChonXuHuong = function (index) {
+        $scope.activeXuHuong = index;
+        $scope.showdate = false;
+    }
+    $scope.yeuthichBaiHat24H = function (index) {
+        if ($rootScope.checklogin.dadangnhap) {
+            if ($scope.DataDanhSachTopTrenDing[index].yeuthich == 0) {
+                $scope.DataDanhSachTopTrenDing[index].yeuthich = 1;
+            }
+            else {
+                $scope.DataDanhSachTopTrenDing[index].yeuthich = 0;
+            }
+        }
+    }
+    $scope.yeuthichBaiHatThang = function (index) {
+        if ($rootScope.checklogin.dadangnhap) {
+            if ($scope.DataDanhSachTopTrenDingThang[index].yeuthich == 0) {
+                $scope.DataDanhSachTopTrenDingThang[index].yeuthich = 1;
+            }
+            else {
+                $scope.DataDanhSachTopTrenDingThang[index].yeuthich = 0;
+            }
+        }
+    }
 })
 
 app.controller('add', function ($rootScope, $scope, dataservice, $uibModalInstance) {

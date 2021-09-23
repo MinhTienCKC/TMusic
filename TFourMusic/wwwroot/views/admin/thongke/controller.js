@@ -146,7 +146,7 @@ app.controller('index', function ($rootScope, $scope, dataservice, $uibModal, Ex
         });
         
     };
-
+ 
     $scope.initData();
 
     $scope.currentPage = 0;
