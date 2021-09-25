@@ -298,10 +298,10 @@ app.factory('dataservice', function ($http) {
 
         },
         loadBinhLuan: function (data, callback) {
-            $http.post('/Home/loadBinhLuan?idbh='+ data).then(callback);
+            $http.post('/Home/loadBinhLuan?idbh=' + data).then(callback);
 
         },
-     
+
         themLuotNghe: function (data, callback) {
             $http.post('/Home/themLuotNghe?idbh=' + data).then(callback);
 
@@ -328,6 +328,10 @@ app.factory('dataservice', function ($http) {
         },
         LayBangGoiVip: function (callback) {
             $http.post('/Home/LayBangGoiVip').then(callback);
+        },
+        BaoCaoBaiHat: function (data, callback) {
+            $http.post('/Home/BaoCaoBaiHat', data).then(callback);
+
         },
         XoaDanhSachPhatNguoiDung: function (data, callback) {
             $http.post('/Home/XoaDanhSachPhatNguoiDung', data).then(callback);
@@ -364,7 +368,7 @@ app.factory('dataservice', function ($http) {
             $http.post('/Home/themLuotNgheToptrending', data).then(callback);
         },
         DanhSachTopTrending24h: function (data, callback) {
-            $http.post('/Home/DanhSachTopTrending24h' , data).then(callback);
+            $http.post('/Home/DanhSachTopTrending24h', data).then(callback);
 
         },
         DanhSachXuHuongThang: function (data, callback) {
@@ -712,7 +716,7 @@ app.controller('Ctrl_ESEIM', function ($scope, dataservice, $uibModal, $rootScop
                 hansudung: '',
                 uid: '',
                 vohieuhoa: '0',
-                daxoa:'0'
+                daxoa: '0'
             }
             var user = result.user;
             $scope.modellogin.email = user.email;
@@ -760,7 +764,7 @@ app.controller('Ctrl_ESEIM', function ($scope, dataservice, $uibModal, $rootScop
             // This gives you a Facebook Access Token. You can use it to access the Facebook API.
 
             $scope.modellogin = {
-         
+
                 daxacthuc: '1',
                 matkhau: '',
                 email: '',
@@ -786,7 +790,7 @@ app.controller('Ctrl_ESEIM', function ($scope, dataservice, $uibModal, $rootScop
 
             $scope.modellogin.hoten = user.displayName;
             $scope.modellogin.uid = user.uid;
-           // $scope.modellogin.hinhdaidien = user.photoURL;
+            // $scope.modellogin.hinhdaidien = user.photoURL;
             dataservice.taoNguoiDungXacThuc($scope.modellogin, function (rs) {
                 rs = rs.data;
                 if (rs.Error) { }
@@ -845,6 +849,15 @@ app.controller('Ctrl_ESEIM', function ($scope, dataservice, $uibModal, $rootScop
                 rs = rs.data;
                 $scope.listQuangCao = rs;
             });
+            if ($rootScope.checklogin.uid != null && $rootScope.checklogin.uid != '' && $rootScope.checklogin.uid != "null") {
+                dataservice.getListDaTaiLen_CaNhan($rootScope.checklogin.uid, function (rs) {
+                    rs = rs.data
+                    if (rs.Error) { } else {
+                        $scope.listBaiHatDaTaiLen = rs;
+                    }
+                })
+            }
+
         })
 
         dataservice.LayBangGoiVip(function (rs) {
@@ -951,22 +964,22 @@ app.controller('Ctrl_ESEIM', function ($scope, dataservice, $uibModal, $rootScop
         });
     cdThumbAnimate.pause();
     $scope.Play = function () {
-       /* $timeout.cancel(timeOutCongLuotNghe);*/
+        /* $timeout.cancel(timeOutCongLuotNghe);*/
         //palert("cancel");
         console.log("vào hàm play()");
         if ($scope.playmusic == 0) {
             audio.play();
             $scope.playmusic = 1;
             cdThumbAnimate.play();
-           /* timeOutCongLuotNghe = undefined;*/
-        /*$timeout.cancel(timeOutCongLuotNghe);*/
-      
+            /* timeOutCongLuotNghe = undefined;*/
+            /*$timeout.cancel(timeOutCongLuotNghe);*/
+
             if (idBaiHatDangNghe.length > 5) {
                 var thoiGian;
                 //console.log("cancel length");
                 //$timeout.cancel(timeOutCongLuotNghe);
                 //$scope.$on("$destroy", function (event) {
-           
+
                 //    $timeout.cancel(timeOutCongLuotNghe);
                 //});
                 $timeout.cancel(timeOutCongLuotNghe);
@@ -976,7 +989,7 @@ app.controller('Ctrl_ESEIM', function ($scope, dataservice, $uibModal, $rootScop
                 //}
                 //$scope.$apply();
                 console.log("vào time out");
-                console.log("bai hat vao timeout:" + $rootScope.BaiHatDangPhat.tenbaihat); 
+                console.log("bai hat vao timeout:" + $rootScope.BaiHatDangPhat.tenbaihat);
                 var promise = new Promise(function (resolve, reject) {
                     $timeout(function () {
                         thoiGian = (audio.duration * 1000) / 2;
@@ -986,8 +999,8 @@ app.controller('Ctrl_ESEIM', function ($scope, dataservice, $uibModal, $rootScop
 
                 })
                 promise.then(function () {
-             
-                   
+
+
                     timeOutCongLuotNghe = $timeout(function () {
                         dataservice.themLuotNghe(idBaiHatDangNghe, function (rs) {
                             rs = rs.data;
@@ -1008,7 +1021,7 @@ app.controller('Ctrl_ESEIM', function ($scope, dataservice, $uibModal, $rootScop
 
 
             }
-               
+
 
         }
         else {
@@ -1018,8 +1031,8 @@ app.controller('Ctrl_ESEIM', function ($scope, dataservice, $uibModal, $rootScop
             //console.log("cancel");
             console.log(timeOutCongLuotNghe);
             $timeout.cancel(timeOutCongLuotNghe);
-           // $scope.$apply();
-           // alert("cancel");
+            // $scope.$apply();
+            // alert("cancel");
         }
     }
     $scope.changeThoiGianNhac = function () {
@@ -1286,7 +1299,7 @@ app.controller('Ctrl_ESEIM', function ($scope, dataservice, $uibModal, $rootScop
                     $scope.modellogin.hoten = user.displayName;
                     $scope.modellogin.uid = user.uid;
                     if (user.photoURL != null) {
-                      //  $scope.modellogin.hinhdaidien = user.photoURL;
+                        //  $scope.modellogin.hinhdaidien = user.photoURL;
                     }
 
                     dataservice.taoNguoiDungXacThuc($scope.modellogin, function (rs) {
@@ -1358,7 +1371,7 @@ app.controller('Ctrl_ESEIM', function ($scope, dataservice, $uibModal, $rootScop
                         $scope.modellogin.hoten = user.displayName;
                         $scope.modellogin.uid = user.uid;
                         if (user.photoURL != null) {
-                          //  $scope.modellogin.hinhdaidien = user.photoURL;
+                            //  $scope.modellogin.hinhdaidien = user.photoURL;
                         }
 
                         dataservice.taoNguoiDungXacThuc($scope.modellogin, function (rs) {
@@ -1427,7 +1440,7 @@ app.controller('Ctrl_ESEIM', function ($scope, dataservice, $uibModal, $rootScop
                             $scope.modellogin.hoten = user.displayName;
                             $scope.modellogin.uid = user.uid;
                             if (user.photoURL != null) {
-                              //  $scope.modellogin.hinhdaidien = user.photoURL;
+                                //  $scope.modellogin.hinhdaidien = user.photoURL;
                             }
 
                             dataservice.taoNguoiDungXacThuc($scope.modellogin, function (rs) {
@@ -1612,10 +1625,10 @@ app.controller('Ctrl_ESEIM', function ($scope, dataservice, $uibModal, $rootScop
     $scope.showBL = function () {
         $scope.showBinhLuan = !$scope.showBinhLuan;
         $scope.duLieuBinhLuan = null;
-      //  $scope.dataBinhLuanCha = "";
+        //  $scope.dataBinhLuanCha = "";
     }
     $scope.BinhLuanBaiHat = function (idbh, noidung1) {
-      
+
         $("#loading_main").css("display", "block");
 
         if ($rootScope.checklogin.dadangnhap) {
@@ -1628,7 +1641,7 @@ app.controller('Ctrl_ESEIM', function ($scope, dataservice, $uibModal, $rootScop
 
                 }
                 /* noidung1 = " ";*/
-            $scope.dataBinhLuanCha = "";
+                $scope.dataBinhLuanCha = "";
                 dataservice.BinhLuanBaiHat_Cha($scope.model, function (rs) {
                     rs = rs.data;
                     dataservice.loadBinhLuan(idbh, function (rs) {
@@ -1648,7 +1661,7 @@ app.controller('Ctrl_ESEIM', function ($scope, dataservice, $uibModal, $rootScop
             $("#loading_main").css("display", "none");
         }
     }
-    $scope.BinhLuanConBaiHat = function (idbh,idblcha, noidung1) {
+    $scope.BinhLuanConBaiHat = function (idbh, idblcha, noidung1) {
         $("#loading_main").css("display", "block");
         $scope.resetBinhLuan = false;
         if ($rootScope.checklogin.dadangnhap) {
@@ -1669,7 +1682,7 @@ app.controller('Ctrl_ESEIM', function ($scope, dataservice, $uibModal, $rootScop
                             $scope.resetBinhLuan = true;
                             $scope.duLieuBinhLuan = rs;
                             $scope.showBinhLuan = true;
-                           /* $scope.dataBinhLuanCha = "";*/
+                            /* $scope.dataBinhLuanCha = "";*/
                             $("#loading_main").css("display", "none");
                         }
                     })
@@ -1678,10 +1691,10 @@ app.controller('Ctrl_ESEIM', function ($scope, dataservice, $uibModal, $rootScop
         } else {
             $("#loading_main").css("display", "none");
             $rootScope.closelogin = !$rootScope.closelogin;
-          
+
         }
     }
-    $scope.PhimEnterBinhLuanCha = function (event,idbh,noidung1) {
+    $scope.PhimEnterBinhLuanCha = function (event, idbh, noidung1) {
         if (event.keyCode == 13) {
             $("#loading_main").css("display", "block");
             $scope.resetBinhLuan = false;
@@ -1719,32 +1732,32 @@ app.controller('Ctrl_ESEIM', function ($scope, dataservice, $uibModal, $rootScop
     $scope.PhimEnterBinhLuanCon = function (event, idbh, idblcha, noidung1) {
         if (event.keyCode == 13) {
             $("#loading_main").css("display", "block");
-           
-            if ($rootScope.checklogin.dadangnhap) {
-                if (idblcha != null && idblcha != "" && noidung1 != null && noidung1 != "" && idbh != null && idbh != "" && noidung1.length >0) {
-                        $scope.model = {
-                            id: '',
-                            baihat_id: idbh,
-                            nguoidung_id: $rootScope.checklogin.uid,
-                            binhluancha_id: idblcha,
-                            noidung: noidung1
 
-                        }
-                        dataservice.BinhLuanBaiHat_Con($scope.model, function (rs) {
-                            rs = rs.data;
-                            dataservice.loadBinhLuan(idbh, function (rs) {
-                                rs = rs.data;
-                                if (rs.Error) { } else {
-                                    
-                                    $scope.duLieuBinhLuan = rs;
-                                    $scope.showBinhLuan = true;
-                                  /*  $scope.dataBinhLuanCha = "";*/
-                                    $("#loading_main").css("display", "none");
-                                }
-                            })
-                        })
+            if ($rootScope.checklogin.dadangnhap) {
+                if (idblcha != null && idblcha != "" && noidung1 != null && noidung1 != "" && idbh != null && idbh != "" && noidung1.length > 0) {
+                    $scope.model = {
+                        id: '',
+                        baihat_id: idbh,
+                        nguoidung_id: $rootScope.checklogin.uid,
+                        binhluancha_id: idblcha,
+                        noidung: noidung1
+
                     }
-                
+                    dataservice.BinhLuanBaiHat_Con($scope.model, function (rs) {
+                        rs = rs.data;
+                        dataservice.loadBinhLuan(idbh, function (rs) {
+                            rs = rs.data;
+                            if (rs.Error) { } else {
+
+                                $scope.duLieuBinhLuan = rs;
+                                $scope.showBinhLuan = true;
+                                /*  $scope.dataBinhLuanCha = "";*/
+                                $("#loading_main").css("display", "none");
+                            }
+                        })
+                    })
+                }
+
             }
             else {
                 $("#loading_main").css("display", "none");
@@ -1752,11 +1765,11 @@ app.controller('Ctrl_ESEIM', function ($scope, dataservice, $uibModal, $rootScop
             }
         }
     }
-    $scope.ChinhSuaBinhLuanBaiHat = function (idbh, idbl ,noidung1) {
+    $scope.ChinhSuaBinhLuanBaiHat = function (idbh, idbl, noidung1) {
         /*$scope.dataBinhLuanCha = "";*/
         $("#loading_main").css("display", "block");
 
-        if ($rootScope.checklogin.dadangnhap ) {
+        if ($rootScope.checklogin.dadangnhap) {
             if (idbh != null && idbh != "" && noidung1 != null && noidung1 != "" && noidung1.length > 0 && idbl != "" && idbl != null) {
                 $scope.model = {
                     id: idbl,
@@ -1855,7 +1868,7 @@ app.controller('Ctrl_ESEIM', function ($scope, dataservice, $uibModal, $rootScop
             }
         }
     }
-    $scope.PhimEnterChinhSuaBinhLuanCha = function (event, idbh,idbl, noidung1) {
+    $scope.PhimEnterChinhSuaBinhLuanCha = function (event, idbh, idbl, noidung1) {
         if (event.keyCode == 13) {
             $("#loading_main").css("display", "block");
 
@@ -1895,7 +1908,7 @@ app.controller('Ctrl_ESEIM', function ($scope, dataservice, $uibModal, $rootScop
         $("#loading_main").css("display", "block");
 
         if ($rootScope.checklogin.dadangnhap) {
-            if (idbh != null && idbh != "" &&  idbl != "" && idbl != null) {
+            if (idbh != null && idbh != "" && idbl != "" && idbl != null) {
                 $scope.model = {
                     id: idbl,
                     baihat_id: idbh,
@@ -2192,7 +2205,7 @@ app.controller('Ctrl_ESEIM', function ($scope, dataservice, $uibModal, $rootScop
                 $scope.Play();
                 /*$("#loading_main").css("display", "none");*/
             }, 1000);
-          
+
         }
         else {
             $scope.flag = true;
@@ -2203,20 +2216,20 @@ app.controller('Ctrl_ESEIM', function ($scope, dataservice, $uibModal, $rootScop
                     $timeout(function () {
                         $scope.setAutoPlayNhac();
                         $scope.Play();
-                      /*  $("#loading_main").css("display", "none");*/
+                        /*  $("#loading_main").css("display", "none");*/
                     }, 1000);
                     $scope.flag = false;
                 }
             });
             if ($scope.flag) {
-              /*  console.log($rootScope.songs);*/
+                /*  console.log($rootScope.songs);*/
                 $rootScope.songs = $rootScope.songs.concat(song);
                 $scope.sttmusic = $rootScope.songs.length - 1;
                 $scope.loaddefaultmusic($scope.sttmusic);
                 $timeout(function () {
                     $scope.setAutoPlayNhac();
                     $scope.Play();
-                 /*   $("#loading_main").css("display", "none");*/
+                    /*   $("#loading_main").css("display", "none");*/
                 }, 1000);
             }
         }
@@ -2556,7 +2569,7 @@ app.controller('Ctrl_ESEIM', function ($scope, dataservice, $uibModal, $rootScop
         $scope.baihatCookie = data;                                                                                                                                                                                                                                                                                                                                   //link hinh                                                                                           // chuyển qua bai hat theo id                                                                                                     //tenbai                                                                                                                                      //luoc yeu thich                                                                                                          // luoc nghe                                                                                                                                                                              //taiXuong                                                                                                                                                                                                                                     // lời bài hát                                                                                               //chặn                                                                                                                                             //thêm vào danh sách phát                                                                                                                                                         // phát tiếp theo                                                                                                                                //subtextmenuPlaylist                                                                                                               //thêm vào plaulist                                                                                                                                                                                    //Bình Luận                                                                                                                                                                                                                     // Sao chép Link                                                                                                                                                                                                                                                                // chia sẻ       <i class="icon fa fa-chevron-right" style="margin-left: auto;"></i>                                                                                                                                                                                                                                    
 
         //xài cho các trang ngoại trừ trang playlist <span class="zm-btn button"><i class="icon fa fa-ban" aria-hidden="true"></i><span>Chặn</span></span>
-        $scope.contextMenuBaiHat_BaiHat = '<div id="contextmenubaihat_baihat" class="zm-contextmenu song-menu" style=" padding:10px 0;"><div class="menu"><ul class="menu-list"><div class="menu-list--submenu"><div class="media song-info-menu"><div class="media-left"><figure class="image is-40x40" style = "width: 65px;"><img style="height:40px;" src="' + data.linkhinhanh + '" alt=""></figure></div><div class="is-w-150 media-content"><a href="/#/baihat/' + data.id + '" class="a-hover"><div class="title-wrapper"><span class="item-title title" title="Sài Gòn Ơi Xin Lỗi Cảm Ơn">' + data.tenbaihat + '</span></div></a><div class="song-stats"><div class="stat-item"><i class="icon far fa-heart iconmusic" aria-hidden="true"></i><span>' + data.luotthich + 'K</span></div><div class="stat-item"><i class="icon fa fa-headphones" aria-hidden="true"></i><span>' + data.luotnghe + 'K</span></div></div></div></div></div></ul><ul class="menu-list"><div class="group-button-menu"><div class="group-button-list"><button class="zm-btn button" ng-click="taiXuong()"><i class="icon fa fa-download" aria-hidden="true"></i><span>Tải xuống</span></button><button class="zm-btn button" tabindex="0" data-toggle="modal" data-target="#myModal"><i class="icon fa fa-book" aria-hidden="true"></i><span>Lời bài hát</span></button></div></div></ul><ul class="menu-list"><li><button class="zm-btn button" tabindex="0" ng-click="themBaiHatVaoDanhSachPhat(baihatCookie)"><i class="icon far fa-list-alt"></i><span>Thêm vào danh sách phát</span></button></li><li><button class="zm-btn button" tabindex="0" ng-click="themBaiHatVaoPhatTiepTheo(baihatCookie)"><i class="icon fa fa-play" aria-hidden="true"></i><span>Phát tiếp theo</span></button></li><li ><div class="menu-list--submenu" subtext-menu="subtextMenuPlayList"><button class="zm-btn button" tabindex="0" ng-click="kiemTraThemBaiHatVaoPlayList()"><i class="icon fa fa-plus" aria-hidden="true"></i><span>Thêm vào playlist</span><i class="icon fa fa-chevron-right" style="margin-left: auto;"></i></button></div></li><li><button class="zm-btn button" tabindex="0"       ng-click="loadBinhLuanBaiHat(' + "'" + data.id + "'" + ')" ><i class="icon far fa-comment"></i><span>Bình luận</span><span class="comment-badge"></span></button></li><li><button class="zm-btn button" ng-click="copyLinkBaiHat(' + "'https://localhost:44348/#/baihat/" + data.id + "'" + ')" tabindex="0"><i class="icon fa fa-link"></i><span>Sao chép link</span></button></li><li><div class="menu-list--submenu" subtext-menu="subtextMenuChiaSe"><button class="zm-btn button" tabindex="0" ng-click="share()"><i class="icon fa fa-share"></i><span>Chia sẻ Facebook</span></button></div></li></ul></div></div>';
+        $scope.contextMenuBaiHat_BaiHat = '<div id="contextmenubaihat_baihat" class="zm-contextmenu song-menu" style=" padding:10px 0;"><div class="menu"><ul class="menu-list"><div class="menu-list--submenu"><div class="media song-info-menu"><div class="media-left"><figure class="image is-40x40" style = "width: 65px;"><img style="height:40px;" src="' + data.linkhinhanh + '" alt=""></figure></div><div class="is-w-150 media-content"><a href="/#/baihat/' + data.id + '" class="a-hover"><div class="title-wrapper"><span class="item-title title" title="Sài Gòn Ơi Xin Lỗi Cảm Ơn">' + data.tenbaihat + '</span></div></a><div class="song-stats"><div class="stat-item"><i class="icon far fa-heart iconmusic" aria-hidden="true"></i><span>' + data.luotthich + 'K</span></div><div class="stat-item"><i class="icon fa fa-headphones" aria-hidden="true"></i><span>' + data.luotnghe + 'K</span></div></div></div></div></div></ul><ul class="menu-list"><div class="group-button-menu"><div class="group-button-list"><button class="zm-btn button" ng-click="taiXuong()"><i class="icon fa fa-download" aria-hidden="true"></i><span>Tải xuống</span></button><button class="zm-btn button" tabindex="0" data-toggle="modal" data-target="#myModal"><i class="icon fa fa-book" aria-hidden="true"></i><span>Lời bài hát</span></button><span ng-click="showBaoCao()" class="zm-btn button"><i class="icon fa fa-ban" aria-hidden="true"></i><span>Báo Cáo</span></span></div></div></ul><ul class="menu-list"><li><button class="zm-btn button" tabindex="0" ng-click="themBaiHatVaoDanhSachPhat(baihatCookie)"><i class="icon far fa-list-alt"></i><span>Thêm vào danh sách phát</span></button></li><li><button class="zm-btn button" tabindex="0" ng-click="themBaiHatVaoPhatTiepTheo(baihatCookie)"><i class="icon fa fa-play" aria-hidden="true"></i><span>Phát tiếp theo</span></button></li><li ><div class="menu-list--submenu" subtext-menu="subtextMenuPlayList"><button class="zm-btn button" tabindex="0" ng-click="kiemTraThemBaiHatVaoPlayList()"><i class="icon fa fa-plus" aria-hidden="true"></i><span>Thêm vào playlist</span><i class="icon fa fa-chevron-right" style="margin-left: auto;"></i></button></div></li><li><button class="zm-btn button" tabindex="0"       ng-click="loadBinhLuanBaiHat(' + "'" + data.id + "'" + ')" ><i class="icon far fa-comment"></i><span>Bình luận</span><span class="comment-badge"></span></button></li><li><button class="zm-btn button" ng-click="copyLinkBaiHat(' + "'https://localhost:44348/#/baihat/" + data.id + "'" + ')" tabindex="0"><i class="icon fa fa-link"></i><span>Sao chép link</span></button></li><li><div class="menu-list--submenu" subtext-menu="subtextMenuChiaSe"><button class="zm-btn button" tabindex="0" ng-click="share()"><i class="icon fa fa-share"></i><span>Chia sẻ Facebook</span></button></div></li></ul></div></div>';
         //xài cho  trang trang playlist
         if ($rootScope.checklogin.uid == $rootScope.idNguoiDungVoiPlayListHienTai) {
             $scope.contextMenuBaiHatPlaylist = '<div id="contextmenubaihat_baihat" class="zm-contextmenu song-menu" style=" padding:10px 0;"><div class="menu"><ul class="menu-list"><div class="menu-list--submenu"><div class="media song-info-menu"><div class="media-left"><figure class="image is-40x40" style = "width: 65px;"><img style="height:40px;" src="' + data.linkhinhanh + '" alt=""></figure></div><div class="is-w-150 media-content"><a href="/#/baihat/' + data.id + '" class="a-hover"><div class="title-wrapper"><span class="item-title title" title="Sài Gòn Ơi Xin Lỗi Cảm Ơn">' + data.tenbaihat + '</span></div></a><div class="song-stats"><div class="stat-item"><i class="icon far fa-heart iconmusic" aria-hidden="true"></i><span>5K</span></div><div class="stat-item"><i class="icon fa fa-headphones" aria-hidden="true"></i><span>122K</span></div></div></div></div></div></ul><ul class="menu-list"><div class="group-button-menu"><div class="group-button-list"><button class="zm-btn button" ng-click="taiXuong()"><i class="icon fa fa-download" aria-hidden="true"></i><span>Tải xuống</span></button><button class="zm-btn button" tabindex="0" data-toggle="modal" data-target="#myModal"><i class="icon fa fa-book" aria-hidden="true"></i><span>Lời bài hát</span></button><span class="zm-btn button"><i class="icon fa fa-ban" aria-hidden="true"></i><span>Chặn</span></span></div></div></ul><ul class="menu-list"><li><button class="zm-btn button" tabindex="0" ng-click="themBaiHatVaoDanhSachPhat(dspCookie)"><i class="icon far fa-list-alt"></i><span>Thêm vào danh sách phát</span></button></li><li><button class="zm-btn button" tabindex="0" ng-click="themBaiHatVaoPhatTiepTheo(dspCookie)"><i class="icon fa fa-play" aria-hidden="true"></i><span>Phát tiếp theo</span></button></li><li ><div class="menu-list--submenu" subtext-menu="subtextMenuPlayList"><button class="zm-btn button" tabindex="0" ng-click="kiemTraThemBaiHatVaoPlayList()"><i class="icon fa fa-plus" aria-hidden="true"></i><span>Thêm vào playlist</span><i class="icon fa fa-chevron-right" style="margin-left: auto;"></i></button></div></li><li><button ng-click="loadBinhLuanBaiHat(' + "'" + data.id + "'" + ')" class="zm-btn button" tabindex="0"><i class="icon far fa-comment"></i><span>Bình luận</span><span class="comment-badge"></span></button></li><li><button class="zm-btn button" ng-click="copyLinkBaiHat(' + "'https://localhost:44348/#/baihat/" + data.id + "'" + ')" tabindex="0"><i class="icon fa fa-link"></i><span>Sao chép link</span></button></li><li><div class="menu-list--submenu" subtext-menu="subtextMenuChiaSe"><button class="zm-btn button" tabindex="0" ng-click="share()"><i class="icon fa fa-share"></i><span>Chia sẻ Facebook</span></button></div></li><li><button class="zm-btn button" tabindex="0" ng-click="xoaBaiHatKhoiPlaylist(' + vitri + ')"><i class="icon fa fa-trash"></i><span>Xóa khỏi playlist này</span><span class="comment-badge"></span></button></li></ul></div></div>';
@@ -2762,8 +2775,82 @@ app.controller('Ctrl_ESEIM', function ($scope, dataservice, $uibModal, $rootScop
     $scope.moTaoPlaylist = function () {
         $scope.checktaoplaylist = true;
     }
+    $scope.showViPhamBaiHat = function (check) {
+        if (check == false) {
+            $scope.baiHatBanQuyen = null;
+        }
+        $scope.showChonBaiHatViPham = check;
+    }
+    $scope.baoCao = function () {
+        $scope.noidung = [];
+        $scope.modelbaocao = {
+            id: '',
+            noidung:'',
+            motavande: '',
+            nguoidung_id: $rootScope.checklogin.uid,
+            nguoidung_baocao_id: $scope.baihatCookie.nguoidung_id,
+            baihat_id: '',
+            baihat_baocao_id: $scope.baihatCookie.id,
+            daxoa: 0,
+            trangthai:0 // 0 - Đã Tiếp Nhận      1 - Đang Xử Lí     2- Đã Xử lí
+        }
+        if ($scope.motabaocao != undefined && $scope.motabaocao.length > 0) {
+            $scope.modelbaocao.motavande = $scope.motabaocao;
+            $scope.motabaocao = null;
+        }
+        if ($scope.baiHatBanQuyen != undefined && $scope.baiHatBanQuyen != null) {
+            $scope.modelbaocao.baihat_id = $scope.baiHatBanQuyen.id;
+            $scope.baiHatBanQuyen = null;
+        }
+        if ($scope.noidungkhongphuhop) {
+            $scope.noidung.push("Bài hát có nội dung không phù hợp");
+            $scope.noidungkhongphuhop = false;
+        }
+        if ($scope.anhthoathan) {
+            $scope.noidung.push("Ảnh bài hát thỏa thân");
+            $scope.anhthoathan = false;
+        }
+        if ($scope.noidunglangma ) {
+            $scope.noidung.push("Nội dung bài hát lăng mạ hoặc kích động thù hận");
+            $scope.noidunglangma = false;
+        }
+        if ($scope.baoluc ) {
+            $scope.noidung.push("Ảnh bài hát bạo lực hoặc phản cảm");
+            $scope.baoluc = false;
+        }
+        if ($scope.viphambanquyen) {
+            $scope.noidung.push("Vi phạm bản quyền bài hát");
+            $scope.viphambanquyen = false;
+        }
+        if ($scope.vandekhac) {
+            $scope.noidung.push("Vấn đề khác");
+            $scope.vandekhac = false;
+        }
+        if ($scope.modelbaocao != null) {
+            var a = JSON.stringify($scope.noidung);
+            $scope.modelbaocao.noidung = a;
+            dataservice.BaoCaoBaiHat($scope.modelbaocao, function (rs) {
+                rs = rs.data;
+            })
+        }
+    }
+    $scope.doiBaiHatBanQuyen = function () {
+        $scope.showChonBaiHatViPham = !$scope.showChonBaiHatViPham;
+        if ($scope.baiHatBanQuyen != null) {
+            $scope.viphambanquyen = true;
 
-
+        } else {
+            $scope.viphambanquyen = false;
+        }
+    }
+    $scope.chonBaiHatViPhamBanQuyen = function (baihat) {
+        $scope.showChonBaiHatViPham = !$scope.showChonBaiHatViPham;
+        $scope.baiHatBanQuyen = baihat;
+    }
+ 
+    $scope.showBaoCao = function () {
+        $scope.showFormBaoCao = !$scope.showFormBaoCao; 
+    }
 
 
 
@@ -2822,7 +2909,7 @@ app.controller('index', function ($scope, dataservice, $rootScope, $location) {
             dataservice.getListBaiHatMoi($rootScope.checklogin.uid, function (rs) {
                 rs = rs.data;
                 $scope.baiHatMoi = rs;
-               // $rootScope.songs = rs;
+                // $rootScope.songs = rs;
 
             })
             dataservice.getListBaiHatNgheNhieuNhat($rootScope.checklogin.uid, function (rs) {
@@ -2851,7 +2938,7 @@ app.controller('index', function ($scope, dataservice, $rootScope, $location) {
                 }
             })
         })
-  
+
         $scope.clickBaiHatMoi = function (index) {
             $rootScope.songs = [];
             $scope.baiHatDangPhat = 1;
@@ -4139,7 +4226,7 @@ app.controller('toptrending', function ($scope, dataservice, $rootScope, $locati
         uid: ''
     }
     // Returns the ISO week of the date.
-   
+
     //function daysInMonth(month, year) {
     //    return new Date(year, month, 0).getDate();
     //};
@@ -4150,18 +4237,18 @@ app.controller('toptrending', function ($scope, dataservice, $rootScope, $locati
         var dateu = new Date();
         var datethang = new Date();
         datethang.setMonth(datethang.getMonth() - 1);
-        
+
         dateu.setDate(dateu.getDate() - 1);
         $scope.date = dateu.setDate(dateu.getDate());
         $scope.ThangActive = datethang.getMonth() + 1;
         $scope.listThang = [];
-        for (var a = datethang.getMonth()+1; a > 0; a--) {
-           
+        for (var a = datethang.getMonth() + 1; a > 0; a--) {
+
             $scope.listThang.push(a);
         }
         $scope.activeXuHuong = 0;
         //$scope.danhSachTuan = [];
-       // $scope.soNgayCuaThang = daysInMonth($scope.date.getFullYear(), $scope.date.getMonth());
+        // $scope.soNgayCuaThang = daysInMonth($scope.date.getFullYear(), $scope.date.getMonth());
         $scope.trauCuuTheoNgay = dateu.getDate();
         $scope.listdate = [];
         for (var a = $scope.trauCuuTheoNgay; a > 0; a--) {
@@ -4169,12 +4256,12 @@ app.controller('toptrending', function ($scope, dataservice, $rootScope, $locati
             b.setDate(a);
             $scope.listdate.push(b);
         }
-     
+
         //console.log($scope.listdate);
         $scope.dateactive = 0;
-     
+
         $scope.showdate = false;
-       // $scope.activeTraCuu = $scope.date.setDate($scope.trauCuuTheoNgay);
+        // $scope.activeTraCuu = $scope.date.setDate($scope.trauCuuTheoNgay);
         var promise = new Promise(function (resolve, reject) {
             firebase.auth().onAuthStateChanged(function (userlogin) {
                 if (userlogin) {
@@ -4201,7 +4288,7 @@ app.controller('toptrending', function ($scope, dataservice, $rootScope, $locati
             });
         });
         promise.then(function () {
-            
+
             $scope.modelTrendDing = {
                 uid: $rootScope.checklogin.uid,
                 key: dateu,
@@ -4224,10 +4311,10 @@ app.controller('toptrending', function ($scope, dataservice, $rootScope, $locati
                     $scope.DataDanhSachTopTrenDingThang = rs;
                 }
             })
-  
-            
 
-            
+
+
+
         })
 
     }
@@ -4255,7 +4342,7 @@ app.controller('toptrending', function ($scope, dataservice, $rootScope, $locati
         $("#loading_main").css("display", "block");
         var dateoption = new Date();
         dateoption.setMonth(dateoption.getMonth() - 1);
-         dateoption.setMonth(index - 1);
+        dateoption.setMonth(index - 1);
         $scope.modelTrendDing = {
             uid: $rootScope.checklogin.uid,
             key: dateoption,

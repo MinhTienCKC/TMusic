@@ -25,6 +25,8 @@ using PayPalCheckoutSdk.Orders;
 using FirebaseAdmin.Auth;
 using FirebaseAdmin;
 using Google.Apis.Auth.OAuth2;
+using MailKit.Net.Smtp;
+using MimeKit;
 
 namespace TFourMusic.Controllers
 {
@@ -181,7 +183,7 @@ namespace TFourMusic.Controllers
             bool success = true;
             try
             {
-                
+
                 if (item.vohieuhoa == 0)
                 {
                     UserRecordArgs args = new UserRecordArgs()
@@ -192,6 +194,30 @@ namespace TFourMusic.Controllers
                     UserRecord userRecord = await FirebaseAdmin.Auth.FirebaseAuth.DefaultInstance.UpdateUserAsync(args);
                     client = new FireSharp.FirebaseClient(config);
                     object p = client.Set("csdlmoi/nguoidung/" + item.uid + "/" + "vohieuhoa", item.vohieuhoa);
+                    var message = new MimeMessage();
+                    message.From.Add(new MailboxAddress("Admin TMUSIC", "0306181067@caothang.edu.vn"));
+                    message.To.Add(new MailboxAddress("Người Dùng", "dang60780@gmail.com"));
+                    message.Subject = "TMUSIC - TÀI KHOẢN VI PHẠM TIÊU CHUẨN CỘNG ĐỒNG";
+                    message.Body = new TextPart("plain")
+                    {
+                        Text = "Kính gửi: Anh/chị \n\n" +
+                        "Chúng tôi khóa tài khoản của bạn do vi phạm điều khoản cộng đồng. \n" +
+                        "Nếu có thắc mắc vui lòng liên hệ SĐT:0981275911 hoặc Fanpage: TMUSIC Nghe Nhạc Trực Tuyến \n\n" +
+                        "Cám ơn bạn đã xem. \n" +
+                        "Admin TMUSIC"
+                    };
+                    using (var client = new SmtpClient())
+                    {
+                        // client.ServerCertificateValidationCallback = (s, c, h, e) => true;
+                        client.CheckCertificateRevocation = false;
+                        // client.SslProtocols = SslProtocols.Ssl3 | SslProtocols.Tls | SslProtocols.Tls11 | SslProtocols.Tls12 | SslProtocols.Tls13;
+                        client.Connect("smtp.gmail.com", 587, false);
+                        //  await client.ConnectAsync("smtp.gmail.com", 587, false);
+                        client.Authenticate("0306181067@caothang.edu.vn", "281258964");
+
+                        client.Send(message);
+                        client.Disconnect(true);
+                    }
                 }
                 else
                 {
@@ -203,7 +229,32 @@ namespace TFourMusic.Controllers
                     UserRecord userRecord = await FirebaseAdmin.Auth.FirebaseAuth.DefaultInstance.UpdateUserAsync(args);
                     client = new FireSharp.FirebaseClient(config);
                     object p = client.Set("csdlmoi/nguoidung/" + item.uid + "/" + "vohieuhoa", item.vohieuhoa);
+                    var message = new MimeMessage();
+                    message.From.Add(new MailboxAddress("Admin TMUSIC", "0306181067@caothang.edu.vn"));
+                    message.To.Add(new MailboxAddress("Người Dùng", "dang60780@gmail.com"));
+                    message.Subject = "TMUSIC - TÀI KHOẢN VI PHẠM TIÊU CHUẨN CỘNG ĐỒNG";
+                    message.Body = new TextPart("plain")
+                    {
+                        Text = "Kính gửi: Anh/chị \n\n" +
+                        "Chúng tôi khóa tài khoản của bạn do vi phạm điều khoản cộng đồng. \n" +
+                        "Nếu có thắc mắc vui lòng liên hệ SĐT:0981275911 hoặc Fanpage: TMUSIC Nghe Nhạc Trực Tuyến \n\n" +
+                        "Cám ơn bạn đã xem. \n" +
+                        "Admin TMUSIC"
+                    };
+                    using (var client = new SmtpClient())
+                    {
+                        // client.ServerCertificateValidationCallback = (s, c, h, e) => true;
+                        client.CheckCertificateRevocation = false;
+                        // client.SslProtocols = SslProtocols.Ssl3 | SslProtocols.Tls | SslProtocols.Tls11 | SslProtocols.Tls12 | SslProtocols.Tls13;
+                        client.Connect("smtp.gmail.com", 587, false);
+                        //  await client.ConnectAsync("smtp.gmail.com", 587, false);
+                        client.Authenticate("0306181067@caothang.edu.vn", "281258964");
+
+                        client.Send(message);
+                        client.Disconnect(true);
+                    }
                 }
+
                 success = true;
             }
             catch (Exception ex)

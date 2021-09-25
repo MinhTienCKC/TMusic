@@ -26,6 +26,9 @@ using static MoreLinq.Extensions.LagExtension;
 using static MoreLinq.Extensions.LeadExtension;
 using MoreLinq;
 using System.Globalization;
+using MailKit.Net.Smtp;
+using MailKit;
+using MimeKit;
 
 namespace TFourMusic.Controllers
 {
@@ -3457,7 +3460,24 @@ namespace TFourMusic.Controllers
                 return Json(false);
             }
         }
+        [HttpPost]
+        public async Task<object> BaoCaoBaiHat([FromBody] baocaobaihatModel baocao)
+        {
+            //string output = JsonConvert.SerializeObject(baocao.noidung);
 
+            baocao.thoigian = DateTime.Now;
+            var firebase = new FirebaseClient(Key);
+            
+            if(baocao != null)
+            {
+                var dino = await firebase.Child("csdlmoi").Child("baocao").Child("baihatvipham").Child("chuaxuli").Child(baocao.nguoidung_id).PostAsync(baocao);
+                string idkey = dino.Key.ToString();
+                baocao.id = idkey;
+                await firebase.Child("csdlmoi").Child("baocao").Child("baihatvipham").Child("chuaxuli").Child(baocao.nguoidung_id).Child(idkey).PutAsync(baocao);
+            }    
+            
+            return true;
+        }
 
 
 

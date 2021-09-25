@@ -297,15 +297,15 @@
                     <input id="tim_kiem_bai_hat" type="text" style="border: none" ng-keypress="suKienNhanPhimEnter($event)" ng-change="loadKetQuaTimKiem()" ng-model="timKiem" ng-blur="blurTimKiem()" ng-focus="focusTimKiemBaiHat(1)" class="form-search" placeholder="Nhập tên bài hát, Nghệ sĩ hoặc MV...">
                     <i ng-mousedown="mousedowmTimKiem()" ng-mouseup="mouseupTimKiem()" ng-show="timKiemBaiHat" ng-click="clickCloseTimKiem()" class="fas fa-times searchitem searchitemclose"></i>
                 </div>
-                <ul  class="suggest__list" style="z-index:9999;" ng-show="timKiemBaiHat">
+                <ul class="suggest__list" style="z-index:9999;" ng-show="timKiemBaiHat">
 
                     <li ng-mousedown="mousedowmTimKiemKq()" ng-mouseup="mouseupTimKiem(timKiem)" ng-show="timKiem.length > 0" class="suggest__item"> <i class="fas fa-search searchitem searchsubitem"></i><span class="item_search">Tìm Kiếm "{{timKiem}}"</span></li>
 
                     <li ng-mousedown="mousedowmTimKiemKq()" ng-mouseup="mouseupTimKiem(x.tenbaihat)" ng-repeat="x in ketQuaTimKiem" class="suggest__item"> <i class="fas fa-search searchitem searchsubitem"></i><span class="item_search"> {{x.tenbaihat}}</span></li>
                     @*<li class="suggest__item"> <i class="fas fa-search searchitem searchsubitem"></i><span class="item_search"> Phía Sau Một Cô Gái 2</span></li>
-                        <li ng-click="clickCloseTimKiem()" class="suggest__item"> <i class="fas fa-search searchitem searchsubitem"></i><span class="item_search"> Phía Sau Một Cô Gái</span></li>
-                        <li class="suggest__item"> <i class="fas fa-search searchitem searchsubitem"></i><span class="item_search"> Phía Sau Một Cô Gái 3</span></li>
-                        <li class="suggest__item"> <i class="fas fa-search searchitem searchsubitem"></i> <span class="item_search">Phía Sau Một Cô Gái 4</span></li>*@
+                    <li ng-click="clickCloseTimKiem()" class="suggest__item"> <i class="fas fa-search searchitem searchsubitem"></i><span class="item_search"> Phía Sau Một Cô Gái</span></li>
+                    <li class="suggest__item"> <i class="fas fa-search searchitem searchsubitem"></i><span class="item_search"> Phía Sau Một Cô Gái 3</span></li>
+                    <li class="suggest__item"> <i class="fas fa-search searchitem searchsubitem"></i> <span class="item_search">Phía Sau Một Cô Gái 4</span></li>*@
                     <li class="suggest__item__song"> </li>
                     <li ng-mousedown="mousedowmTimKiemKq()" ng-repeat="x in ketQuaTimKiem" ng-mouseup="mouseupTimKiemKq($index)" class="suggest__item__song__kq hover_item__song">
                         <div ng-style="{'background-image': 'url(' + x.linkhinhanh + ')'}" class="hinh_baihatmoi_search ">
@@ -903,7 +903,7 @@
                                                                 </div>
                                                             </div>
                                                             <div ng-show="!chinhsuabinhluancon" ng-style="{'opacity': opacitycon}">{{paren.binhluancon.noidung}}</div>
-                                                            <div  ng-init="chinhSuaBinhLuancon = paren.binhluancon.noidung" ng-show="chinhsuabinhluancon  && paren.binhluancon.nguoidung_id == checklogin.uid && checklogin.dadangnhap == true" class="rep_comment" style="position:relative">
+                                                            <div ng-init="chinhSuaBinhLuancon = paren.binhluancon.noidung" ng-show="chinhsuabinhluancon  && paren.binhluancon.nguoidung_id == checklogin.uid && checklogin.dadangnhap == true" class="rep_comment" style="position:relative">
                                                                 <i @*ng-click="BinhLuanConBaiHat()"*@ ng-click="ChinhSuaBinhLuanConBaiHat(idBHBinhLuan,paren.binhluancon.id,chinhSuaBinhLuancon)" style="cursor:pointer; position: absolute; right: 25%; color: #fff; top: 15%; font-size: 16px; transform: rotate( 45deg );" class="fas fa-location-arrow"></i>
                                                                 <input ng-model="chinhSuaBinhLuancon" ng-keypress="PhimEnterChinhSuaBinhLuanConBaiHat($event,idBHBinhLuan,paren.binhluancon.id,chinhSuaBinhLuancon)" style="height:30px;width:80%" class="input_playlist ng-pristine ng-untouched ng-valid ng-empty" type="text" maxlength="200" placeholder="Nhập bình luận ..." />
                                                                 <div ng-click="chinhsuabinhluancon = !chinhsuabinhluancon" class="huy_chinhsua">Hủy bỏ</div>
@@ -945,6 +945,144 @@
         </div>
 
 
+        @*báo cáo*@
+        <div class="zm-portal-modal" ng-init="activebaocao =0;" ng-show="showFormBaoCao">
+            <div class="modal_comment is-active">
+                <div class="modal-background" style="color:#fff;">
+                    <div class="">
+                        <div class="comment-content">
+                            <div class="header_comment">
+                                <h3 class="title">Báo Cáo Vi Phạm</h3>
+                                <button ng-click="showFormBaoCao =!showFormBaoCao" style=" background-color: inherit; color:#fff;" class="zm-btn-comment zm-tooltip-btn is-hover-circle button" tabindex="0"><span class="material-icons-outlined">close</span></button>
+                            </div>
+                            <div class="action"><h3 style="margin-left:20px" class="subtitle has-text-weight-bold">Hãy chọn vấn đề cần báo cáo</h3><div>Nếu bạn nhận thấy ai đó đang gặp nguy hiểm, đừng chần chừ mà hãy tìm ngay sự giúp đỡ trước khi báo cáo với TMusic.</div></div>
+                            <div class="mar-t-10 comment-list">
+                                <div style="position: relative; overflow: hidden; width: 100%; height: 100%;">
+
+
+                                    <div id="modal-scroll" class="baocao">
+                                        <!--commentitem-->
+                                        <div class="itemreport">
+                                            <label class="checkbox">
+                                                <input ng-model="noidungkhongphuhop" type="checkbox" />
+                                            </label>
+                                            <div ng-class="{'activebaocao': noidungkhongphuhop}" for="taikhoangiamao">Bài Hát Có Nội Dung Không Phù Hợp</div>
+                                        </div>
+                                        <div class="itemreport">
+                                            <label class="checkbox">
+                                                <input ng-model="anhthoathan" type="checkbox" />
+                                            </label>
+                                            <div ng-class="{'activebaocao': anhthoathan}" for="tengiamao">Ảnh Bài Hát Khỏa Thân</div>
+                                        </div>
+                                        <div class="itemreport">
+                                            <label class="checkbox">
+                                                <input ng-model="noidunglangma" type="checkbox" />
+                                            </label>
+                                            <div ng-class="{'activebaocao': noidunglangma}" for="dangnoidungkhongphuhop">Nội Dung Bài Hát Lăng Mạ Hoặc Kích Động Thù Hận</div>
+                                        </div>
+                                        <div class="itemreport">
+                                            <label class="checkbox">
+                                                <input ng-model="baoluc" type="checkbox" />
+                                            </label>
+                                            <div ng-class="{'activebaocao': baoluc}" for="anhthoathan">Ảnh Bài Hát Bạo Lực Hoặc Phản Cảm</div>
+                                        </div>
+
+                                        <div class="itemreport">
+                                            <label ng-click="showViPhamBaiHat(viphambanquyen)" class="checkbox">
+                                                <input ng-model="viphambanquyen" type="checkbox" />
+                                            </label>
+                                            <div ng-class="{'activebaocao': viphambanquyen}" for="viphambanquyenbaihat">Vi phạm Bản Quyền Bài Hát Của Tôi </div>
+                                        </div>
+                                        <div class="itemreport">
+                                            <label class="checkbox">
+                                                <input ng-model="vandekhac" type="checkbox" />
+                                            </label>
+                                            <div ng-class="{'activebaocao': vandekhac}" for="viphambanquyenbaihat">Vấn Đề Khác</div>
+                                        </div>
+
+
+                                        <div class="action motabaocao">
+                                            <h3 style="margin-bottom:6px;" class="subtitle has-text-weight-bold">Mô tả thêm</h3>
+                                            <textarea ng-model="motabaocao" name="okem1" class="textarea_uploadbaihat textmotathem" rows="8" cols="100">  </textarea>
+                                        </div>
+
+
+                                        <div ng-show="baiHatBanQuyen != null">
+                                            <div>Vi phạm bản quyền bài hát: {{baiHatBanQuyen.tenbaihat}} của bạn</div>
+                                            <div ng-show="baiHatBanQuyen != null" class="baihat_moi_baocao hover_baihat_moi" ng-click="showChonBaiHatViPham = !showChonBaiHatViPham" context-menu="contextMenuBaiHat_BaiHat">
+                                                <div ng-style="{'background-image': 'url(' + baiHatBanQuyen.linkhinhanh + ')'}" animate class="hinh_baihatmoi item">
+
+                                                    <img src="{{baiHatBanQuyen.linkhinhanh}} " hidden style="width: 0; height:0;object-fit:cover" />
+                                                </div>
+                                                <div class="thongtin_baihat_moi">
+                                                    <div class="ten_bai_hat_moi">{{baiHatBanQuyen.tenbaihat}}</div>
+                                                    <div class="ca_si_bai_hat_moi">{{baiHatBanQuyen.casi}}</div>
+                                                </div>
+
+
+                                            </div>
+                                        </div>
+                                        
+                                    </div>
+                                    <div class="baocaobuton" style="">
+                                        <button ng-click="huyHenGioShow()" style="display: flex; justify-content: center; align-items: center; font-weight: 400; background-color: #ffffff1a; border: 1px solid #ffffff1a; color: rgb(255 255 255); margin: 0 auto;" class="button_create_playlist">Hủy</button>
+
+                                        <button ng-click="baoCao();"  ng-disabled=" !noidungkhongphuhop && !anhthoathan && !noidunglangma && !baoluc && !viphambanquyen && !vandekhac" ng-class="{'disable_button': !noidungkhongphuhop && !anhthoathan && !noidunglangma && !baoluc && !viphambanquyen && !vandekhac}" class="button_create_playlist">Báo Cáo</button>
+                                    </div>
+                                </div>
+
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+            @*bài hát người dung*@
+
+        </div>
+        <div class="zm-portal-modal" ng-show="showChonBaiHatViPham  ">
+            <div class="modal_comment is-active">
+                <div class="modal-background" style="color:#fff;">
+                    <div class="">
+                        <div class="comment-content">
+                            <div class="header_comment">
+                                <h3 class="title">Vi Phạm Bản Quyền Bài Hát</h3>
+                                <button ng-click="doiBaiHatBanQuyen()" style=" background-color: inherit; color:#fff;" class="zm-btn-comment zm-tooltip-btn is-hover-circle button" tabindex="0"><span class="material-icons-outlined">close</span></button>
+                            </div>
+                            <div class="action"><h3 style="margin-left:20px" class="subtitle has-text-weight-bold">Chọn Bài Hát Vi Phạm Bản Quyền Của Bạn</h3><div>Nếu bạn nhận thấy ai đó đang gặp nguy hiểm, đừng chần chừ mà hãy tìm ngay sự giúp đỡ trước khi báo cáo với TMusic.</div></div>
+                            <div class="mar-t-10 comment-list">
+                                <div style="position: relative; overflow: hidden; width: 100%; height: 100%;">
+
+
+                                    <div id="modal-scroll" style="height:62vh;" class="baocao">
+                                        <!--commentitem-->
+
+
+                                        <div ng-repeat="x in listBaiHatDaTaiLen" class="baihat_moi_baocao hover_baihat_moi   "  ng-click="chonBaiHatViPhamBanQuyen(x)" context-menu="contextMenuBaiHat_BaiHat" >
+                                            <div ng-style="{'background-image': 'url(' + x.linkhinhanh + ')'}" animate class="hinh_baihatmoi item">
+                                                
+                                                <img src="{{x.linkhinhanh}} " hidden style="width: 0; height:0;object-fit:cover" />
+                                            </div>
+                                            <div class="thongtin_baihat_moi">
+                                                <div class="ten_bai_hat_moi">{{x.tenbaihat}}</div>
+                                                <div class="ca_si_bai_hat_moi">{{x.casi}}</div>
+                                            </div>
+
+
+                                        </div>
+                                    </div>
+                                
+                                </div>
+
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+            @*bài hát người dung*@
+
+        </div>
 
     </div>
 

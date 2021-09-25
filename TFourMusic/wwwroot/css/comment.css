@@ -85,8 +85,9 @@
         margin-left: 20px;
     }
     .comment-content .action {
-        display: flex;
+        display: block;
         align-items: center;
+        text-align:center;
         justify-content: space-between;
     }
     .comment-content .comment-list {
@@ -119,9 +120,9 @@
     position: relative;
 }
 .comment-content .action {
-    display: flex;
+    display: block;
     align-items: center;
-    justify-content: space-between;
+    justify-content: center;
 }
 .subtitle {
     color: #ffffff80;
@@ -203,5 +204,4 @@
     color: #fff;
     text-decoration: underline;
     cursor: pointer;
-}
 }
