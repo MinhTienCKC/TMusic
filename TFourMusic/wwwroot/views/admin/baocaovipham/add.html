@@ -1,51 +1,31 @@
 ﻿
+
 <div class="modal-header" style="margin: 0px 0px 0px 0px;">
-    <h6 class="m-0">Tạo Gói Vip</h6>
+    <h6 class="m-0">Tạo Chủ Đề</h6>
     <button type="submit" id="btntext" ng-click="hienThiTaiXuong()" style="display:none;" class="btn btn-accent"></button>
 </div>
 <div class="modal-body" style="padding: 15px 30px 10px 30px !important;">
-    <form name="addGoiVip">
+    <form name="addChuDe">
         <div class="form-row kiemtra">
             <div class="form-group col-md-6">
-                <label for="feLastName">Tên Gói Vip</label>
-                <input style="height:44.4px;" type="text" validatekitudacbiet ng-model="addTenGoiVip" name="addTenGoiVip" class="form-control" id="feLastName12" maxlength="255" value="Brooks" required>
-                <span class="thong_bao_sai" ng-show="addGoiVip.addTenGoiVip.$touched && addGoiVip.addTenGoiVip.$invalid">Tên Gói Víp không hợp lệ.</span>
+                <label for="feLastName">Tên Chủ Đề</label>
+                <input style="height:44.4px;" type="text" validatekitudacbiet ng-model="addTenChuDe" name="addTenChuDe" class="form-control" id="feLastName12" maxlength="255" value="Brooks" required>
+                <span class="thong_bao_sai" ng-show="addChuDe.addTenChuDe.$touched && addChuDe.addTenChuDe.$invalid">Tên Chủ Đề không hợp lệ.</span>
             </div>
             <div class="form-group col-md-6">
                 <label for="hinhanh">Hình Ảnh</label>
                 <input type="file" ng-model="addLinkHinhAnh" class="form-control" style="font-size:15px" name="addLinkHinhAnh" id="hinhanh" ng-files="getTheFilesHinhAnh($files)" accept="image/*" required multiple>
-                <span class="thong_bao_sai" ng-show="addGoiVip.addLinkHinhAnh.$touched && addGoiVip.addLinkHinhAnh.$invalid">Vui Lòng Chọn Hình Ảnh.</span>
+                <span class="thong_bao_sai" ng-show="addChuDe.addLinkHinhAnh.$touched && addChuDe.addLinkHinhAnh.$invalid">Vui Lòng Chọn Hình Ảnh.</span>
                 <span class="thong_bao_sai" ng-show="dinhDangHinhAnh != 'image/' ">Sai Định Dạng Hình Ảnh (*.jpg, *.png).</span>
             </div>
 
         </div>
-        <div class="form-row kiemtra">
-            <div class="form-group col-md-6 ">
-                <label for="feFirstName">Giá Góc</label>
-                <input type="text"  kiemtraso ng-model="addGiaTienGoc" name="addGiaTienGoc" class="form-control" maxlength="255" id="feFir12stNa2me" value="Sierra" required>
-                <span class="thong_bao_sai" ng-show="addGoiVip.addGiaTienGoc.$touched && addGoiVip.addGiaTienGoc.$invalid">Giá Góc không hợp lệ.</span>
-                <span class="thong_bao_sai" ng-show="addGiaTienGoc < addGiaTienGiamGia ">Giá gốc > giá tiền giảm !!!!.</span>
-            </div>
-            <div class="form-group col-md-6 ">
-                <label for="feFirstName">Giá Giảm</label>
-                <input type="text"  kiemtraso ng-model="addGiaTienGiamGia"name="addGiaTienGiamGia" class="form-control" maxlength="255" id="feFir12stNa2me" value="Sierra" required>
-                <span class="thong_bao_sai" ng-show="addGoiVip.addGiaTienGiamGia.$touched && addGoiVip.addGiaTienGiamGia.$invalid">Giá Giảm không hợp lệ.</span>
-                <span class="thong_bao_sai" ng-show="addGiaTienGoc < addGiaTienGiamGia">Giá giảm gốc < giá tiền gốc !!!!.</span>
-            </div>
-        </div>
-        <div class="form-row kiemtra">
-            <div class="form-group col-md-6 ">
-                <label for="feFirstName">Số Tháng</label>
-                <input type="text" kiemtraso ng-model="addSoThang" name="addSoThang" class="form-control" maxlength="255" id="feFir12stNa2me" value="Sierra" required>
-                <span class="thong_bao_sai" ng-show="addGoiVip.addSoThang.$touched && addGoiVip.addSoThang.$invalid">Số Tháng không hợp lệ.</span>
-                <span class="thong_bao_sai" ng-show=" addSoThang > soThangVuot ">Số tháng không quá 36 tháng !!!.</span>
-            </div>          
-        </div>
+    
     </form>
 </div>
 <div class="modal-footer" style="margin:0px 0px 0px 0px;">
 
-    <button type="submit" ng-click="submit()" class="btn btn-accent" id="submitcd">Tạo Gói Vip</button>
+    <button type="submit" ng-click="submit()" class="btn btn-accent" id="submitcd">Tạo Chủ Đề</button>
     <button type="submit" ng-click="cancel()" class="btn btn-accent">Thoát</button>
 </div>
 <style>

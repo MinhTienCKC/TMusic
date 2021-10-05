@@ -76,7 +76,8 @@ html {
     /* margin-left: 5px; */
     margin-bottom: 5%;
     height: 100%;
-    background-image: url(/image/logo.png);
+    /*background-image: url(/image/logo.png);*/
+    background-image: url('../image/logo (2).png');
     background-repeat: no-repeat;
     background-size: 59%;
     border-radius: 0;

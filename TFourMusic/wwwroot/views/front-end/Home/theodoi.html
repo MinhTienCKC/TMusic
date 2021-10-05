@@ -50,17 +50,17 @@
                     </div>
                 </div>
                 <ul ng-if="x.baihat.length > 5" class="songs-animate-container_theodoi " animate>
-                    
 
-                    <li ng-repeat="y in x.baihat" ng-class="{'second': checkindexsecond == $index,'first':  checkindexli == $index }"  class="song-animate-item third animate  item">
+
+                    <li ng-repeat="y in x.baihat" ng-class="{'second': checkindexsecond == $index,'first':  checkindexli == $index }" class="song-animate-item third animate  item">
                         <div class="add-to-cart" style="width:100%; height: 100%" ng-click="playMotBanNhac(y)">
                             <figure style="height:100%" class="image is-48x48">
                                 <img src="{{y.linkhinhanh}}" style="object-fit:cover;height:100%;" alt="item">
                             </figure>
                         </div>
-                    
+
                     </li>
-          
+
 
                 </ul>
             </div>
@@ -73,7 +73,7 @@
                 </div>
                 <div ng-if="x.baihat.length > 0" class="item_bh_theodoi" ng-repeat="z in x.baihat" context-menu="contextMenuBaiHat_BaiHat" ng-right-click="moChiTietBaiHat(z)">
 
-                    <div  class="zm-card-image_theodoi video-image" animate>
+                    <div class="zm-card-image_theodoi video-image" animate>
                         <div class="item">
                             <figure class="image is-48x48">
                                 <img style=" object-fit: cover; height: 146px;" src="{{z.linkhinhanh}}" alt="">
@@ -81,7 +81,7 @@
                             <div class="opacity "></div>
                             <!--<div class="zm-box zm-actions_theodoi video-actions">
 
-                </div>-->
+                            </div>-->
                             <div ng-click="$event.preventDefault(); Play(); " class="zm-actions_theodoi play1-play2 nut_dsp_tl vong_tron_play " style="color:#fff; width:55px;" tabindex="0" ng-show="kiemTraBaiHatDangPhat == z.id">
                                 <div ng-show="playmusic == 1 " class="play_baihat_dsptl" style="top: 51%;left: 38%; height: 26px; width: 27px; color:#fff;"> </div>
 
@@ -105,13 +105,14 @@
 
             </div>
 
-          
+
         </div>
 
 
 
 
     </div>
+  
 </div>
 <div style="width:100%; height:50px;">
 

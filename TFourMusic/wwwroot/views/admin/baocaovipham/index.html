@@ -1,105 +1,121 @@
-﻿
-<div class="main-content-container container-fluid px-4">
+﻿<div class="main-content-container container-fluid px-4">
     <!-- Page Header -->
-    <div class="page-header row no-gutters py-4" style="padding-bottom: 0.1rem!important;">
+    <div class="page-header row no-gutters py-4">
         <div class="col-12 col-sm-4 text-center text-sm-left mb-0">
-            <button id="" type="submit" ng-click="taoGoiVip_index()" class="btn btn-accent " style=""><i class="fa fa-plus"></i>  Tạo Gói Vip</button>
-            <button type="submit" ng-show="!hienTimKiem" ng-click="showSearch()" class="btn btn-accent " style=" font-size: 0.75rem; width: 95px;"><i class="fa fa-search"></i>  Tìm Kiếm</button>
-        </div>
-    </div>
-    <div class="page-header row no-gutters py-4" style="padding-top: 0rem !important; padding-bottom: 0.1rem!important;" ng-show="hienTimKiem">
-        <div class="col-12 col-sm-4 text-center text-sm-left mb-0">
-            <input type="text" ng-model="timkiem.tengoivip" class="form-control " id="feLastName23" placeholder="Tìm theo tên" value="Brooks">
+            <button ng-class="{'Chon': model.hienTimKiem == 'baihat' }" id="" type="submit" ng-click="chuyenDoi('baihat')" class="btn btn-accent " style="">Bài Hát</button>
+            <!--<button ng-class="{'Chon': model.hienTimKiem == 'danhsachphat' }" id="" type="submit" ng-click="chuyenDoi('danhsachphat')" class="btn btn-accent " style="">Danh Sách Phát </button>-->
+            <button ng-class="{'Chon': model.hienTimKiem == 'nguoidung' }" id="" type="submit" ng-click="chuyenDoi('nguoidung')" class="btn btn-accent " style="">Người Dùng</button>
         </div>
         <div class="col-12 col-sm-4 text-center text-sm-left mb-0">
-            <button type="submit" ng-click="showSearch(); timkiem.tengoivip = '';" class="btn btn-accent" style="padding: 10px 8px;">Ẩn Tìm Kiếm</button>
-        </div>
 
 
+
+        </div>
+        <div class="col-12 col-sm-4 text-center text-sm-left mb-0">
+        </div>
     </div>
+    <div class="page-header row no-gutters py-4">
+        <h3 ng-if="model.hienTimKiem == 'baihat'" style="padding-left: 32%; font-family: sans-serif; font-size: 2.953rem; " class="m-0">Bài Hát Vi Phạm</h3>
+        <!--<h3 ng-if="model.hienTimKiem == 'danhsachphat'" style="padding-left: 32%; font-family: sans-serif; font-size: 2.953rem; " class="m-0">Danh Sách Phát Vi Phạm</h3>-->
+        <h3 ng-if="model.hienTimKiem == 'nguoidung'" style="padding-left: 32%; font-family: sans-serif; font-size: 2.953rem; " class="m-0">Người Dùng Vi Phạm</h3>
+        <img ng-if="loading" style="width:35px;" src="../../../image/loading2.gif" />
+    </div>
+    <div class="page-header row no-gutters py-4" style="padding-top: 0rem !important; padding-bottom: 0.1rem!important;" ng-if="model.hienTimKiem == 'baihat'">
+        <div class="col-12 col-sm-4 text-center text-sm-left mb-0" style="display:flex;flex: 0 0 70%;max-width: 70%;">
+
+            <button ng-class="{'Chon': baiHatViPhamXuLy == 'chuaxuly' }" id="" type="submit" ng-click="layDanhSach('chuaxuly')" class="btn btn-accent " style="">Chưa xử lý</button>
+            <button ng-class="{'Chon': baiHatViPhamXuLy == 'daxuly' }" id="" type="submit" ng-click="layDanhSach('daxuly')" class="btn btn-accent " style=" margin-left: 5px;">Đã xử lý</button>
+        </div>
+        <!--<div class="col-12 col-sm-4 text-center text-sm-left mb-0" style="text-align: right !important; flex: 0 0 30%;max-width: 30%; display: flex; justify-content: flex-end;">
+            <button id="" type="submit" ng-click="xuatThongKe()" class="btn btn-accent " style="">Xuất Excel</button>
+        </div>-->
+    </div>
+    <!--<div class="page-header row no-gutters py-4" style="padding-top: 0rem !important; padding-bottom: 0.1rem!important;" ng-if="model.hienTimKiem == 'theothang'">
+
+        <div class="col-12 col-sm-4 text-center text-sm-left mb-0" style="display:flex;flex: 0 0 70%;max-width: 70%;">
+            <span style=" padding: 10px;">Chọn Tháng:</span> <input style="width:180px;" type="month" class="form-control" ng-model="model.theothang">
+            <button id="" type="submit" ng-click="layDanhSach()" class="btn btn-accent " style="">Lấy Danh Sách</button>
+        </div>
+        <div class="col-12 col-sm-4 text-center text-sm-left mb-0" style="text-align: right !important; flex: 0 0 30%;max-width: 30%; display: flex; justify-content: flex-end;">
+            <button id="" type="submit" ng-click="xuatThongKe()" class="btn btn-accent " style="">Xuất Excel</button>
+        </div>
+    </div>
+    <div class="page-header row no-gutters py-4" style="padding-top: 0rem !important; padding-bottom: 0.1rem!important;" ng-if="model.hienTimKiem == 'theonam'">
+
+        <div class="col-12 col-sm-4 text-center text-sm-left mb-0" style="display:flex;flex: 0 0 70%;max-width: 70%;">
+            <span style=" padding: 10px;">Chọn Năm:</span> <input style="width:180px;" type="month" class="form-control" ng-model="model.theonam">
+            <button id="" type="submit" ng-click="layDanhSach()" class="btn btn-accent " style="">Lấy Danh Sách</button>
+        </div>
+        <div class="col-12 col-sm-4 text-center text-sm-left mb-0" style="text-align: right !important; flex: 0 0 30%;max-width: 30%; display: flex; justify-content: flex-end;">
+            <button id="" type="submit" ng-click="xuatThongKe()" class="btn btn-accent " style="">Xuất Excel</button>
+        </div>
+    </div>-->
     <!-- End Page Header -->
     <!-- Default Light Table -->
-    <div class="row">
 
+    <div class="row" >
         <div class="col">
-            <div class="card card-small mb-4 dodai">
-                <div class="card-header border-bottom">
-                    <h6 class="m-0">
-                        <span class="chuot" ng-click="sapXep('null'); hoatdong=false; currentPage = 0;">Gói Vip</span>
-                    </h6>
-                </div>
+            <div class="card card-small mb-4 dodai" style=" height: 595px !important; max-height: 595px !important;">
                 <div class="card-body p-0 pb-3 text-center">
-                    <table class="table mb-0 dodaibang">
+                    <table class="table mb-0 dodaibang" style="">
                         <thead class="bg-light">
                             <tr>
                                 <!--<th scope="col" class="border-0">id</th>-->
-                                <th scope="col" class="border-0 ">
-                                    <span class="chuot" ng-click="sapXep('tengoivip')">Tên Gói Víp</span>
-                                    <span class="sortorder" ng-show="tenbien === 'tengoivip'" ng-class="{hoatdong: hoatdong}"></span>
-                                </th>
-                                <th scope="col" class="border-0">
-                                    <span class="chuot" ng-click="sapXep('linkhinhanh')">Ảnh</span>
-                                    <span class="sortorder" ng-show="tenbien === 'linkhinhanh'" ng-class="{hoatdong: hoatdong}"></span>
-                                </th>
-                                <th scope="col" class="border-0 ">
-                                    <span class="chuot" ng-click="sapXep('sothang')">Số Tháng</span>
-                                    <span class="sortorder" ng-show="tenbien === 'sothang'" ng-class="{hoatdong: hoatdong}"></span>
-                                </th>
-                                <th scope="col" class="border-0">
-                                    <span class="chuot" ng-click="sapXep('giatiengoc')">Giá Tiền Gốc</span>
-                                    <span class="sortorder" ng-show="tenbien === 'giatiengoc'" ng-class="{hoatdong: hoatdong}"></span>
-                                </th>
-                                <th scope="col" class="border-0 ">
-                                    <span class="chuot" ng-click="sapXep('giatiemgiamgia')">Giá Tiền Giảm</span>
-                                    <span class="sortorder" ng-show="tenbien === 'giatiengiamgia'" ng-class="{hoatdong: hoatdong}"></span>
-                                </th>
-                                                           
-                                <th scope="col" class="border-0">Sửa</th>
-                                <th scope="col" class="border-0">Xóa</th>
 
+                                <th scope="col" class="border-0" >Email Người Báo Cáo</th>
+                                <th scope="col" class="border-0" >Email Vi Phạm</th>
+                               <!--<th scope="col" class="border-0" >Bài hát Vi Phạm</th>-->
+                                <!--<th scope="col" class="border-0" style="border-bottom: 1px solid #017bfd !important;">Mô Tả Thêm</th>-->
+
+                                <th scope="col" class="border-0" >Xử Lý</th>
+                                <th scope="col" class="border-0" >Trạng Thái</th>
+                                <th scope="col" class="border-0" >Xóa</th>
                             </tr>
+                            <!--<tr>-->
+                                <!--<th scope="col" class="border-0">id</th>-->
+                                <!--<th scope="col" class="border-0" style="background:white;"></th>
+                                <th scope="col" class="border-0" style="background:white;"></th>
+                                <th scope="col" class="border-0" style="background:white;"></th>
+                                <th scope="col" class="border-0" style="background:white;"></th>
+                                <th scope="col" class="border-0" style="background:white;">Số Hóa Đơn : {{taiThongKe.length}}</th>
+                                <th scope="col" class="border-0" style="background:white;">Tổng Tiền : {{tongTien | number:'0' | vietNamDong }}</th>
+
+
+
+                            </tr>-->
                         </thead>
+                     
                         <tbody>
-                            <tr ng-repeat="data in taiGoiVip | orderBy:tenbien:hoatdong | filter:timkiem | startFrom:currentPage*pageSize | limitTo:pageSize ">
-
-                                <td class="vitrigiua "><span>{{data.tengoivip}}</span></td>
-
-                                <td>
-                                    <img src="{{data.linkhinhanh}}" class="icon-category hinhanh">
-                                    <label style="color: #0479f8;" class="anh">
-                                        <i class="fas fa-camera icon_edit"></i>
-                                        <input type="file" class="" style="display: none;" ng-files="suaHinhAnhGoiVip($files,data)" accept="image/png, image/jpeg" required multiple>
-                                    </label>
+                            <tr style="height: 85px !important;" ng-repeat="data in taiBaoCaoViPham | filter:timkiem | startFrom:currentPage*pageSize | limitTo:pageSize" >
+                                <!---->
+                                <td class="vitrigiua">{{data.email_nguoidung}}</td>
+                                <td class="vitrigiua">{{data.email_nguoidung_baocao}}</td>
+                                <!--<td class="vitrigiua" style="display: flex; padding: 0px 0px 0px 20px; padding-top:30px !important;">
+                                    <div><img src="{{data.baihatvipham[0].linkhinhanh}}" class="icon-category hinhanh"></div>
+                                    <div style="padding-left: 10px;">
+                                        <span style="display: block; text-align: left;">{{data.baihatvipham[0].tenbaihat}}</span>
+                                        <span style="display: block; font-size: 12px; text-align: left;">{{data.baihatvipham[0].casi}}</span>
+                                    </div>
+                                    
+                                   
+                                </td>-->
+                                <!--<td class="vitrigiua"><p ng-repeat="data1 in data.noidung " ng-show="$index == 0 ">{{data1}}</p></td>
+                                <td class="vitrigiua">{{data.motavande}}</td>-->
+                                <td class="vitrigiua"> <button ng-click="edit(data,($index + ((currentPage+1)*pageSize)-pageSize));capNhatTrangThai(data,($index + ((currentPage+1)*pageSize)-pageSize))" style="width: 25px; height: 25px; padding: 0px;-webkit-box-shadow: 0 2px 5px 0 rgba(85,168,253,0.45);" class="btn btn-accent blue "><i class="fa fa-edit"></i></button></td>
+                                <td class="vitrigiua">
+                                    <p ng-if="data.trangthai == 0" style="color:red;">Chưa Xử Lý</p>
+                                    <p ng-if="data.trangthai == 1" style="color:#2e15f9;">Đang Xử Lý</p>
                                 </td>
-                                <td class="vitrigiua "><span>{{data.sothang}}</span></td>
-                                <td class="vitrigiua "><span>{{data.giatiengoc | currency:"":0}} VNĐ</span></td>
-                                <td class="vitrigiua "><span>{{data.giatiengiamgia | currency:"":0}} VNĐ</span></td>
-
-                                <td class="vitrigiua"> <button ng-click="edit(data)" style="width: 25px; height: 25px; padding: 0px;-webkit-box-shadow: 0 2px 5px 0 rgba(85,168,253,0.45);" class="btn btn-accent blue "><i class="fa fa-edit"></i></button>       </td>
-                                <td class="vitrigiua"> <button type="submit" ng-click="xoaGoiVip(data,($index + ((currentPage+1)*pageSize)-pageSize))" style="width: 25px; height: 25px; padding: 0px;-webkit-box-shadow: 0 2px 5px 0 rgba(230,60,95,0.45)" class="btn btn-accent red "><i class="fa fa-trash"></i></button></td>
-
-
+                                <td class="vitrigiua"> <button type="submit" ng-click="xoaBaoCaoViPham(data,($index + ((currentPage+1)*pageSize)-pageSize))" style="width: 25px; height: 25px; padding: 0px;-webkit-box-shadow: 0 2px 5px 0 rgba(230,60,95,0.45)" class="btn btn-accent red "><i class="fa fa-trash"></i></button></td>
                             </tr>
-
-
                         </tbody>
-
                     </table>
-
-                    <span class="khungso"> {{currentPage+1}}/{{numberOfPages()}}</span>
-
-
+                    <span class="khungso" style=" position: absolute; top: 93%;"> {{currentPage+1}}/{{numberOfPages()}}</span>
                 </div>
-
             </div>
-
-
         </div>
-
     </div>
-    <!-- End Default Light Table -->
-    <!-- Default Dark Table -->
-    <div class="row" style="padding:0px 0px 0px 15px">
+    <div class="row" style="padding:0px 0px 0px 15px" >
         <!--{{currentPage+1}}/{{numberOfPages()}}-->
         <nav aria-label="Page navigation example">
             <ul class="pagination pagination-primary" style="padding-left: 0px;">
@@ -112,12 +128,28 @@
         </nav>
     </div>
 
-    <!-- End Default Dark Table -->
+    <!-- End Default Light Table -->
+    <!-- Default Dark Table -->
+
 </div>
 <style>
+    .vitrigiua {
+        padding-top: 2.5em !important;
+    }
+    .motadsptl {
+        text-overflow: Ellipsis;
+        width: 370px;
+        white-space: nowrap;
+        overflow: hidden;
+    }
 
     .soTrangChon {
         background-color: #006fe6 !important;
+        color: white !important;
+    }
+
+    .Chon {
+        background-color: red !important;
         color: white !important;
     }
 
@@ -135,7 +167,6 @@
     .anh {
         position: relative;
         display: inline-block;
-        /*         margin-top: 20px;*/
         cursor: pointer;
     }
 

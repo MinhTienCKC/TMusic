@@ -74,14 +74,14 @@
                                     <span class="chuot" ng-click="sapXep('luotnghe')">Lượt Nghe</span>
                                     <span class="sortorder" ng-show="tenbien === 'luotnghe'" ng-class="{hoatdong: hoatdong}"></span>
                                 </th>
-                                <th scope="col" class="border-0">
+                                <!--<th scope="col" class="border-0">
                                     <span class="chuot" ng-click="sapXep('luottaixuong')">Lượt Tải Xuống</span>
                                     <span class="sortorder" ng-show="tenbien === 'luottaixuong'" ng-class="{hoatdong: hoatdong}"></span>
-                                </th>
-                                <th scope="col" class="border-0">
+                                </th>-->
+                                <!--<th scope="col" class="border-0">
                                     <span class="chuot" ng-click="sapXep('luotthich')">Lượt Thích</span>
                                     <span class="sortorder" ng-show="tenbien === 'luotthich'" ng-class="{hoatdong: hoatdong}"></span>
-                                </th>
+                                </th>-->
                                 <!--<th scope="col" class="border-0">Thời Lượng</th>-->
                                 <!--<th scope="col" class="border-0">Mô Tả</th>-->
                                 <!--<th scope="col" class="border-0">Ca Sĩ</th>
@@ -95,7 +95,7 @@
                             </tr>
                         </thead>
                         <tbody>
-                            <tr ng-repeat="data in taiBaiHat | orderBy:tenbien:hoatdong | filter:timkiem | startFrom:currentPage*pageSize | limitTo:pageSize ">
+                            <tr  ng-repeat="data in taiBaiHat | orderBy:tenbien:hoatdong | filter:timkiem | startFrom:currentPage*pageSize | limitTo:pageSize ">
                                 <!--<td class="vitrigiua "><span>{{data.tenbaihat}}</span></td>-->
                                 <td class="vitrigiua" style="width: 200px;">
                                     <p style="margin-bottom: 0px !important;" class="motadsptl" title="{{data.tenbaihat}}">{{data.tenbaihat}}</p>
@@ -110,8 +110,8 @@
                                 <td class="vitrigiua">{{data.thoiluongbaihat}}</td>
                                 <td class="vitrigiua">{{data.casi}}</td>
                                 <td class="vitrigiua">{{data.luotnghe}}</td>
-                                <td class="vitrigiua">{{data.luottaixuong}}</td>
-                                <td class="vitrigiua">{{data.luotthich}}</td>
+                                <!--<td class="vitrigiua">{{data.luottaixuong}}</td>-->
+                                <!--<td class="vitrigiua">{{data.luotthich}}</td>-->
                                 <td ng-if="timkiem.nguoidung_id == 'admin'" class="vitrigiua">
                                     <label class="switch1">
                                         <input ng-change="cheDo(data)" type="checkbox" ng-model="data.chedo"

@@ -1,7 +1,7 @@
 ﻿
 var ctxfolderurl = "/views/front-end/Home";
 
-var app = angular.module('App_ESEIM', ['ui.bootstrap', 'ngRoute', 'slick', 'ngCookies', 'ngAnimate']);
+var app = angular.module('App_ESEIM', ['ui.bootstrap', 'ngRoute', 'slick', 'ngCookies', 'ngAnimate', 'ngSanitize']);
 
 app.config(function ($routeProvider, $locationProvider) {
     $locationProvider.hashPrefix('');
@@ -336,6 +336,19 @@ app.factory('dataservice', function ($http) {
         XoaDanhSachPhatNguoiDung: function (data, callback) {
             $http.post('/Home/XoaDanhSachPhatNguoiDung', data).then(callback);
         },
+        ChinhSuaTenBaiHat: function (data, callback) {
+            $http.post('/Home/ChinhSuaTenBaiHat', data).then(callback);
+
+        },
+        xoaBaiHatNguoiDung: function (data, callback) {
+            $http.post('/Home/xoaBaiHatNguoiDung', data).then(callback);
+
+        },
+        ChinhSuaTenDanhSachPhat: function (data, callback) {
+            $http.post('/Home/ChinhSuaTenDanhSachPhat', data).then(callback);
+
+        },
+
         // Lấy bài hát theo id 
         taiBaiHatTheoId: function (data, callback) {
             $http.post('/Home/taiBaiHatTheoId', data).then(callback);
@@ -486,6 +499,573 @@ app.factory('dataservice', function ($http) {
     }
 
 });
+app.directive('ngTemplate', function () {
+
+    return {
+        template: `<label ng-if="huyhengioshow == 1" ng-click="huyhengioshow = 0" class="tao_playlist_layout_label_hengio"></label>
+            <div ng-if= "huyhengioshow == 1" class="tao_playlist_layout_hengio" >
+
+                <div class="modal_laylist_layout">
+                    <div class="modal_laylist_layout_item">
+                        <div class="modal_content">
+                            <h3 style=" font-size: 18px; margin-bottom: 15px;">Hủy Hẹn Giờ</h3>
+
+                            <div class="option_playlist">
+
+                                <div>
+                                    <h3 style=" font-size: 14px; margin-bottom: 5px; font-weight: 400;">Bạn có chắc chắn hủy hẹn giờ</h3>
+
+                                </div>
+
+
+                            </div>
+                            <div style="display: flex; padding-top: 20px;">
+                                <button ng-click="huyHenGioShow()" style="display: flex; justify-content: center; align-items: center; font-weight: 400; background-color: #ffffff1a; border: 1px solid #ffffff1a; color: rgb(255 255 255); margin: 0 auto;" class="button_create_playlist">Không</button>
+
+                                <button ng-click="huyHenGio();" class="button_create_playlist">Có</button>
+                            </div>
+
+                        </div>
+                    </div>
+                </div>
+
+            </div >`
+    }
+});
+app.directive('ngLogin', function () {
+
+    return {
+        template: `<div class="row login_form" style="outline:none;" ng-show="closelogin" ng-init="model.ngaysinh = '2020-01-06'">
+            <div class="col-md-6 mx-auto p-0">
+                <div class="card">
+                    <div class="login-box">
+                        <a style="text-decoration:none" ng-click="closeloginAccount() " class="close_hover_login">
+                            <i class="fas fa-times close_login"></i>
+                        </a>
+
+                        <div class="login-snip">
+                            <input id="tab-1" type="radio" name="tab" class="sign-in" checked><label for="tab-1" class="tab">Login</label> <input id="tab-2" type="radio" name="tab" class="sign-up"><label for="tab-2" class="tab">Sign Up</label>
+                            <div class="login-space">
+
+                                <div class="login">
+                                    <form ng-submit="dangNhapWeb()" name="dangnhap" novalidate ng-init="login.email=''; login.password=''">
+                                        <div class="group"> <label for="user" class="label">Email</label> <input style="outline:none;" ng-model="login.email" id="user" type="email" name="email" maxlength="50" class="input" placeholder="Email"> </div>
+                                        <div class="group"> <label for="pass" class="label">Mật Khẩu</label> <input style="outline:none;" name="matkhau" ng-model="login.password" id="pass" type="password" min="6" maxlength="30" ng-minlength="6" ng-maxlength="30" required class="input" data-type="password" placeholder="Mật Khẩu"></div>
+                                        <label ng-show="dangNhapLoi.length > 0" class="opacity_validate" style="color: #f8d6d6;margin: 1px; margin-left: 10px; font-size:12px;">{{dangNhapLoi}}</label>
+
+
+                                        <label ng-class="{'xacthucemail':xacthucemail}" style="color: red;margin: 1px; margin-left: 10px; font-size:12px; opacity:0;">Email của bạn chưa xác thực. Vui lòng xác thực mới đăng nhập</label>
+                                        <div class="group">  <label style="color:#fff;margin-left: 31%; margin-top: 15px;">Hoặc đăng nhập bằng</label> </div>
+                                        <div class="login_fb_gg">
+                                            <a class="logins  " id="btnGoogle" ng-click="btnGoogle()"><img class="login_or_gg" src="https://firebasestorage.googleapis.com/v0/b/tfourmusic-1e3ff.appspot.com/o/image%2Fvip%2Flogin.png?alt=media&token=5f85c387-26ce-47fa-9afa-126312c3ea87" alt="GOOGLE"></a>
+                                            <a class="logins login_or" id="btnFacebook" ng-click="loginFb()"> <span class="material-icons-outlined login_facebook">facebook</span></a>
+
+                                        </div>
+
+                                        <div class="group"> <button class="button" style="outline:none;cursor:pointer" type="submit" ng-class="{'disable_button':  login.email.$error.email || login.password < 6}" ng-disabled="login.email.$error.email || login.password < 6" value="Đăng Nhập ">Đăng Nhập</button> </div>
+                                        <div class="hr"></div>
+
+                                        <div class="foot"> <a ng-click="checkLogin()" style="color: #fff; text-decoration: none;" href="/quenmatkhau">Quên mật khẩu?</a> </div>
+                                    </form>
+
+                                </div>
+                                <div class="sign-up-form" ng-init="showmk='password';showmk1 = 'password'">
+                                    <form ng-submit="dangky()" name="form" novalidate>
+
+
+                                        <div class="group">
+                                            <label for="user" class="label">Họ Tên*</label>
+                       
+                                            <label ng-class="{'opacity_validate': form.username.$error.minlength}" class="not_opacity_validate" style="color: red;margin: 1px; margin-left: 10px; font-size:12px;">Họ Tên không được bỏ trống, Họ tên phải hơn 6 kí tự</label>
+
+                                            <input ng-change="validatebutton()" style="outline:none;" ng-model="model.hoten" id="hotenlogin" name="username" type="text" maxlength="50" class="input" placeholder="Họ Tên" ng-minlength="6" ng-maxlength="50" required>
+
+                                        </div>
+                                        <div class="group">
+                                            <label for="pass" class="label">Email*</label> <label ng-class="{'opacity_validate': form.email.$error.email}" class="not_opacity_validate" style="color: red;margin: 1px; margin-left: 10px; font-size:12px;">Email không đúng định dạng.</label>
+                                            <input ng-change="validatebutton()" style="outline:none;" ng-model="model.email" name="email" maxlength="30" type="email" class="input" placeholder="Email" autocomplete="off" required>
+                                        </div>
+
+                                        <div class="group">
+                                            <label for="pass" class="label">Mật Khẩu*</label> <label ng-class="{'opacity_validate': form.matkhau.$error.minlength && form.matkhau.$dirty}" class="not_opacity_validate" style="color: red;margin: 1px; margin-left: 10px;font-size:12px;">mật khẩu phải lớn hơn 6 kí tự.</label>
+
+                                            <input ng-change="validatebutton()" style="outline:none;" ng-model="model.matkhau" name="matkhau" type="{{showmk}}" maxlength="30" class="input" data-type="text" placeholder="Mật Khẩu" ng-minlength="6" ng-maxlength="30" required><i ng-mousedown="showMkDangKi(1)" ng-mouseup="showMkDangKi(1)" style="cursor:pointer; position: absolute; right: 25px; top: 62%; color: #1d1b1b; font-size: 15px; " class="fas fa-eye"></i>
+                                        </div>
+                                        <div class="group">
+                                            <label for="pass" class="label">Nhập Lại Mật Khẩu*</label> <label ng-class="{'opacity_validate': model.matkhau != matkhau2 && model.matkhau !=''}" class="not_opacity_validate" style="color: red;margin: 1px; margin-left: 10px;font-size:12px;">Mật khẩu không khớp</label>
+                                            <input ng-change="validatebutton()" style="outline:none;" ng-model="matkhau2" maxlength="30" type="{{showmk1}}" class="input" data-type="password" placeholder="Nhập Lại Mật Khẩu"><i ng-mousedown="showMkDangKi(0)" ng-mouseup="showMkDangKi(0)" style="cursor:pointer; position: absolute; right: 25px; top: 86%; color: #1d1b1b; font-size: 15px; " class="fas fa-eye"></i>
+                                        </div>
+
+                                        <div class="group"> <label for="user" class="label">Ngày Sinh*</label> <input type="date" value="2013-01-08" class="input" ng-model="model.ngaysinh" placeholder="yyyy-MM-dd" min="1960-01-01" max="{{ngayHienTai | date : 'yyyy-MM-dd'}}" required> </div>
+                                        <div class="group" style="margin-bottom:-1px;">
+                                            <label class="label">Giới Tính*</label><label class="gioi_tinh">Nam</label> <input ng-model="model.gioitinh" value="1" type="radio" name="gioitinh" style="margin-left:10px; margin-top:2px;">
+                                            <label class="gioi_tinh">Nữ</label><input ng-model="model.gioitinh" value="0" name="gioitinh" style="margin-left:10px; margin-top:2px;" type="radio" id="start">
+                                        </div>
+                                        <div class="group" style="margin-bottom:-1px;">
+                                            <label ng-show="taoThatBai" style="color: #ed2b91;margin: 1px; margin-left: 10px; font-size:12px; margin: 10px 5px;">Email bạn nhập đã liên kết với tài khoản khác </label>
+
+                                        </div>
+                                        <div class="group"> <button type="submit" ng-disabled="disabledbutton || form.$dirty && form.$invalid" style="outline:none;" class="button" placeholder="Mật Khẩu">Đăng Ký</button> </div>
+                                    </form>
+
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>`
+    }
+});
+app.directive('ngThongbao', function () {
+
+    return {
+        template: `  <div class="zm-portal-modal" ng-show="thongBao.length > 0">
+            <div style=" margin-left: 82px;" class="modal_comment is-active">
+                <div class="modal-background" style="color:#fff;">
+                    <div class="">
+                        <div style="margin-bottom:10px;" class="comment-content">
+                            <div class="header_comment">
+                                <h3 class="title">Thông Báo</h3>
+                            </div>
+                            <div class="titlethongbao" style=" padding-bottom: 20px;">
+                                <h3 style="margin-left:20px;margin: 0 25px;" class="subtitle has-text-weight-bold">{{thongBao}}</h3>
+                            </div>
+
+                            <button style=" width: 90px; position: relative; left: 42%;" ng-click="showThongBao()" class="button_create_playlist">Xác Nhận</button>
+
+                        </div>
+
+                    </div>
+                </div>
+            </div>`
+    }
+});
+app.directive('ngBaocao', function () {
+
+    return {
+        template: `      <div class="zm-portal-modal" ng-show="showChonBaiHatViPham  ">
+            <div class="modal_comment is-active">
+                <div class="modal-background" style="color:#fff;">
+                    <div class="">
+                        <div class="comment-content">
+                            <div class="header_comment">
+                                <h3 class="title">Vi Phạm Bản Quyền Bài Hát</h3>
+                                <button ng-click="doiBaiHatBanQuyen()" style=" background-color: inherit; color:#fff;" class="zm-btn-comment zm-tooltip-btn is-hover-circle button" tabindex="0"><span class="material-icons-outlined">close</span></button>
+                            </div>
+                            <div class="action"><h3 style="margin-left:20px" class="subtitle has-text-weight-bold">Chọn Bài Hát Vi Phạm Bản Quyền Của Bạn</h3><div>Nếu bạn nhận thấy ai đó đang gặp nguy hiểm, đừng chần chừ mà hãy tìm ngay sự giúp đỡ trước khi báo cáo với TMusic.</div></div>
+                            <div class="mar-t-10 comment-list">
+                                <div style="position: relative; overflow: hidden; width: 100%; height: 100%;">
+
+
+                                    <div id="modal-scroll" style="height:62vh;" class="baocao">
+                                        commentitem
+
+
+                                        <div ng-repeat="x in listBaiHatDaTaiLen" class="baihat_moi_baocao hover_baihat_moi   " ng-click="chonBaiHatViPhamBanQuyen(x)" context-menu="contextMenuBaiHat_BaiHat">
+                                            <div ng-style="{'background-image': 'url(' + x.linkhinhanh + ')'}" animate class="hinh_baihatmoi item">
+
+                                                <img src="{{x.linkhinhanh}} " hidden style="width: 0; height:0;object-fit:cover" />
+                                            </div>
+                                            <div class="thongtin_baihat_moi">
+                                                <div class="ten_bai_hat_moi">{{x.tenbaihat}}</div>
+                                                <div class="ca_si_bai_hat_moi">{{x.casi}}</div>
+                                            </div>
+
+
+                                        </div>
+                                    </div>
+
+                                </div>
+
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+            </div>`
+    }
+});
+app.directive('ngChitietbaocao', function () {
+
+    return {
+        template: ` <div class="zm-portal-modal" ng-init="activebaocao =0;" ng-show="showFormBaoCao">
+            <div class="modal_comment is-active">
+                <div class="modal-background" style="color:#fff;">
+                    <div class="">
+                        <div class="comment-content">
+                            <div class="header_comment">
+                                <h3 class="title">Báo Cáo Vi Phạm</h3>
+                                <button ng-click="showFormBaoCao =!showFormBaoCao" style=" background-color: inherit; color:#fff;" class="zm-btn-comment zm-tooltip-btn is-hover-circle button" tabindex="0"><span class="material-icons-outlined">close</span></button>
+                            </div>
+                            <div class="action"><h3 style="margin-left:20px" class="subtitle has-text-weight-bold">Hãy chọn vấn đề cần báo cáo</h3><div>Nếu bạn nhận thấy ai đó đang gặp nguy hiểm, đừng chần chừ mà hãy tìm ngay sự giúp đỡ trước khi báo cáo với TMusic.</div></div>
+                            <div class="mar-t-10 comment-list">
+                                <div style="position: relative; overflow: hidden; width: 100%; height: 100%;">
+
+
+                                    <div id="modal-scroll" class="baocao">
+                                        <!--commentitem-->
+                                        <div class="itemreport">
+                                            <label class="checkbox">
+                                                <input ng-model="noidungkhongphuhop" type="checkbox" />
+                                            </label>
+                                            <div ng-class="{'activebaocao': noidungkhongphuhop}" for="taikhoangiamao">Bài Hát Có Nội Dung Không Phù Hợp</div>
+                                        </div>
+                                        <div class="itemreport">
+                                            <label class="checkbox">
+                                                <input ng-model="anhthoathan" type="checkbox" />
+                                            </label>
+                                            <div ng-class="{'activebaocao': anhthoathan}" for="tengiamao">Ảnh Bài Hát Khỏa Thân</div>
+                                        </div>
+                                        <div class="itemreport">
+                                            <label class="checkbox">
+                                                <input ng-model="noidunglangma" type="checkbox" />
+                                            </label>
+                                            <div ng-class="{'activebaocao': noidunglangma}" for="dangnoidungkhongphuhop">Nội Dung Bài Hát Lăng Mạ Hoặc Kích Động Thù Hận</div>
+                                        </div>
+                                        <div class="itemreport">
+                                            <label class="checkbox">
+                                                <input ng-model="baoluc" type="checkbox" />
+                                            </label>
+                                            <div ng-class="{'activebaocao': baoluc}" for="anhthoathan">Ảnh Bài Hát Bạo Lực Hoặc Phản Cảm</div>
+                                        </div>
+
+                                        <div class="itemreport">
+                                            <label ng-click="showViPhamBaiHat(viphambanquyen)" class="checkbox">
+                                                <input ng-model="viphambanquyen" type="checkbox" />
+                                            </label>
+                                            <div ng-class="{'activebaocao': viphambanquyen}" for="viphambanquyenbaihat">Vi phạm Bản Quyền Bài Hát Của Tôi </div>
+                                        </div>
+                                        <div class="itemreport">
+                                            <label class="checkbox">
+                                                <input ng-model="vandekhac" type="checkbox" />
+                                            </label>
+                                            <div ng-class="{'activebaocao': vandekhac}" for="viphambanquyenbaihat">Vấn Đề Khác</div>
+                                        </div>
+
+
+                                        <div class="action motabaocao">
+                                            <h3 style="margin-bottom:6px;" class="subtitle has-text-weight-bold">Mô tả thêm</h3>
+                                            <textarea ng-model="motabaocao" name="okem1" class="textarea_uploadbaihat textmotathem" rows="8" cols="100">  </textarea>
+                                        </div>
+
+
+                                        <div ng-show="baiHatBanQuyen != null">
+                                            <div>Vi phạm bản quyền bài hát: {{baiHatBanQuyen.tenbaihat}} của bạn</div>
+                                            <div ng-show="baiHatBanQuyen != null" class="baihat_moi_baocao hover_baihat_moi" ng-click="showChonBaiHatViPham = !showChonBaiHatViPham" context-menu="contextMenuBaiHat_BaiHat">
+                                                <div ng-style="{'background-image': 'url(' + baiHatBanQuyen.linkhinhanh + ')'}" animate class="hinh_baihatmoi item">
+
+                                                    <img src="{{baiHatBanQuyen.linkhinhanh}} " hidden style="width: 0; height:0;object-fit:cover" />
+                                                </div>
+                                                <div class="thongtin_baihat_moi">
+                                                    <div class="ten_bai_hat_moi">{{baiHatBanQuyen.tenbaihat}}</div>
+                                                    <div class="ca_si_bai_hat_moi">{{baiHatBanQuyen.casi}}</div>
+                                                </div>
+
+
+                                            </div>
+                                        </div>
+
+                                    </div>
+                                    <div class="baocaobuton" style="">
+                                        <button ng-click="showFormBaoCao = !showFormBaoCao" style="display: flex; justify-content: center; align-items: center; font-weight: 400; background-color: #ffffff1a; border: 1px solid #ffffff1a; color: rgb(255 255 255); margin: 0 auto;" class="button_create_playlist">Hủy</button>
+
+                                        <button ng-click="baoCao();" ng-disabled=" !noidungkhongphuhop && !anhthoathan && !noidunglangma && !baoluc && !viphambanquyen && !vandekhac" ng-class="{'disable_button': !noidungkhongphuhop && !anhthoathan && !noidunglangma && !baoluc && !viphambanquyen && !vandekhac}" class="button_create_playlist">Báo Cáo</button>
+                                    </div>
+                                </div>
+
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+            </div>`
+    }
+});
+app.directive('ngBinhluan', function () {
+
+    return {
+        template: ` <div class="zm-portal-modal" ng-if="showBinhLuan == true">
+            <div class="modal_comment is-active">
+                <div class="modal-background" style="color:#fff;">
+                    <div class="">
+                        <div class="comment-content">
+                            <div class="header_comment">
+                                <h3 class="title">Bình luận</h3>
+                                <button ng-click="showBL()" style=" background-color: inherit; color:#fff;" class="zm-btn-comment zm-tooltip-btn is-hover-circle button" tabindex="0"><span class="material-icons-outlined">close</span></button>
+                            </div>
+                            <div class="action"><h3 style="margin-left:20px" class="subtitle has-text-weight-bold">{{duLieuBinhLuan.length}} Bình luận</h3></div>
+                            <div class="mar-t-10 comment-list">
+                                <div style="position: relative; overflow: hidden; width: 100%; height: 100%;">
+
+
+                                    <div ng-init="opacity=1;chinhsuabinhluan = false; opacitycon = 1; chinhsuabinhluancon=false" id="modal-scroll" style="position: absolute; inset: 0px;font-size:13px; overflow: hidden scroll; margin-right: 0px; margin-bottom: 0px;margin-left: 20px;  margin-right: 5px;">
+                                        <!--commentitem-->
+
+
+
+                                        <div ng-repeat="x in duLieuBinhLuan | orderBy:x.binhluancha.thoigian:true" class="media comment-item">
+                                            <div ng-style="{'opacity': opacity}" class="media-left">
+                                                <a ng-click="showBL()" href="#/nghesi/{{x.nguoidungcha.uid}}">
+                                                    <figure class="image_comment is-rounded is-50x50">
+                                                        <img src="{{x.nguoidungcha.hinhdaidien}}" alt="">
+                                                    </figure>
+                                                </a>
+                                            </div>
+                                            <div class="media-content_comment">
+                                                <div style="position:relative;display:flex" class="username">
+                                                    <a ng-style="{'opacity': opacity}" ng-click="showBL()" href="#/nghesi/{{x.nguoidungcha.uid}}">{{x.nguoidungcha.hoten}} </a>
+                                                    <span ng-style="{'opacity': opacity}" class="post-time">{{x.binhluancha.thoigian | date:'HH:mm dd-MM-yyyy'}}</span>
+                                                    <div class="privatecmt">
+                                                        <span style="padding-bottom:22px;padding-right:22px; opacity:1" class="material-icons-outlined icondot_commnet">more_horiz</span>
+                                                        <div style="z-index:1;top:0;opacity:1" class="user_profile_comment">
+                                                            <ul style="list-style:none" class="setting-user">
+                                                                <li ng-show="opacity == 1" ng-click="opacity = 0.2" class="item_setting"><span style=" margin: 0px 5px" class="material-icons-outlined">comments_disabled</span><span>Ẩn bình luận</span></li>
+                                                                <li ng-show="opacity == 0.2" ng-click="opacity = 1" class="item_setting"><span style=" margin: 0px 5px" class="material-icons-outlined">comment</span><span>Hiện bình luận</span></li>
+                                                                <li ng-if="x.binhluancha.nguoidung_id == checklogin.uid && checklogin.dadangnhap == true" ng-click="XoaBinhLuanBaiHat(idBHBinhLuan,x.binhluancha.id)" class="item_setting"><span style="margin:0px 5px" class="material-icons-outlined">delete</span> <span> Xóa bình luận</span></li>
+
+                                                                <li ng-click="chinhsuabinhluan = !chinhsuabinhluan" ng-show="x.binhluancha.nguoidung_id == checklogin.uid && checklogin.dadangnhap == true" class="item_setting"><span style="margin:0px 5px" class="material-icons-outlined">edit</span> <span>Chỉnh sửa</span></li>
+
+                                                            </ul>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div ng-show="!chinhsuabinhluan" ng-style="{'opacity': opacity}">{{x.binhluancha.noidung}}</div>
+                                                <input ng-if="chinhsuabinhluan  && x.binhluancha.nguoidung_id == checklogin.uid && checklogin.dadangnhap == true"  style="height:30px;width:80%" class="input_playlist ng-pristine ng-untouched ng-valid ng-empty" type="text" maxlength="300" />
+                                                <div ng-init="chinhSuaBinhLuan = x.binhluancha.noidung" ng-show="chinhsuabinhluan  && x.binhluancha.nguoidung_id == checklogin.uid && checklogin.dadangnhap == true" class="rep_comment" style="position:relative">
+                                                    <i ng-click="BinhLuanConBaiHat()" ng-click="ChinhSuaBinhLuanBaiHat(idBHBinhLuan,x.binhluancha.id,chinhSuaBinhLuan)" style="cursor:pointer; position: absolute; right: 25%; color: #fff; top: 25%; font-size: 16px; transform: rotate( 45deg );" class="fas fa-location-arrow"></i>
+                                                    <input ng-model="chinhSuaBinhLuan" ng-keypress="PhimEnterChinhSuaBinhLuanCha($event,idBHBinhLuan,x.binhluancha.id,chinhSuaBinhLuan)" style="height:30px;width:80%" class="input_playlist ng-pristine ng-untouched ng-valid ng-empty" type="text" maxlength="200" placeholder="Nhập bình luận ..." />
+
+                                                </div>
+                                                <div ng-style="{'opacity': opacity}" class="comment-reply-list-wrapper">
+
+                                                    <div ng-if="x.binhluancon.length > 0 &&  $index < xemthembinhluan " class="media comment-item" ng-repeat="paren in x.binhluancon">
+                                                        <div ng-style="{'opacity': opacitycon}" class="media-left">
+                                                            <a ng-click="showBL()" href="#/nghesi/{{paren.nguoidungcon.uid}}">
+                                                                <figure style="width:40px; height:40px; object-fit:cover" class="image_comment is-rounded is-50x50">
+                                                                    <img src="{{paren.nguoidungcon.hinhdaidien}}" alt="">
+                                                                </figure>
+                                                            </a>
+                                                        </div>
+                                                        <div class="media-content" style="height:auto">
+                                                            <div style="position:relative; display:flex" class="username">
+                                                                <a ng-style="{'opacity': opacitycon}" ng-click="showBL()" href="#/nghesi/{{paren.nguoidungcon.uid}}">{{paren.nguoidungcon.hoten}}</a>
+                                                                <span ng-style="{'opacity': opacitycon}" class="post-time">{{paren.binhluancon.thoigian | date:'HH:mm dd-MM-yyyy'}}</span>
+                                                                <div class="privatecmtcon">
+                                                                    <span style="padding-bottom:22px;padding-right:22px; opacity:1" class="material-icons-outlined icondot_commnet">more_horiz</span>
+                                                                    <div style="z-index:1;top:0;opacity:1" class="user_profile_comment">
+                                                                        <ul style="list-style:none" class="setting-user">
+                                                                            <li ng-show="opacitycon == 1" ng-click="opacitycon = 0.2" class="item_setting"><span style="margin:0px 5px" class="material-icons-outlined">comments_disabled</span> <span>Ẩn bình luận</span></li>
+                                                                            <li ng-show="opacitycon == 0.2" ng-click="opacitycon = 1" class="item_setting"><span style="margin:0px 5px" class="material-icons-outlined">comment</span><span>Hiện bình luận</span></li>
+                                                                            <li ng-if="paren.binhluancon.nguoidung_id == checklogin.uid && checklogin.dadangnhap == true" ng-click="XoaBinhLuanConBaiHat(idBHBinhLuan,paren.binhluancon.id)" class="item_setting"><span style="margin:0px 5px" class="material-icons-outlined">delete</span><span> Xóa bình luận</span></li>
+
+                                                                            <li ng-click="chinhsuabinhluancon = !chinhsuabinhluancon" ng-show="paren.binhluancon.nguoidung_id == checklogin.uid && checklogin.dadangnhap == true" class="item_setting"><span style="margin:0px 5px" class="material-icons-outlined">edit</span> <span>Chỉnh sửa</span></li>
+
+                                                                        </ul>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                            <div ng-show="!chinhsuabinhluancon" ng-style="{'opacity': opacitycon}">{{paren.binhluancon.noidung}}</div>
+                                                            <div ng-init="chinhSuaBinhLuancon = paren.binhluancon.noidung" ng-show="chinhsuabinhluancon  && paren.binhluancon.nguoidung_id == checklogin.uid && checklogin.dadangnhap == true" class="rep_comment" style="position:relative">
+                                                                <i ng-click="BinhLuanConBaiHat()" ng-click="ChinhSuaBinhLuanConBaiHat(idBHBinhLuan,paren.binhluancon.id,chinhSuaBinhLuancon)" style="cursor:pointer; position: absolute; right: 25%; color: #fff; top: 15%; font-size: 16px; transform: rotate( 45deg );" class="fas fa-location-arrow"></i>
+                                                                <input ng-model="chinhSuaBinhLuancon" ng-keypress="PhimEnterChinhSuaBinhLuanConBaiHat($event,idBHBinhLuan,paren.binhluancon.id,chinhSuaBinhLuancon)" style="height:30px;width:80%" class="input_playlist ng-pristine ng-untouched ng-valid ng-empty" type="text" maxlength="200" placeholder="Nhập bình luận ..." />
+                                                                <div ng-click="chinhsuabinhluancon = !chinhsuabinhluancon" class="huy_chinhsua">Hủy bỏ</div>
+                                                            </div>
+                                                            <div class="comment-reply-list-wrapper">
+                                                            </div>
+                                                        </div>
+
+                                                    </div>
+                                                    <div style="display:flex;margin-top:10px;">
+                                                        <div ng-style="{'opacity': opacity}" ng-click="showinputbinhluan=!showinputbinhluan" class="rep_comment_click">Trả Lời</div>
+                                                        <div ng-style="{'opacity': opacity}" ng-show="xemthembinhluan ==1 && x.binhluancon.length > 1" ng-click="xemthembinhluan = x.binhluancon.length" class="rep_comment_click" style="margin-left:12px;"> Xem thêm({{x.binhluancon.length - 1}}) </div>
+                                                        <div ng-style="{'opacity': opacity}" ng-show="xemthembinhluan >1" ng-click="xemthembinhluan = 1" class="rep_comment_click" style="margin-left:12px;">Thu gọn </div>
+                                                    </div>
+                                                    <div ng-show="showinputbinhluan" class="rep_comment" style="position:relative">
+                                                        <i ng-click="BinhLuanConBaiHat()" ng-click="BinhLuanConBaiHat(idBHBinhLuan,x.binhluancha.id,dataBinhLuanCon)" style="cursor:pointer; position: absolute; right: 25%; color: #fff; top: 25%; font-size: 16px; transform: rotate( 45deg );" class="fas fa-location-arrow"></i>
+                                                        <input ng-model="dataBinhLuanCon" ng-keypress="PhimEnterBinhLuanCon($event,idBHBinhLuan,x.binhluancha.id,dataBinhLuanCon)" style="height:30px;width:80%" class="input_playlist ng-pristine ng-untouched ng-valid ng-empty" type="text" maxlength="200" placeholder="Nhập bình luận ..." />
+
+                                                    </div>
+
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div style="padding:15px" class="noti-message">
+                            <div style="position:relative;" class="rep_comment">
+                                <i ng-click="BinhLuanBaiHat(idBHBinhLuan,dataBinhLuanCha)" style="position: absolute; right: 5%;cursor:pointer; color: #fff; top: 25%; font-size: 16px; transform: rotate( 45deg );" class="fas fa-location-arrow"></i>
+
+                                <input id="binhluanbh" ng-show="resetBinhLuan" ng-model="dataBinhLuanCha" ng-keypress="PhimEnterBinhLuanCha($event,idBHBinhLuan,dataBinhLuanCha)" style="height:30px;width:100%" class="input_playlist ng-pristine ng-untouched ng-valid ng-empty" type="text" maxlength="200" placeholder="Viết bình luận ..." />
+
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>-->`
+    }
+});
+app.directive('ngShowvip', function () {
+
+    return {
+        template: `     <label ng-show="showVip==1" ng-click="clickShowVip()" class="tao_playlist_layout_label_hengio"></label>
+                <div ng-show="showVip==1" style="top:8px; left:30%;max-width:700px;" class="tao_playlist_layout_nangcapvip">
+                    <div class="modal_laylist_layout" style="border-radius: 30px;">
+                        <div style="background-image: url(https://static-zmp3.zadn.vn/skins/zmp3-v5.1/vip/images/bg.jpg); background-size: cover;border-radius: 30px;" class="modal_laylist_layout_item">
+                            <div class="modal_content" style="width:auto;">
+                                <h3 class="titlevip" style=" text-transform:uppercase">Nâng Cấp Vip</h3>
+
+                                <div class="option_playlist">
+
+                                    <div style=" display: flex; flex-direction: column; align-items: center;">
+                                        <h3 class="titlevip" ">Âm Nhạc Không Giới Hạn</h3>
+                                        <h3 style="color: #ffffff80;     font-size: 12px;font-weight: 400;">Dịch vụ nghe nhạc Online chất lượng cao, kết hợp cùng các tiện ích dành riêng cho thành viên VIP</h3>
+                                    </div>
+
+
+                                </div>
+                                <div style="margin: 10px 0px; ">
+                                    <div ng-click="clickMuaGoiVip(x)" style=" position: relative; border-radius: 0; background: none; height: 186px;" class="package__container" ng-repeat="x in goiVip | orderBy:'sothang'">
+                                        <div class="package__container" ng-class="{'active_package': maGoiVip==x.id}" style="width: 174.6px;">
+                                            <div class="cover cover--6-month margin_cover" ng-style="{'background-image': 'url(' + x.linkhinhanh + ')'}" style=" background-size:cover"></div>
+                                            <div class="package__info">
+                                                <div class="package__month">{{x.tengoivip}}</div>
+                                                <div class="package__line"></div>
+                                                <div class="package__price">
+                                                    <div class="new-price">
+                                                        <div class="before-dot">{{x.giatiengiamgia / 1000}}</div>
+                                                        <div class="price-block">
+                                                            <div class="after-dot">.000</div>
+                                                            <div class="unit-currency">VNĐ</div>
+                                                        </div>
+                                                    </div>
+                                                    <s class="old-price">{{x.giatiengoc}}</s>
+                                                </div>
+                                            </div>
+
+                                           
+                                        </div>
+                                        <img ng-show="maGoiVip==x.id" class="img_package" style="position:absolute" src="https://firebasestorage.googleapis.com/v0/b/tfourmusic-1e3ff.appspot.com/o/image%2Fvip%2Fmain_sprites.png?alt=media&token=28619287-2347-4661-912b-9e9ecef4d22c" />
+
+
+                                    </div>
+
+
+
+                                </div>
+
+                                <div class="package__line"></div>
+                                <h3 style=" font-size: 14px; margin-bottom: 5px; font-weight: 400;">Chọn phương thức thanh toán</h3>
+                                <div class="phuongthuc_thanhtoan">
+
+                                    <div ng-click="phuongThucThanhToan=1" ng-class="{'active_phuongthucthanhtoan': phuongThucThanhToan==1}" class="img_thanhtoan" style="background-image: url(https://firebasestorage.googleapis.com/v0/b/tfourmusic-1e3ff.appspot.com/o/image%2Fvip%2Flogo512.png?alt=media&token=37db39c8-35ed-4777-baf1-751cbb772c22);background-size:cover; position:relative;cursor:pointer">
+                                        <img ng-show="phuongThucThanhToan==1" class="img_thanhtoan_icon" style="position:absolute" src="https://firebasestorage.googleapis.com/v0/b/tfourmusic-1e3ff.appspot.com/o/image%2Fvip%2Fmain_sprites.png?alt=media&token=28619287-2347-4661-912b-9e9ecef4d22c" />
+
+                                    </div>
+
+
+                                    <div ng-click="phuongThucThanhToan=2" ng-class="{'active_phuongthucthanhtoan': phuongThucThanhToan==2}" class="img_thanhtoan" style="background-image: url(https://firebasestorage.googleapis.com/v0/b/tfourmusic-1e3ff.appspot.com/o/image%2Fvip%2Fpaypal-32-498436.png?alt=media&token=adcc0aad-9283-400f-b730-f22e502bd663);background-size:cover;position:relative;cursor:pointer">
+                                        <img ng-show="phuongThucThanhToan==2" class="img_thanhtoan_icon" style="position:absolute" src="https://firebasestorage.googleapis.com/v0/b/tfourmusic-1e3ff.appspot.com/o/image%2Fvip%2Fmain_sprites.png?alt=media&token=28619287-2347-4661-912b-9e9ecef4d22c" />
+
+                                    </div>
+
+
+                                </div>
+                                <a ng-show="phuongThucThanhToan==1 && (maGoiVip != null ||  maGoiVip != undefined)" ng-click="$event.preventDefault();thanhToanBangMomo(goiVipThanhToan)" class="package__btn" href="#">THANH TOÁN BẰNG MOMO</a>
+                                <a ng-show="phuongThucThanhToan==2 && (maGoiVip != null ||  maGoiVip != undefined)" ng-click="$event.preventDefault();thanhToanBangPaypal(goiVipThanhToan)" class="package__btn" href="">THANH TOÁN BẰNG PAYPAL</a>
+                                <label ng-click="clickShowVip()" class="close_timer" style="        cursor: pointer;font-size: 15px;   position: absolute; bottom: 0; right: 47%;">HỦY</label>
+                            </div>
+
+                        </div>
+                    </div>
+
+                </div>`
+    }
+});
+app.directive('ngTaonguoidung', function () {
+
+    return {
+        template: `  <label class="overplaycanhan" ng-show="taoThanhCong">
+            overlay
+        </label>
+        <div ng-show="taoThanhCong" class="tao_playlist_layout_hengio" style="z-index: 6;">
+
+            <div class="modal_laylist_layout">
+                <div class="modal_laylist_layout_item">
+                    <div class="modal_content">
+                        <h3 style=" font-size: 18px; margin-bottom: 15px;">Thông Báo</h3>
+
+                        <div class="option_playlist">
+
+                            <div>
+                                <h3 style=" font-size: 14px; margin-bottom: 5px; font-weight: 400;">Tạo tài khoản TMusic thành công</h3>
+                                <h3 style=" font-size: 14px; margin-bottom: 5px; font-weight: 400;">Chúng tôi đã gửi email xác thực tài khoản đến email của bạn. Vui lòng xác nhận email để đăng nhập.   </h3>
+
+                            </div>
+
+
+                        </div>
+                        <div style="display: flex; padding-top: 20px;">
+
+
+                            <button ng-click="taoThanhCong = !taoThanhCong;closelogin = !closelogin;" style="display: flex; justify-content: center; align-items: center; font-weight: 400; background-color: #ffffff1a; border: 1px solid #ffffff1a; color: rgb(255 255 255); margin: 0 auto;" class="button_create_playlist">Thoát</button>
+                            <button ng-click="dangNhapEmailvaPass(model.email, model.matkhau);" class="button_create_playlist">
+                                Đăng Nhập Ngay
+                            </button>
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+
+        </div>`
+    }
+});
+app.directive('ngXacthuc', function () {
+
+    return {
+        template: `   <label class="overplaycanhan" ng-if="xacthucemail == 1">
+            overlay
+        </label>
+        <div ng-if="xacthucemail == 1" class="tao_playlist_layout_xacthuc" ng-init="titleGuiLaiXacThucEmail= 'Gửi Email Xác Thực';kiemtraXacThucEmail= false;">
+
+            <div class="modal_laylist_layout">
+                <div class="modal_laylist_layout_item">
+                    <div class="modal_content_xacthuc">
+                        <h3 style=" font-size: 18px; margin-bottom: 15px;">Thông Báo</h3>
+
+                        <div class="option_playlist">
+
+                            <div>
+                                <h3 style=" font-size: 14px; margin-bottom: 5px; font-weight: 400;">Tài khoản TMusic của bạn chưa xác thực</h3>
+                                <h3 style=" font-size: 14px; margin-bottom: 5px; font-weight: 400;">Vui lòng xác thực tài khoản của bạn để đăng nhập.</h3>
+                                <h3 style=" font-size: 14px; margin-bottom: 5px; font-weight: 400;">Nếu chưa nhận được email thì bạn có thể gửi lại email xác thực. Nếu đã xác thực email xong thì bạn có thể chọn <i>"Tôi Đã Xác Thực"</i> để đăng nhập</h3>
+                            </div>
+
+
+                        </div>
+                        <div style="display: flex; padding-top: 20px;">
+
+                            <button ng-click="dangXuatNguoiDung()" style="display: flex; justify-content: center; align-items: center; font-weight: 400; background-color: #ffffff1a; border: 1px solid #ffffff1a; color: rgb(255 255 255); margin: 0 auto;" class="button_create_playlist">Hủy</button>
+                            <button ng-click="ResendEmailXacThuc()" ng-disabled="kiemtraXacThucEmail" ng-class="{'disable_button': kiemtraXacThucEmail}" class="button_create_playlist">
+                                {{titleGuiLaiXacThucEmail}}
+                            </button>
+                            <button ng-click="dangNhapEmailvaPass(model.email, model.matkhau);" class="button_create_playlist">
+                                Tôi Đã Xác Thực
+                            </button>
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+
+        </div>`
+    }
+});
+
 
 let updateTimer;
 app.directive('ngFiles', ['$parse', function ($parse) {
@@ -564,20 +1144,23 @@ app.controller('Ctrl_ESEIM', function ($scope, dataservice, $uibModal, $rootScop
             if ($location.path() == "/") {
                 $scope.modelnav = 2;
             }
-            if ($location.path() == "/toptrending") {
+            else if ($location.path() == "/toptrending") {
                 $scope.modelnav = 3;
             }
-            if ($location.path() == "/theodoi") {
+            else if ($location.path() == "/theodoi") {
                 $scope.modelnav = 4;
             }
-            if ($location.path() == "/nhacmoi") {
+            else if ($location.path() == "/nhacmoi") {
                 $scope.modelnav = 5;
             }
-            if ($location.path() == "/theloai") {
+            else if ($location.path() == "/theloai") {
                 $scope.modelnav = 6;
             }
-            if ($location.path() == "/top20") {
+            else if ($location.path() == "/top20") {
                 $scope.modelnav = 7;
+            }
+            else {
+                $scope.modelnav = 0;
             }
 
         }
@@ -661,20 +1244,23 @@ app.controller('Ctrl_ESEIM', function ($scope, dataservice, $uibModal, $rootScop
                 if ($location.path() == "/") {
                     $scope.modelnav = 2;
                 }
-                if ($location.path() == "/toptrending") {
+                else if ($location.path() == "/toptrending") {
                     $scope.modelnav = 3;
                 }
-                if ($location.path() == "/theodoi") {
+                else if ($location.path() == "/theodoi") {
                     $scope.modelnav = 4;
                 }
-                if ($location.path() == "/nhacmoi") {
+                else if ($location.path() == "/nhacmoi") {
                     $scope.modelnav = 5;
                 }
-                if ($location.path() == "/theloai") {
+                else if ($location.path() == "/theloai") {
                     $scope.modelnav = 6;
                 }
-                if ($location.path() == "/top20") {
+                else if ($location.path() == "/top20") {
                     $scope.modelnav = 7;
+                }
+                else {
+                    $scope.modelnav = 0;
                 }
 
             }).catch(function () {
@@ -815,7 +1401,7 @@ app.controller('Ctrl_ESEIM', function ($scope, dataservice, $uibModal, $rootScop
     }
     $scope.initData = function () {
         $scope.repeate = false;
-        //$scope.huyhengioshow = 0;
+        $scope.huyhengioshow = 0;
         //$scope.xacthucemail = true;
         $scope.xemthembinhluan = 1;
         $scope.showBinhLuan = false;
@@ -868,6 +1454,7 @@ app.controller('Ctrl_ESEIM', function ($scope, dataservice, $uibModal, $rootScop
         })
         // Create a callback which logs the current auth state
 
+       /* $scope.model.ngaysinh = new Date();*/
 
 
         $scope.buttonnav = 1;
@@ -890,12 +1477,12 @@ app.controller('Ctrl_ESEIM', function ($scope, dataservice, $uibModal, $rootScop
         $scope.indexsongs = 0;
 
         $rootScope.songs = [
-            {
-                tenbaihat: "Gặp Người Đúng Lúc",
-                casi: "Luân Tiang",
-                link: "https://firebasestorage.googleapis.com/v0/b/tfourmusic-1e3ff.appspot.com/o/music%2Fadmin%2Fadmin2962021142954180?alt=media&token=24ac13cc-4edf-4b5e-9069-e2c2a78531cc",
-                linkhinhanh: "https://firebasestorage.googleapis.com/v0/b/tfourmusic-1e3ff.appspot.com/o/image%2Fbaihat%2Fadmin2962021142958180?alt=media&token=a0526c86-eba9-42e0-9178-f75fae5331e2"
-            },
+            //{
+            //    tenbaihat: "Gặp Người Đúng Lúc",
+            //    casi: "Luân Tiang",
+            //    link: "https://firebasestorage.googleapis.com/v0/b/tfourmusic-1e3ff.appspot.com/o/music%2Fadmin%2Fadmin2962021142954180?alt=media&token=24ac13cc-4edf-4b5e-9069-e2c2a78531cc",
+            //    linkhinhanh: "https://firebasestorage.googleapis.com/v0/b/tfourmusic-1e3ff.appspot.com/o/image%2Fbaihat%2Fadmin2962021142958180?alt=media&token=a0526c86-eba9-42e0-9178-f75fae5331e2"
+            //},
 
         ];
         $scope.slbaihat = $rootScope.songs.length;
@@ -944,7 +1531,7 @@ app.controller('Ctrl_ESEIM', function ($scope, dataservice, $uibModal, $rootScop
     }
 
     $scope.initData();
-    $scope.loadmusic($scope.sttmusic);
+    /*$scope.loadmusic($scope.sttmusic);*/
 
     $scope.showdata = function () {
         if ($scope.show == true) {
@@ -1074,9 +1661,11 @@ app.controller('Ctrl_ESEIM', function ($scope, dataservice, $uibModal, $rootScop
         }
         else {
             $scope.sttmusic++;
-            if ($scope.sttmusic >= $scope.songs.length)
+            if ($scope.sttmusic >= $rootScope.songs.length)
                 $scope.sttmusic = 0;
             $scope.loadmusic($scope.sttmusic);
+
+
         }
 
     }
@@ -1115,14 +1704,16 @@ app.controller('Ctrl_ESEIM', function ($scope, dataservice, $uibModal, $rootScop
         else {
             if ($scope.ramdomsong == true) {
                 $scope.ramdomsongstt();
-                console.log($scope.sttmusic);
                 $scope.loadmusic($scope.sttmusic);
             }
             else {
                 $scope.sttmusic++;
-                if ($scope.sttmusic >= $scope.slbaihat)
+                if ($scope.sttmusic >= $rootScope.songs.length)
                     $scope.sttmusic = 0;
                 $scope.loadmusic($scope.sttmusic);
+                var downloadbaihat = document.getElementById("btntext");
+                downloadbaihat.click();
+                downloadbaihat.click();
             }
         }
 
@@ -1189,22 +1780,29 @@ app.controller('Ctrl_ESEIM', function ($scope, dataservice, $uibModal, $rootScop
 
     $scope.upLoadNhac = function () {
         if ($rootScope.checklogin.dadangnhap) {
-            var modalInstance = $uibModal.open({
-                animation: true,
-                templateUrl: ctxfolderurl + '/add.html',
-                controller: 'add',
-                backdrop: 'true',
-                backdropClass: ".fade:not(.show)1",
-                backdropClass: ".modal-backdrop1",
-                backdropClass: ".col-lg-81",
-                backdropClass: ".modal-content1",
+            if ($scope.listBaiHatDaTaiLen.lenght <= 1) {
+                var modalInstance = $uibModal.open({
+                    animation: true,
+                    templateUrl: ctxfolderurl + '/add.html',
+                    controller: 'add',
+                    backdrop: 'true',
+                    backdropClass: ".fade:not(.show)1",
+                    backdropClass: ".modal-backdrop1",
+                    backdropClass: ".col-lg-81",
+                    backdropClass: ".modal-content1",
 
-                size: '100'
-            });
-            modalInstance.result.then(function () {
+                    size: '100'
+                });
+                modalInstance.result.then(function () {
 
-            }, function () {
-            });
+                }, function () {
+                });
+            }
+            else {
+                $rootScope.thongBao = "Tài khoản của bạn đã đạt giới hạn dung lượng lưu trữ bài hát, vui lòng nâng cấp vip !!!";
+                $scope.showVip = 1;
+            }
+
         }
         else {
             $rootScope.closelogin = true;
@@ -1270,69 +1868,90 @@ app.controller('Ctrl_ESEIM', function ($scope, dataservice, $uibModal, $rootScop
             $rootScope.closelogin = true;
         }, 1400);
         $scope.dangNhapLoi = "";
-        firebase.auth().signInWithEmailAndPassword($scope.login.email, $scope.login.password)
-            .then(function (result) {
+        if ($scope.login.email != "" && $scope.login.email != undefined && $scope.login.email.length > 5 && $scope.login.password != "" && $scope.login.password != undefined && $scope.login.password.length > 5) {
 
-                var user = result.user;// This appears in the console
-                if (user.emailVerified) {
-                    $timeout(function () {
-                        $rootScope.closelogin = false;
-                    }, 1450);
-                    $scope.modellogin = {
-                        daxacthuc: '1',
-                        matkhau: '',
-                        email: '',
-                        hoten: '',
-                        mota: 'null',
-                        ngaysinh: '',
-                        hinhdaidien: '',
-                        gioitinh: '1',
-                        online: 0,
-                        vip: 0,
-                        hansudung: '',
-                        uid: '',
-                        vohieuhoa: '0',
-                        daxoa: '0'
-                    }
-                    var user = result.user;
-                    $scope.modellogin.email = user.email;
-                    $scope.modellogin.hoten = user.displayName;
-                    $scope.modellogin.uid = user.uid;
-                    if (user.photoURL != null) {
-                        //  $scope.modellogin.hinhdaidien = user.photoURL;
-                    }
+            firebase.auth().signInWithEmailAndPassword($scope.login.email, $scope.login.password)
+                .then(function (result) {
 
-                    dataservice.taoNguoiDungXacThuc($scope.modellogin, function (rs) {
-                        rs = rs.data;
-                        if (rs.Error) { }
-                        else {
+                    var user = result.user;// This appears in the console
+                    if (user.emailVerified) {
+                        $timeout(function () {
+                            $rootScope.closelogin = false;
+                        }, 1450);
+                        $scope.modellogin = {
+                            daxacthuc: '1',
+                            matkhau: '',
+                            email: '',
+                            hoten: '',
+                            mota: 'null',
+                            ngaysinh: '',
+                            hinhdaidien: '',
+                            gioitinh: '1',
+                            online: 0,
+                            vip: 0,
+                            hansudung: '',
+                            uid: '',
+                            vohieuhoa: '0',
+                            daxoa: '0'
                         }
-                    });
-                    $rootScope.closelogin = false;
-                    delete $scope.modellogin;
+                        var user = result.user;
+                        $scope.modellogin.email = user.email;
+                        $scope.modellogin.hoten = user.displayName;
+                        $scope.modellogin.uid = user.uid;
+                        if (user.photoURL != null) {
+                            //  $scope.modellogin.hinhdaidien = user.photoURL;
+                        }
+
+                        dataservice.taoNguoiDungXacThuc($scope.modellogin, function (rs) {
+                            rs = rs.data;
+                            if (rs.Error) { }
+                            else {
+                            }
+                        });
+                        $rootScope.closelogin = false;
+                        delete $scope.modellogin;
+                        $("#loading_main").css("display", "none");
+                        window.location.assign("/");
+                    }
+                    else {
+                        $("#loading_main").css("display", "none");
+                        //$scope.signOut();
+                        $scope.xacthucemail = true;
+
+                    }
+
+                })
+                .catch(function (error) {
+
+                    if (error.code == "auth/user-not-found") {
+                        $scope.dangNhapLoi = "Email bạn nhập không kết nối với tài khoản nào";
+                    }
+                    if (error.code == "auth/wrong-password") {
+                        $scope.dangNhapLoi = "Mật khẩu không hợp lệ.";
+                    }
+                    if (error.code == "auth/user-disabled") {
+                        $timeout(function () {
+                            $rootScope.closelogin = false;
+
+                        }, 1000)
+                        //var downloadbaihat = document.getElementById("btntext");
+                        //downloadbaihat.click();
+                        //downloadbaihat.click();
+                        $timeout(function () {
+                            $rootScope.thongBao = "Tài khoản của bạn đã bị vô hiệu hóa. Nếu có thắc mắc vui lòng gửi email đến 0306181280@gmail.com để chúng tôi hỗ trợ.";
+                        }, 1000)
+                    }
                     $("#loading_main").css("display", "none");
-                    window.location.assign("/");
-                }
-                else {
-                    $("#loading_main").css("display", "none");
-                    //$scope.signOut();
-                    $scope.xacthucemail = true;
-
-                }
-            })
-            .catch(function (error) {
-
-                if (error.code == "auth/user-not-found") {
-                    $scope.dangNhapLoi = "Email bạn nhập không kết nối với tài khoản nào"
-                }
-                if (error.code == "auth/wrong-password") {
-                    $scope.dangNhapLoi = "Mật khẩu không hợp lệ."
-                }
-                $("#loading_main").css("display", "none");
-            });
+                });
 
 
-
+        }
+        else {
+            $scope.dangNhapLoi = "Vui lòng điền đầy đủ thông tin tài khoản.";
+            $("#loading_main").css("display", "none");
+        }
+        $scope.login.email = "";
+        $scope.login.password = "";
 
     }
     $scope.dangNhapEmailvaPass = function (email, pass) {
@@ -2050,9 +2669,6 @@ app.controller('Ctrl_ESEIM', function ($scope, dataservice, $uibModal, $rootScop
 
     $scope.clickTaoPlaylist = function () {
         $("#loading_main").css("display", "block");
-
-
-
         if ($rootScope.checklogin.dadangnhap) {
             $scope.danhSachPhatNguoiDung = {
                 id: '',
@@ -2064,38 +2680,46 @@ app.controller('Ctrl_ESEIM', function ($scope, dataservice, $uibModal, $rootScop
             $scope.danhSachPhatNguoiDung.tendanhsachphat = $scope.tenplaylist;
             $scope.danhSachPhatNguoiDung.chedo = $scope.swithoffon == true ? 1 : 0;
             $scope.danhSachPhatNguoiDung.nguoidung_id = $rootScope.checklogin.uid;
-            dataservice.taoDanhSachPhat_NguoiDung($scope.danhSachPhatNguoiDung, function (rs) {
-                rs = rs.data;
-                $("#loading_main").css("display", "none");
-                if (rs.Error) { } else {
-
-                }
-                dataservice.getPlaylist_CaNhan($rootScope.checklogin.uid, function (rs) {
+            if ($rootScope.checklogin.vip || $rootScope.playlist_canhan.length < 21) {
+                dataservice.taoDanhSachPhat_NguoiDung($scope.danhSachPhatNguoiDung, function (rs) {
                     rs = rs.data;
+                    $("#loading_main").css("display", "none");
                     if (rs.Error) { } else {
+
+                    }
+                    dataservice.getPlaylist_CaNhan($rootScope.checklogin.uid, function (rs) {
+                        rs = rs.data;
+                        if (rs.Error) { } else {
+                            $rootScope.playlist_canhan = rs;
+                        }
+                    });
+
+                    //  $cookies.putObject("user", $rootScope.checklogin);
+                    var playlist = ''; // contexxtmenu
+                    dataservice.getPlaylist_CaNhan($rootScope.checklogin.uid, function (rs) {
+                        rs = rs.data;
+
                         $rootScope.playlist_canhan = rs;
-                    }
-                });
+                        for (var i = 0; i < $rootScope.playlist_canhan.length; i++) {
+                            playlist += '<li ng-click="themBaiHatVaoPlayList(' + "'" + $rootScope.playlist_canhan[i].id + "'" + ')"><button class="zm-btn button" tabindex="0"><i class="icon ic-list-music"></i><span>' + $rootScope.playlist_canhan[i].tendanhsachphat + '</span></button></li>';
 
-                //  $cookies.putObject("user", $rootScope.checklogin);
-                var playlist = ''; // contexxtmenu
-                dataservice.getPlaylist_CaNhan($rootScope.checklogin.uid, function (rs) {
-                    rs = rs.data;
+                        }
 
-                    $rootScope.playlist_canhan = rs;
-                    for (var i = 0; i < $rootScope.playlist_canhan.length; i++) {
-                        playlist += '<li ng-click="themBaiHatVaoPlayList(' + "'" + $rootScope.playlist_canhan[i].id + "'" + ')"><button class="zm-btn button" tabindex="0"><i class="icon ic-list-music"></i><span>' + $rootScope.playlist_canhan[i].tendanhsachphat + '</span></button></li>';
-
-                    }
-
-                    $scope.subtextMenuPlayList = '<div id="subtextmenuplaylist-node" class="menu add-playlist-content submenu-content"><ul class="menu-list"><li class="mar-t-10" ng-click="moTaoPlaylist()"><button class="zm-btn button" tabindex="0"><i class="icon ic- z-ic-svg ic-svg-add"></i><span>Tạo playlist mới</span></button></li></ul><div class="playlist-container"><div class="top-shadow "></div><div class="content"><div style="position: relative; background-color: #6a39af; width: 100%; height: 100%;"><div style="  background-color: #6a39af; inset: 0px;  margin-right: 0px; margin-bottom: 0px;"><ul class="menu-list">' + playlist + '</ul></div><div class="track-horizontal" style="position: absolute; height: 6px; transition: opacity 200ms ease 0s; opacity: 0;"><div style="position: relative; display: block; height: 100%; cursor: pointer; border-radius: inherit; background-color: rgba(0, 0, 0, 0.2); width: 0px;"></div></div><div class="track-vertical" style="position: absolute; width: 4px; transition: opacity 200ms ease 0s; opacity: 0; right: 2px; top: 2px; bottom: 2px; z-index: 100;"><div class="thumb-vertical" style="position: relative; display: block; width: 100%; height: 0px;"></div></div></div></div></div></div>';
+                        $scope.subtextMenuPlayList = '<div id="subtextmenuplaylist-node" class="menu add-playlist-content submenu-content"><ul class="menu-list"><li class="mar-t-10" ng-click="moTaoPlaylist()"><button class="zm-btn button" tabindex="0"><i class="icon ic- z-ic-svg ic-svg-add"></i><span>Tạo playlist mới</span></button></li></ul><div class="playlist-container"><div class="top-shadow "></div><div class="content"><div style="position: relative; background-color: #6a39af; width: 100%; height: 100%;"><div style="  background-color: #6a39af; inset: 0px;  margin-right: 0px; margin-bottom: 0px;"><ul class="menu-list">' + playlist + '</ul></div><div class="track-horizontal" style="position: absolute; height: 6px; transition: opacity 200ms ease 0s; opacity: 0;"><div style="position: relative; display: block; height: 100%; cursor: pointer; border-radius: inherit; background-color: rgba(0, 0, 0, 0.2); width: 0px;"></div></div><div class="track-vertical" style="position: absolute; width: 4px; transition: opacity 200ms ease 0s; opacity: 0; right: 2px; top: 2px; bottom: 2px; z-index: 100;"><div class="thumb-vertical" style="position: relative; display: block; width: 100%; height: 0px;"></div></div></div></div></div></div>';
 
 
 
-                });
-            })
-            $scope.checktaoplaylist = false;
-            $scope.tenplaylist = "";
+                    });
+                })
+                $scope.checktaoplaylist = false;
+                $scope.tenplaylist = "";
+            } else {
+                $scope.checktaoplaylist = false;
+                $scope.tenplaylist = "";
+                $("#loading_main").css("display", "none");
+                $rootScope.thongBao = "Bạn đã sử dụng đến giới hạn. Vui lòng mua Vip để nâng cấp tài khoản và sử dụng";
+            }
+
 
         } else {
             $("#loading_main").css("display", "none");
@@ -2412,6 +3036,8 @@ app.controller('Ctrl_ESEIM', function ($scope, dataservice, $uibModal, $rootScop
     $scope.moChiTietDSP_TheLoai = function (data) {
         $scope.dspCookie = data;                                                                                                                                                                  //thêm vào danh sách phát                                                                                                                                                             //Bình Luận                                                                                                                                                                                                                     // Sao chép Link                                                                                                                                                                                                                                                                // chia sẻ                                                                                                                                                                                                                                           
 
+        $scope.contextMenuPlaylist_CaNhan = '<div id="contextmenudsptl-node" class="zm-contextmenu song-menu" style="width:250px; padding:10px 0;"><div class="menu" ><ul class="menu-list"><li><button class="zm-btn button" tabindex="0" ng-click="themVaoDSP_DSPTheLoai(dspCookie)"><i class="icon far fa-list-alt"></i><span>Thêm vào danh sách phát</span></button></li><li><button class="zm-btn button" ng-click="copyLinkDSPTheLoai(' + "'https://localhost:44348/#/danhsachphat/" + data.id + "'" + ')" tabindex="0"><i class="icon fa fa-link"></i><span>Sao chép link</span></button></li><li><div class="menu-list--submenu" subtext-menu="subtextMenuChiaSe"><button class="zm-btn button" tabindex="0" ng-click="shareDanhSachPhat(' + "'https://localhost:44348/#/danhsachphat/" + data.id + "'" + ')"><i class="icon fa fa-share"></i><span>Chia sẻ</span></button></div></li><li><div class="menu-list--submenu" subtext-menu="subtextMenuChiaSe"><button class="zm-btn button" tabindex="0" ng-click="ShowEditDSP()"><i class="icon fa fa-share"></i><span>Chỉnh sửa</span></button></div></li></ul ></div ></div >';
+
         $scope.contextMenuDSPTheLoai = '<div id="contextmenudsptl-node" class="zm-contextmenu song-menu" style="width:250px; padding:10px 0;"><div class="menu" ><ul class="menu-list"><li><button class="zm-btn button" tabindex="0" ng-click="themVaoDSP_DSPTheLoai(dspCookie)"><i class="icon far fa-list-alt"></i><span>Thêm vào danh sách phát</span></button></li><li><button class="zm-btn button" ng-click="copyLinkDSPTheLoai(' + "'https://localhost:44348/#/danhsachphat/" + data.id + "'" + ')" tabindex="0"><i class="icon fa fa-link"></i><span>Sao chép link</span></button></li><li><div class="menu-list--submenu" subtext-menu="subtextMenuChiaSe"><button class="zm-btn button" tabindex="0" ng-click="shareDanhSachPhat(' + "'https://localhost:44348/#/danhsachphat/" + data.id + "'" + ')"><i class="icon fa fa-share"></i><span>Chia sẻ</span></button></div></li></ul ></div ></div >';
         //  $scope.subtextMenuPlayList = document.getElementById("subtextmenuplaylist-node").innerHTML;
         //29/07 
@@ -2567,6 +3193,7 @@ app.controller('Ctrl_ESEIM', function ($scope, dataservice, $uibModal, $rootScop
     // xem contextmenu bai hat khi click
     $scope.moChiTietBaiHat = function (data, vitri) {
         $scope.baihatCookie = data;                                                                                                                                                                                                                                                                                                                                   //link hinh                                                                                           // chuyển qua bai hat theo id                                                                                                     //tenbai                                                                                                                                      //luoc yeu thich                                                                                                          // luoc nghe                                                                                                                                                                              //taiXuong                                                                                                                                                                                                                                     // lời bài hát                                                                                               //chặn                                                                                                                                             //thêm vào danh sách phát                                                                                                                                                         // phát tiếp theo                                                                                                                                //subtextmenuPlaylist                                                                                                               //thêm vào plaulist                                                                                                                                                                                    //Bình Luận                                                                                                                                                                                                                     // Sao chép Link                                                                                                                                                                                                                                                                // chia sẻ       <i class="icon fa fa-chevron-right" style="margin-left: auto;"></i>                                                                                                                                                                                                                                    
+        $scope.contextMenuBaiHat_CaNhan = '<div id="contextmenubaihat_canhan" class="zm-contextmenu song-menu" style=" padding:10px 0;"><div class="menu"><ul class="menu-list"><div class="menu-list--submenu"><div class="media song-info-menu"><div class="media-left"><figure class="image is-40x40" style = "width: 65px;"><img style="height:40px;" src="' + data.linkhinhanh + '" alt=""></figure></div><div class="is-w-150 media-content"><a href="/#/baihat/' + data.id + '" class="a-hover"><div class="title-wrapper"><span class="item-title title" title="Sài Gòn Ơi Xin Lỗi Cảm Ơn">' + data.tenbaihat + '</span></div></a><div class="song-stats"><div class="stat-item"><i class="icon far fa-heart iconmusic" aria-hidden="true"></i><span>' + data.luotthich + 'K</span></div><div class="stat-item"><i class="icon fa fa-headphones" aria-hidden="true"></i><span>' + data.luotnghe + 'K</span></div></div></div></div></div></ul><ul class="menu-list"><div class="group-button-menu"><div class="group-button-list"><button class="zm-btn button" ng-click="taiXuong()"><i class="icon fa fa-download" aria-hidden="true"></i><span>Tải xuống</span></button><button class="zm-btn button" tabindex="0" data-toggle="modal" data-target="#myModal"><i class="icon fa fa-book" aria-hidden="true"></i><span>Lời bài hát</span></button><span ng-click="showBaoCao()" class="zm-btn button"><i class="icon fa fa-ban" aria-hidden="true"></i><span>Báo Cáo</span></span></div></div></ul><ul class="menu-list"><li><button class="zm-btn button" tabindex="0" ng-click="themBaiHatVaoDanhSachPhat(baihatCookie)"><i class="icon far fa-list-alt"></i><span>Thêm vào danh sách phát</span></button></li><li><button class="zm-btn button" tabindex="0" ng-click="themBaiHatVaoPhatTiepTheo(baihatCookie)"><i class="icon fa fa-play" aria-hidden="true"></i><span>Phát tiếp theo</span></button></li><li ><div class="menu-list--submenu" subtext-menu="subtextMenuPlayList"><button class="zm-btn button" tabindex="0" ng-click="kiemTraThemBaiHatVaoPlayList()"><i class="icon fa fa-plus" aria-hidden="true"></i><span>Thêm vào playlist</span><i class="icon fa fa-chevron-right" style="margin-left: auto;"></i></button></div></li><li><button class="zm-btn button" tabindex="0"       ng-click="ShowChinhSuaBaiHat()" ><i class="icon far fa-comment"></i><span>Chỉnh Sửa</span><span class="comment-badge"></span></button></li><li><button class="zm-btn button" ng-click="xoaBaiHatNguoiDung()" tabindex="0"><i class="icon fa fa-link"></i><span>Xóa</span></button></li></ul></div></div>';
 
         //xài cho các trang ngoại trừ trang playlist <span class="zm-btn button"><i class="icon fa fa-ban" aria-hidden="true"></i><span>Chặn</span></span>
         $scope.contextMenuBaiHat_BaiHat = '<div id="contextmenubaihat_baihat" class="zm-contextmenu song-menu" style=" padding:10px 0;"><div class="menu"><ul class="menu-list"><div class="menu-list--submenu"><div class="media song-info-menu"><div class="media-left"><figure class="image is-40x40" style = "width: 65px;"><img style="height:40px;" src="' + data.linkhinhanh + '" alt=""></figure></div><div class="is-w-150 media-content"><a href="/#/baihat/' + data.id + '" class="a-hover"><div class="title-wrapper"><span class="item-title title" title="Sài Gòn Ơi Xin Lỗi Cảm Ơn">' + data.tenbaihat + '</span></div></a><div class="song-stats"><div class="stat-item"><i class="icon far fa-heart iconmusic" aria-hidden="true"></i><span>' + data.luotthich + 'K</span></div><div class="stat-item"><i class="icon fa fa-headphones" aria-hidden="true"></i><span>' + data.luotnghe + 'K</span></div></div></div></div></div></ul><ul class="menu-list"><div class="group-button-menu"><div class="group-button-list"><button class="zm-btn button" ng-click="taiXuong()"><i class="icon fa fa-download" aria-hidden="true"></i><span>Tải xuống</span></button><button class="zm-btn button" tabindex="0" data-toggle="modal" data-target="#myModal"><i class="icon fa fa-book" aria-hidden="true"></i><span>Lời bài hát</span></button><span ng-click="showBaoCao()" class="zm-btn button"><i class="icon fa fa-ban" aria-hidden="true"></i><span>Báo Cáo</span></span></div></div></ul><ul class="menu-list"><li><button class="zm-btn button" tabindex="0" ng-click="themBaiHatVaoDanhSachPhat(baihatCookie)"><i class="icon far fa-list-alt"></i><span>Thêm vào danh sách phát</span></button></li><li><button class="zm-btn button" tabindex="0" ng-click="themBaiHatVaoPhatTiepTheo(baihatCookie)"><i class="icon fa fa-play" aria-hidden="true"></i><span>Phát tiếp theo</span></button></li><li ><div class="menu-list--submenu" subtext-menu="subtextMenuPlayList"><button class="zm-btn button" tabindex="0" ng-click="kiemTraThemBaiHatVaoPlayList()"><i class="icon fa fa-plus" aria-hidden="true"></i><span>Thêm vào playlist</span><i class="icon fa fa-chevron-right" style="margin-left: auto;"></i></button></div></li><li><button class="zm-btn button" tabindex="0"       ng-click="loadBinhLuanBaiHat(' + "'" + data.id + "'" + ')" ><i class="icon far fa-comment"></i><span>Bình luận</span><span class="comment-badge"></span></button></li><li><button class="zm-btn button" ng-click="copyLinkBaiHat(' + "'https://localhost:44348/#/baihat/" + data.id + "'" + ')" tabindex="0"><i class="icon fa fa-link"></i><span>Sao chép link</span></button></li><li><div class="menu-list--submenu" subtext-menu="subtextMenuChiaSe"><button class="zm-btn button" tabindex="0" ng-click="share()"><i class="icon fa fa-share"></i><span>Chia sẻ Facebook</span></button></div></li></ul></div></div>';
@@ -2663,6 +3290,7 @@ app.controller('Ctrl_ESEIM', function ($scope, dataservice, $uibModal, $rootScop
     }
     // thêm bài hát vào playlist khi click
 
+    alertify.set('notifier', 'position', 'bottom-left');
     $scope.themBaiHatVaoPlayList = function (DSPPlayList_id) {
 
 
@@ -2693,7 +3321,8 @@ app.controller('Ctrl_ESEIM', function ($scope, dataservice, $uibModal, $rootScop
                     for (var i = 0; i < $scope.taiDSBaiHatTheoDSPNguoiDung_PlayList.length; i++) {
 
                         if ($scope.taiDSBaiHatTheoDSPNguoiDung_PlayList[i].id == $scope.baihatCookie.id) {
-                            alert("Bài Hát Đã Có Trong PlayList");
+                            // alert("Bài Hát Đã Có Trong PlayList");
+                            alertify.success("Thêm thành công.");
                             $scope.kiemTraBaiHatTonTai = false;
                             return;
                         }
@@ -2715,7 +3344,9 @@ app.controller('Ctrl_ESEIM', function ($scope, dataservice, $uibModal, $rootScop
                         dataservice.themBaiHatVaoDanhSachPhatNguoiDung_NhacMoi($scope.modelThemBaiHatVaoDSPNguoiDung, function (rs) {
                             rs = rs.data;
                             $scope.themBaiHatVaoDanhSachPhatNguoiDung_NhacMoi = rs;
-                            alert("thêm thành công");
+                            // alert("thêm thành công");
+                            alertify.success("Thêm thành công.");
+
                         });
                     }
 
@@ -2781,18 +3412,23 @@ app.controller('Ctrl_ESEIM', function ($scope, dataservice, $uibModal, $rootScop
         }
         $scope.showChonBaiHatViPham = check;
     }
+    $scope.showThongBao = function () {
+        $rootScope.thongBao = "";
+    }
     $scope.baoCao = function () {
+        $("#loading_main").css("display", "block");
+        $scope.showFormBaoCao = !$scope.showFormBaoCao;
         $scope.noidung = [];
         $scope.modelbaocao = {
             id: '',
-            noidung:'',
+            noidung: '',
             motavande: '',
             nguoidung_id: $rootScope.checklogin.uid,
             nguoidung_baocao_id: $scope.baihatCookie.nguoidung_id,
             baihat_id: '',
             baihat_baocao_id: $scope.baihatCookie.id,
             daxoa: 0,
-            trangthai:0 // 0 - Đã Tiếp Nhận      1 - Đang Xử Lí     2- Đã Xử lí
+            trangthai: 0 // 0 - Đã Tiếp Nhận      1 - Đang Xử Lí     2- Đã Xử lí
         }
         if ($scope.motabaocao != undefined && $scope.motabaocao.length > 0) {
             $scope.modelbaocao.motavande = $scope.motabaocao;
@@ -2810,11 +3446,11 @@ app.controller('Ctrl_ESEIM', function ($scope, dataservice, $uibModal, $rootScop
             $scope.noidung.push("Ảnh bài hát thỏa thân");
             $scope.anhthoathan = false;
         }
-        if ($scope.noidunglangma ) {
+        if ($scope.noidunglangma) {
             $scope.noidung.push("Nội dung bài hát lăng mạ hoặc kích động thù hận");
             $scope.noidunglangma = false;
         }
-        if ($scope.baoluc ) {
+        if ($scope.baoluc) {
             $scope.noidung.push("Ảnh bài hát bạo lực hoặc phản cảm");
             $scope.baoluc = false;
         }
@@ -2831,9 +3467,12 @@ app.controller('Ctrl_ESEIM', function ($scope, dataservice, $uibModal, $rootScop
             $scope.modelbaocao.noidung = a;
             dataservice.BaoCaoBaiHat($scope.modelbaocao, function (rs) {
                 rs = rs.data;
+                $rootScope.thongBao = rs;
+                $("#loading_main").css("display", "none");
             })
         }
     }
+
     $scope.doiBaiHatBanQuyen = function () {
         $scope.showChonBaiHatViPham = !$scope.showChonBaiHatViPham;
         if ($scope.baiHatBanQuyen != null) {
@@ -2847,9 +3486,15 @@ app.controller('Ctrl_ESEIM', function ($scope, dataservice, $uibModal, $rootScop
         $scope.showChonBaiHatViPham = !$scope.showChonBaiHatViPham;
         $scope.baiHatBanQuyen = baihat;
     }
- 
+
     $scope.showBaoCao = function () {
-        $scope.showFormBaoCao = !$scope.showFormBaoCao; 
+        if ($rootScope.checklogin.dadangnhap) {
+            $scope.showFormBaoCao = !$scope.showFormBaoCao;
+        }
+        else {
+            $rootScope.closelogin = true;
+        }
+
     }
 
 
@@ -3540,8 +4185,10 @@ app.controller('canhan', function ($scope, dataservice, $rootScope, $location, $
             });
         });
         promise.then(function () {
+            $scope.chinhSuaBaiHat = false;
             $scope.editHoTen = false;
             $scope.editMoTa = false;
+            $scope.editDSP = false;
             dataservice.getListBaiHatYeuThich($rootScope.checklogin.uid, function (rs) {
                 rs = rs.data;
                 if (rs.Error) {
@@ -3597,7 +4244,17 @@ app.controller('canhan', function ($scope, dataservice, $rootScope, $location, $
                 }
             })
         });
-
+        $scope.taiDSPTheLoai = function (idtl) {
+            $scope.text = {
+                key: idtl,
+                uid: $rootScope.checklogin.uid
+            }
+            dataservice.taiDanhSachPhatTheLoai($scope.text, function (rs) {
+                rs = rs.data;
+                $scope.danhSachPhatTheLoaiEdit = rs;
+                /*  $scope.valueDanhSachPhatTheLoai = rs[0].id;*/
+            });
+        }
         //$scope.apply();
     }
 
@@ -3679,6 +4336,7 @@ app.controller('canhan', function ($scope, dataservice, $rootScope, $location, $
         if (id != null && id != "" && id != undefined) {
             $scope.idxoaDanhSachPhat = id;
             $scope.xoaDanhSachPhatNguoiDung = true;
+
         }
     }
     $scope.xoaDanhSachPhat = function (id) {
@@ -3708,7 +4366,109 @@ app.controller('canhan', function ($scope, dataservice, $rootScope, $location, $
         }
 
     }
+    $scope.ShowChinhSuaBaiHat = function () {
+        if ($scope.chinhSuaBaiHat) {
+            $scope.chinhSuaBaiHat = false;
+        }
+        else {
+            $scope.chinhSuaBaiHat = true;
+        }
+        $scope.text = {
+            key: $scope.baihatCookie.theloai_id,
+            uid: ''
+        }
+        $scope.tenBaiHatEdit = $scope.baihatCookie.tenbaihat;
+        $scope.casiBaiHatEdit = $scope.baihatCookie.casi;
+        dataservice.taiDanhSachPhatTheLoai($scope.text, function (rs) {
+            rs = rs.data;
+            $scope.datataiDanhSachPhatTheLoai = rs;
+            for (var i = 0; i < $scope.datataiDanhSachPhatTheLoai.length; i++) {
+                if ($scope.baihatCookie.danhsachphattheloai_id == rs[i].id) {
+                    $scope.valueDanhSachPhatTheLoai = rs[i].id;
+                    break;
+                }
+            }
+        });
+    }
+    $scope.ChinhSuaBaiHatDaTaiLen = function () {
+        $("#loading_main").css("display", "block");
+        $scope.baihatCookie.tenbaihat = $scope.tenBaiHatEdit;
+        $scope.baihatCookie.casi = $scope.casiBaiHatEdit;
+        $scope.baihatCookie.danhsachphattheloai_id = $scope.valueDanhSachPhatTheLoai;
+        dataservice.ChinhSuaTenBaiHat($scope.baihatCookie, function (rs) {
+            rs = rs.data;
+            if (rs.Error) { } else {
+                $scope.trangthaieditbaihat = rs;
 
+                dataservice.getListDaTaiLen_CaNhan($rootScope.checklogin.uid, function (rs) {
+                    rs = rs.data
+                    if (rs.Error) { } else {
+                        $scope.listBaiHatDaTaiLen = rs;
+                        $scope.chinhSuaBaiHat = false;
+                        $("#loading_main").css("display", "none");
+                    }
+                })
+            }
+        })
+    }
+    $scope.xoaBaiHatNguoiDung = function () {
+        $("#loading_main").css("display", "block");
+        if ($scope.baihatCookie != null && $scope.baihatCookie != undefined) {
+            dataservice.xoaBaiHatNguoiDung($scope.baihatCookie, function (rs) {
+                if (rs.Error) { } else {
+
+
+                    dataservice.getListDaTaiLen_CaNhan($rootScope.checklogin.uid, function (rs) {
+                        rs = rs.data
+                        if (rs.Error) { } else {
+                            $scope.listBaiHatDaTaiLen = rs;
+                            /* $scope.chinhSuaBaiHat = false;*/
+                            $("#loading_main").css("display", "none");
+                        }
+                    })
+                }
+            })
+        }
+    }
+    $scope.ShowEditDSP = function () {
+        $scope.editDSP = !$scope.editDSP;
+        $scope.tenDSPMoi = $scope.dspCookie.tendanhsachphat;
+        $scope.congkhaiDSP = $scope.dspCookie.chedo;
+    }
+    $scope.fChinhSuaTenDanhSachPhat = function (ten) {
+        $("#loading_main").css("display", "block");
+        if (ten != null && ten != "" && ten != undefined) {
+            if ($rootScope.checklogin.uid) {
+                $scope.modelDSP = $scope.dspCookie;
+                $scope.modelDSP.tendanhsachphat = ten;
+                if ($scope.congkhaiDSP) {
+                    $scope.modelDSP.chedo = 1;
+                }
+                else {
+                    $scope.modelDSP.chedo = 0;
+                }
+
+                dataservice.ChinhSuaTenDanhSachPhat($scope.modelDSP, function (rs) {
+                    rs = rs.data;
+                    $("#loading_main").css("display", "none");
+                    $scope.editDSP = !$scope.editDSP;
+                    if (rs.Error) { } else {
+                        //dataservice.getPlaylist_CaNhan($rootScope.checklogin.uid, function (rs) {
+                        //    rs = rs.data;
+                        //    if (rs.Error) { } else {
+                        //        $rootScope.playlist_canhan = rs;
+
+                        //    }
+                        //});
+
+                    }
+                })
+
+            } else {
+                $rootScope.closelogin = true;
+            }
+        }
+    }
 
 });
 app.controller('timkiem', function ($scope, $routeParams, dataservice, $rootScope, $location) {
@@ -4557,6 +5317,8 @@ app.directive("contextMenu", function ($compile) {
             //bài hát bên nhạc mới
             if ($("#contextmenubaihat_baihat"))
                 $("#contextmenubaihat_baihat").remove();
+            if ($("#contextmenubaihat_canhan"))
+                $("#contextmenubaihat_canhan").remove();
             if ($("#contextmenudsptl-node"))
                 $("#contextmenudsptl-node").remove();
             if ($("#contextmenuplaylist-node"))
@@ -4565,21 +5327,25 @@ app.directive("contextMenu", function ($compile) {
                 $("#contextmenubaihatdangphat").remove();
             $('#idcontextmenu').prepend($compile(lScope[lAttr.contextMenu])(lScope));
             //bài hát bên nhạc mới vị trí click          
-            if ($("#contextmenubaihat_baihat") || $("#contextmenudsptl-node")) {
+            if ($("#contextmenubaihat_baihat") || $("#contextmenubaihat_canhan") || $("#contextmenudsptl-node")) {
                 if (e.clientX > 900) {
                     $("#contextmenubaihat_baihat").css("left", e.clientX - 525);
+                    $("#contextmenubaihat_canhan").css("left", e.clientX - 525);
                     $("#contextmenudsptl-node").css("left", e.clientX - 495);
                 }
                 else {
                     $("#contextmenubaihat_baihat").css("left", e.clientX - 230);
+                    $("#contextmenubaihat_canhan").css("left", e.clientX - 230);
                     $("#contextmenudsptl-node").css("left", e.clientX - 230);
                 }
                 if (e.clientY > 370) {
                     $("#contextmenubaihat_baihat").css("top", e.clientY - 400);
+                    $("#contextmenubaihat_canhan").css("top", e.clientY - 400);
                     $("#contextmenudsptl-node").css("top", e.clientY - 200);
                 }
                 else {
                     $("#contextmenubaihat_baihat").css("top", e.clientY - 100);
+                    $("#contextmenubaihat_canhan").css("top", e.clientY - 100);
                     $("#contextmenudsptl-node").css("top", e.clientY - 60);
                 }
             }
@@ -4606,6 +5372,7 @@ app.directive("contextMenu", function ($compile) {
                     $("#contextmenubaihat_baihat").remove();
                 }
             }
+
         });
 
         lElem.on("wheel", function (e) {
@@ -4615,6 +5382,8 @@ app.directive("contextMenu", function ($compile) {
 
             if ($("#contextmenubaihat_baihat"))
                 $("#contextmenubaihat_baihat").remove();
+            if ($("#contextmenubaihat_canhan"))
+                $("#contextmenubaihat_canhan").remove();
 
         });
 
@@ -4625,6 +5394,8 @@ app.directive("contextMenu", function ($compile) {
 
             if ($("#contextmenubaihat_baihat"))
                 $("#contextmenubaihat_baihat").remove();
+            if ($("#contextmenubaihat_canhan"))
+                $("#contextmenubaihat_canhan").remove();
         });
 
     };
@@ -4639,28 +5410,33 @@ app.directive("contextMenu1", function ($compile) {
 
             if ($("#contextmenubaihat_baihat"))
                 $("#contextmenubaihat_baihat").remove();
-
+            if ($("#contextmenubaihat_canhan"))
+                $("#contextmenubaihat_canhan").remove();
             if ($("#contextmenudsptl-node"))
                 $("#contextmenudsptl-node").remove();
             //if ($("#contextmenubaihatdangphat"))
             //    $("##contextmenubaihatdangphat").remove();
             $('#idcontextmenu').prepend($compile(lScope[lAttr.contextMenu1])(lScope));
 
-            if ($("#contextmenubaihat_baihat") || $("#contextmenudsptl-node")) {
+            if ($("#contextmenubaihat_baihat") || $("#contextmenubaihat_canhan") || $("#contextmenudsptl-node")) {
                 if (e.clientX > 900) {
                     $("#contextmenubaihat_baihat").css("left", e.clientX - 525);
+                    $("#contextmenubaihat_canhan").css("left", e.clientX - 525);
                     $("#contextmenudsptl-node").css("left", e.clientX - 495);
                 }
                 else {
                     $("#contextmenubaihat_baihat").css("left", e.clientX - 230);
+                    $("#contextmenubaihat_canhan").css("left", e.clientX - 230);
                     $("#contextmenudsptl-node").css("left", e.clientX - 230);
                 }
                 if (e.clientY > 370) {
                     $("#contextmenubaihat_baihat").css("top", e.clientY - 400);
+                    $("#contextmenubaihat_canhan").css("top", e.clientY - 400);
                     $("#contextmenudsptl-node").css("top", e.clientY - 200);
                 }
                 else {
                     $("#contextmenubaihat_baihat").css("top", e.clientY - 100);
+                    $("#contextmenubaihat_canhan").css("top", e.clientY - 100);
                     $("#contextmenudsptl-node").css("top", e.clientY - 60);
                 }
             }
@@ -4675,6 +5451,8 @@ app.directive("contextMenu1", function ($compile) {
             if ($("#contextmenubaihat_baihat"))
                 $("#contextmenubaihat_baihat").remove();
 
+            if ($("#contextmenubaihat_canhan"))
+                $("#contextmenubaihat_canhan").remove();
             if ($("#contextmenudsptl-node"))
                 $("#contextmenudsptl-node").remove();
 

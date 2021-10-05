@@ -27,7 +27,9 @@ using FireSharp.Interfaces;
 using FireSharp.Response;
 using Newtonsoft.Json.Linq;
 using FirebaseAdmin.Auth;
-
+using MimeKit;
+using MailKit.Net.Smtp;
+using System.Security.Authentication;
 
 namespace TFourMusic.Controllers
 {
@@ -177,6 +179,8 @@ namespace TFourMusic.Controllers
         [HttpPost]
         public async Task<IActionResult> taiThongKe([FromBody] modelthongke item)
         {
+           
+           
             //  var auth = new FirebaseAuthProvider(new FirebaseConfig123(ApiKey));
             // var a = await auth.SignInWithEmailAndPasswordAsync(AuthEmail, AuthPassword);
             //var ok = await FirebaseAuth123

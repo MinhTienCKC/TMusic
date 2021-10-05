@@ -67,18 +67,20 @@
     border-radius: 50%;
     line-height: 0;
 }
-
-.form-search {
-    background-color: transparent;
-    border: none;
-    outline: none;
-    font-size: 1rem;
-    width: 43rem;
-    color: #ccc5d4;
-    margin-left: 5%;
-    height: 100%;
-    font-size: 15px;
-}
+    .header__action-item:hover{
+        opacity:0.7;
+    }
+    .form-search {
+        background-color: transparent;
+        border: none;
+        outline: none;
+        font-size: 1rem;
+        width: 43rem;
+        color: #ccc5d4;
+        margin-left: 5%;
+        height: 100%;
+        font-size: 15px;
+    }
 
 .nav {
     display: flex;

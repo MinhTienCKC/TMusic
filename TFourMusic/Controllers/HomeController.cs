@@ -463,6 +463,18 @@ namespace TFourMusic.Controllers
                 return list;
             }
         }
+        //public baocaobaihatModel LayBaiHatChiTiet(string nguoidungid, string idbh)
+        //{
+        //    FirebaseResponse rp = client.Get("csdlmoi/baocao/chuaxuly" + nguoidungid.ToString() + "/" + idbh.ToString());
+        //    var datarp = JsonConvert.DeserializeObject<baocaobaihatModel>(rp.Body);
+        //    baocaobaihatModel bh = new baocaobaihatModel();
+        //    if (datarp != null)
+        //    {
+        //        bh = datarp;
+        //    }
+        //    return bh;
+        //}
+
         //17-08 Đã sữa CSDL mới
         public List<chudeModel> LayBangChuDe(string idchude = null)
         {
@@ -1283,6 +1295,17 @@ namespace TFourMusic.Controllers
                 return list;
             }
         }
+       public baocaobaihatModel LayBangBaoCaoBaiHatChuaXuLy(string nguoidungid,string idbaocao)
+        {
+            FirebaseResponse rp = client.Get("csdlmoi/baocao/chuaxuly/" + nguoidungid.ToString() + "/" + idbaocao.ToString());
+            var datarp = JsonConvert.DeserializeObject<baocaobaihatModel>(rp.Body);
+            baocaobaihatModel bh = new baocaobaihatModel();
+            if (datarp != null)
+            {
+                bh = datarp;
+            }
+            return bh;
+        }
         //17-08 Đã sữa CSDL mới
         public List<chitietdanhsachphattheloaiModel> LayBangChiTietDanhSachPhatTheLoai(string iddsptheloai = null)
         {
@@ -1335,6 +1358,7 @@ namespace TFourMusic.Controllers
                 return list;
             }
         }
+
         //17-08 Đã sữa CSDL mới
         public async Task<IActionResult> DanhSachQuangCao(string uid)
         {
@@ -1669,6 +1693,61 @@ namespace TFourMusic.Controllers
             }
 
         }
+        public List<baocaobaihatModel> LayBangBaoCaoBaiHatChuaXuLi(string uid = null)
+        {
+            try
+            {
+                if (uid == null)
+                {
+                    client = new FireSharp.FirebaseClient(config);
+                    FirebaseResponse response = client.Get("csdlmoi/baocao/baihatvipham/chuaxuly");
+                    var data = JsonConvert.DeserializeObject<dynamic>(response.Body);
+                    var list = new List<baocaobaihatModel>();
+
+
+                    if (data != null)
+                    {
+                        foreach (var item in data)
+                        {
+                            foreach (var x in item)
+                            {
+                                foreach (var y in x)
+
+                                {
+                                    list.Add(JsonConvert.DeserializeObject<baocaobaihatModel>(((JProperty)y).Value.ToString()));
+
+                                }
+
+                            }
+
+                        }
+                    }
+                    return list;
+                }
+                else
+                {
+                    client = new FireSharp.FirebaseClient(config);
+                    FirebaseResponse response = client.Get("csdlmoi/baocao/baihatvipham/chuaxuly/" + uid);
+                    var data = JsonConvert.DeserializeObject<dynamic>(response.Body);
+                    var list = new List<baocaobaihatModel>();
+
+                    if (data != null)
+                    {
+                        foreach (var item in data)
+                        {
+                            list.Add(JsonConvert.DeserializeObject<baocaobaihatModel>(((JProperty)item).Value.ToString()));
+
+                        }
+                    }
+                    return list;
+                }
+            }
+            catch
+            {
+                return null;
+            }
+
+        }
         //17-08 Đã sữa CSDL mới
         public List<baihatcustomModel> convertBaiHat(List<baihatModel> list, string uid)
         {
@@ -1827,7 +1906,7 @@ namespace TFourMusic.Controllers
 
                     var listbaihat = getListBaiHat();
                     var datakq = (from baihat in listbaihat
-                                  where baihat.chedo == 1
+                                  where baihat.chedo == 1 && baihat.daxoa == 0 && baihat.vohieuhoa == 0
                                   select baihat).ToList().OrderByDescending(x => x.thoigian).Take(listbaihat.Count > 12 ? 12 : listbaihat.Count).ToList();
                     //List<baihatModel> datakq = data.ToList();
                     var datareturn = convertBaiHat(datakq, uid);
@@ -1884,7 +1963,7 @@ namespace TFourMusic.Controllers
                                       nguoidung = ng,
                                       baihat = (from ngcon in convertnd
                                                 join bh in convertbh on ngcon.uid equals bh.nguoidung_id
-                                                where bh.chedo == 1 && bh.nguoidung_id == ng.uid
+                                                where bh.chedo == 1 && bh.nguoidung_id == ng.uid && bh.daxoa == 0 && bh.vohieuhoa == 0
                                                 select bh)
                                                 .ToList()
                                   }).OrderByDescending(x => x.nguoidung.theodoi).ThenByDescending(x => x.nguoidung.soluongtheodoi).ToList();
@@ -1972,7 +2051,7 @@ namespace TFourMusic.Controllers
                 {
                     var listbaihat = getListBaiHat();
                     var datakq = (from baihat in listbaihat
-                                  where baihat.chedo == 1
+                                  where baihat.chedo == 1 && baihat.daxoa == 0 && baihat.vohieuhoa == 0
                                   select baihat).ToList().OrderByDescending(x => x.luotnghe).Take(listbaihat.Count > 8 ? 8 : listbaihat.Count).ToList();
                     var result = convertBaiHat(datakq, uid);
 
@@ -2016,7 +2095,7 @@ namespace TFourMusic.Controllers
                 {
                     var listbaihat = getListBaiHat();
                     var datakq = (from baihat in listbaihat
-                                  where baihat.chedo == 1
+                                  where baihat.chedo == 1 && baihat.daxoa == 0 && baihat.vohieuhoa == 0
                                   select baihat).ToList().OrderByDescending(x => x.luotthich).Take(listbaihat.Count > 8 ? 8 : listbaihat.Count).ToList();
                     var result = convertBaiHat(datakq, uid);
                     return result;
@@ -2059,7 +2138,7 @@ namespace TFourMusic.Controllers
                 {
                     var listbaihat = getListBaiHat();
                     var datakq = (from baihat in listbaihat
-                                  where baihat.chedo == 1
+                                  where baihat.chedo == 1 && baihat.daxoa == 0 && baihat.vohieuhoa == 0
                                   select baihat).OrderByDescending(x => x.luottaixuong).Take(listbaihat.Count > 8 ? 8 : listbaihat.Count).ToList();
                     var result = convertBaiHat(datakq, uid);
                     return result;
@@ -2100,7 +2179,7 @@ namespace TFourMusic.Controllers
                     var listbaihat = getListBaiHat();
                     var listyeuthich = LayBangYeuThichBaiHat(uid);
                     var datakq = (from bh in listbaihat
-                                  where (bh.chedo == 1)
+                                  where (bh.chedo == 1 && bh.daxoa == 0 && bh.vohieuhoa == 0)
                                   join yt in listyeuthich on bh.id equals yt.baihat_id
                                   where yt.nguoidung_id == uid
                                   select bh).ToList();
@@ -2233,11 +2312,11 @@ namespace TFourMusic.Controllers
         {
             try
             {
-                if (idbh != null)
+                if (idbh != null && idbh.ToString() !=  "undefined")
                 {
                     var listbaihat = getListBaiHat();
                     baihatModel qery = (from bh in listbaihat
-                                        where bh.id == idbh
+                                        where bh.id == idbh && bh.daxoa == 0 && bh.vohieuhoa == 0
                                         select bh).FirstOrDefault();
                     qery.luotnghe = qery.luotnghe + 1;
                     client = new FireSharp.FirebaseClient(config);
@@ -2264,7 +2343,7 @@ namespace TFourMusic.Controllers
                 xuhuong.baihat_id = baihat.id;
                 xuhuong.luotnghe = baihat.luotnghe;
                 xuhuong.nguoidung_id = baihat.nguoidung_id;
-                
+
                 //int week = DateTime.Now.Day;
                 //int monthh = DateTime.Now.Month;
                 //int year = DateTime.Now.Year;
@@ -2378,7 +2457,7 @@ namespace TFourMusic.Controllers
                 var date = DateTime.Now;
                 if (date.Day > ngayUpdatexuhuong)
                 {
-                   
+
                     update = updatexh.AddDays(-1);
                     FirebaseResponse responsexh = client.Get("csdlmoi/xuhuong/" + updatexh.Year.ToString() + "/" + updatexh.Month.ToString() + "/" + updatexh.Day.ToString());
                     //FirebaseResponse response = client.Get("csdlmoi/baihat");
@@ -2394,7 +2473,7 @@ namespace TFourMusic.Controllers
                         }
 
                         listxh = (from bh in listxh
-                                select bh).OrderByDescending(x => x.luotnghe).Take(20).ToList();
+                                  select bh).OrderByDescending(x => x.luotnghe).Take(20).ToList();
                         if (listxh.Count > 20)
                         {
                             FirebaseResponse responseupdate = client.Delete("csdlmoi/xuhuong/" + updatexh.Year.ToString() + "/" + updatexh.Month.ToString() + "/" + updatexh.Day.ToString());
@@ -2414,7 +2493,7 @@ namespace TFourMusic.Controllers
                     namUpdatexuhuong++;
                 }
 
-           
+
                 if (data != null)
                 {
                     List<baihatModel> listbh = new List<baihatModel>();
@@ -2440,9 +2519,9 @@ namespace TFourMusic.Controllers
                         {
 
                             listbh = (from bh in listbh
-                                      select bh).OrderByDescending(x=>x.luotnghe).Take(20).ToList();
-                            
-                            if(model.uid != null && model.uid != "null")
+                                      select bh).OrderByDescending(x => x.luotnghe).Take(20).ToList();
+
+                            if (model.uid != null && model.uid != "null")
                             {
                                 return convertBaiHat(listbh, model.uid);
                             }
@@ -2450,13 +2529,13 @@ namespace TFourMusic.Controllers
                             {
                                 return listbh;
                             }
-                            
+
                         }
                     }
-                   
+
                 }
                 return false;
-         
+
 
             }
             catch (Exception ex)
@@ -2471,7 +2550,7 @@ namespace TFourMusic.Controllers
             var firebase = new FirebaseClient(Key);
             DateTime update = DateTime.Parse(model.key);
             //update = update.AddDays(-1);
-            FirebaseResponse response = client.Get("csdlmoi/xuhuong/" + update.Year.ToString() + "/" + update.Month.ToString() );
+            FirebaseResponse response = client.Get("csdlmoi/xuhuong/" + update.Year.ToString() + "/" + update.Month.ToString());
             //FirebaseResponse response = client.Get("csdlmoi/baihat");
             var data = JsonConvert.DeserializeObject<dynamic>(response.Body);
             var list = new List<xuhuongModel>();
@@ -2492,14 +2571,14 @@ namespace TFourMusic.Controllers
 
                 }
             }
-            if(list.Count > 0)
+            if (list.Count > 0)
             {
                 List<xuhuongModel> listxh = new List<xuhuongModel>();
                 List<baihatModel> listbh = new List<baihatModel>();
                 var tongbh = (from xh in list
-                          group xh by xh.baihat_id into idbaihat
-                          select idbaihat).ToList();
-                foreach(var item in tongbh)
+                              group xh by xh.baihat_id into idbaihat
+                              select idbaihat).ToList();
+                foreach (var item in tongbh)
                 {
                     listxh.Add(congLuotNgheThang(list, item.Key.ToString()));
                 }
@@ -2531,16 +2610,16 @@ namespace TFourMusic.Controllers
 
                 }
 
-            }    
+            }
             return false;
-        }    
-        public xuhuongModel congLuotNgheThang(List<xuhuongModel> xuhuongs,string idbh)
+        }
+        public xuhuongModel congLuotNgheThang(List<xuhuongModel> xuhuongs, string idbh)
         {
             List<xuhuongModel> result = (from xh in xuhuongs
                                          where xh.baihat_id == idbh
                                          select xh).ToList();
-            xuhuongModel xuhuong =result[0];
-            foreach(var item in result)
+            xuhuongModel xuhuong = result[0];
+            foreach (var item in result)
             {
                 xuhuong.luotnghe += item.luotnghe;
             }
@@ -2773,7 +2852,7 @@ namespace TFourMusic.Controllers
                 {
 
                     var datakq = (from baihat in list
-                                  where baihat.tenbaihat.ToUpper().Contains(model.tuKhoa.ToUpper()) && baihat.chedo == 1 && baihat.daxoa == 0
+                                  where baihat.tenbaihat.ToUpper().Contains(model.tuKhoa.ToUpper()) && baihat.chedo == 1 && baihat.daxoa == 0 && baihat.vohieuhoa == 0
                                   select baihat).OrderBy(x => x.tenbaihat).ToList();
                     if (model.uid != null)
                     {
@@ -2960,7 +3039,7 @@ namespace TFourMusic.Controllers
             {
                 var list = getListBaiHat(uid);
                 list = (from bh in list
-                        where bh.nguoidung_id == uid && bh.daxoa == 0
+                        where bh.nguoidung_id == uid && bh.daxoa == 0 
                         select bh).ToList();
                 var result = convertBaiHat(list, uid);
                 return result;
@@ -2978,7 +3057,7 @@ namespace TFourMusic.Controllers
 
             var list = getListBaiHat(model.uidNgheSi);
             list = (from bh in list
-                    where bh.nguoidung_id == model.uidNgheSi && bh.chedo == 1 && bh.daxoa == 0
+                    where bh.nguoidung_id == model.uidNgheSi && bh.chedo == 1 && bh.daxoa == 0  && bh.vohieuhoa == 0
                     select bh).OrderByDescending(x => x.luotnghe).ToList();
             if (model.uidNguoiDung != null)
             {
@@ -3017,7 +3096,7 @@ namespace TFourMusic.Controllers
 
                 var listbh = getListBaiHat();
                 var listdatai = LayBangDaTaiXuong(uid);
-                var qery = (from bh in listbh
+                var qery = (from bh in listbh where bh.daxoa == 0 && bh.vohieuhoa == 0 && bh.chedo == 1
                             join datai in listdatai.Where(x => x.nguoidung_id == uid) on bh.id equals datai.baihat_id
                             select bh).Distinct().ToList();
                 var result = convertBaiHat(qery, uid);
@@ -3142,6 +3221,7 @@ namespace TFourMusic.Controllers
                 danhsachphat.linkhinhanh = list[item].linkhinhanh;
                 danhsachphat.nguoidung_id = list[item].nguoidung_id;
                 danhsachphat.thoigian = list[item].thoigian;
+                danhsachphat.chedo = list[item].chedo;
                 bool checkYeuThich = false;
                 for (int j = 0; j < listyeuthichdsp.Count(); j++)
                 {
@@ -3464,21 +3544,169 @@ namespace TFourMusic.Controllers
         public async Task<object> BaoCaoBaiHat([FromBody] baocaobaihatModel baocao)
         {
             //string output = JsonConvert.SerializeObject(baocao.noidung);
-
-            baocao.thoigian = DateTime.Now;
-            var firebase = new FirebaseClient(Key);
-            
-            if(baocao != null)
+            var listbaocao = LayBangBaoCaoBaiHatChuaXuLi(baocao.nguoidung_id);
+            listbaocao = (from bc in listbaocao
+                          where bc.baihat_baocao_id == baocao.baihat_baocao_id
+                          select bc).ToList();
+            if (listbaocao.Count > 0)
             {
-                var dino = await firebase.Child("csdlmoi").Child("baocao").Child("baihatvipham").Child("chuaxuli").Child(baocao.nguoidung_id).PostAsync(baocao);
-                string idkey = dino.Key.ToString();
-                baocao.id = idkey;
-                await firebase.Child("csdlmoi").Child("baocao").Child("baihatvipham").Child("chuaxuli").Child(baocao.nguoidung_id).Child(idkey).PutAsync(baocao);
-            }    
-            
-            return true;
+
+                return Json("Bạn Đã Báo Cáo Bài Hát Vui Lòng Đợi Nhân Viên Xử Lý");
+            }
+            else
+            {
+                baocao.thoigian = DateTime.Now;
+                var firebase = new FirebaseClient(Key);
+
+                if (baocao != null)
+                {
+                    var dino = await firebase.Child("csdlmoi").Child("baocao").Child("baihatvipham").Child("chuaxuly").Child(baocao.nguoidung_id).PostAsync(baocao);
+                    string idkey = dino.Key.ToString();
+                    baocao.id = idkey;
+                    await firebase.Child("csdlmoi").Child("baocao").Child("baihatvipham").Child("chuaxuly").Child(baocao.nguoidung_id).Child(idkey).PutAsync(baocao);
+                    var nguoibaocao = LayBangNguoiDung(baocao.nguoidung_id);
+                    var nguoibibaocao = LayBangNguoiDung(baocao.nguoidung_baocao_id);
+
+
+                    if (nguoibaocao.Count > 0 && nguoibaocao[0].email != "admin")
+                    {
+                        var message = new MimeMessage();
+                        message.From.Add(new MailboxAddress("Admin TMUSIC", "0306181280@caothang.edu.vn"));
+                        message.To.Add(new MailboxAddress(nguoibaocao[0].hoten, nguoibaocao[0].email));
+                        message.Subject = "TMUSIC - CÁM ƠN BẠN ĐÃ BÁO CÁO";
+                        message.Body = new TextPart("plain")
+                        {
+                            Text = "Xin chào: " + nguoibaocao[0].hoten + "\n" +
+                            "Cám ơn bạn đã báo cáo bài hát mà bạn đã cho rằng vi phạm tiêu chuẩn cộng đồng. \n" +
+                            "Chúng tôi đã tiếp nhận báo cáo của bạn và sẽ xử lý vi phạm trong thời gian sớm nhất. \n\n" +
+                            "Chúng tôi sẽ thông báo cho bạn ngay khi có kết quả xử lý vi phạm.  \n" +
+                            "Cám ơn bạn. \n" +
+                            "Admin TMUSIC"
+                        };
+                        using (var client = new SmtpClient())
+                        {
+                            // client.ServerCertificateValidationCallback = (s, c, h, e) => true;
+                            client.CheckCertificateRevocation = false;
+                            // client.SslProtocols = SslProtocols.Ssl3 | SslProtocols.Tls | SslProtocols.Tls11 | SslProtocols.Tls12 | SslProtocols.Tls13;
+                            client.Connect("smtp.gmail.com", 587, false);
+                            //  await client.ConnectAsync("smtp.gmail.com", 587, false);
+                            client.Authenticate("0306181280@caothang.edu.vn", "0965873520");
+
+                            client.Send(message);
+                            client.Disconnect(true);
+                        }
+
+                    }
+                    // gửi email
+
+
+                    if (nguoibibaocao.Count > 0 && nguoibibaocao[0].email != "admin")
+                    {
+                        // gửi email
+                        var messagenguoibibaocao = new MimeMessage();
+                        messagenguoibibaocao.From.Add(new MailboxAddress("Admin TMUSIC", "0306181280@caothang.edu.vn"));
+                        messagenguoibibaocao.To.Add(new MailboxAddress(nguoibibaocao[0].hoten, nguoibibaocao[0].email));
+                        messagenguoibibaocao.Subject = "TMUSIC - Bài Hát Của Bạn Bị Báo Cáo Vi Phạm Tiêu Chuẩn Cộng Đồng";
+                        messagenguoibibaocao.Body = new TextPart("plain")
+                        {
+                            Text = "Xin chào: " + nguoibibaocao[0].hoten + "\n" +
+                            "Chúng tôi đã nhận được báo cáo bài hát của bạn vi phạm tiêu chuẩn cộng đồng của chúng tôi. \n" +
+                            "Nhằm đảm bảo cho tiêu chuẩn cộng đồng chúng tôi sẽ xem xét về trường hợp của bạn. \n" +
+                            "Nếu bạn cho rằng báo cáo nhầm lẫn hoặc không chính xác vui lòng  reply email cho chúng tôi với các thông tin chứng minh rằng bạn đã không vi phạm bất cứ tiêu chuẩn cộng đồng của chúng tôi. \n\n" +
+                            "Chúng tôi luôn đảm bảo rằng TMusic là một cộng đồng người dùng văn minh.   \n" +
+                            "Cám ơn bạn. \n" +
+                            "Admin TMUSIC"
+                        };
+                        using (var client = new SmtpClient())
+                        {
+                            // client.ServerCertificateValidationCallback = (s, c, h, e) => true;
+                            client.CheckCertificateRevocation = false;
+                            // client.SslProtocols = SslProtocols.Ssl3 | SslProtocols.Tls | SslProtocols.Tls11 | SslProtocols.Tls12 | SslProtocols.Tls13;
+                            client.Connect("smtp.gmail.com", 587, false);
+                            //  await client.ConnectAsync("smtp.gmail.com", 587, false);
+                            client.Authenticate("0306181280@caothang.edu.vn", "0965873520");
+
+                            client.Send(messagenguoibibaocao);
+                            client.Disconnect(true);
+                        }
+                    }
+                    return Json("Cảm Ơn Bạn Bạn Đã Báo Cáo. Chúng Tôi Đã Tiếp Nhận Báo Cáo Của Bạn. Chúng Tôi Sẽ Phản Hồi Tình Trạng Qua Email Của Bạn.");
+                }
+            }
+
+            return false;
+        }
+        [HttpPost]
+        public bool ChinhSuaTenDanhSachPhat([FromBody] danhsachphatnguoidungModel dsp)
+        {
+            try
+            {
+                if (dsp != null )
+                {
+                    //var listnguoidung = LayBangDanhSachPhatNguoiDung(dsp.nguoidung_id);
+                    //danhsachphatnguoidungModel qery = (from nd in listnguoidung
+                    //                       where nd.nguoidung_id == dsp.nguoidung_id
+                    //                       select nd).FirstOrDefault();
+                   // qery.tendanhsachphat = dsp.tendanhsachphat.ToString();
+                    client = new FireSharp.FirebaseClient(config);
+                    SetResponse response = client.Set("csdlmoi/danhsachphatnguoidung/" + dsp.nguoidung_id +"/"+ dsp.id,dsp);
+                    return true;
+                }
+                else
+                {
+                    return false;
+                }
+            }
+            catch (Exception ex)
+            {
+                return false;
+            }
+        }
+        [HttpPost]
+        public bool ChinhSuaTenBaiHat([FromBody] baihatModel baihat)
+        {
+            try
+            {
+                if (baihat != null )
+                {
+                    
+                    client = new FireSharp.FirebaseClient(config);
+                    SetResponse response = client.Set("csdlmoi/baihat/" + baihat.nguoidung_id+"/" + baihat.id , baihat);
+                    return true;
+                }
+                else
+                {
+                    return false;
+                }
+            }
+            catch (Exception ex)
+            {
+                return false;
+            }
         }
 
+        [HttpPost]
+        public bool xoaBaiHatNguoiDung([FromBody] baihatModel baihat)
+        {
+            try
+            {
+                if (baihat != null)
+                {
+
+                    client = new FireSharp.FirebaseClient(config);
+                    SetResponse response = client.Set("csdlmoi/baihat/" + baihat.nguoidung_id + "/" + baihat.id +"/"+ "daxoa", 1);
+                    return true;
+                }
+                else
+                {
+                    return false;
+                }
+            }
+            catch (Exception ex)
+            {
+                return false;
+            }
+        }
 
 
 
@@ -3493,7 +3721,7 @@ namespace TFourMusic.Controllers
             {
                 var listbaihat = getListBaiHat();
                 var datakq = (from baihat in listbaihat
-                              where baihat.chedo == 1 && baihat.daxoa == 0
+                              where baihat.chedo == 1 && baihat.daxoa == 0  && baihat.vohieuhoa == 0
                               select baihat).OrderByDescending(x => x.thoigian).Take(20).ToList();
                 if (uid != null && uid != "" && uid != "null")
                 {
@@ -3557,7 +3785,7 @@ namespace TFourMusic.Controllers
                 var listbaihat = getListBaiHat();
                 var chitietdanhsachphattheloai = LayBangChiTietDanhSachPhatTheLoai(itemmodel.key.ToString());
                 var datakq = (from baihat in listbaihat
-                              where baihat.chedo == 1 && baihat.daxoa == 0 && baihat.danhsachphattheloai_id.Equals(itemmodel.key.ToString())
+                              where baihat.chedo == 1 && baihat.daxoa == 0 && baihat.vohieuhoa == 0 && baihat.danhsachphattheloai_id.Equals(itemmodel.key.ToString())
                               select baihat).ToList();
                 var datathembaihat = (from bh in listbaihat
                                       join ctdsptl in chitietdanhsachphattheloai on bh.id equals ctdsptl.baihat_id
@@ -3614,7 +3842,7 @@ namespace TFourMusic.Controllers
 
                 var listbaihat = getListBaiHat();
                 baihatModel qery = (from bh in listbaihat
-                                    where bh.id == item.key
+                                    where bh.id == item.key && bh.daxoa == 0 && bh.vohieuhoa == 0
                                     select bh).FirstOrDefault();
                 qery.luottaixuong = qery.luottaixuong + 1;
                 client = new FireSharp.FirebaseClient(config);
@@ -3976,7 +4204,7 @@ namespace TFourMusic.Controllers
                         select dsptl).ToList();
             try
             {
-                if (item.uid != "")
+                if (item.uid != "" && item.uid != "null")
                 {
                     var datachuyendoi = convertDanhSachPhatTheLoai(data, item.uid.ToString()).ToList();
                     return Json(datachuyendoi);
@@ -4045,12 +4273,12 @@ namespace TFourMusic.Controllers
         public object taiBaiHatTheoId([FromBody] Text item)
         {
 
-
+           
 
             var baihat = getListBaiHat();
 
             var data = (from bh in baihat
-                        where bh.id.Equals(item.key.ToString())
+                        where bh.id.Equals(item.key.ToString()) && bh.daxoa == 0 && bh.vohieuhoa == 0
                         select bh).ToList();
             try
             {
@@ -4634,6 +4862,13 @@ namespace TFourMusic.Controllers
                    .Child(idTam)
                    .PutAsync(ctdspnd);
 
+                var baihat = getListBaiHat();
+
+                var databh = (from bh in baihat
+                            where bh.id.Equals(item.baihat_id.ToString()) && bh.daxoa == 0 && bh.vohieuhoa == 0
+                            select bh).ToList();
+                client = new FireSharp.FirebaseClient(config);
+                object p = client.Set("csdlmoi/danhsachphatnguoidung/" + item.uid + "/" + item.danhsachphatnguoidung_id  + "/linkhinhanh", databh[0].linkhinhanh);
 
             }
             catch (Exception ex)

@@ -147,78 +147,8 @@
                     </div>
 
                 </div>
-                <label ng-show="showVip==1" ng-click="clickShowVip()" class="tao_playlist_layout_label_hengio"></label>
-                <div ng-show="showVip==1" style="top:8px; left:30%;max-width:700px;" class="tao_playlist_layout_nangcapvip">
-                    <div class="modal_laylist_layout" style="border-radius: 30px;">
-                        <div style="background-image: url(https://static-zmp3.zadn.vn/skins/zmp3-v5.1/vip/images/bg.jpg); background-size: cover;border-radius: 30px;" class="modal_laylist_layout_item">
-                            <div class="modal_content" style="width:auto;">
-                                <h3 class="titlevip" style=" text-transform:uppercase">Nâng Cấp Vip</h3>
+                <div ng-showvip></div>
 
-                                <div class="option_playlist">
-
-                                    <div style=" display: flex; flex-direction: column; align-items: center;">
-                                        <h3 class="titlevip" ">Âm Nhạc Không Giới Hạn</h3>
-                                        <h3 style="color: #ffffff80;     font-size: 12px;font-weight: 400;">Dịch vụ nghe nhạc Online chất lượng cao, kết hợp cùng các tiện ích dành riêng cho thành viên VIP</h3>
-                                    </div>
-
-
-                                </div>
-                                <div style="margin: 10px 0px; ">
-                                    <div ng-click="clickMuaGoiVip(x)" style=" position: relative; border-radius: 0; background: none; height: 186px;" class="package__container" ng-repeat="x in goiVip | orderBy:'sothang'">
-                                        <div class="package__container" ng-class="{'active_package': maGoiVip==x.id}" style="width: 174.6px;">
-                                            <div class="cover cover--6-month margin_cover" ng-style="{'background-image': 'url(' + x.linkhinhanh + ')'}" style=" background-size:cover"></div>
-                                            <div class="package__info">
-                                                <div class="package__month">{{x.tengoivip}}</div>
-                                                <div class="package__line"></div>
-                                                <div class="package__price">
-                                                    <div class="new-price">
-                                                        <div class="before-dot">{{x.giatiengiamgia / 1000}}</div>
-                                                        <div class="price-block">
-                                                            <div class="after-dot">.000</div>
-                                                            <div class="unit-currency">VNĐ</div>
-                                                        </div>
-                                                    </div>
-                                                    <s class="old-price">{{x.giatiengoc}}</s>
-                                                </div>
-                                            </div>
-
-                                            @*<a class="package__btn" href="#">Mua VIP</a>*@
-                                        </div>
-                                        <img ng-show="maGoiVip==x.id" class="img_package" style="position:absolute" src="https://firebasestorage.googleapis.com/v0/b/tfourmusic-1e3ff.appspot.com/o/image%2Fvip%2Fmain_sprites.png?alt=media&token=28619287-2347-4661-912b-9e9ecef4d22c" />
-
-
-                                    </div>
-
-
-
-                                </div>
-
-                                <div class="package__line"></div>
-                                <h3 style=" font-size: 14px; margin-bottom: 5px; font-weight: 400;">Chọn phương thức thanh toán</h3>
-                                <div class="phuongthuc_thanhtoan">
-
-                                    <div ng-click="phuongThucThanhToan=1" ng-class="{'active_phuongthucthanhtoan': phuongThucThanhToan==1}" class="img_thanhtoan" style="background-image: url(https://firebasestorage.googleapis.com/v0/b/tfourmusic-1e3ff.appspot.com/o/image%2Fvip%2Flogo512.png?alt=media&token=37db39c8-35ed-4777-baf1-751cbb772c22);background-size:cover; position:relative;cursor:pointer">
-                                        <img ng-show="phuongThucThanhToan==1" class="img_thanhtoan_icon" style="position:absolute" src="https://firebasestorage.googleapis.com/v0/b/tfourmusic-1e3ff.appspot.com/o/image%2Fvip%2Fmain_sprites.png?alt=media&token=28619287-2347-4661-912b-9e9ecef4d22c" />
-
-                                    </div>
-
-
-                                    <div ng-click="phuongThucThanhToan=2" ng-class="{'active_phuongthucthanhtoan': phuongThucThanhToan==2}" class="img_thanhtoan" style="background-image: url(https://firebasestorage.googleapis.com/v0/b/tfourmusic-1e3ff.appspot.com/o/image%2Fvip%2Fpaypal-32-498436.png?alt=media&token=adcc0aad-9283-400f-b730-f22e502bd663);background-size:cover;position:relative;cursor:pointer">
-                                        <img ng-show="phuongThucThanhToan==2" class="img_thanhtoan_icon" style="position:absolute" src="https://firebasestorage.googleapis.com/v0/b/tfourmusic-1e3ff.appspot.com/o/image%2Fvip%2Fmain_sprites.png?alt=media&token=28619287-2347-4661-912b-9e9ecef4d22c" />
-
-                                    </div>
-
-
-                                </div>
-                                <a ng-show="phuongThucThanhToan==1 && (maGoiVip != null ||  maGoiVip != undefined)" ng-click="$event.preventDefault();thanhToanBangMomo(goiVipThanhToan)" class="package__btn" href="#">THANH TOÁN BẰNG MOMO</a>
-                                <a ng-show="phuongThucThanhToan==2 && (maGoiVip != null ||  maGoiVip != undefined)" ng-click="$event.preventDefault();thanhToanBangPaypal(goiVipThanhToan)" class="package__btn" href="">THANH TOÁN BẰNG PAYPAL</a>
-                                <label ng-click="clickShowVip()" class="close_timer" style="        cursor: pointer;font-size: 15px;   position: absolute; bottom: 0; right: 47%;">HỦY</label>
-                            </div>
-
-                        </div>
-                    </div>
-
-                </div>
                 <div class="add-playlist-sidebar">
                     <label for="showplaylist" class="add-playlist-sidebar-button " tabindex="0">
                         <i class="fas fa-plus iconadd-playlist"></i><span>Tạo playlist mới</span>
@@ -297,15 +227,16 @@
                     <input id="tim_kiem_bai_hat" type="text" style="border: none" ng-keypress="suKienNhanPhimEnter($event)" ng-change="loadKetQuaTimKiem()" ng-model="timKiem" ng-blur="blurTimKiem()" ng-focus="focusTimKiemBaiHat(1)" class="form-search" placeholder="Nhập tên bài hát, Nghệ sĩ hoặc MV...">
                     <i ng-mousedown="mousedowmTimKiem()" ng-mouseup="mouseupTimKiem()" ng-show="timKiemBaiHat" ng-click="clickCloseTimKiem()" class="fas fa-times searchitem searchitemclose"></i>
                 </div>
+
                 <ul class="suggest__list" style="z-index:9999;" ng-show="timKiemBaiHat">
 
                     <li ng-mousedown="mousedowmTimKiemKq()" ng-mouseup="mouseupTimKiem(timKiem)" ng-show="timKiem.length > 0" class="suggest__item"> <i class="fas fa-search searchitem searchsubitem"></i><span class="item_search">Tìm Kiếm "{{timKiem}}"</span></li>
 
                     <li ng-mousedown="mousedowmTimKiemKq()" ng-mouseup="mouseupTimKiem(x.tenbaihat)" ng-repeat="x in ketQuaTimKiem" class="suggest__item"> <i class="fas fa-search searchitem searchsubitem"></i><span class="item_search"> {{x.tenbaihat}}</span></li>
                     @*<li class="suggest__item"> <i class="fas fa-search searchitem searchsubitem"></i><span class="item_search"> Phía Sau Một Cô Gái 2</span></li>
-                    <li ng-click="clickCloseTimKiem()" class="suggest__item"> <i class="fas fa-search searchitem searchsubitem"></i><span class="item_search"> Phía Sau Một Cô Gái</span></li>
-                    <li class="suggest__item"> <i class="fas fa-search searchitem searchsubitem"></i><span class="item_search"> Phía Sau Một Cô Gái 3</span></li>
-                    <li class="suggest__item"> <i class="fas fa-search searchitem searchsubitem"></i> <span class="item_search">Phía Sau Một Cô Gái 4</span></li>*@
+                        <li ng-click="clickCloseTimKiem()" class="suggest__item"> <i class="fas fa-search searchitem searchsubitem"></i><span class="item_search"> Phía Sau Một Cô Gái</span></li>
+                        <li class="suggest__item"> <i class="fas fa-search searchitem searchsubitem"></i><span class="item_search"> Phía Sau Một Cô Gái 3</span></li>
+                        <li class="suggest__item"> <i class="fas fa-search searchitem searchsubitem"></i> <span class="item_search">Phía Sau Một Cô Gái 4</span></li>*@
                     <li class="suggest__item__song"> </li>
                     <li ng-mousedown="mousedowmTimKiemKq()" ng-repeat="x in ketQuaTimKiem" ng-mouseup="mouseupTimKiemKq($index)" class="suggest__item__song__kq hover_item__song">
                         <div ng-style="{'background-image': 'url(' + x.linkhinhanh + ')'}" class="hinh_baihatmoi_search ">
@@ -331,8 +262,10 @@
                 <div class="header__action-item">
                     <i class="fas fa-tshirt icon_index"></i>
                 </div>
-                <div ng-click="upLoadNhac()" class="header__action-item">
-                    <i class="fas fa-upload icon_index"></i>
+                <div style="cursor:pointer" ng-click="upLoadNhac()" class="header__action-item">
+                    <span class="material-icons-outlined">
+                        file_upload
+                    </span>
                 </div>
                 <div class="header__action-item">
                     <i class="fas fa-cog icon_index"></i>
@@ -347,33 +280,35 @@
                 </div>
             </div>
         </div>
-        <label ng-if="huyhengioshow == 1" ng-click="huyhengioshow = 0" class="tao_playlist_layout_label_hengio"></label>
-        <div ng-if="huyhengioshow == 1" class="tao_playlist_layout_hengio">
+        <div id="xoahengio" ng-template>
+            @*<label ng-if="huyhengioshow == 1" ng-click="huyhengioshow = 0" class="tao_playlist_layout_label_hengio"></label>
+                <div ng-if="huyhengioshow == 1" class="tao_playlist_layout_hengio">
 
-            <div class="modal_laylist_layout">
-                <div class="modal_laylist_layout_item">
-                    <div class="modal_content">
-                        <h3 style=" font-size: 18px; margin-bottom: 15px;">Hủy Hẹn Giờ</h3>
+                    <div class="modal_laylist_layout">
+                        <div class="modal_laylist_layout_item">
+                            <div class="modal_content">
+                                <h3 style=" font-size: 18px; margin-bottom: 15px;">Hủy Hẹn Giờ</h3>
 
-                        <div class="option_playlist">
+                                <div class="option_playlist">
 
-                            <div>
-                                <h3 style=" font-size: 14px; margin-bottom: 5px; font-weight: 400;">Bạn có chắc chắn hủy hẹn giờ</h3>
+                                    <div>
+                                        <h3 style=" font-size: 14px; margin-bottom: 5px; font-weight: 400;">Bạn có chắc chắn hủy hẹn giờ</h3>
+
+                                    </div>
+
+
+                                </div>
+                                <div style="display: flex; padding-top: 20px;">
+                                    <button ng-click="huyHenGioShow()" style="display: flex; justify-content: center; align-items: center; font-weight: 400; background-color: #ffffff1a; border: 1px solid #ffffff1a; color: rgb(255 255 255); margin: 0 auto;" class="button_create_playlist">Không</button>
+
+                                    <button ng-click="huyHenGio();" class="button_create_playlist">Có</button>
+                                </div>
 
                             </div>
-
-
                         </div>
-                        <div style="display: flex; padding-top: 20px;">
-                            <button ng-click="huyHenGioShow()" style="display: flex; justify-content: center; align-items: center; font-weight: 400; background-color: #ffffff1a; border: 1px solid #ffffff1a; color: rgb(255 255 255); margin: 0 auto;" class="button_create_playlist">Không</button>
-
-                            <button ng-click="huyHenGio();" class="button_create_playlist">Có</button>
-                        </div>
-
                     </div>
-                </div>
-            </div>
 
+                </div>*@
         </div>
         <div class="wapper">
 
@@ -665,49 +600,50 @@
             </div>
 
         </div>
+        <div ng-login></div>
 
-        <div class="row login_form" style="outline:none;" ng-show="closelogin">
-            <div class="col-md-6 mx-auto p-0">
-                <div class="card">
-                    <div class="login-box">
-                        <a style="text-decoration:none" ng-click="closeloginAccount() " class="close_hover_login">
-                            <i class="fas fa-times close_login"></i>
-                        </a>
+        <!--<div class="row login_form" style="outline:none;" ng-show="closelogin">
+        <div class="col-md-6 mx-auto p-0">
+            <div class="card">
+                <div class="login-box">
+                    <a style="text-decoration:none" ng-click="closeloginAccount() " class="close_hover_login">
+                        <i class="fas fa-times close_login"></i>
+                    </a>
 
-                        <div class="login-snip">
-                            <input id="tab-1" type="radio" name="tab" class="sign-in" checked><label for="tab-1" class="tab">Login</label> <input id="tab-2" type="radio" name="tab" class="sign-up"><label for="tab-2" class="tab">Sign Up</label>
-                            <div class="login-space">
+                    <div class="login-snip">
+                        <input id="tab-1" type="radio" name="tab" class="sign-in" checked><label for="tab-1" class="tab">Login</label> <input id="tab-2" type="radio" name="tab" class="sign-up"><label for="tab-2" class="tab">Sign Up</label>
+                        <div class="login-space">
 
-                                <div class="login">
-                                    <form ng-submit="dangNhapWeb()" name="dangnhap" novalidate>
-                                        <div class="group"> <label for="user" class="label">Email</label> <input style="outline:none;" ng-model="login.email" id="user" type="email" name="email" maxlength="50" class="input" placeholder="Email"> </div>
-                                        <div class="group"> <label for="pass" class="label">Mật Khẩu</label> <input style="outline:none;" name="matkhau" ng-model="login.password" id="pass" type="password" min="6" maxlength="30" ng-minlength="6" ng-maxlength="30" required class="input" data-type="password" placeholder="Mật Khẩu"></div>
-                                        <label ng-show="dangNhapLoi.length > 0" class="opacity_validate" style="color: #f8d6d6;margin: 1px; margin-left: 10px; font-size:12px;">{{dangNhapLoi}}</label>
-
-
-                                        <label ng-class="{'xacthucemail':xacthucemail}" style="color: red;margin: 1px; margin-left: 10px; font-size:12px; opacity:0;">Email của bạn chưa xác thực. Vui lòng xác thực mới đăng nhập</label>
-                                        <div class="group">  <label style="color:#fff;margin-left: 31%; margin-top: 15px;">Hoặc đăng nhập bằng</label> </div>
-                                        <div class="login_fb_gg">
-                                            <a class="logins  " id="btnGoogle" ng-click="btnGoogle()"><img class="login_or_gg" src="~/image/7123953_logo_google_g_icon.png" alt="GOOGLE"></a>
-                                            <a class="logins login_or" id="btnFacebook" ng-click="loginFb()"> <span class="material-icons-outlined login_facebook">facebook</span></a>
-
-                                        </div>
-
-                                        <div class="group"> <button class="button" style="outline:none;cursor:pointer" type="submit" ng-class="{'disable_button':  dangnhap.email.$error.email}" ng-disabled="dangnhap.email.$error.email" value="Đăng Nhập ">Đăng Nhập</button> </div>
-                                        <div class="hr"></div>
-
-                                        <div class="foot"> <a ng-click="checkLogin()" style="color: #fff; text-decoration: none;" href="/quenmatkhau">Quên mật khẩu?</a> </div>
-                                    </form>
-
-                                </div>
-                                <div class="sign-up-form" ng-init="showmk='password';showmk1 = 'password'">
-                                    <form ng-submit="dangky()" name="form" novalidate>
+                            <div class="login">
+                                <form ng-submit="dangNhapWeb()" name="dangnhap" novalidate ng-init="login.email=''; login.password=''">
+                                    <div class="group"> <label for="user" class="label">Email</label> <input style="outline:none;" ng-model="login.email" id="user" type="email" name="email" maxlength="50" class="input" placeholder="Email"> </div>
+                                    <div class="group"> <label for="pass" class="label">Mật Khẩu</label> <input style="outline:none;" name="matkhau" ng-model="login.password" id="pass" type="password" min="6" maxlength="30" ng-minlength="6" ng-maxlength="30" required class="input" data-type="password" placeholder="Mật Khẩu"></div>
+                                    <label ng-show="dangNhapLoi.length > 0" class="opacity_validate" style="color: #f8d6d6;margin: 1px; margin-left: 10px; font-size:12px;">{{dangNhapLoi}}</label>
 
 
-                                        <div class="group">
-                                            <label for="user" class="label">Họ Tên*</label>
-                                            @*<label ng-show="form.username.$error.required" style="color: red;margin: 1px; margin-left: 10px; font-size:12px;">Họ Tên không được bỏ trống.</label>*@
-                                            <label ng-class="{'opacity_validate': form.username.$error.minlength}" class="not_opacity_validate" style="color: red;margin: 1px; margin-left: 10px; font-size:12px;">Họ Tên không được bỏ trống, Họ tên phải hơn 6 kí tự</label>
+                                    <label ng-class="{'xacthucemail':xacthucemail}" style="color: red;margin: 1px; margin-left: 10px; font-size:12px; opacity:0;">Email của bạn chưa xác thực. Vui lòng xác thực mới đăng nhập</label>
+                                    <div class="group">  <label style="color:#fff;margin-left: 31%; margin-top: 15px;">Hoặc đăng nhập bằng</label> </div>
+                                    <div class="login_fb_gg">
+                                        <a class="logins  " id="btnGoogle" ng-click="btnGoogle()"><img class="login_or_gg" src="~/image/7123953_logo_google_g_icon.png" alt="GOOGLE"></a>
+                                        <a class="logins login_or" id="btnFacebook" ng-click="loginFb()"> <span class="material-icons-outlined login_facebook">facebook</span></a>
+
+                                    </div>
+
+                                    <div class="group"> <button class="button" style="outline:none;cursor:pointer" type="submit" ng-class="{'disable_button':  login.email.$error.email || login.password < 6}" ng-disabled="login.email.$error.email || login.password < 6" value="Đăng Nhập ">Đăng Nhập</button> </div>
+                                    <div class="hr"></div>
+
+                                    <div class="foot"> <a ng-click="checkLogin()" style="color: #fff; text-decoration: none;" href="/quenmatkhau">Quên mật khẩu?</a> </div>
+                                </form>
+
+                            </div>
+                            <div class="sign-up-form" ng-init="showmk='password';showmk1 = 'password'">
+                                <form ng-submit="dangky()" name="form" novalidate>
+
+
+                                    <div class="group">
+                                        <label for="user" class="label">Họ Tên*</label>-->
+        @*<label ng-show="form.username.$error.required" style="color: red;margin: 1px; margin-left: 10px; font-size:12px;">Họ Tên không được bỏ trống.</label>*@
+        <!--<label ng-class="{'opacity_validate': form.username.$error.minlength}" class="not_opacity_validate" style="color: red;margin: 1px; margin-left: 10px; font-size:12px;">Họ Tên không được bỏ trống, Họ tên phải hơn 6 kí tự</label>
 
                                             <input ng-change="validatebutton()" style="outline:none;" ng-model="model.hoten" id="hotenlogin" name="username" type="text" maxlength="50" class="input" placeholder="Họ Tên" ng-minlength="6" ng-maxlength="50" required>
 
@@ -745,84 +681,17 @@
                     </div>
                 </div>
             </div>
-        </div>
-
-        <label class="overplaycanhan" ng-show="taoThanhCong">
-            overlay
-        </label>
-        <div ng-show="taoThanhCong" class="tao_playlist_layout_hengio" style="z-index: 6;">
-
-            <div class="modal_laylist_layout">
-                <div class="modal_laylist_layout_item">
-                    <div class="modal_content">
-                        <h3 style=" font-size: 18px; margin-bottom: 15px;">Thông Báo</h3>
-
-                        <div class="option_playlist">
-
-                            <div>
-                                <h3 style=" font-size: 14px; margin-bottom: 5px; font-weight: 400;">Tạo tài khoản TMusic thành công</h3>
-                                <h3 style=" font-size: 14px; margin-bottom: 5px; font-weight: 400;">Chúng tôi đã gửi email xác thực tài khoản đến email của bạn. Vui lòng xác nhận email để đăng nhập.   </h3>
-
-                            </div>
-
-
-                        </div>
-                        <div style="display: flex; padding-top: 20px;">
-
-
-                            <button ng-click="taoThanhCong = !taoThanhCong;closelogin = !closelogin;" style="display: flex; justify-content: center; align-items: center; font-weight: 400; background-color: #ffffff1a; border: 1px solid #ffffff1a; color: rgb(255 255 255); margin: 0 auto;" class="button_create_playlist">Thoát</button>
-                            <button ng-click="dangNhapEmailvaPass(model.email, model.matkhau);" class="button_create_playlist">
-                                Đăng Nhập Ngay
-                            </button>
-                        </div>
-
-                    </div>
-                </div>
-            </div>
-
-        </div>
-        <label class="overplaycanhan" ng-if="xacthucemail == 1">
-            overlay
-        </label>
-        <div ng-if="xacthucemail == 1" class="tao_playlist_layout_xacthuc" ng-init="titleGuiLaiXacThucEmail= 'Gửi Email Xác Thực';kiemtraXacThucEmail= false;">
-
-            <div class="modal_laylist_layout">
-                <div class="modal_laylist_layout_item">
-                    <div class="modal_content_xacthuc">
-                        <h3 style=" font-size: 18px; margin-bottom: 15px;">Thông Báo</h3>
-
-                        <div class="option_playlist">
-
-                            <div>
-                                <h3 style=" font-size: 14px; margin-bottom: 5px; font-weight: 400;">Tài khoản TMusic của bạn chưa xác thực</h3>
-                                <h3 style=" font-size: 14px; margin-bottom: 5px; font-weight: 400;">Vui lòng xác thực tài khoản của bạn để đăng nhập.</h3>
-                                <h3 style=" font-size: 14px; margin-bottom: 5px; font-weight: 400;">Nếu chưa nhận được email thì bạn có thể gửi lại email xác thực. Nếu đã xác thực email xong thì bạn có thể chọn <i>"Tôi Đã Xác Thực"</i> để đăng nhập</h3>
-                            </div>
-
-
-                        </div>
-                        <div style="display: flex; padding-top: 20px;">
-
-                            <button ng-click="dangXuatNguoiDung()" style="display: flex; justify-content: center; align-items: center; font-weight: 400; background-color: #ffffff1a; border: 1px solid #ffffff1a; color: rgb(255 255 255); margin: 0 auto;" class="button_create_playlist">Hủy</button>
-                            <button ng-click="ResendEmailXacThuc()" ng-disabled="kiemtraXacThucEmail" ng-class="{'disable_button': kiemtraXacThucEmail}" class="button_create_playlist">
-                                {{titleGuiLaiXacThucEmail}}
-                            </button>
-                            <button ng-click="dangNhapEmailvaPass(model.email, model.matkhau);" class="button_create_playlist">
-                                Tôi Đã Xác Thực
-                            </button>
-                        </div>
-
-                    </div>
-                </div>
-            </div>
-
-        </div>
+        </div>-->
+        <div ng-taonguoidung></div>
+        <div ng-xacthuc></div>
+       
 
 
 
 
         @*//comment*@
-        <div class="zm-portal-modal" ng-if="showBinhLuan == true">
+        <div ng-binhluan></div>
+        <!--<div class="zm-portal-modal" ng-if="showBinhLuan == true">
             <div class="modal_comment is-active">
                 <div class="modal-background" style="color:#fff;">
                     <div class="">
@@ -836,8 +705,8 @@
                                 <div style="position: relative; overflow: hidden; width: 100%; height: 100%;">
 
 
-                                    <div ng-init="opacity=1;chinhsuabinhluan = false; opacitycon = 1; chinhsuabinhluancon=false" id="modal-scroll" style="position: absolute; inset: 0px;font-size:13px; overflow: hidden scroll; margin-right: 0px; margin-bottom: 0px;margin-left: 20px;  margin-right: 5px;">
-                                        <!--commentitem-->
+                                    <div ng-init="opacity=1;chinhsuabinhluan = false; opacitycon = 1; chinhsuabinhluancon=false" id="modal-scroll" style="position: absolute; inset: 0px;font-size:13px; overflow: hidden scroll; margin-right: 0px; margin-bottom: 0px;margin-left: 20px;  margin-right: 5px;">-->
+        <!--commentitem
 
 
 
@@ -868,9 +737,9 @@
                                                     </div>
                                                 </div>
                                                 <div ng-show="!chinhsuabinhluan" ng-style="{'opacity': opacity}">{{x.binhluancha.noidung}}</div>
-                                                @*<input ng-if="chinhsuabinhluan  && x.binhluancha.nguoidung_id == checklogin.uid && checklogin.dadangnhap == true"  style="height:30px;width:80%" class="input_playlist ng-pristine ng-untouched ng-valid ng-empty" type="text" maxlength="300" />*@
+                                                <input ng-if="chinhsuabinhluan  && x.binhluancha.nguoidung_id == checklogin.uid && checklogin.dadangnhap == true"  style="height:30px;width:80%" class="input_playlist ng-pristine ng-untouched ng-valid ng-empty" type="text" maxlength="300" />
                                                 <div ng-init="chinhSuaBinhLuan = x.binhluancha.noidung" ng-show="chinhsuabinhluan  && x.binhluancha.nguoidung_id == checklogin.uid && checklogin.dadangnhap == true" class="rep_comment" style="position:relative">
-                                                    <i @*ng-click="BinhLuanConBaiHat()"*@ ng-click="ChinhSuaBinhLuanBaiHat(idBHBinhLuan,x.binhluancha.id,chinhSuaBinhLuan)" style="cursor:pointer; position: absolute; right: 25%; color: #fff; top: 25%; font-size: 16px; transform: rotate( 45deg );" class="fas fa-location-arrow"></i>
+                                                    <i ng-click="BinhLuanConBaiHat()" ng-click="ChinhSuaBinhLuanBaiHat(idBHBinhLuan,x.binhluancha.id,chinhSuaBinhLuan)" style="cursor:pointer; position: absolute; right: 25%; color: #fff; top: 25%; font-size: 16px; transform: rotate( 45deg );" class="fas fa-location-arrow"></i>
                                                     <input ng-model="chinhSuaBinhLuan" ng-keypress="PhimEnterChinhSuaBinhLuanCha($event,idBHBinhLuan,x.binhluancha.id,chinhSuaBinhLuan)" style="height:30px;width:80%" class="input_playlist ng-pristine ng-untouched ng-valid ng-empty" type="text" maxlength="200" placeholder="Nhập bình luận ..." />
 
                                                 </div>
@@ -904,7 +773,7 @@
                                                             </div>
                                                             <div ng-show="!chinhsuabinhluancon" ng-style="{'opacity': opacitycon}">{{paren.binhluancon.noidung}}</div>
                                                             <div ng-init="chinhSuaBinhLuancon = paren.binhluancon.noidung" ng-show="chinhsuabinhluancon  && paren.binhluancon.nguoidung_id == checklogin.uid && checklogin.dadangnhap == true" class="rep_comment" style="position:relative">
-                                                                <i @*ng-click="BinhLuanConBaiHat()"*@ ng-click="ChinhSuaBinhLuanConBaiHat(idBHBinhLuan,paren.binhluancon.id,chinhSuaBinhLuancon)" style="cursor:pointer; position: absolute; right: 25%; color: #fff; top: 15%; font-size: 16px; transform: rotate( 45deg );" class="fas fa-location-arrow"></i>
+                                                                <i ng-click="BinhLuanConBaiHat()" ng-click="ChinhSuaBinhLuanConBaiHat(idBHBinhLuan,paren.binhluancon.id,chinhSuaBinhLuancon)" style="cursor:pointer; position: absolute; right: 25%; color: #fff; top: 15%; font-size: 16px; transform: rotate( 45deg );" class="fas fa-location-arrow"></i>
                                                                 <input ng-model="chinhSuaBinhLuancon" ng-keypress="PhimEnterChinhSuaBinhLuanConBaiHat($event,idBHBinhLuan,paren.binhluancon.id,chinhSuaBinhLuancon)" style="height:30px;width:80%" class="input_playlist ng-pristine ng-untouched ng-valid ng-empty" type="text" maxlength="200" placeholder="Nhập bình luận ..." />
                                                                 <div ng-click="chinhsuabinhluancon = !chinhsuabinhluancon" class="huy_chinhsua">Hủy bỏ</div>
                                                             </div>
@@ -919,7 +788,7 @@
                                                         <div ng-style="{'opacity': opacity}" ng-show="xemthembinhluan >1" ng-click="xemthembinhluan = 1" class="rep_comment_click" style="margin-left:12px;">Thu gọn </div>
                                                     </div>
                                                     <div ng-show="showinputbinhluan" class="rep_comment" style="position:relative">
-                                                        <i @*ng-click="BinhLuanConBaiHat()"*@ ng-click="BinhLuanConBaiHat(idBHBinhLuan,x.binhluancha.id,dataBinhLuanCon)" style="cursor:pointer; position: absolute; right: 25%; color: #fff; top: 25%; font-size: 16px; transform: rotate( 45deg );" class="fas fa-location-arrow"></i>
+                                                        <i ng-click="BinhLuanConBaiHat()" ng-click="BinhLuanConBaiHat(idBHBinhLuan,x.binhluancha.id,dataBinhLuanCon)" style="cursor:pointer; position: absolute; right: 25%; color: #fff; top: 25%; font-size: 16px; transform: rotate( 45deg );" class="fas fa-location-arrow"></i>
                                                         <input ng-model="dataBinhLuanCon" ng-keypress="PhimEnterBinhLuanCon($event,idBHBinhLuan,x.binhluancha.id,dataBinhLuanCon)" style="height:30px;width:80%" class="input_playlist ng-pristine ng-untouched ng-valid ng-empty" type="text" maxlength="200" placeholder="Nhập bình luận ..." />
 
                                                     </div>
@@ -942,11 +811,10 @@
                     </div>
                 </div>
             </div>
-        </div>
-
-
+        </div>-->
         @*báo cáo*@
-        <div class="zm-portal-modal" ng-init="activebaocao =0;" ng-show="showFormBaoCao">
+        <div ng-chitietbaocao> </div>
+        <!--<div class="zm-portal-modal" ng-init="activebaocao =0;" ng-show="showFormBaoCao">
             <div class="modal_comment is-active">
                 <div class="modal-background" style="color:#fff;">
                     <div class="">
@@ -960,129 +828,154 @@
                                 <div style="position: relative; overflow: hidden; width: 100%; height: 100%;">
 
 
-                                    <div id="modal-scroll" class="baocao">
-                                        <!--commentitem-->
-                                        <div class="itemreport">
-                                            <label class="checkbox">
-                                                <input ng-model="noidungkhongphuhop" type="checkbox" />
-                                            </label>
-                                            <div ng-class="{'activebaocao': noidungkhongphuhop}" for="taikhoangiamao">Bài Hát Có Nội Dung Không Phù Hợp</div>
-                                        </div>
-                                        <div class="itemreport">
-                                            <label class="checkbox">
-                                                <input ng-model="anhthoathan" type="checkbox" />
-                                            </label>
-                                            <div ng-class="{'activebaocao': anhthoathan}" for="tengiamao">Ảnh Bài Hát Khỏa Thân</div>
-                                        </div>
-                                        <div class="itemreport">
-                                            <label class="checkbox">
-                                                <input ng-model="noidunglangma" type="checkbox" />
-                                            </label>
-                                            <div ng-class="{'activebaocao': noidunglangma}" for="dangnoidungkhongphuhop">Nội Dung Bài Hát Lăng Mạ Hoặc Kích Động Thù Hận</div>
-                                        </div>
-                                        <div class="itemreport">
-                                            <label class="checkbox">
-                                                <input ng-model="baoluc" type="checkbox" />
-                                            </label>
-                                            <div ng-class="{'activebaocao': baoluc}" for="anhthoathan">Ảnh Bài Hát Bạo Lực Hoặc Phản Cảm</div>
-                                        </div>
-
-                                        <div class="itemreport">
-                                            <label ng-click="showViPhamBaiHat(viphambanquyen)" class="checkbox">
-                                                <input ng-model="viphambanquyen" type="checkbox" />
-                                            </label>
-                                            <div ng-class="{'activebaocao': viphambanquyen}" for="viphambanquyenbaihat">Vi phạm Bản Quyền Bài Hát Của Tôi </div>
-                                        </div>
-                                        <div class="itemreport">
-                                            <label class="checkbox">
-                                                <input ng-model="vandekhac" type="checkbox" />
-                                            </label>
-                                            <div ng-class="{'activebaocao': vandekhac}" for="viphambanquyenbaihat">Vấn Đề Khác</div>
-                                        </div>
-
-
-                                        <div class="action motabaocao">
-                                            <h3 style="margin-bottom:6px;" class="subtitle has-text-weight-bold">Mô tả thêm</h3>
-                                            <textarea ng-model="motabaocao" name="okem1" class="textarea_uploadbaihat textmotathem" rows="8" cols="100">  </textarea>
-                                        </div>
-
-
-                                        <div ng-show="baiHatBanQuyen != null">
-                                            <div>Vi phạm bản quyền bài hát: {{baiHatBanQuyen.tenbaihat}} của bạn</div>
-                                            <div ng-show="baiHatBanQuyen != null" class="baihat_moi_baocao hover_baihat_moi" ng-click="showChonBaiHatViPham = !showChonBaiHatViPham" context-menu="contextMenuBaiHat_BaiHat">
-                                                <div ng-style="{'background-image': 'url(' + baiHatBanQuyen.linkhinhanh + ')'}" animate class="hinh_baihatmoi item">
-
-                                                    <img src="{{baiHatBanQuyen.linkhinhanh}} " hidden style="width: 0; height:0;object-fit:cover" />
-                                                </div>
-                                                <div class="thongtin_baihat_moi">
-                                                    <div class="ten_bai_hat_moi">{{baiHatBanQuyen.tenbaihat}}</div>
-                                                    <div class="ca_si_bai_hat_moi">{{baiHatBanQuyen.casi}}</div>
-                                                </div>
-
-
-                                            </div>
-                                        </div>
-                                        
+                                    <div id="modal-scroll" class="baocao">-->
+        <!--commentitem-->
+        <!--<div class="itemreport">
+                                        <label class="checkbox">
+                                            <input ng-model="noidungkhongphuhop" type="checkbox" />
+                                        </label>
+                                        <div ng-class="{'activebaocao': noidungkhongphuhop}" for="taikhoangiamao">Bài Hát Có Nội Dung Không Phù Hợp</div>
                                     </div>
-                                    <div class="baocaobuton" style="">
-                                        <button ng-click="huyHenGioShow()" style="display: flex; justify-content: center; align-items: center; font-weight: 400; background-color: #ffffff1a; border: 1px solid #ffffff1a; color: rgb(255 255 255); margin: 0 auto;" class="button_create_playlist">Hủy</button>
-
-                                        <button ng-click="baoCao();"  ng-disabled=" !noidungkhongphuhop && !anhthoathan && !noidunglangma && !baoluc && !viphambanquyen && !vandekhac" ng-class="{'disable_button': !noidungkhongphuhop && !anhthoathan && !noidunglangma && !baoluc && !viphambanquyen && !vandekhac}" class="button_create_playlist">Báo Cáo</button>
+                                    <div class="itemreport">
+                                        <label class="checkbox">
+                                            <input ng-model="anhthoathan" type="checkbox" />
+                                        </label>
+                                        <div ng-class="{'activebaocao': anhthoathan}" for="tengiamao">Ảnh Bài Hát Khỏa Thân</div>
                                     </div>
-                                </div>
+                                    <div class="itemreport">
+                                        <label class="checkbox">
+                                            <input ng-model="noidunglangma" type="checkbox" />
+                                        </label>
+                                        <div ng-class="{'activebaocao': noidunglangma}" for="dangnoidungkhongphuhop">Nội Dung Bài Hát Lăng Mạ Hoặc Kích Động Thù Hận</div>
+                                    </div>
+                                    <div class="itemreport">
+                                        <label class="checkbox">
+                                            <input ng-model="baoluc" type="checkbox" />
+                                        </label>
+                                        <div ng-class="{'activebaocao': baoluc}" for="anhthoathan">Ảnh Bài Hát Bạo Lực Hoặc Phản Cảm</div>
+                                    </div>
 
-                            </div>
-                        </div>
-
-                    </div>
-                </div>
-            </div>
-            @*bài hát người dung*@
-
-        </div>
-        <div class="zm-portal-modal" ng-show="showChonBaiHatViPham  ">
-            <div class="modal_comment is-active">
-                <div class="modal-background" style="color:#fff;">
-                    <div class="">
-                        <div class="comment-content">
-                            <div class="header_comment">
-                                <h3 class="title">Vi Phạm Bản Quyền Bài Hát</h3>
-                                <button ng-click="doiBaiHatBanQuyen()" style=" background-color: inherit; color:#fff;" class="zm-btn-comment zm-tooltip-btn is-hover-circle button" tabindex="0"><span class="material-icons-outlined">close</span></button>
-                            </div>
-                            <div class="action"><h3 style="margin-left:20px" class="subtitle has-text-weight-bold">Chọn Bài Hát Vi Phạm Bản Quyền Của Bạn</h3><div>Nếu bạn nhận thấy ai đó đang gặp nguy hiểm, đừng chần chừ mà hãy tìm ngay sự giúp đỡ trước khi báo cáo với TMusic.</div></div>
-                            <div class="mar-t-10 comment-list">
-                                <div style="position: relative; overflow: hidden; width: 100%; height: 100%;">
-
-
-                                    <div id="modal-scroll" style="height:62vh;" class="baocao">
-                                        <!--commentitem-->
+                                    <div class="itemreport">
+                                        <label ng-click="showViPhamBaiHat(viphambanquyen)" class="checkbox">
+                                            <input ng-model="viphambanquyen" type="checkbox" />
+                                        </label>
+                                        <div ng-class="{'activebaocao': viphambanquyen}" for="viphambanquyenbaihat">Vi phạm Bản Quyền Bài Hát Của Tôi </div>
+                                    </div>
+                                    <div class="itemreport">
+                                        <label class="checkbox">
+                                            <input ng-model="vandekhac" type="checkbox" />
+                                        </label>
+                                        <div ng-class="{'activebaocao': vandekhac}" for="viphambanquyenbaihat">Vấn Đề Khác</div>
+                                    </div>
 
 
-                                        <div ng-repeat="x in listBaiHatDaTaiLen" class="baihat_moi_baocao hover_baihat_moi   "  ng-click="chonBaiHatViPhamBanQuyen(x)" context-menu="contextMenuBaiHat_BaiHat" >
-                                            <div ng-style="{'background-image': 'url(' + x.linkhinhanh + ')'}" animate class="hinh_baihatmoi item">
-                                                
-                                                <img src="{{x.linkhinhanh}} " hidden style="width: 0; height:0;object-fit:cover" />
+                                    <div class="action motabaocao">
+                                        <h3 style="margin-bottom:6px;" class="subtitle has-text-weight-bold">Mô tả thêm</h3>
+                                        <textarea ng-model="motabaocao" name="okem1" class="textarea_uploadbaihat textmotathem" rows="8" cols="100">  </textarea>
+                                    </div>
+
+
+                                    <div ng-show="baiHatBanQuyen != null">
+                                        <div>Vi phạm bản quyền bài hát: {{baiHatBanQuyen.tenbaihat}} của bạn</div>
+                                        <div ng-show="baiHatBanQuyen != null" class="baihat_moi_baocao hover_baihat_moi" ng-click="showChonBaiHatViPham = !showChonBaiHatViPham" context-menu="contextMenuBaiHat_BaiHat">
+                                            <div ng-style="{'background-image': 'url(' + baiHatBanQuyen.linkhinhanh + ')'}" animate class="hinh_baihatmoi item">
+
+                                                <img src="{{baiHatBanQuyen.linkhinhanh}} " hidden style="width: 0; height:0;object-fit:cover" />
                                             </div>
                                             <div class="thongtin_baihat_moi">
-                                                <div class="ten_bai_hat_moi">{{x.tenbaihat}}</div>
-                                                <div class="ca_si_bai_hat_moi">{{x.casi}}</div>
+                                                <div class="ten_bai_hat_moi">{{baiHatBanQuyen.tenbaihat}}</div>
+                                                <div class="ca_si_bai_hat_moi">{{baiHatBanQuyen.casi}}</div>
                                             </div>
 
 
                                         </div>
                                     </div>
-                                
+
+                                </div>
+                                <div class="baocaobuton" style="">
+                                    <button ng-click="huyHenGioShow()" style="display: flex; justify-content: center; align-items: center; font-weight: 400; background-color: #ffffff1a; border: 1px solid #ffffff1a; color: rgb(255 255 255); margin: 0 auto;" class="button_create_playlist">Hủy</button>
+
+                                    <button ng-click="baoCao();" ng-disabled=" !noidungkhongphuhop && !anhthoathan && !noidunglangma && !baoluc && !viphambanquyen && !vandekhac" ng-class="{'disable_button': !noidungkhongphuhop && !anhthoathan && !noidunglangma && !baoluc && !viphambanquyen && !vandekhac}" class="button_create_playlist">Báo Cáo</button>
+                                </div>
+                            </div>
+
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+        </div>-->
+        @*bài hát người dung*@
+
+    </div>
+    <div ng-baocao></div>
+    @*<div class="zm-portal-modal" ng-show="showChonBaiHatViPham  ">
+        <div class="modal_comment is-active">
+            <div class="modal-background" style="color:#fff;">
+                <div class="">
+                    <div class="comment-content">
+                        <div class="header_comment">
+                            <h3 class="title">Vi Phạm Bản Quyền Bài Hát</h3>
+                            <button ng-click="doiBaiHatBanQuyen()" style=" background-color: inherit; color:#fff;" class="zm-btn-comment zm-tooltip-btn is-hover-circle button" tabindex="0"><span class="material-icons-outlined">close</span></button>
+                        </div>
+                        <div class="action"><h3 style="margin-left:20px" class="subtitle has-text-weight-bold">Chọn Bài Hát Vi Phạm Bản Quyền Của Bạn</h3><div>Nếu bạn nhận thấy ai đó đang gặp nguy hiểm, đừng chần chừ mà hãy tìm ngay sự giúp đỡ trước khi báo cáo với TMusic.</div></div>
+                        <div class="mar-t-10 comment-list">
+                            <div style="position: relative; overflow: hidden; width: 100%; height: 100%;">
+
+
+                                <div id="modal-scroll" style="height:62vh;" class="baocao">
+                                    commentitem
+
+
+                                    <div ng-repeat="x in listBaiHatDaTaiLen" class="baihat_moi_baocao hover_baihat_moi   " ng-click="chonBaiHatViPhamBanQuyen(x)" context-menu="contextMenuBaiHat_BaiHat">
+                                        <div ng-style="{'background-image': 'url(' + x.linkhinhanh + ')'}" animate class="hinh_baihatmoi item">
+
+                                            <img src="{{x.linkhinhanh}} " hidden style="width: 0; height:0;object-fit:cover" />
+                                        </div>
+                                        <div class="thongtin_baihat_moi">
+                                            <div class="ten_bai_hat_moi">{{x.tenbaihat}}</div>
+                                            <div class="ca_si_bai_hat_moi">{{x.casi}}</div>
+                                        </div>
+
+
+                                    </div>
                                 </div>
 
                             </div>
-                        </div>
 
+                        </div>
                     </div>
+
                 </div>
             </div>
-            @*bài hát người dung*@
+        </div>*@
+    @*bài hát người dung*@
+
+</div>
+<div ng-thongbao></div>
+@*<div class="zm-portal-modal" ng-show="thongBao.length > 0">
+    <div style=" margin-left: 82px;" class="modal_comment is-active">
+        <div class="modal-background" style="color:#fff;">
+            <div class="">
+                <div style="margin-bottom:10px;" class="comment-content">
+                    <div class="header_comment">
+                        <h3 class="title">Thông Báo</h3>
+                    </div>
+                    <div class="titlethongbao" style=" padding-bottom: 20px;">
+                        <h3 style="margin-left:20px;margin: 0 25px;" class="subtitle has-text-weight-bold">{{thongBao}}</h3>
+                    </div>
+
+                    <button style=" width: 90px; position: relative; left: 42%;" ng-click="showThongBao()" class="button_create_playlist">Xác Nhận</button>
+
+                </div>
+
+            </div>
+        </div>
+    </div>*@
+@*bài hát người dung*@
 
         </div>
+
 
     </div>
 

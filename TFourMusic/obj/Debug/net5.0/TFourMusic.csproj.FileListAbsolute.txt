@@ -313,3 +313,4 @@ C:\Users\ad\Desktop\file delete đô an\16-08-21\8.7.2021\TFourMusic\TFourMusic\
 C:\Users\ad\Desktop\file delete đô an\16-08-21\8.7.2021\TFourMusic\TFourMusic\TFourMusic\bin\Debug\net5.0\MailKit.dll
 C:\Users\ad\Desktop\file delete đô an\16-08-21\8.7.2021\TFourMusic\TFourMusic\TFourMusic\bin\Debug\net5.0\MimeKit.dll
 C:\Users\ad\Desktop\file delete đô an\16-08-21\8.7.2021\TFourMusic\TFourMusic\TFourMusic\obj\Debug\net5.0\TFourMusic.csprojAssemblyReference.cache
+C:\Users\ad\Desktop\file delete đô an\16-08-21\8.7.2021\TFourMusic\TFourMusic\TFourMusic\obj\Debug\net5.0\Razor\Areas\Admin\Views\BaoCaoViPham\Index.cshtml.g.cs

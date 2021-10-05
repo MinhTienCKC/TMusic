@@ -19,6 +19,7 @@
                         <th scope="col" class="border-0">Tên Bài Hát</th>
                         <th scope="col" class="border-0"> Ca Sĩ</th>
                         <th scope="col" class="border-0"> Hình Ảnh</th>
+                        <th scope="col" class="border-0"> Thời Gian Xóa</th>
                         <!--<th scope="col" class="border-0">Chế Độ</th>-->
                         <th scope="col" class="border-0">Khôi Phục</th>
                         <th scope="col" class="border-0">Xóa Vĩnh Viễn</th>
@@ -31,6 +32,7 @@
                         <td style=" padding: 1.3em 0.3em 0.3em 0.3em;"><span class="chinhsua">{{data.tenbaihat}}</span></td>
                         <td style=" padding: 1.3em 0.3em 0.3em 0.3em;"><span class="chinhsua">{{data.casi}}</span></td>
                         <td><img src="{{data.linkhinhanh}}" class="icon-category hinhanh"></td>
+                        <td style=" padding: 1.3em 0.3em 0.3em 0.3em;"><span class="chinhsua">{{data.thoigianxoa | date:'dd/MM/yyyy '}}</span></td>
                         <td style=" padding: 1.3em 0.3em 0.3em 0.3em;"><span class="chinhsua"> <button ng-click="khoiPhucBaiHat(data,$index)" class="package__btnthem"><i class="fa fa-reply"></i></button></span></td>
                         <td style=" padding: 1.3em 0.3em 0.3em 0.3em;"><span class="chinhsua"> <button ng-click="xoaBaiHat(data,$index)" class="package__btnthem"><i class="fa fa-plus"></i></button></span></td>
                     </tr>
