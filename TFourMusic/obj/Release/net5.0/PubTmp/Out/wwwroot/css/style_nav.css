@@ -2,6 +2,9 @@
     --sidebar-bg: #411465;
     --border-primary: #6c696e;
     --header: #37075D;
+    -webkit-user-select: none; /* Safari */
+    -ms-user-select: none; /* IE 10 and IE 11 */
+    user-select: none; /* Standard syntax */
 }
 
 .zm-sidebar {
@@ -21,6 +24,9 @@ html {
     width: 1200px;
     max-width: 100%;
     font-family: 'Inter';
+    -webkit-user-select: none; /* Safari */
+    -ms-user-select: none; /* IE 10 and IE 11 */
+    user-select: none; /* Standard syntax */
 }
 /* greek-ext */
 @font-face {
@@ -70,7 +76,8 @@ html {
     /* margin-left: 5px; */
     margin-bottom: 5%;
     height: 100%;
-    background-image: url(/image/logo.png);
+    /*background-image: url(/image/logo.png);*/
+    background-image: url('../image/logo (2).png');
     background-repeat: no-repeat;
     background-size: 59%;
     border-radius: 0;
@@ -358,7 +365,7 @@ section .loader span{
 }
 
 .login_or_gg {
-    font-size: 25px;
+   /* font-size: 25px;*/
     /* color: #3b5998; */
     display: -moz-box;
     display: -ms-flexbox;
@@ -921,11 +928,123 @@ section .loader span{
     font-weight: 900;
     font-family: "SFCompactDisplay", -apple-system, BlinkMacSystemFont, "Segoe UI", "Roboto", "Oxygen", "Ubuntu", "Cantarell", "Fira Sans", "Droid Sans", "Helvetica Neue", sans-serif;
 }
+.icon_play_cshtml {
+    position: absolute;
+    z-index: 5;
+    /* margin: auto; */
+    font-size: 20px;
+    color: #fff;
+    top: 12px;
+    left: 24px;
+}
 
 .tao_playlist_layout_nangcapvip {
     z-index: 1000000;
     /* background-color: hsl(0deg 0% 0% / 80%); */
     /* display: none;*/
+    justify-content: center;
+    align-items: center;
+    position: fixed;
+    top: 30%;
+    left: 40%;
+    width: auto;
+    height: auto;
+}
+.animate {
+    -webkit-transition: 50ms cubic-bezier(0.250, 0.250, 0.750, 0.750) all;
+    -moz-transition: 50ms cubic-bezier(0.250, 0.250, 0.750, 0.750) all;
+    -ms-transition: 50ms cubic-bezier(0.250, 0.250, 0.750, 0.750) all;
+    -o-transition: 50ms cubic-bezier(0.250, 0.250, 0.750, 0.750) all;
+    transition: 50ms cubic-bezier(0.250, 0.250, 0.750, 0.750) all;
+    position: relative;
+    transition: 0.5s linear all;
+}
+
+    .animate.ng-leave.ng-leave-active,
+    .animate.ng-enter {
+        -webkit-transform: rotateX(60deg) rotateZ(60deg);
+        -moz-transform: rotateX(60deg) rotateZ(60deg);
+        -ms-transform: rotateX(60deg) rotateZ(60deg);
+        -o-transform: rotateX(60deg) rotateZ(60deg);
+        transform: rotateX(60deg) rotateZ(60deg);
+        transform: translateX(50%);
+        transform: translateY(50%);
+        opacity: 0;
+    }
+
+        .animate.ng-enter.ng-enter-active,
+        .animate.ng-leave {
+            -webkit-transform: rotateX(0deg) rotateZ(0deg);
+            -moz-transform: rotateX(0deg) rotateZ(0deg);
+            -ms-transform: rotateX(0deg) rotateZ(0deg);
+            -o-transform: rotateX(0deg) rotateZ(0deg);
+            transform: rotateX(0deg) rotateZ(0deg);
+        
+            opacity: 1;
+        }
+.animate-enter,
+.animate-leave {
+    -webkit-transition: 600ms cubic-bezier(0.250, 0.500, 0.750, 1) all;
+    -moz-transition: 600ms cubic-bezier(0.250, 0.500, 0.750, 1) all;
+    -ms-transition: 600ms cubic-bezier(0.250, 0.500, 0.750, 1) all;
+    -o-transition: 600ms cubic-bezier(0.250, 0.500, 0.750, 1) all;
+    transition: 600ms cubic-bezier(0.250, 0.500, 0.750, 1) all;
+    position: relative;
+    display: block;
+}
+
+    .animate-leave.animate-leave-active,
+    .animate-enter {
+        -webkit-transform: rotateX(45deg) rotateZ(45deg);
+        -moz-transform: rotateX(45deg) rotateZ(45deg);
+        -ms-transform: rotateX(45deg) rotateZ(45deg);
+        -o-transform: rotateX(45deg) rotateZ(45deg);
+        transform: rotateX(45deg) rotateZ(45deg);
+        opacity: 0;
+        height: 0px;
+    }
+
+        .animate-enter.animate-enter-active,
+        .animate-leave {
+            -webkit-transform: rotateX(0deg) rotateZ(0deg);
+            -moz-transform: rotateX(0deg) rotateZ(0deg);
+            -ms-transform: rotateX(0deg) rotateZ(0deg);
+            -o-transform: rotateX(0deg) rotateZ(0deg);
+            transform: rotateX(0deg) rotateZ(0deg);
+            opacity: 1;
+            height: 30px;
+        }
+
+
+
+        .playmusicanimate.ng-enter{
+            transition: 2s;
+            transform:scale3d(45deg);
+            position:fixed;
+            height:50px;
+            width:50px;
+            z-index:99999;
+        }
+.slide.ng-animate {
+    transition: 5s;
+}
+.slide.ng-enter {
+    transition: 0.5s linear all;
+    transform: translateY(-100px);
+}
+
+    .slide.ng-enter.ng-enter-active {
+        transform: translateY(0);
+    }
+.modal_content_xacthuc {
+    width: 370px;
+    text-align: center;
+    color: #fff;
+    padding: 15px;
+}
+.tao_playlist_layout_xacthuc {
+    z-index: 6;
+    /* background-color: hsl(0deg 0% 0% / 80%); */
     justify-content: center;
     align-items: center;
     position: fixed;

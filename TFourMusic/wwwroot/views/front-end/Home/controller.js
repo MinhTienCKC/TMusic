@@ -535,7 +535,7 @@ app.directive('ngTemplate', function () {
 app.directive('ngLogin', function () {
 
     return {
-        template: `<div class="row login_form" style="outline:none;" ng-show="closelogin" ng-init="model.ngaysinh = '2020-01-06'">
+        template: `<div class="row login_form" style="outline:none;" ng-show="closelogin" ng-init="model.ngaysinh = '2020-01-01'">
             <div class="col-md-6 mx-auto p-0">
                 <div class="card">
                     <div class="login-box">
@@ -1109,9 +1109,9 @@ app.controller('Ctrl_ESEIM', function ($scope, dataservice, $uibModal, $rootScop
     let curr_time = document.getElementById("process__start_time");
     let total_duration = document.getElementById("process__end_time");
     let audio = document.createElement("audio");
-    var idBaiHatDangNghe;
+   
     let timeOutCongLuotNghe;
-
+    var idBaiHatDangNghe = "";
     $rootScope.BaiHatDangPhat;
     $rootScope.kiemTraBaiHatDangPhat = '';//  23.7.2021 biến này để lưu id bài hát khi phát nhạc để check vị trí bài hát đang phát
     $scope.closeloginAccount = function () {
@@ -1462,7 +1462,7 @@ app.controller('Ctrl_ESEIM', function ($scope, dataservice, $uibModal, $rootScop
         $scope.playmusic = 0;
         $scope.show = 0;
         $scope.sttmusic = 0;
-
+       
         var progress = document.getElementById("progress");
         $scope.lickPlaylist = false;
         const $ = document.querySelector.bind(document);
@@ -1586,8 +1586,6 @@ app.controller('Ctrl_ESEIM', function ($scope, dataservice, $uibModal, $rootScop
 
                 })
                 promise.then(function () {
-
-
                     timeOutCongLuotNghe = $timeout(function () {
                         dataservice.themLuotNghe(idBaiHatDangNghe, function (rs) {
                             rs = rs.data;
@@ -1800,7 +1798,7 @@ app.controller('Ctrl_ESEIM', function ($scope, dataservice, $uibModal, $rootScop
             }
             else {
                 $rootScope.thongBao = "Tài khoản của bạn đã đạt giới hạn dung lượng lưu trữ bài hát, vui lòng nâng cấp vip !!!";
-                $scope.showVip = 1;
+               /* $scope.thongBao = 1;*/
             }
 
         }
@@ -2989,6 +2987,9 @@ app.controller('Ctrl_ESEIM', function ($scope, dataservice, $uibModal, $rootScop
 
             $rootScope.songs = $rootScope.songs.concat(bh);
         }
+        if ($rootScope.songs.length == 1) {
+            $scope.loaddefaultmusic(0);
+        }
     }
     // thêm bài hát vào hát tiếp theo
     $scope.themBaiHatVaoPhatTiepTheo = function (bh) {
@@ -3125,6 +3126,9 @@ app.controller('Ctrl_ESEIM', function ($scope, dataservice, $uibModal, $rootScop
         }
         $scope.text.key = id_dsp_theloai;
         $rootScope.kiemTraDSPTLClick = id_dsp_theloai;
+        $rootScope.kiemTraDSPNguoiDungClick = "";
+        $rootScope.kiemTraDSPTop20Click = "";
+
         dataservice.taiDSPBaiHatTheoDSPTheLoai_DSP($scope.text, function (rs) {
             rs = rs.data;
             $scope.taiDSPBaiHatTheoDSPTheLoai_DSP = rs;
@@ -3143,6 +3147,9 @@ app.controller('Ctrl_ESEIM', function ($scope, dataservice, $uibModal, $rootScop
         }
         $scope.text.key = id_dsp_top20;
         $rootScope.kiemTraDSPTop20Click = id_dsp_top20;
+        $rootScope.kiemTraDSPNguoiDungClick = "";
+        $rootScope.kiemTraDSPTLClick = "";
+
         dataservice.taiDSPBaiHatTheoDSPTop20_DSPTop20($scope.text, function (rs) {
             rs = rs.data;
             $scope.taiDSPBaiHatTheoDSPTop20_DSPTop20 = rs;
@@ -3168,6 +3175,10 @@ app.controller('Ctrl_ESEIM', function ($scope, dataservice, $uibModal, $rootScop
         }
         $scope.text.key = data.id;
         $rootScope.kiemTraDSPNguoiDungClick = data.id;
+        $rootScope.kiemTraDSPTop20Click = "";
+        $rootScope.kiemTraDSPTLClick = "";
+
+
         $scope.modelChiTietPlayList.dspnguoidung_id = data.id;
         $scope.modelChiTietPlayList.nguoidung_id = data.nguoidung_id;
         dataservice.taiDSBaiHatTheoDSPNguoiDung_PlayList($scope.modelChiTietPlayList, function (rs) {
@@ -4830,7 +4841,7 @@ app.directive("animate", function () {
                     })
                     .removeClass()
                     .css({
-                        'opacity': '0.7',
+                        'opacity': '0.9',
                         'position': 'absolute',
                         'height': '80px  ',
                         'width': '80px',
@@ -4844,13 +4855,13 @@ app.directive("animate", function () {
                         'left': cart.offset().left + 10,
                         'width': 80,
                         'height': 80
-                    }, 2000, 'easeInOutExpo');
+                    }, 3000, 'easeInOutExpo');
 
                 setTimeout(function () {
                     cart.effect("shake", {
                         times: 2
                     }, 200);
-                }, 1500);
+                }, 2000);
 
                 imgclone.animate({
                     'width': 0,

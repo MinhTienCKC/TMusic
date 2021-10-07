@@ -93,17 +93,29 @@ app.controller('index', function ($rootScope, $scope, dataservice) {
 
     };
     firebase.initializeApp(config);
-       //const storageRef = firebase.storage().ref();
-        //var desertRef = storageRef.child('image/chude/(ChuDe)962021104052160');
+    //var storage = firebase.storage();
+    //var fileUrl =
+    //    'https://firebasestorage.googleapis.com/v0/b/tfourmusic-1e3ff.appspot.com/o/image%2Fnguoidung%2Fimages.png?alt=media&token=7ce24768-7525-43d6-b6a1-4523e11f9118';
 
-        //// Delete the file
-        //desertRef.delete().then(() => {
-        //    alert("Thành công");
-        //}).catch((error) => {
-        //    // Uh-oh, an error occurred!
-        //});
+    //// Create a reference to the file to delete
+    //var fileRef = storage.refFromURL(fileUrl);
+    //fileRef.delete().then(function () {
+
+    //    alert("Thành công");
+    //}).catch(function (error) {
+    //    // Some Error occurred
+    //});
+    //   const storageRef = firebase.storage().ref();
+    //var desertRef = storageRef.child('music/admin/Hanh-Phuc-Cuoi-Cung-Truong-Viet-Thai.mp3');
+
+    //    // Delete the file
+    //    desertRef.delete().then(() => {
+    //        alert("Thành công");
+    //    }).catch((error) => {
+    //        // Uh-oh, an error occurred!
+    //    });
     const user = firebase.auth().currentUser;
-    var storage = firebase.storage();
+ 
     var audio = document.getElementById('okokok');
     $scope.downLoad = function () {
 
@@ -140,7 +152,12 @@ app.controller('index', function ($rootScope, $scope, dataservice) {
 
 
     };
-   
+    alertify.set('notifier', 'position', 'bottom-left');
+    $scope.text = function () {
+      
+        alertify.success("ok em");
+       
+    }
    // var httpsReference = storage.refFromURL('https://firebasestorage.googleapis.com/v0/b/tfourmusic-1e3ff.appspot.com/o/music%2Fadmin%2Fadmin2462021172920175?alt=media&token=6627b9c3-995b-4c85-bbda-7781fad2e482');
   /*  $uibModal.open({*/
     //    animation: true,

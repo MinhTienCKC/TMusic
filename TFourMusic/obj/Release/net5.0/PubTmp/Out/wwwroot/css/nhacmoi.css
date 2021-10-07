@@ -90,7 +90,10 @@
     line-height: 0;
     border-radius: 4px;
     overflow: hidden;
+    width: 580px;
     padding-bottom: 29%;
+    height: 170px;
+}
     .zm-carousel-control-prev.zm-disabled
 
 {
@@ -131,7 +134,7 @@
     cursor: pointer;
 }
 /*    height: 0;*/
-}
+
 /*chitiettheoai*/
 /*zingchat*/
 .select-item:hover {
@@ -1234,13 +1237,21 @@ a, a.active, a:hover {
 }
 
 .zm-card-content .title a {
-    display: -webkit-box;
+   /* display: -webkit-box;
     -webkit-line-clamp: 2;
     -webkit-box-orient: vertical;
     font-weight: 500;
     text-align: left;
     text-transform: capitalize;
+    margin: 8px 0 3px;*/
+    display: -webkit-box;
+    -webkit-line-clamp: 2;
+    -webkit-box-orient: vertical;
+    font-weight: 700;
+    text-align: left;
+    text-transform: capitalize;
     margin: 8px 0 3px;
+    font-size: 15px;
 }
 
 .zm-card-content .subtitle {
@@ -2079,7 +2090,7 @@ img, video {
     }
 
         .group-button-menu .group-button-list .zm-btn {
-            height: 49.6px;
+            /* height: 49.6px;
             display: flex;
             flex: 1 1;
             flex-direction: column;
@@ -2088,7 +2099,17 @@ img, video {
             padding: 8px 0;
             font-size: 10px;
             max-width: 80px;
-            line-height: 14px;
+            line-height: 14px;*/
+            height: 49.6px;
+            display: flex;
+            flex: 1 1;
+            flex-direction: column;
+            align-items: center;
+            border-radius: 8px;
+            padding: 10px 0;
+            font-size: 11px;
+            max-width: 125px;
+            line-height: 25px;
         }
 
 .zm-btn {
@@ -2288,6 +2309,7 @@ img, video {
     .add-playlist-content .playlist-container .content {
         overflow-y: scroll;
         height: 180px;
+      
     }
  
     /*   .add-playlist-content .playlist-container .content {
@@ -2415,7 +2437,7 @@ h1.title, h3.title {
 }
 .xoayHinh {
     -webkit-animation-name: spin;    
-     -webkit-animation-duration: 12s; 
+     -webkit-animation-duration: 6s; 
      -webkit-animation-iteration-count: infinite; 
      border-radius:50% !important;
 }
@@ -2442,4 +2464,179 @@ h1.title, h3.title {
     text-align: center;
     cursor: pointer;
     position: relative;
+}
+
+.loadding_thanhtoan {
+    background-image: url(https://firebasestorage.googleapis.com/v0/b/tfourmusic-1e3ff.appspot.com/o/image%2Fvip%2Floading.gif?alt=media&token=ce706dd4-fa04-46d9-abd0-f1a0ee2a8cb7);
+    width: 80px;
+    background-position: center;
+    background-repeat: no-repeat;
+    height: 80px;
+    background-size: 80px;
+    position: absolute;
+    top: 40%;
+    left: 45%;
+    /*  z-index: 9990;*/
+}
+.manche_loadding {
+    background-image: url(https://zmp3-static.zadn.vn/skins/zmp3-v6.1/images/theme-background/eiffel.jpg);
+    height: 100%;
+    width: 100%;
+    height: 100%;
+    position: fixed;
+    display:flex;
+    justify-content:center;
+    top: 0;
+    z-index: 10010;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    opacity: 85%;
+}
+/*10/08 bình luận bài hát*/
+/*.comment-content {
+    width: 610px;
+}
+    .comment-content .headerbl {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        border-bottom: 1px solid hsla(0,0%,100%,0.1);
+        margin-bottom: 10px;
+        padding-bottom: 10px;
+    }
+        .comment-content .headerbl .title {
+            margin-bottom: 0;
+        }
+    .comment-content .action {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+    }
+.subtitle {
+    color: hsla(0,0%,100%,0.5);
+}
+.comment-content .comment-list {
+    height: 65vh;
+}
+.comment-content .comment-item {
+    align-items: flex-start;
+    padding: 10px 0;
+    -webkit-user-select: text;
+    -ms-user-select: text;
+    user-select: text;
+}
+.media-content {
+    flex-basis: auto;
+    flex-grow: 1;
+    flex-shrink: 1;
+    text-align: left;
+    align-self: center;
+    width: 0;
+}
+.comment-content .comment-item .username {
+    font-weight: 500;
+    margin-bottom: 5px;
+}
+.comment-content .comment-item .reactions {
+    margin: 5px 0 10px;
+    display: flex;
+    color: var(--text-secondary);
+    -webkit-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
+}
+    .comment-content .comment-item .reactions .item {
+        margin-right: 10px;
+    }
+.comment-content .noti-message {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background-color: var(--alpha-bg);
+    margin-top: 20px;
+    font-size: 12px;
+    color: var(--text-secondary);
+    padding: 12px;
+    border-radius: 4px;
+}
+    .comment-content .noti-message .icon {
+        margin-right: 8px;
+        font-size: 16px;
+    }*/
+
+
+/*chude*/
+.chudehinh {
+    width: 280px;
+    height: 180px;
+    margin: 0px 27px 0px 0px;
+}
+.chudegigure {
+    height: 150px;
+}
+.imgchude {
+    object-fit: cover;
+    height: 100%;
+    width: 100%;
+    border-radius: 20px;
+}
+.chiacotchude {
+    height: 100%;
+    width: 1230px;
+    /* width: 101%; */
+    splay: flex;
+    flex-wrap: wrap;
+    display: flex;
+  
+}
+.tieudechude {
+    position: relative;
+    left: 0%;
+    /* top: 58%; */
+    /* display: block; */
+    /* position: absolute; */
+    /* padding: 0px; */
+    /* z-index: 100; */
+    top: -60px;
+}
+.mauchuchude {
+    text-align: center;
+    color: white;
+}
+.dinhchu{
+    position: relative;
+    height: 0;
+    padding-bottom: 53%;
+    border-radius: 8px;
+    overflow: hidden;
+  /*  box-shadow: 0 2px 24px 0 rgb(0 0 0 / 9%);*/
+}
+.title1 {
+    color: white;
+    font-size: 20px;
+    line-height: normal;
+    text-shadow: 0 2px 5px rgb(0 0 0 / 30%);
+}
+.bongmochude {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+    position: relative;
+    top: -64px;
+    left: 0;
+    width: 100%;
+    height: 64px;
+    opacity: 100%;
+    /* background: black; */
+    background: linear-gradient( 285deg,hsla(0,0%,101%,1), #37075d, transparent);
+    border-bottom-right-radius: 20px;
+}
+.imgchude:hover {
+    transform: scale(1.1) translateZ(0);
+    border-radius: 30px;
+    /* border: 50px; */
+    border-bottom-right-radius: 55px;
+    width: 95.1%;
 }

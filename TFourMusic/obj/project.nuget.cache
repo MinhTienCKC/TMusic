@@ -1,6 +1,6 @@
 {
   "version": 2,
-  "dgSpecHash": "7p3w6X/PAmUmsQlM5PddR4pAULtrASmsiWVCAfof40YiE/7zOe5cLeuOHx6YEoOMw7RBOefJZjC3KCr194haAw==",
+  "dgSpecHash": "YHVu+6jxwlE/LNzZHvpRdtRHq4a6YMAeCE9aXluK2wlZZyNHkyMO/ChaGvFbdl+Bt7PfVTLIIp1Hi8m3cbIjDQ==",
   "success": true,
   "projectFilePath": "C:\\Users\\ad\\Desktop\\file delete đô an\\16-08-21\\8.7.2021\\TFourMusic\\TFourMusic\\TFourMusic\\TFourMusic.csproj",
   "expectedPackageFiles": [
@@ -48,7 +48,9 @@
     "C:\\Users\\ad\\.nuget\\packages\\microsoft.net.http\\2.2.28\\microsoft.net.http.2.2.28.nupkg.sha512",
     "C:\\Users\\ad\\.nuget\\packages\\microsoft.netcore.platforms\\3.1.0\\microsoft.netcore.platforms.3.1.0.nupkg.sha512",
     "C:\\Users\\ad\\.nuget\\packages\\microsoft.netcore.targets\\1.1.0\\microsoft.netcore.targets.1.1.0.nupkg.sha512",
+    "C:\\Users\\ad\\.nuget\\packages\\microsoft.web.administration\\11.1.0\\microsoft.web.administration.11.1.0.nupkg.sha512",
     "C:\\Users\\ad\\.nuget\\packages\\microsoft.win32.primitives\\4.3.0\\microsoft.win32.primitives.4.3.0.nupkg.sha512",
+    "C:\\Users\\ad\\.nuget\\packages\\microsoft.win32.registry\\4.0.0\\microsoft.win32.registry.4.0.0.nupkg.sha512",
     "C:\\Users\\ad\\.nuget\\packages\\microsoft.win32.systemevents\\4.7.0\\microsoft.win32.systemevents.4.7.0.nupkg.sha512",
     "C:\\Users\\ad\\.nuget\\packages\\mimekit\\2.15.0\\mimekit.2.15.0.nupkg.sha512",
     "C:\\Users\\ad\\.nuget\\packages\\morelinq\\3.3.2\\morelinq.3.3.2.nupkg.sha512",
@@ -86,6 +88,7 @@
     "C:\\Users\\ad\\.nuget\\packages\\system.diagnostics.debug\\4.3.0\\system.diagnostics.debug.4.3.0.nupkg.sha512",
     "C:\\Users\\ad\\.nuget\\packages\\system.diagnostics.diagnosticsource\\5.0.1\\system.diagnostics.diagnosticsource.5.0.1.nupkg.sha512",
     "C:\\Users\\ad\\.nuget\\packages\\system.diagnostics.tools\\4.3.0\\system.diagnostics.tools.4.3.0.nupkg.sha512",
+    "C:\\Users\\ad\\.nuget\\packages\\system.diagnostics.tracesource\\4.0.0\\system.diagnostics.tracesource.4.0.0.nupkg.sha512",
     "C:\\Users\\ad\\.nuget\\packages\\system.diagnostics.tracing\\4.3.0\\system.diagnostics.tracing.4.3.0.nupkg.sha512",
     "C:\\Users\\ad\\.nuget\\packages\\system.drawing.common\\4.7.0\\system.drawing.common.4.7.0.nupkg.sha512",
     "C:\\Users\\ad\\.nuget\\packages\\system.globalization\\4.3.0\\system.globalization.4.3.0.nupkg.sha512",
@@ -131,6 +134,7 @@
     "C:\\Users\\ad\\.nuget\\packages\\system.security.cryptography.x509certificates\\4.3.0\\system.security.cryptography.x509certificates.4.3.0.nupkg.sha512",
     "C:\\Users\\ad\\.nuget\\packages\\system.security.permissions\\4.5.0\\system.security.permissions.4.5.0.nupkg.sha512",
     "C:\\Users\\ad\\.nuget\\packages\\system.security.principal.windows\\4.5.0\\system.security.principal.windows.4.5.0.nupkg.sha512",
+    "C:\\Users\\ad\\.nuget\\packages\\system.serviceprocess.servicecontroller\\4.1.0\\system.serviceprocess.servicecontroller.4.1.0.nupkg.sha512",
     "C:\\Users\\ad\\.nuget\\packages\\system.text.encoding\\4.3.0\\system.text.encoding.4.3.0.nupkg.sha512",
     "C:\\Users\\ad\\.nuget\\packages\\system.text.encoding.codepages\\4.4.0\\system.text.encoding.codepages.4.4.0.nupkg.sha512",
     "C:\\Users\\ad\\.nuget\\packages\\system.text.encoding.extensions\\4.3.0\\system.text.encoding.extensions.4.3.0.nupkg.sha512",

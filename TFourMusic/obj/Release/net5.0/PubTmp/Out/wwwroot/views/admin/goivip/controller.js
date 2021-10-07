@@ -1,33 +1,30 @@
-﻿var ctxfolderurl = "/views/admin/goiVip";
+﻿var ctxfolderurl = "/views/admin/GoiVip";
 
 var app = angular.module('T_Music', ["ui.bootstrap", "ngRoute"]);
 //var app = angular.module('T_Music', ["ui.bootstrap", "ngRoute", "ngValidate", "datatables", "datatables.bootstrap", 'datatables.colvis', "ui.bootstrap.contextMenu", 'datatables.colreorder', 'angular-confirm', "ngJsTree", "treeGrid", "ui.select", "ngCookies", "pascalprecht.translate"])
 app.factory('dataservice', function ($http) {
     return {
-        createGoiVip: function (data, callback) {
-            $http.post('/Admin/GoiVip/CreateGoiVip', data).then(callback);
+        taiGoiVip: function (callback) {
+            $http.post('/Admin/GoiVip/taiGoiVip').then(callback);
         },
-        deletequangcao: function (data, callback) {
-            $http.post('/Admin/GoiVip/DeleteGoiVip', data).then(callback);
+        xoaGoiVip: function (data, callback) {
+            $http.post('/Admin/GoiVip/xoaGoiVip', data).then(callback);
         },
-        editquangcao: function (data, callback) {
-            $http.post('/Admin/GoiVip/EditQuangCao', data).then(callback);
+        suaGoiVip: function (data, callback) {
+            $http.post('/Admin/GoiVip/suaGoiVip', data).then(callback);
         },
-        loadquangcao: function (callback) {
-            $http.post('/Admin/GoiVip/LoadQuangCao').then(callback);
+        suaLinkHinhAnhGoiVip: function (data, callback) {
+            $http.post('/Admin/GoiVip/suaLinkHinhAnhGoiVip', data).then(callback);
 
         },
-        //loadtheloai: function (callback) {
-        //    $http.post('/Admin/ChuDe/LoadTheloai').then(callback);
-
-        //},
-
-
+        taoGoiVip: function (data, callback) {
+            $http.post('/Admin/GoiVip/taoGoiVip', data).then(callback);
+        },
 
         uploadHinhAnh: function (data, callback) {
             $http({
                 method: 'post',
-                url: '/Admin/QuangCao/GetLinkHinhAnh',
+                url: '/Admin/GoiVip/GetLinkHinhAnh',
                 headers: {
                     'Content-Type': undefined
                 },
@@ -57,8 +54,60 @@ app.directive('ngFiles', ['$parse', function ($parse) {
         link: fn_link
     }
 
-}])
+}]);
+app.directive('kiemtraso', function () {
+    function link(scope, elem, attrs, ngModel) {
+        ngModel.$parsers.push(function (viewValue) {
+            var reg = /^[^`~!@#$%\^&*()_+={}|[\]\\:';"<>?,./a-z]*$/;
+            // if view values matches regexp, update model value
+            if (viewValue.match(reg)) {
+                return viewValue;
+            }
+            // keep the model value as it is
+            var transformedValue = ngModel.$modelValue;
+            ngModel.$setViewValue(transformedValue);
+            ngModel.$render();
+            return transformedValue;
+        });
+    }
 
+
+    return {
+        restrict: 'A',
+        require: 'ngModel',
+        link: link
+    };
+});
+app.directive('validatekitudacbiet', function () {
+    function link(scope, elem, attrs, ngModel) {
+        ngModel.$parsers.push(function (viewValue) {
+            var reg = /^[^`~!@#$%\^&*_+={}|[\]\\:';"<>?,./]*$/;
+            // if view values matches regexp, update model value
+            if (viewValue.match(reg)) {
+                return viewValue;
+            }
+            // keep the model value as it is
+            var transformedValue = ngModel.$modelValue;
+            ngModel.$setViewValue(transformedValue);
+            ngModel.$render();
+            return transformedValue;
+        });
+    }
+
+
+    return {
+        restrict: 'A',
+        require: 'ngModel',
+        link: link
+    };
+});
+app.filter('startFrom', function () {
+    return function (input, start) {
+        if (!input || !input.length) { return; }
+        start = +start; //parse to int
+        return input.slice(start);
+    }
+});
 app.config(function ($routeProvider) {
     $routeProvider
         .when('/', {
@@ -70,46 +119,47 @@ app.controller('T_Music', function () {
 
 });
 app.controller('index', function ($rootScope, $scope, dataservice, $uibModal) {
+    $scope.tenbien = 'null';
+    $scope.hoatdong = false;
+    $scope.modelsapxep = 'null';
+    $scope.sapXep = function (data) {
+        $scope.hoatdong = ($scope.tenbien === data) ? !$scope.hoatdong : false;
+        $scope.tenbien = data;
+    }
 
+    $(".nav-noidung").addClass("active");
+    $scope.hienTimKiem = false;
+    $scope.showSearch = function () {
+        if (!$scope.hienTimKiem) {
+            $scope.hienTimKiem = true;
+        } else {
+            $scope.hienTimKiem = false;
+        }
+    }
 
-    //$scope.initData = function () {
-    //    dataservice.loadquangcao(function (rs) {
-
-    //        rs = rs.data;
-    //        $scope.dataloadquangcao = rs;
-
-
-
-    //    });
-
-    //};
-
-    //$scope.initData();
 
     $scope.model = {
         id: '',
-        noidung: '',
-        tenquangcao: '',
-        linkhinhanh: ''
-
+        sothang: 0,
+        tengoivip: '',
+        linkhinhanh: '',
+        giatiengoc: 0,
+        giatiengiamgia: 0,
+        trangthai: 0
     }
     $scope.initData = function () {
 
-        dataservice.loadquangcao(function (rs) {
+        dataservice.taiGoiVip(function (rs) {
 
             rs = rs.data;
-            $scope.dataloadquangcao = rs;
+            $scope.taiGoiVip = rs;
 
-            $scope.q = '';
-
-            $scope.getData = function () {
-
-                return $filter('filter')($scope.dataloadquangcao, $scope.q)
-
-            }
 
             $scope.numberOfPages = function () {
-                return Math.ceil($scope.dataloadquangcao.length / $scope.pageSize);
+                return Math.ceil($scope.taiGoiVip.length / $scope.pageSize);
+            }
+            if ($scope.numberOfPages() < 8) {
+                $scope.soLuong = $scope.numberOfPages();
             }
         });
     };
@@ -128,30 +178,63 @@ app.controller('index', function ($rootScope, $scope, dataservice, $uibModal) {
         $scope.currentPage = data;
     };
 
-
     $scope.currentPage = 0;
     $scope.pageSize = 5;
+    $scope.size = 0;
+    $scope.soLuong = 8;
 
-
-
-    $scope.Prev = function () {
-        if ($scope.currentPage == 0) {
-
-            $scope.currentPage = 0;
+    $scope.Truoc = function () {
+        if ($scope.numberOfPages() < 8) {
+            return;
         }
-        else
+        else {
+            if ($scope.size == 0) {
+                return;
+            } else {
+                $scope.size -= 8;
+                $scope.soLuong = 8
+            }
+            $scope.currentPage = $scope.size;
+        }
 
-            $scope.currentPage = $scope.currentPage - 1;
     }
-    $scope.Next = function () {
-        if ($scope.currentPage < $scope.numberOfPages() - 1) {
-            $scope.currentPage = $scope.currentPage + 1;
+    $scope.Sau = function () {
+        if ($scope.numberOfPages() < 8) {
+            return;
+        }
+        else {
 
-        } else
-            $scope.currentPage = 0;
+            if ($scope.numberOfPages() % 8 == 0) {
+                if ($scope.size + $scope.soLuong >= $scope.numberOfPages())
+                    $scope.size = 0;
+                else {
+                    $scope.size += $scope.soLuong;
+                }
+                $scope.currentPage = $scope.size;
+            }
+            else {
+                $scope.bienTam = $scope.numberOfPages() % 8;
+                $scope.bienTam2 = $scope.numberOfPages() - $scope.bienTam;
+                if ($scope.size + $scope.soLuong == $scope.bienTam2) {
+
+                    $scope.size += 8;
+                    $scope.soLuong = $scope.bienTam;
+                }
+                else if ($scope.size + $scope.soLuong >= $scope.numberOfPages()) {
+                    $scope.size = 0;
+                    $scope.soLuong = 8
+                }
+                else {
+                    $scope.size += 8;
+
+                }
+                $scope.currentPage = $scope.size;
+            }
+        }
+
 
     }
-    $scope.add = function () {
+    $scope.taoGoiVip_index = function () {
 
         var modalInstance = $uibModal.open({
             animation: true,
@@ -168,10 +251,7 @@ app.controller('index', function ($rootScope, $scope, dataservice, $uibModal) {
         modalInstance.result.then(function () {
 
         }, function () {
-            setTimeout(function () {
 
-
-            });
 
             setTimeout(function () {
                 $scope.initData();
@@ -204,57 +284,70 @@ app.controller('index', function ($rootScope, $scope, dataservice, $uibModal) {
         modalInstance.result.then(function () {
 
         }, function () {
+            setTimeout(function () {
+                $scope.initData();
+            }, 2000);
         });
     };
-    $scope.submit = function () {
-        dataservice.createquangcao($scope.model, function (rs) {
+
+    alertify.set('notifier', 'position', 'bottom-left');
+
+    $scope.xoaGoiVip = function (data, vitrigoivip) {
+
+        dataservice.xoaGoiVip(data, function (rs) {
             rs = rs.data;
-            $scope.data = rs;
-            $scope.initData();
+            $scope.xoaGoiVip = rs;
+            if (rs == true) {
+                alertify.success("Xóa Thành Công");
+                $scope.taiGoiVip.splice(vitrigoivip, 1);
+            }
+            else {
+                alertify.success("Xóa Thất Bại");
+            }
         });
 
     }
-    $scope.delete = function (key) {
-        $scope.model.id = key;
-        dataservice.deletequangcao($scope.model, function (rs) {
-            rs = rs.data;
-            $scope.deletedata = rs;
-            $scope.initData();
-        });
+    var duLieuHinh = new FormData();
+    $scope.suaHinhAnhGoiVip = function ($files, data) {
+        $scope.BienTam = {
+            linkhinhanhmoi: '',
+            linkhinhanhcu: '',
+            goivip_id: ''
+        }
+        $scope.modelGoiVipcs = data;
 
-    }
+        if ($files[0].type == "image/png" || $files[0].type == "image/jpeg") {
+            duLieuHinh = new FormData();
+            duLieuHinh.append("File", $files[0]);
+            dataservice.uploadHinhAnh(duLieuHinh, function (rs) {
+                rs = rs.data;
+                $scope.BienTam.linkhinhanhmoi = rs;
+                $scope.BienTam.linkhinhanhcu = data.linkhinhanh;
+                $scope.BienTam.goivip_id = data.id;
+                dataservice.suaLinkHinhAnhGoiVip($scope.BienTam, function (rs) {
+                    rs = rs.data;
+                    $scope.modelGoiVipcs.linkhinhanh = $scope.BienTam.linkhinhanhmoi;
+                });
+            });
+        } else {
+            alert("Sai định đạng ảnh (*.jpg, *.png)");
+        }
 
-});
-app.filter('startFrom', function () {
-    return function (input, start) {
-        start = +start; //parse to int
-        return input.slice(start);
+        //for (var i = 0; i < $files.length; i++) {
+        //    formData.append("File", $files[i]);
+        //}
+
     }
 });
 app.controller('add', function ($rootScope, $scope, dataservice, $uibModalInstance) {
-    $scope.ok = function () {
-        $uibModalInstance.close();
-    };
+    $scope.soThangVuot = 37;
+
     $scope.cancel = function () {
         $uibModalInstance.dismiss('cancel');
 
     };
-    $scope.initData = function () {
 
-        //dataservice.loadtheloai(function (rs) {
-
-
-        //    rs = rs.data;
-        //    $scope.dataloadtheloai = rs;
-
-
-        //    $scope.valueTheLoai = rs[0].object.id;
-
-        //});
-
-    };
-
-    $scope.initData();
+    
     $scope.model = {
         id: '',
         sothang: 0,
@@ -263,114 +356,92 @@ app.controller('add', function ($rootScope, $scope, dataservice, $uibModalInstan
         giatiengoc: 0,
         giatiengiamgia: 0,
         trangthai: 0
-
     }
-    var formData = new FormData();
+
+    var duLieuHinh = new FormData();
+    $scope.dinhDangHinhAnh = "image/";
     $scope.submit = function () {
+        if ($scope.dinhDangHinhAnh != "image/"
+            || $scope.addGiaTienGoc < $scope.addGiaTienGiamGia
+            || !$scope.addGoiVip.addSoThang.$valid
+            || !$scope.addGoiVip.addGiaTienGiamGia.$valid
+            || !$scope.addGoiVip.addGiaTienGoc.$valid
+            || !$scope.addGoiVip.addLinkHinhAnh.$valid
+            || !$scope.addGoiVip.addTenGoiVip.$valid) {
+            alert("Vùng Lòng  Điền Đầy Đủ Và Kiểm Tra Thông Tin !!!");
+        }
+        else {
 
-        dataservice.uploadHinhAnh(formData, function (rs) {
-            rs = rs.data;
-            $scope.model.linkhinhanh = rs;
-
-            dataservice.createGoiVip($scope.model, function (rs) {
+            $scope.model.tengoivip = $scope.addTenGoiVip;
+            $scope.model.sothang = $scope.addSoThang;
+            $scope.model.giatiengiamgia = $scope.addGiaTienGiamGia;
+            $scope.model.giatiengoc = $scope.addGiaTienGoc;
+            dataservice.uploadHinhAnh(duLieuHinh, function (rs) {
                 rs = rs.data;
-                $scope.data = rs;
+                $scope.model.linkhinhanh = rs;
 
-            });
-        })
-
-        $uibModalInstance.dismiss('cancel');
-    }
-
-    $scope.getTheFilesHinhAnh = function ($files) {
-        //chọn nhiều ảnh
-        //for (var i = 0; i < $files.length; i++) {
-        //    formData.append("file", $files[i]);
-        //}    
-        formData = new FormData();
-        formData.append("File", $files[0]);
-        //   $scope.link = $files[0].name;                      
-
-    }
-});
-app.controller('edit', function ($rootScope, $scope, $uibModalInstance, dataservice, para) {
-    $scope.cancel = function () {
-        $uibModalInstance.dismiss('cancel');
-    }
-
-    $scope.data1 = para;
-
-    $scope.model = {
-        id: '',
-        noidung: '',
-        tenquangcao: '',
-        linkhinhanh: ''
-    }
-    $scope.initData = function () {
-        /* $scope.valueTheLoai = $scope.data1.tentheloai;*/
-        //$scope.model = $scope.data1;
-
-        //dataservice.loadtheloai(function (rs) {
-
-        //    rs = rs.data;
-        //    $scope.dataloadtheloai = rs;
-        //  //  var so = $scope.dataloadtheloai.length;
-
-        //    for (var i = 0; i < $scope.dataloadtheloai.length; i++) {
-        //        if ($scope.data1.tentheloai == rs[i].object.tentheloai) {
-        //            $scope.valueTheLoai = rs[i].object.id;
-        //            break;
-        //        }
-        //    }      
-
-        //});
-        $scope.kt = 0;
-    };
-    $scope.initData();
-    //$scope.changeGrade = function () {
-
-
-    //}
-    var formData = new FormData();
-    $scope.submit = function () {
-        // delete $scope.model['tentheloai'];
-        //  $scope.model.theloai_id = $scope.valueTheLoai;
-        $scope.model = $scope.data1;
-        if ($scope.kt == 1) {
-            dataservice.uploadHinhAnh(formData, function (rs) {
-                rs = rs.data;
-                $scope.model.object.linkhinhanh = rs;
-
-                dataservice.editquangcao($scope.model.object, function (rs) {
+                dataservice.taoGoiVip($scope.model, function (rs) {
                     rs = rs.data;
-                    $scope.EditItem = rs;
 
                 });
             })
             $uibModalInstance.dismiss('cancel');
-        } else {
-            dataservice.editquangcao($scope.model.object, function (rs) {
-                rs = rs.data;
-                $scope.EditItem = rs;
-
-            });
-            $uibModalInstance.dismiss('cancel');
         }
 
 
-
-
-
-        //$uibModalInstance.dismiss('cancel');
     }
 
     $scope.getTheFilesHinhAnh = function ($files) {
-
-        formData = new FormData();
-        formData.append("File", $files[0]);
-
-        $scope.kt = 1;
+        $scope.addLinkHinhAnh = "Đã Chọn Hình Ảnh";
+        duLieuHinh = new FormData();
+        duLieuHinh.append("File", $files[0]);
+        if ($files[0].type == "image/png" || $files[0].type == "image/jpg" || $files[0].type == "image/jpeg") {
+            $scope.dinhDangHinhAnh = "image/"
+        }
+        else {
+            $scope.dinhDangHinhAnh = $files[0].type;
+        }
+        var nutao = document.getElementById("btntext");
+        nutao.click();
+    }
+});
+app.controller('edit', function ($rootScope, $scope, $uibModalInstance, dataservice, para) {
+    $scope.soThangVuot = 37;
+    $scope.cancel = function () {
+        $uibModalInstance.dismiss('cancel');
     }
 
+    $scope.modelGoiVip = para;
+    $scope.initData = function () {
 
+        $scope.editTenGoiVip = $scope.modelGoiVip.tengoivip;
+        $scope.editSoThang = $scope.modelGoiVip.sothang;
+        $scope.editGiaTienGoc = $scope.modelGoiVip.giatiengoc;
+        $scope.editGiaTienGiamGia = $scope.modelGoiVip.giatiengiamgia;
+
+    };
+    $scope.initData();
+    $scope.submit = function () {
+        if ($scope.editGiaTienGoc < $scope.editGiaTienGiamGia
+            || !$scope.editGoiVip.editSoThang.$valid
+            || !$scope.editGoiVip.editGiaTienGiamGia.$valid
+            || !$scope.editGoiVip.editGiaTienGoc.$valid
+            || !$scope.editGoiVip.editTenGoiVip.$valid) {
+            alert("Vùng Lòng  Điền Đầy Đủ Và Kiểm Tra Thông Tin !!!");
+        }
+        else {
+            $scope.modelGoiVip.tengoivip = $scope.editTenGoiVip;
+            $scope.modelGoiVip.sothang = $scope.editSoThang;
+            $scope.modelGoiVip.giatiengiamgia = $scope.editGiaTienGiamGia;
+            $scope.modelGoiVip.giatiengoc = $scope.editGiaTienGoc;
+
+            dataservice.suaGoiVip($scope.modelGoiVip, function (rs) {
+                rs = rs.data;
+
+
+            });
+
+            $uibModalInstance.dismiss('cancel');
+        }
+    }
 });

@@ -67,18 +67,20 @@
     border-radius: 50%;
     line-height: 0;
 }
-
-.form-search {
-    background-color: transparent;
-    border: none;
-    outline: none;
-    font-size: 1rem;
-    width: 43rem;
-    color: #ccc5d4;
-    margin-left: 5%;
-    height: 100%;
-    font-size: 15px;
-}
+    .header__action-item:hover{
+        opacity:0.7;
+    }
+    .form-search {
+        background-color: transparent;
+        border: none;
+        outline: none;
+        font-size: 1rem;
+        width: 43rem;
+        color: #ccc5d4;
+        margin-left: 5%;
+        height: 100%;
+        font-size: 15px;
+    }
 
 .nav {
     display: flex;
@@ -293,7 +295,7 @@
 
 .nav__right {
     position: fixed;
-    z-index: 5;
+    z-index: 4;
     top: 7.5%;
     bottom: 0;
     right: 0;
@@ -1030,7 +1032,7 @@ a {
 
 .login_form {
     position: fixed;
-    z-index: 1000;
+    z-index: 100;
     top: 15px;
 }
 
@@ -1044,10 +1046,10 @@ a {
     opacity: 0.75;
 }
 
-.button:hover {
+/*.button:hover {
     cursor: pointer;
     opacity: 0.7;
-}
+}*/
 
 .gioi_tinh {
     color: #fff;
@@ -1283,4 +1285,14 @@ h1{
     /* margin-left: 29px; */
     border-radius: 7px;
     top: 0px;
+}
+.disable_button {
+   opacity:0.5;
+   cursor: unset !important;
+}
+.opacity_validate {
+opacity:1 !important;
+}
+.not_opacity_validate {
+opacity:0;
 }

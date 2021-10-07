@@ -65,6 +65,7 @@
     border-radius: 50%;
     overflow: hidden;
     margin-right: 50px;
+    padding:0;
 }
 .action_nghesi {
     display: flex;
@@ -173,20 +174,20 @@
     justify-content: center;
 }
 .icon_nav_right_first_nghesi {
-    margin-top: 5px;
+    margin-top: 8px;
     /* position: absolute; */
     /* right: 144px; */
     /* opacity: 0; */
-    font-size: 21px;
-    color: #ffffff80;
+    font-size: 14px;
+    color: #ffffff;
 }
 .icon_active_yeuthich_nghesi {
-    margin-top: 5px;
+    margin-top: 8px;
     /* position: absolute; */
     /* right: 151px; */
     color: #ed2b91;
     /* opacity: 0; */
-    font-size: 22px;
+    font-size: 16px;
 }
 .list_bhnghesi {
     display: table-column;

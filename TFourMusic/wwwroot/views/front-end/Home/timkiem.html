@@ -98,8 +98,8 @@
                         <div class="media_luu_content_timkiem"><div class="time_bai_hat_timkiem">{{danhSachBaiHatTimKiem[$index+1].thoiluongbaihat}}</div></div>
                         <div class="media_luu_right">
                             <label class="label_account" ng-click="toggleYeuThichBH_TimKiem($index)">
-                                <i ng-show="danhSachBaiHatTimKiem[$index].yeuthich==0" style="position:inherit;" class="far fa-heart icon_nav_right_first_timkiem"></i>
-                                <i ng-show="danhSachBaiHatTimKiem[$index].yeuthich==1" class="fas fa-heart icon_active_yeuthich_timkiem"></i>
+                                <i ng-show="danhSachBaiHatTimKiem[$index].yeuthich==0 && checklogin.dadangnhap == true" style="position:inherit;" class="far fa-heart icon_nav_right_first_timkiem"></i>
+                                <i ng-show="danhSachBaiHatTimKiem[$index].yeuthich==1 && checklogin.dadangnhap == true" class="fas fa-heart icon_active_yeuthich_timkiem"></i>
                                 <i ng-show="!checklogin.dadangnhap" class="far fa-heart icon_nav_right_first_timkiem"></i>
                             </label>
                             <!--<label class="label_account">
@@ -132,21 +132,31 @@
             <div class="tao_playlist_item_timkiem">
                 <a href="/#/playlist/{{x.id}}" class="item_tao_playlist_curent_timkiem">
                     <div class="img_playlist_timkiem" ng-style="{'background-image': 'url(' + x.linkhinhanh + ')'}"></div>
-                    <div class="hover_playlist">
+                    <div class="hover_playlist item" animate ng-class="{'display_block' : kiemTraDSPNguoiDungClick == x.id  }">
                         <label class="hover_remove_playlist" style="cursor:pointer;" ng-click="$event.preventDefault();  yeuThichDanhSachPhatNguoiDung($index); yeuThichDanhSachPhatNguoiDungID(x.id)">
-                            <i ng-show="x.yeuthich==1" class="fas fa-heart icon_account"></i>
-                            <i ng-show="x.yeuthich==0" class="far fa-heart icon_nav_right_first_timkiem_a"></i>
+                            <i ng-show="x.yeuthich==1 && checklogin.dadangnhap == true" class="fas fa-heart icon_account"></i>
+                            <i ng-show="x.yeuthich==0 && checklogin.dadangnhap == true" class="far fa-heart icon_nav_right_first_timkiem_a"></i>
                             <i ng-show="!checklogin.dadangnhap" class="far fa-heart icon_nav_right_first_timkiem_a"></i>
                         </label>
-                        <i class="icon_play" ng-click="$event.preventDefault(); playDanhSachPhatNguoiDung(x.id); ">
-                        </i>
+                        <div ng-click="$event.preventDefault(); Play(); " class="play1-play2 nut_dsp_tl vong_tron_play" style="" tabindex="0" ng-show="kiemTraDSPNguoiDungClick == x.id">
+                            <div ng-show="playmusic == 1 " class="play_baihat_dsptl" style="top: 51%;left: 38%; height: 26px; width: 27px;"> </div>
+
+                            <!--<i ng-show="playmusic == 0 " class="nutplay_baihat_nhacmoi fa fa-play" style="color: white;"></i>-->
+                            <i ng-show="playmusic == 0 " class="fa fa-play" style=""></i><!--width: 55px; height: 55px; display: flex; align-items: center; justify-content: center; font-size: 20px;-->
+                        </div>
+                        <div ng-show="kiemTraDSPNguoiDungClick != x.id" class="play1-play2 nut_dsp_tl vong_tron_play add-to-cartdsp add-to-cart" style="" tabindex="0" ng-click="$event.preventDefault();playDanhSachPhatNguoiDung(x);">
+
+                            <!--<i class="fa fa-play-circle"></i>-->
+                            <i class="fa fa-play" style=""></i>
+                        </div>
                         <label class="hover_remove_playlist_dots" context-menu1="contextMenuPlaylist" ng-click="$event.preventDefault(); moChiTietDSP_TheLoai(x); ">
                             <span style="font-size:23px;" class="material-icons-outlined">
                                 more_horiz
                             </span>
                         </label>
+                        <img src="{{x.linkhinhanh}}" hidden style="width: 0; height:0;object-fit:cover" />
                     </div>
-                    <div class="hover_background">
+                    <div class="hover_background"  ng-class="{'display_blockbg' : kiemTraDSPNguoiDungClick == x.id  }">
                     </div>
                 </a>
                 <div class="ten_danh_sach_phat_da_tao" style="margin:4px;">
@@ -159,21 +169,31 @@
             <div class="tao_playlist_item_timkiem">
                 <a href="/#/danhsachphat/{{x.id}}" class="item_tao_playlist_curent_timkiem">
                     <div class="img_playlist_timkiem" ng-style="{'background-image': 'url(' + x.linkhinhanh + ')'}"></div>
-                    <div class="hover_playlist">
+                    <div class="hover_playlist item" animate ng-class="{'display_block' : kiemTraDSPTLClick == x.id  }">
                         <label class="hover_remove_playlist" ng-click="$event.preventDefault();  yeuThichDanhSachPhatTimKiem($index);">
-                            <i ng-show="x.yeuthich==1" class="fas fa-heart icon_account"></i>
-                            <i ng-show="x.yeuthich==0" class="far fa-heart icon_nav_right_first_timkiem_a"></i>
+                            <i ng-show="x.yeuthich==1 && checklogin.dadangnhap == true" class="fas fa-heart icon_account"></i>
+                            <i ng-show="x.yeuthich==0 && checklogin.dadangnhap == true" class="far fa-heart icon_nav_right_first_timkiem_a"></i>
                             <i ng-show="!checklogin.dadangnhap" class="far fa-heart icon_nav_right_first_timkiem_a"></i>
                         </label>
-                        <i class="icon_play" ng-click="$event.preventDefault(); playDanhSachPhatTheLoai(x.id); ">
-                        </i>
+                        <div ng-click="$event.preventDefault(); Play(); " class="play1-play2 nut_dsp_tl vong_tron_play" style="" tabindex="0" ng-show="kiemTraDSPTLClick == x.id">
+                            <div ng-show="playmusic == 1 " class="play_baihat_dsptl" style="top: 51%;left: 38%; height: 26px; width: 27px;"> </div>
+
+                            <!--<i ng-show="playmusic == 0 " class="nutplay_baihat_nhacmoi fa fa-play" style="color: white;"></i>-->
+                            <i ng-show="playmusic == 0 " class="fa fa-play" style=""></i><!--width: 55px; height: 55px; display: flex; align-items: center; justify-content: center; font-size: 20px;-->
+                        </div>
+                        <div ng-show="kiemTraDSPTLClick != x.id" class="play1-play2 nut_dsp_tl vong_tron_play add-to-cartdsp add-to-cart" style="" tabindex="0" ng-click="$event.preventDefault(); playDanhSachPhatTheLoai(x.id);">
+
+                            <!--<i class="fa fa-play-circle"></i>-->
+                            <i class="fa fa-play" style=""></i>
+                        </div>
                         <label class="hover_remove_playlist_dots" context-menu1="contextMenuDSPTheLoai" ng-click="$event.preventDefault(); moChiTietDSP_TheLoai(x); ">
                             <span style="font-size:23px;" class="material-icons-outlined">
                                 more_horiz
                             </span>
                         </label>
+                        <img src="{{x.linkhinhanh}}" hidden style="width: 0; height:0;object-fit:cover" />
                     </div>
-                    <div class="hover_background">
+                    <div  ng-class="{'display_blockbg' : kiemTraDSPTLClick == x.id  }" class="hover_background">
                     </div>
                 </a>
                 <div class="ten_danh_sach_phat_da_tao" style="margin:4px;">
@@ -229,14 +249,14 @@
                     <div class="media_luu_content_timkiem"><div class="time_bai_hat_timkiem">{{x.thoiluongbaihat}}</div></div>
                     <div class="media_luu_right">
                         <label class="label_account" ng-click="toggleYeuThichBH_TimKiem($index)">
-                            <i ng-show="x.yeuthich==0" style="right:141px" class="far fa-heart icon_nav_right_first_timkiem_TAB"></i>
-                            <i ng-show="x.yeuthich==1" style="position: inherit;" class="fas fa-heart icon_active_yeuthich_timkiem"></i>
+                            <i ng-show="x.yeuthich==0 && checklogin.dadangnhap == true" style="right:141px" class="far fa-heart icon_nav_right_first_timkiem_TAB"></i>
+                            <i ng-show="x.yeuthich==1 && checklogin.dadangnhap == true" style="position: inherit;" class="fas fa-heart icon_active_yeuthich_timkiem"></i>
                             <i ng-show="!checklogin.dadangnhap" style="right:141px"  class="far fa-heart icon_nav_right_first_timkiem_TAB"></i>
                         </label>
                         <!--<label class="label_account">
                             <i class="far fa-heart icon_account_notfocus"></i>
                         </label>-->
-                        <span class="material-icons-outlined dots_account_baihat_timkiem" context-menu1="contextMenuBaiHat_BaiHat" ng-right-click="moChiTietBaiHat(x)">
+                        <span class="material-icons-outlined dots_account_baihat_timkiem" context-menu1="contextMenuBaiHat_BaiHat" ng-click="moChiTietBaiHat(x)">
                             more_horiz
                         </span>
                     </div>
@@ -263,19 +283,32 @@
         <div class="tao_playlist_item_timkiem">
             <a href="/#/playlist/{{x.id}}" class="item_tao_playlist_curent_timkiem">
                 <div class="img_playlist_timkiem" ng-style="{'background-image': 'url(' + x.linkhinhanh + ')'}"></div>
-                <div class="hover_playlist">
-                    <label class="hover_remove_playlist" style="cursor:pointer;" ng-click="$event.preventDefault();  yeuThichDanhSachPhatNguoiDung($index); yeuThichDanhSachPhatNguoiDungID(x.id)">
-                        <i ng-show="x.yeuthich==1" class="fas fa-heart icon_account"></i>
-                        <i ng-show="x.yeuthich==0" class="far fa-heart icon_nav_right_first_timkiem_a"></i>
-                        <i ng-show="!checklogin.dadangnhap" class="far fa-heart icon_nav_right_first_timkiem_a"></i>
-                    </label>
-                    <i class="icon_play" ng-click="$event.preventDefault(); playDanhSachPhatNguoiDung(x.id); ">
-                    </i>
+                <div class="hover_playlist item" animate ng-class="{'display_block' : kiemTraDSPTLClick == x.id  }">
+                    <div class="hover_remove_playlist" style="cursor:pointer;" ng-click="$event.preventDefault();  yeuThichDanhSachPhatNguoiDung($index); yeuThichDanhSachPhatNguoiDungID(x.id)">
+                        <div>
+                            <i ng-show="x.yeuthich==1 && checklogin.dadangnhap == true" class="fas fa-heart icon_account"></i>
+                            <i ng-show="x.yeuthich==0 && checklogin.dadangnhap == true" class="far fa-heart icon_nav_right_first_timkiem_a"></i>
+                            <i ng-show="!checklogin.dadangnhap" class="far fa-heart icon_nav_right_first_timkiem_a"></i>
+                        </div>
+
+                    </div>
+                    <div ng-click="$event.preventDefault(); Play(); " class="play1-play2 nut_dsp_tl vong_tron_play" style="" tabindex="0" ng-show="kiemTraDSPNguoiDungClick == x.id">
+                        <div ng-show="playmusic == 1 " class="play_baihat_dsptl" style="top: 51%;left: 38%; height: 26px; width: 27px;"> </div>
+
+                        <!--<i ng-show="playmusic == 0 " class="nutplay_baihat_nhacmoi fa fa-play" style="color: white;"></i>-->
+                        <i ng-show="playmusic == 0 " class="fa fa-play" style=""></i><!--width: 55px; height: 55px; display: flex; align-items: center; justify-content: center; font-size: 20px;-->
+                    </div>
+                    <div ng-show="kiemTraDSPNguoiDungClick != x.id" class="play1-play2 nut_dsp_tl vong_tron_play add-to-cartdsp add-to-cart" style="" tabindex="0" ng-click="$event.preventDefault();playDanhSachPhatNguoiDung(x);">
+
+                        <!--<i class="fa fa-play-circle"></i>-->
+                        <i class="fa fa-play" style=""></i>
+                    </div>
                     <label class="hover_remove_playlist_dots" context-menu1="contextMenuPlaylist" ng-click="$event.preventDefault(); moChiTietDSP_TheLoai(x); ">
                         <span style="font-size:23px;" class="material-icons-outlined">
                             more_horiz
                         </span>
                     </label>
+                    <img src="{{x.linkhinhanh}}" hidden style="width: 0; height:0;object-fit:cover" />
                 </div>
                 <div class="hover_background">
                 </div>
@@ -290,19 +323,29 @@
         <div class="tao_playlist_item_timkiem">
             <a href="/#/danhsachphat/{{x.id}}" class="item_tao_playlist_curent_timkiem">
                 <div class="img_playlist_timkiem" ng-style="{'background-image': 'url(' + x.linkhinhanh + ')'}"></div>
-                <div class="hover_playlist">
+                <div class="hover_playlist item" animate ng-class="{'display_block' : kiemTraDSPTLClick == x.id  }">
                     <label class="hover_remove_playlist" style="cursor:pointer;" ng-click="$event.preventDefault();  yeuThichDanhSachPhatTimKiem($index);">
-                        <i ng-show="x.yeuthich==1" class="fas fa-heart icon_account"></i>
-                        <i ng-show="x.yeuthich==0" class="far fa-heart icon_nav_right_first_timkiem_a"></i>
+                        <i ng-show="x.yeuthich==1 && checklogin.dadangnhap == true" class="fas fa-heart icon_account"></i>
+                        <i ng-show="x.yeuthich==0 && checklogin.dadangnhap == true" class="far fa-heart icon_nav_right_first_timkiem_a"></i>
                         <i ng-show="!checklogin.dadangnhap" class="far fa-heart icon_nav_right_first_timkiem_a"></i>
                     </label>
-                    <i class="icon_play"  ng-click="$event.preventDefault(); playDanhSachPhatTheLoai(x.id); ">
-                    </i>
+                    <div ng-click="$event.preventDefault(); Play(); " class="play1-play2 nut_dsp_tl vong_tron_play" style="" tabindex="0" ng-show="kiemTraDSPTLClick == x.id">
+                        <div ng-show="playmusic == 1 " class="play_baihat_dsptl" style="top: 51%;left: 38%; height: 26px; width: 27px;"> </div>
+
+                        <!--<i ng-show="playmusic == 0 " class="nutplay_baihat_nhacmoi fa fa-play" style="color: white;"></i>-->
+                        <i ng-show="playmusic == 0 " class="fa fa-play" style=""></i><!--width: 55px; height: 55px; display: flex; align-items: center; justify-content: center; font-size: 20px;-->
+                    </div>
+                    <div ng-show="kiemTraDSPTLClick != x.id" class="play1-play2 nut_dsp_tl vong_tron_play add-to-cartdsp add-to-cart" style="" tabindex="0" ng-click="$event.preventDefault(); playDanhSachPhatTheLoai(x.id);">
+
+                        <!--<i class="fa fa-play-circle"></i>-->
+                        <i class="fa fa-play" style=""></i>
+                    </div>
                     <label class="hover_remove_playlist_dots" context-menu1="contextMenuDSPTheLoai" ng-click="$event.preventDefault(); moChiTietDSP_TheLoai(x); ">
                         <span style="font-size:23px;" class="material-icons-outlined">
                             more_horiz
                         </span>
                     </label>
+                    <img src="{{x.linkhinhanh}}" hidden style="width: 0; height:0;object-fit:cover" />
                 </div>
                 <div class="hover_background">
                 </div>

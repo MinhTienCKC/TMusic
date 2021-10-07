@@ -179,7 +179,7 @@
     /* margin: auto; */
     font-size: 20px;
     color: #fff;
-    top: 8px;
+    top: 7px;
     left: 20px;
 }
 .media_luu_baihat_timkiem {
@@ -260,7 +260,8 @@
     font-size: 20px;
     padding: 5px;
     border-radius: 50%;
-    /* background-color: #381735; */
+    cursor: pointer;
+    background-color: ##ffffff1a; 
     /* color: #fff; */
     color: rgb(255 255 255 / 50%);
 }
@@ -448,6 +449,8 @@
         overflow: hidden;
         width: 140px;
         height: 140px;
+        padding:0;
+        margin:0;
     }
 
 figure_timkiem {
@@ -576,7 +579,7 @@ figure_timkiem {
 .column_timkiem {
     padding: 15px;
     /* padding-left: 57px; */
-    margin-left: 50px;
+    margin-left: 40px;
     width: auto;
     height: auto;
     display: flex;
@@ -609,28 +612,28 @@ figure_timkiem {
     font-size: 12px;
 }
 .icon_active_yeuthich_timkiem {
-    margin-top: 5px;
+    margin-top: 7px;
     position: absolute;
-    right: 75px;
+    right: 78px;
     color: #ed2b91;
     /* opacity: 0; */
-    font-size: 22px;
+    font-size: 16px;
 }
 .icon_nav_right_first_timkiem {
-    margin-top: 5px;
+    margin-top: 10px;
     position: absolute;
-    right: 75px;
+    right: 79px;
     /* opacity: 0; */
-    font-size: 21px;
-    color: #ffffff80;
+    font-size: 14px;
+    color: #ffffff;
 }
 .icon_nav_right_first_timkiem_TAB {
-    margin-top: 5px;
-    position: absolute;
+    margin-top: 9px;
+    /* position: absolute; */
     right: 144px;
     /* opacity: 0; */
-    font-size: 21px;
-    color: #ffffff80;
+    font-size: 14px;
+    color: #ffffff;
 }
 .icon_active_yeuthich_timkiem_tab {
     margin-top: 5px;
@@ -684,12 +687,13 @@ icon_nav_right_first_timkiem_tab1 {
     left: 30px;
 }
 .icon_nav_right_first_timkiem_a {
-    margin-top: 10px;
+    margin-top: 1px;
     /* position: absolute; */
     right: 153px;
     /* opacity: 0; */
     font-size: 21px;
     color: #fff;
+    cursor:pointer;
 }
 .active_baihat_timkiem {
     background-color: rgb(255 255 255 / 10%);
@@ -697,4 +701,18 @@ icon_nav_right_first_timkiem_tab1 {
 .label_account_timkiem:hover {
     background-color: #ffffff1a;
     cursor: pointer;
+}
+.display_block {
+    display: block;
+    width: 100%;
+    justify-content: space-evenly;
+    display: flex;
+    align-items: center;
+    z-index: 10;
+    position: absolute;
+}
+
+.display_blockbg{
+    z-index:1;
+    display:block;
 }

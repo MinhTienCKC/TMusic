@@ -1032,7 +1032,7 @@ a {
 
 .login_form {
     position: fixed;
-    z-index: 7;
+    z-index: 100;
     top: 15px;
 }
 

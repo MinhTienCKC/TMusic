@@ -10,6 +10,9 @@ app.factory('dataservice', function ($http) {
         xoaBaiHat: function (data, callback) {
             $http.post('/Admin/BaiHat/xoaBaiHat', data).then(callback);
         },
+        thayDoiCheDoBaiHat: function (data, callback) {
+            $http.post('/Admin/BaiHat/thayDoiCheDoBaiHat', data).then(callback);
+        },
         suaBaiHat: function (data, callback) {
             $http.post('/Admin/BaiHat/suaBaiHat', data).then(callback);
         },
@@ -27,6 +30,21 @@ app.factory('dataservice', function ($http) {
         },
         taiChuDe: function (callback) {
             $http.post('/Admin/BaiHat/taiChuDe').then(callback);
+
+        },
+        suaLinkHinhAnhBaiHat: function (data, callback) {
+            $http.post('/Admin/BaiHat/suaLinkHinhAnhBaiHat', data).then(callback);
+
+        },
+        taiDanhSachBaiHatDaXoa_ThungRac: function (callback) {
+            $http.post('/Admin/BaiHat/taiDanhSachBaiHatDaXoa_ThungRac').then(callback);
+
+        },
+        khoiPhucBaiHat_ThungRac: function (data, callback) {
+            $http.post('/Admin/BaiHat/khoiPhucBaiHat_ThungRac', data).then(callback);
+        },
+        xoaBaiHatVinhVien_ThungRac: function (data, callback) {
+            $http.post('/Admin/BaiHat/xoaBaiHatVinhVien_ThungRac', data).then(callback);
 
         },
         //LoadBaiHat: function (callback) {
@@ -94,7 +112,50 @@ app.directive('ngFiles', ['$parse', function ($parse) {
     }
 
 }])
+app.directive('validatekitudacbiet', function () {
+    function link(scope, elem, attrs, ngModel) {
+        ngModel.$parsers.push(function (viewValue) {
+            var reg = /^[^`~!@#$%\^&*_+={}|[\]\\:';"<>?,./]*$/;
+            // if view values matches regexp, update model value
+            if (viewValue.match(reg)) {
+                return viewValue;
+            }
+            // keep the model value as it is
+            var transformedValue = ngModel.$modelValue;
+            ngModel.$setViewValue(transformedValue);
+            ngModel.$render();
+            return transformedValue;
+        });
+    }
 
+
+    return {
+        restrict: 'A',
+        require: 'ngModel',
+        link: link
+    };
+});
+app.directive("whenScrolled", function () {
+    return {
+
+        restrict: 'A',
+        link: function (scope, elem, attrs) {
+
+            // we get a list of elements of size 1 and need the first element
+            raw = elem[0];
+
+            // we load more elements when scrolled past a limit
+            elem.bind("scroll", function () {
+                if (raw.scrollTop + raw.offsetHeight + 5 >= raw.scrollHeight) {
+                    scope.loading = true;
+
+                    // we can give any function which loads more elements into the list
+                    scope.$apply(attrs.whenScrolled);
+                }
+            });
+        }
+    }
+});
 app.filter('startFrom', function () {
     return function (input, start) {
         if (!input || !input.length) { return; }
@@ -114,10 +175,43 @@ app.config(function ($routeProvider) {
         })
 });
 app.controller('T_Music', function () {
-
+   
 });
 
-app.controller('index', function ($rootScope, $scope, dataservice, $uibModal, $filter) {
+app.controller('index', function ($rootScope, $scope, dataservice, $uibModal, $filter, $interval) {
+
+
+    $scope.cheDo = function (data) {
+        dataservice.thayDoiCheDoBaiHat(data, function (rs) {
+            rs = rs.data;
+
+            if (rs == true) {
+                alertify.success("Thay đỗi chế độ thành công.");
+            }
+            else {
+                alertify.success("Thay đỗi chế độ thất bại .");
+            }
+        });
+    }
+    alertify.set('notifier', 'position', 'bottom-left');
+    var tick = function () {
+        $scope.clock = Date.now();
+    }
+    tick();
+    $interval(tick, 1000);
+    $(".nav-noidung").addClass("active");
+    $scope.tenbien = 'null';
+    $scope.hoatdong = false;
+    $scope.modelsapxep = 'null';
+    $scope.sapXep = function (data) {
+        $scope.hoatdong = ($scope.tenbien === data) ? !$scope.hoatdong : false;
+        $scope.tenbien = data;
+    }
+   // tippy('[data-tippy-content]');
+    tippy('td', {
+        content: 'Global content',
+        trigger: 'click',
+    });
     $scope.hienTimKiem = false;
     $scope.showSearch = function () {
         if (!$scope.hienTimKiem) {
@@ -146,22 +240,45 @@ app.controller('index', function ($rootScope, $scope, dataservice, $uibModal, $f
         linkhinhanh: ''
     }
     $scope.initData = function () {
-  
         dataservice.taiBaiHat($scope.model, function (rs) {
 
             rs = rs.data;
-            $scope.dataloadbaihat = rs;       
+            $scope.taiBaiHat = rs;       
 
            
             $scope.numberOfPages = function () {
-                return Math.ceil($scope.dataloadbaihat.length / $scope.pageSize);
+                return Math.ceil($scope.taiBaiHat.length / $scope.pageSize);
             }
             if ($scope.numberOfPages() < 8) {
                 $scope.soLuong = $scope.numberOfPages();
             }
         });
     };
+    function chuyenDoi(object) {
 
+        return Math.ceil(object.length / 5);;
+    }
+    $scope.layBaiHatAdmin = function (object) {
+        if (chuyenDoi(object) < 8) {
+            $scope.numberOfPages = function () {
+                return chuyenDoi(object);
+            }
+            $scope.soLuong = chuyenDoi(object);
+            $scope.soTrang = chuyenDoi(object)
+            $scope.size = 0;
+            $scope.currentPage = 0;
+        }
+        else {
+            $scope.numberOfPages = function () {
+                return chuyenDoi(object);
+            }
+            $scope.soLuong = 8;
+            $scope.soTrang = chuyenDoi(object)
+            $scope.size = 0;
+            $scope.currentPage = 0;
+            //  $scope.numberOfPages() = chuyenDoi(object);
+        }
+    };
     $scope.initData();
     $scope.timKiem = function () {
 
@@ -178,26 +295,435 @@ app.controller('index', function ($rootScope, $scope, dataservice, $uibModal, $f
 
     $scope.currentPage = 0;
     $scope.pageSize = 5;
-    //$scope.Prev = function () {
-    //    if ($scope.currentPage == 0) {
-          
-    //        $scope.currentPage = 0;
-    //    }
-    //    else 
-
-    //        $scope.currentPage = $scope.currentPage - 1;
-    //}
-    //$scope.Next = function () {
-    //    if ($scope.currentPage < $scope.numberOfPages() - 1) {
-    //        $scope.currentPage = $scope.currentPage + 1;
-           
-    //    } else
-    //        $scope.currentPage = 0;
-       
-    //}
     $scope.size = 0;
     $scope.soLuong = 8;
    
+    $scope.Truoc = function () {
+        if ($scope.numberOfPages() < 8) {
+            return;
+        }
+        else {
+            if ($scope.size == 0) {
+                return;
+            } else {
+                $scope.size -= 8;
+                $scope.soLuong = 8
+            }
+            $scope.currentPage = $scope.size;
+        }
+
+    }
+    $scope.Sau = function () {
+        if ($scope.numberOfPages() < 8) {
+            return;
+        }
+        else {
+
+            if ($scope.numberOfPages() % 8 == 0) {
+                if ($scope.size + $scope.soLuong >= $scope.numberOfPages())
+                    $scope.size = 0;
+                else {
+                    $scope.size += $scope.soLuong;
+                }
+                $scope.currentPage = $scope.size;
+            }
+            else {
+                $scope.bienTam = $scope.numberOfPages() % 8;
+                $scope.bienTam2 = $scope.numberOfPages() - $scope.bienTam;
+                if ($scope.size + $scope.soLuong == $scope.bienTam2) {
+
+                    $scope.size += 8;
+                    $scope.soLuong = $scope.bienTam;
+                }
+                else if ($scope.size + $scope.soLuong >= $scope.numberOfPages()) {
+                    $scope.size = 0;
+                    $scope.soLuong = 8
+                }
+                else {
+                    $scope.size += 8;
+
+                }
+                $scope.currentPage = $scope.size;
+            }
+        }
+
+
+    }
+  
+    
+
+
+    $scope.taoBaiHat_index = function () {
+      
+        var modalInstance =  $uibModal.open({
+            /*animation: true,*/
+            
+            //ariaLabelledBy: 'modal-title',
+            //ariaDescribedBy: 'modal-body',
+            templateUrl: ctxfolderurl + '/add.html',
+            controller: 'add',
+          //  backdrop: 'true',
+            backdropClass: ".fade:not(.show)",
+            backdropClass: ".modal-backdrop",
+            backdropClass: ".col-lg-8",
+            backdropClass: ".modal-content",
+          /*  appendTo: document.getElementById("#main-baihat"),*/
+            size: '10'
+        });
+        modalInstance.result.then(function () { 
+            
+        }, function () {
+                setTimeout(function () {
+                    $scope.initData();
+                }, 2000);
+        });
+       
+    };
+    $scope.edit = function (key) {
+     /*   $scope.model.id = key;*/
+        var modalInstance =  $uibModal.open({
+            animation: true,
+            templateUrl: ctxfolderurl + '/edit.html',
+            controller: 'edit',
+            backdrop: 'true',
+            backdropClass: ".fade:not(.show)",
+            backdropClass: ".modal-backdrop",
+            backdropClass: ".col-lg-8",
+            backdropClass: ".modal-content",
+
+            size: '100',
+            resolve: {
+                para: function () {
+                    return key;
+                }
+            }
+        });
+        modalInstance.result.then(function () {
+            $scope.initData();
+            //setTimeout(function () {
+               
+            //}, 1500);
+        }, function () {
+        });
+    };
+    $scope.thungrac = function () {
+
+        var modalInstance = $uibModal.open({
+            /*animation: true,*/
+
+            //ariaLabelledBy: 'modal-title',
+            //ariaDescribedBy: 'modal-body',
+            templateUrl: ctxfolderurl + '/thungrac.html',
+            controller: 'thungrac',
+            //  backdrop: 'true',
+            backdropClass: ".fade:not(.show)",
+            backdropClass: ".modal-backdrop",
+            backdropClass: ".col-lg-8",
+            backdropClass: ".modal-content",
+            /*  appendTo: document.getElementById("#main-baihat"),*/
+            size: '10'
+        });
+        modalInstance.result.then(function () {
+            $scope.initData();
+            //setTimeout(function () {
+               
+            //}, 1500);
+        }, function () {
+        });
+
+    };
+    $scope.xoaBaiHat = function (data,vitribaihat) {
+       
+        dataservice.xoaBaiHat(data, function (rs) {
+            rs = rs.data;
+            $scope.deletedata = rs;
+            $scope.taiBaiHat.splice(vitribaihat, 1);
+            alertify.success("Xóa thành công");
+           //// $scope.initData();
+        });
+
+    }
+    var duLieuHinh = new FormData();
+
+    // 02/08 suữa ảnh cá nhân
+    $scope.suaHinhAnhBaiHat = function ($files,data) {
+        $scope.BienTam = {
+            linkhinhanhmoi: '',
+            linkhinhanhcu: '',
+            baihat_id: '',
+            nguoidung_id:''
+        }
+        $scope.modelbaihatcs = data;
+    
+        if ($files[0].type == "image/png" || $files[0].type == "image/jpeg") {
+            duLieuHinh = new FormData();
+            duLieuHinh.append("File1", $files[0]);           
+            dataservice.uploadHinhAnh(duLieuHinh, function (rs) {
+                rs = rs.data;
+                $scope.BienTam.linkhinhanhmoi = rs;
+                $scope.BienTam.linkhinhanhcu = data.linkhinhanh;
+                $scope.BienTam.baihat_id = data.id;
+                $scope.BienTam.nguoidung_id = data.nguoidung_id;
+                dataservice.suaLinkHinhAnhBaiHat($scope.BienTam, function (rs) {
+                    rs = rs.data;
+                    $scope.modelbaihatcs.linkhinhanh = $scope.BienTam.linkhinhanhmoi;
+                });
+            });
+        } else {
+            alert("Sai định đạng ảnh (*.jpg, *.png)");
+        }
+
+        //for (var i = 0; i < $files.length; i++) {
+        //    formData.append("File", $files[i]);
+        //}
+
+    }
+ 
+});
+
+app.controller('add', function ($rootScope, $scope, dataservice, $uibModalInstance) { 
+    $scope.cancel = function () {
+        $uibModalInstance.dismiss('cancel');
+    };
+    $scope.model = {
+        id: '',
+        nguoidung_id: 'admin',
+        tenbaihat: '',
+        mota: '',
+        luottaixuong: (Math.floor(Math.random() * 100) + 1),   
+        luotthich: (Math.floor(Math.random() * 100) + 1),
+        loibaihat: '',
+        casi: '',
+        luotnghe: (Math.floor(Math.random() * 100) + 1),
+        theloai_id: '',
+        danhsachphattheloai_id: '',
+        chude_id: '',
+        thoiluongbaihat: '',
+        quangcao:'',
+        link: '',
+        linkhinhanh: ''
+    }
+    $scope.text = {
+        key:''
+    }
+   
+   
+    /*CKEDITOR.replace('editor11', {});  */
+    $scope.initData = function () {
+    
+      //  CKEDITOR.replace('ckloibaihat');
+    //    element.style.color = 'red';
+       
+        //var textarea = document.body.appendChild(document.createElement('textarea'));
+        //CKEDITOR.replace(textarea);
+     /*   CKEDITOR.replace('ckloibaihat');*/
+        dataservice.taiTheLoai(function (rs) {
+
+
+            rs = rs.data;
+            $scope.dataloadtheloai = rs;
+
+
+            $scope.valueTheLoai = rs[0].object.id;
+            $scope.text.key = $scope.valueTheLoai;
+            dataservice.taiDanhSachPhatTheLoai($scope.text, function (rs) {
+                rs = rs.data;
+                $scope.datataiDanhSachPhatTheLoai = rs;
+                $scope.valueDanhSachPhatTheLoai = rs[0].object.id;
+            });
+           
+        });
+       
+        dataservice.taiChuDe(function (rs) {
+            rs = rs.data;
+            $scope.dataloadchude = rs;
+            $scope.valueChuDe = rs[0].object.id;
+
+        });
+    };
+    $scope.changeTheLoai = function () {
+        $scope.text.key = $scope.valueTheLoai
+        dataservice.taiDanhSachPhatTheLoai($scope.text, function (rs) {
+            rs = rs.data;
+            $scope.datataiDanhSachPhatTheLoai = rs;
+            $scope.valueDanhSachPhatTheLoai = rs[0].object.id;
+        });
+
+    };
+    //$scope.changeChude = function () {
+
+
+    //};
+    $scope.initData();
+    var duLieuNhac= new FormData();
+    var duLieuHinh = new FormData();
+    $scope.dinhDangBaiHat = "audio/mpeg";
+    $scope.dinhDangHinhAnh = "image/";
+    $scope.submit = function () {
+        
+        if ($scope.dinhDangHinhAnh != "image/"
+            || $scope.dinhDangBaiHat != "audio/mpeg"
+            || !$scope.addBaiHat.addTenBaiHat.$valid
+            || !$scope.addBaiHat.addLinkBaiHat.$valid
+            || !$scope.addBaiHat.addLinkHinhAnh.$valid
+            || !$scope.addBaiHat.addTenCaSi.$valid) {
+            alert("Vùng Lòng  Điền Đầy Đủ Và Kiểm Tra Thông Tin !!!");
+        }
+        else {
+
+            $scope.model.theloai_id = $scope.valueTheLoai;
+            $scope.model.danhsachphattheloai_id = $scope.valueDanhSachPhatTheLoai;
+            $scope.model.chude_id = $scope.valueChuDe;
+            $scope.model.tenbaihat = $scope.addTenBaiHat;
+            $scope.model.casi = $scope.addTenCaSi;
+            $scope.model1 = $scope.model;
+            dataservice.uploadaudio(duLieuNhac, function (rs) {
+                rs = rs.data;
+                $scope.model.link = rs;
+                dataservice.uploadHinhAnh(duLieuHinh, function (rs) {
+                    rs = rs.data;
+                    $scope.model.linkhinhanh = rs;
+                    dataservice.taoBaiHat($scope.model, function (rs) {
+                        rs = rs.data;
+                        $scope.data = rs;
+                    });
+                });
+            });
+
+
+            $uibModalInstance.dismiss('cancel');  
+        }
+       
+    }
+    $scope.getTheFiles = function ($files) {
+        var mb1 = 1048576;
+        if ($files[0].size > (mb1 * 10)) {
+            alert("Hãy chọn file mp3 < 10mb !!!");
+            return;
+        }
+        $scope.addLinkBaiHat = "Đã Chọn Bài Hát";
+        duLieuNhac = new FormData();
+        duLieuNhac.append("File", $files[0]);  
+    //    for (var i = 0; i < $files.length; i++) {
+    //        formData.append("File", $files[i]);
+    //    }     
+        $scope.dinhDangBaiHat = $files[0].type;
+        var downloadbaihat = document.getElementById("btntext");
+        downloadbaihat.click();
+       
+       var objectUrl = URL.createObjectURL($files[0]);
+        $("#audio").prop("src", objectUrl);
+        $("#audio").on("canplaythrough", function (e) {
+            var seconds = e.currentTarget.duration;
+            let currentMinutes = Math.floor(seconds / 60);
+            let currentSeconds = Math.floor(seconds - currentMinutes * 60);
+            let durationMinutes = Math.floor(seconds / 60);
+            let durationSeconds = Math.floor(seconds - durationMinutes * 60);
+
+            // Adding a zero to the single digit time values
+            if (currentSeconds < 10) { currentSeconds = "0" + currentSeconds; }
+            if (durationSeconds < 10) { durationSeconds = "0" + durationSeconds; }
+            if (currentMinutes < 10) { currentMinutes = "0" + currentMinutes; }
+            if (durationMinutes < 10) { durationMinutes = "0" + durationMinutes; }
+
+
+            var total_duration = durationMinutes + ":" + durationSeconds;
+     
+            $scope.model.thoiluongbaihat = total_duration;
+            //var dc = moment.duration(secondsn, "seconds");
+            //var time = "";
+            //var hours = duration.hours();
+            //if (hours > 0) { time = hours + ":"; }
+
+            //time = time + duration.minutes() + ":" + duration.seconds();
+            //time = time + duration.minutes() + ":" + duration.seconds();
+         
+        });
+    }
+    $scope.getTheFilesHinhAnh = function ($files) {
+        $scope.addLinkHinhAnh = "Đã Chọn Hình Ảnh";
+        duLieuHinh = new FormData();
+        duLieuHinh.append("File1", $files[0]);     
+        if ($files[0].type == "image/png" || $files[0].type == "image/jpg" || $files[0].type == "image/jpeg") {
+            $scope.dinhDangHinhAnh = "image/"
+        }
+        else {
+            $scope.dinhDangHinhAnh = $files[0].type;
+        }
+        var downloadbaihat = document.getElementById("btntext");
+        downloadbaihat.click();        
+    }
+});
+app.controller('thungrac', function ($rootScope, $scope, dataservice, $uibModalInstance) {
+    $scope.cancel = function () {
+        $uibModalInstance.dismiss('cancel');
+    };
+    
+    $scope.text = {
+        key: ''
+    }
+
+    
+    $scope.initData = function () {
+        dataservice.taiDanhSachBaiHatDaXoa_ThungRac( function (rs) {
+            rs = rs.data;
+            $scope.taiDanhSachBaiHatDaXoa_ThungRac = rs;
+            $scope.numberOfPages = function () {
+                return Math.ceil($scope.taiDanhSachBaiHatDaXoa_ThungRac.length / $scope.pageSize);
+            }
+            if ($scope.numberOfPages() < 8) {
+                $scope.soLuong = $scope.numberOfPages();
+            }
+        });
+
+    }
+    $scope.initData();
+    $scope.range = function (n) {
+        return new Array(n);
+    };
+
+    $scope.phanTrang = function (data) {
+        $scope.currentPage = data;
+    };
+
+    $scope.xoaBaiHat = function (data, vitribaihat) {
+
+        
+        dataservice.xoaBaiHatVinhVien_ThungRac(data, function (rs) {
+            rs = rs.data;
+            if (rs == true) {
+                alertify.success("Xóa Thành Công");
+                $scope.taiDanhSachBaiHatDaXoa_ThungRac.splice(vitribaihat, 1);
+            }
+            else {
+                alertify.success("Xóa Thất Bại");
+            }
+
+        });
+    };
+    alertify.set('notifier', 'position', 'bottom-left');
+   
+     
+    $scope.khoiPhucBaiHat = function (data, vitribaihat) {       
+        dataservice.khoiPhucBaiHat_ThungRac(data, function (rs) {
+            rs = rs.data;
+
+            if (rs == true) {
+                alertify.success("Khôi Phục Thành Công");
+                $scope.taiDanhSachBaiHatDaXoa_ThungRac.splice(vitribaihat, 1);
+            }
+            else {
+                alertify.success("Khôi Phục Thất Bại");
+            }
+               
+            $scope.initData();
+        });
+    };
+    $scope.currentPage = 0;
+    $scope.pageSize = 5;
+    $scope.size = 0;
+    $scope.soLuong = 8;
+
     $scope.Truoc = function () {
         if ($scope.numberOfPages() < 8) {
             return;
@@ -246,258 +772,26 @@ app.controller('index', function ($rootScope, $scope, dataservice, $uibModal, $f
 
 
     }
-  
+
     
 
-
-    $scope.add = function () {
-      
-        var modalInstance =  $uibModal.open({
-            /*animation: true,*/
-            
-            //ariaLabelledBy: 'modal-title',
-            //ariaDescribedBy: 'modal-body',
-            templateUrl: ctxfolderurl + '/add.html',
-            controller: 'add',
-          //  backdrop: 'true',
-            backdropClass: ".fade:not(.show)",
-            backdropClass: ".modal-backdrop",
-            backdropClass: ".col-lg-8",
-            backdropClass: ".modal-content",
-          /*  appendTo: document.getElementById("#main-baihat"),*/
-            size: '10'
-        });
-        modalInstance.result.then(function () {
-            $scope.initData();
-        }, function () {
-        });
-       
-    };
-    $scope.edit = function (key) {
-     /*   $scope.model.id = key;*/
-        var modalInstance =  $uibModal.open({
-            animation: true,
-            templateUrl: ctxfolderurl + '/edit.html',
-            controller: 'edit',
-            backdrop: 'true',
-            backdropClass: ".fade:not(.show)",
-            backdropClass: ".modal-backdrop",
-            backdropClass: ".col-lg-8",
-            backdropClass: ".modal-content",
-
-            size: '100',
-            resolve: {
-                para: function () {
-                    return key;
-                }
-            }
-        });
-        modalInstance.result.then(function () {
-            $scope.initData();
-        }, function () {
-        });
-    };
-   
-    $scope.delete = function (key) {
-        $scope.model.id = key;
-        dataservice.xoaBaiHat($scope.model, function (rs) {
-            rs = rs.data;
-            $scope.deletedata = rs;
-            $scope.initData();
-        });
-
-    }
-   
- 
-});
-
-app.controller('add', function ($rootScope, $scope, dataservice, $uibModalInstance) { 
-    $scope.cancel = function () {
-        $uibModalInstance.dismiss('cancel');
-    };
-    $scope.model = {
-        id: '',
-        nguoidung_id: 'admin',
-        tenbaihat: '',
-        mota: '',
-        luottaixuong: (Math.floor(Math.random() * 100) + 1),   
-        luotthich: (Math.floor(Math.random() * 100) + 1),
-        loibaihat: '',
-        casi: '',
-        luotnghe: (Math.floor(Math.random() * 100) + 1),
-        theloai_id: '',
-        danhsachphattheloai_id: '',
-        chude_id: '',
-        thoiluongbaihat: '',
-        quangcao:'',
-        link: '',
-        linkhinhanh: ''
-    }
-    $scope.text = {
-        key:''
-    }
-   
-   
-    /*CKEDITOR.replace('editor11', {});  */
-    $scope.initData = function () {
-      
-      
-    //    element.style.color = 'red';
-       
-        //var textarea = document.body.appendChild(document.createElement('textarea'));
-        //CKEDITOR.replace(textarea);
-     /*   CKEDITOR.replace('editor11');*/
-        dataservice.taiTheLoai(function (rs) {
-
-
-            rs = rs.data;
-            $scope.dataloadtheloai = rs;
-
-
-            $scope.valueTheLoai = rs[0].object.id;
-            $scope.text.key = $scope.valueTheLoai;
-            dataservice.taiDanhSachPhatTheLoai($scope.text, function (rs) {
-                rs = rs.data;
-                $scope.datataiDanhSachPhatTheLoai = rs;
-                $scope.valueDanhSachPhatTheLoai = rs[0].object.id;
-            });
-           
-        });
-       
-        dataservice.taiChuDe(function (rs) {
-            rs = rs.data;
-            $scope.dataloadchude = rs;
-            $scope.valueChuDe = rs[0].object.id;
-
-        });
-    };
-    $scope.changeTheLoai = function () {
-        $scope.text.key = $scope.valueTheLoai
-        dataservice.taiDanhSachPhatTheLoai($scope.text, function (rs) {
-            rs = rs.data;
-            $scope.datataiDanhSachPhatTheLoai = rs;
-            $scope.valueDanhSachPhatTheLoai = rs[0].object.id;
-        });
-
-    };
-    //$scope.changeChude = function () {
-
-
-    //};
-    $scope.initData();
-    var duLieuNhac= new FormData();
-    var duLieuHinh = new FormData();
-    $scope.submit = function () {
-        
-
-
-        if (!$scope.addBaiHat.addTenBaiHat.$valid || !$scope.addBaiHat.addLinkBaiHat.$valid || !$scope.addBaiHat.addTenCaSi.$valid ) {
-            alert("Vùng Lòng  Điền Đầy Đủ Thông Tin !!!");
-        }
-        else {
-
-            $scope.model.theloai_id = $scope.valueTheLoai;
-            $scope.model.danhsachphattheloai_id = $scope.valueDanhSachPhatTheLoai;
-            $scope.model.chude_id = $scope.valueChuDe;
-            $scope.model.tenbaihat = $scope.addTenBaiHat;
-            $scope.model.casi = $scope.addTenCaSi;
-            $scope.model1 = $scope.model;
-            dataservice.uploadaudio(duLieuNhac, function (rs) {
-                rs = rs.data;
-                $scope.model.link = rs;
-                dataservice.uploadHinhAnh(duLieuHinh, function (rs) {
-                    rs = rs.data;
-                    $scope.model.linkhinhanh = rs;
-                    dataservice.taoBaiHat($scope.model, function (rs) {
-                        rs = rs.data;
-                        $scope.data = rs;
-                    });
-                });
-            });
-
-
-            $uibModalInstance.dismiss('cancel');  
-        }
-       
-    }
-    $scope.getTheFiles = function ($files) {
-        $scope.addLinkBaiHat = "Đã Chọn Bài Hát";
-        duLieuNhac = new FormData();
-        duLieuNhac.append("File", $files[0]);  
-    //    for (var i = 0; i < $files.length; i++) {
-    //        formData.append("File", $files[i]);
-    //    }     
-       var objectUrl = URL.createObjectURL($files[0]);
-        $("#audio").prop("src", objectUrl);
-        $("#audio").on("canplaythrough", function (e) {
-            var seconds = e.currentTarget.duration;
-            let currentMinutes = Math.floor(seconds / 60);
-            let currentSeconds = Math.floor(seconds - currentMinutes * 60);
-            let durationMinutes = Math.floor(seconds / 60);
-            let durationSeconds = Math.floor(seconds - durationMinutes * 60);
-
-            // Adding a zero to the single digit time values
-            if (currentSeconds < 10) { currentSeconds = "0" + currentSeconds; }
-            if (durationSeconds < 10) { durationSeconds = "0" + durationSeconds; }
-            if (currentMinutes < 10) { currentMinutes = "0" + currentMinutes; }
-            if (durationMinutes < 10) { durationMinutes = "0" + durationMinutes; }
-
-
-            var total_duration = durationMinutes + ":" + durationSeconds;
-     
-            $scope.model.thoiluongbaihat = total_duration;
-            //var dc = moment.duration(secondsn, "seconds");
-            //var time = "";
-            //var hours = duration.hours();
-            //if (hours > 0) { time = hours + ":"; }
-
-            //time = time + duration.minutes() + ":" + duration.seconds();
-            //time = time + duration.minutes() + ":" + duration.seconds();
-         
-        });
-    }
-    $scope.getTheFilesHinhAnh = function ($files) {
-        duLieuHinh = new FormData();
-        duLieuHinh.append("File1", $files[0]);     
-        //for (var i = 0; i < $files.length; i++) {
-        //    formData.append("File", $files[i]);
-        //}
-             
-    }
 });
 app.controller('edit', function ($rootScope, $scope, $uibModalInstance, dataservice, para) {
-    CKEDITOR.replace('okem');
     $scope.cancel = function () {
         $uibModalInstance.dismiss('cancel');
     }
-    $scope.data1 = para;
-    //$scope.initData = function () {
-
-    //    dataservice.editloadbaihat(para, function (rs) {
-           
-    //        rs = rs.data;
-    //        $scope.EditItem = rs;
-    //    });
-
-    //}
-    //$scope.initData();
+    $scope.modelbaihat = para;
     $scope.text = {
         key: ''
     };
-
     $scope.initData = function () {
         $scope.kt = 0;
         dataservice.taiTheLoai(function (rs) {
-
-
             rs = rs.data;
             $scope.dataloadtheloai = rs;
-
-
-         //   $scope.valueTheLoai = rs[0].object.id;
-          //  $scope.text.key = $scope.valueTheLoai
+        
             for (var i = 0; i < $scope.dataloadtheloai.length; i++) {
-                if ($scope.data1.object.theloai_id == rs[i].object.id) {
+                if ($scope.modelbaihat.theloai_id == rs[i].object.id) {
                     $scope.valueTheLoai = rs[i].object.id;
                     break;
                 }
@@ -506,30 +800,26 @@ app.controller('edit', function ($rootScope, $scope, $uibModalInstance, dataserv
             dataservice.taiDanhSachPhatTheLoai($scope.text, function (rs) {
                 rs = rs.data;
                 $scope.datataiDanhSachPhatTheLoai = rs;
-             //   $scope.valueDanhSachPhatTheLoai = rs[0].object.id;
-
                 for (var i = 0; i < $scope.datataiDanhSachPhatTheLoai.length; i++) {
-                    if ($scope.data1.object.danhsachphattheloai_id == rs[i].object.id) {
+                    if ($scope.modelbaihat.danhsachphattheloai_id == rs[i].object.id) {
                         $scope.valueDanhSachPhatTheLoai = rs[i].object.id;
                         break;
                     }
                 }      
-
             });
-
         });
-
         dataservice.taiChuDe(function (rs) {
             rs = rs.data;
             $scope.dataloadchude = rs;
-        //    $scope.valueChuDe = rs[0].object.id;
             for (var i = 0; i < $scope.dataloadchude.length; i++) {
-                if ($scope.data1.object.chude_id == rs[i].object.id) {
+                if ($scope.modelbaihat.chude_id == rs[i].object.id) {
                     $scope.valueChuDe = rs[i].object.id;
                     break;
                 }
             }      
         });
+        $scope.editTenBaiHat = $scope.modelbaihat.tenbaihat;
+        $scope.editTenCaSi = $scope.modelbaihat.casi;
     };
     $scope.changeTheLoai = function () {
         $scope.text.key = $scope.valueTheLoai
@@ -540,92 +830,34 @@ app.controller('edit', function ($rootScope, $scope, $uibModalInstance, dataserv
         });
 
     };
-    //$scope.changeChude = function () {
 
-
-    //};
     $scope.initData();
-    $scope.model = {
-        id: '',
-        nguoidung_id: '',
-        tenbaihat: '',
-        mota: '',
-        luottaixuong: '',
-        thoiluongbaihat: '',
-        luotthich: '',
-        loibaihat: '',
-        casi: '',
-        luotnghe: '',
-        theloai_id: '',
-        chude_id: '',
-        link: '',
-        linkhinhanh: ''
-    }
-    var duLieuHinh = new FormData();
-   
-
-   
+    
     $scope.submit = function () {
-        $scope.model = $scope.data1;
-        $scope.model.object.theloai_id = $scope.valueTheLoai;
-        $scope.model.object.chude_id = $scope.valueChuDe;
-        $scope.model.object.danhsachphattheloai_id = $scope.valueDanhSachPhatTheLoai;
-        //dataservice.editbaihat($scope.model.object, function (rs) {
-        //    rs = rs.data;
-        //    $scope.EditItem = rs;
-
-        //});
-        $scope.modelok = $scope.model;
-   
-        if ($scope.kt == 1) {
-            dataservice.uploadHinhAnh(duLieuHinh, function (rs) {
-                rs = rs.data;
-                $scope.model.object.linkhinhanh = rs;
-
-                dataservice.suaBaiHat($scope.model.object, function (rs) {
-                    rs = rs.data;
-                    $scope.EditItem = rs;
-
-                });
-            })
-            $uibModalInstance.dismiss('cancel');
-        } else {
-            dataservice.suaBaiHat($scope.model.object, function (rs) {
-                rs = rs.data;
-                $scope.EditItem = rs;
+        if ( $scope.valueDanhSachPhatTheLoai == null
+            ||
+            $scope.valueTheLoai == null
+            ||
+            $scope.valueChuDe == null
+            ||
+           !$scope.editBaiHat.editTenBaiHat.$valid         
+            || !$scope.editBaiHat.editTenCaSi.$valid ) {
+            alert("Vùng Lòng  Điền Đầy Đủ Và Kiểm Tra Thông Tin !!!");
+        }
+        else {
+            $scope.modelbaihat.tenbaihat =  $scope.editTenBaiHat ;
+            $scope.modelbaihat.casi = $scope.editTenCaSi;
+            $scope.modelbaihat.theloai_id = $scope.valueTheLoai;
+            $scope.modelbaihat.danhsachphattheloai_id = $scope.valueDanhSachPhatTheLoai;
+            $scope.modelbaihat.chude_id = $scope.valueChuDe;
+            $scope.modelbaihat.tenbaihat = $scope.editTenBaiHat;
+            dataservice.suaBaiHat($scope.modelbaihat,function (rs) {
+               rs = rs.data;
+                $scope.suaBaiHat = rs;
 
             });
+
             $uibModalInstance.dismiss('cancel');
-        }
-
-    
+        }   
     }
-    $scope.getTheFilesHinhAnh = function ($files) {
-        duLieuHinh = new FormData();
-        duLieuHinh.append("File1", $files[0]);
-        //for (var i = 0; i < $files.length; i++) {
-        //    formData.append("File", $files[i]);
-        //}
-        $scope.kt = 1;
-
-    }
-    //function validationSelect(data) {
-    //    var mess = { Status: false, Title: "" }
-    //    if (data.Name == "") {
-    //        $scope.errorName = true;
-    //        mess.Status = true;
-    //    }
-    //    else
-    //        $scope.errorName = false;
-    //    if (data.Subject == "") {
-    //        $scope.errorSubject = true;
-    //        mess.Status = true;
-    //    }
-    //    else
-    //        $scope.errorSubject = false;
-
-    //    return mess;
-    //};
-
-
 });

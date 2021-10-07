@@ -1777,6 +1777,9 @@ namespace TFourMusic.Controllers
                 baihat.theloai_id = list[item].theloai_id;
                 baihat.thoigian = list[item].thoigian;
                 baihat.thoiluongbaihat = list[item].thoiluongbaihat;
+                baihat.thoigianxoa = list[item].thoigianxoa;
+                baihat.vohieuhoa = list[item].vohieuhoa;
+                
                 bool checkYeuThich = false;
                 for (int j = 0; j < listyeuthich.Count(); j++)
                 {
@@ -1831,6 +1834,8 @@ namespace TFourMusic.Controllers
                 nguoidung.thoigian = list[item].thoigian;
                 nguoidung.uid = list[item].uid;
                 nguoidung.vip = list[item].vip;
+                nguoidung.vohieuhoa = list[item].vohieuhoa;
+                
                 //  nguoidung.website = list[item].website;
                 bool checkYeuThich = false;
                 for (int j = 0; j < listyeuthich.Count(); j++)
@@ -1887,6 +1892,7 @@ namespace TFourMusic.Controllers
                 nguoidung.thoigian = list[item].thoigian;
                 nguoidung.uid = list[item].uid;
                 nguoidung.vip = list[item].vip;
+                nguoidung.vohieuhoa = list[item].vohieuhoa;
                 //   nguoidung.website = list[item].website;
                 nguoidung.soluongtheodoi = (from yeuthich in listyeuthichtong
                                             where yeuthich.nguoidung_theodoi_id == list[item].uid

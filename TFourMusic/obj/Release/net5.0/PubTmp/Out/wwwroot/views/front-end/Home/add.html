@@ -1,5 +1,5 @@
 ﻿
-<div class="col-lg-8">
+<!--<div class="col-lg-8">
     <div class="card card-small mb-4">
         <div class="card-header border-bottom">
             <h6 class="m-0">Tạo Bài Hát</h6>
@@ -27,7 +27,7 @@
                                     <input type="file" ng-model="addLinkBaiHat" class="form-control" style="font-size:15px" name="addLinkBaiHat" id="file" ng-files="getTheFiles($files)" accept="audio/*" required multiple>
                                     <span ng-show="addBaiHat.addLinkBaiHat.$touched && addBaiHat.addLinkBaiHat.$invalid" style="color: red;">Vui Lòng Chọn Bài Hát.</span>
                                     <audio id="audio" style="display: none;"></audio>
-                                    <!--audio thấy thời lượng-->
+                                    audio thấy thời lượng
                                 </div>
                                 <div class="form-group col-md-6">
                                     <label for="hinhanh">Hình Ảnh</label>
@@ -71,8 +71,8 @@
                                     <label id="addLoiBaiHat" class="okemtey" for="feLastName">Lời Bài Hát</label>
                                     <input type="text" ng-model="model.loibaihat" class="form-control" value="Sierra">
 
-                                    <!--<textarea  id="okem1" rows="8" cols="100">
-                                    </textarea>-->
+                                    <textarea  id="okem1" rows="8" cols="100">
+                                    </textarea>
 
                                 </div>
                             </div>
@@ -87,7 +87,188 @@
             </li>
         </ul>
     </div>
-</div>
+</div>-->
+<!--<div class="modal_content_upload_baihat">-->
 
 
+    <div class="modal-header" style="margin: 0px 10px 0px 10px;">
+        <!--<button type="button" class="close" data-dismiss="modal">&times;</button>-->
+        <h4 class="modal-title">Tải Lên Bài Hát</h4>
+    </div>
+    <div class="modal-body">
+        <form name="addBaiHat">
+            <div class="form-row">
+                <div class="form-group col-md-6">
+                    <label for="feLastName" class="ten_input">Tên bài hát</label>
+                    <input type="text" ng-model="addTenBaiHat" name="addTenBaiHat" class="input_upload_baihat" id="feLastName12" maxlength="255" value="Brooks" required>
+                    <span class="thong_bao_sai" ng-show="addBaiHat.addTenBaiHat.$touched && addBaiHat.addTenBaiHat.$invalid" >Tên Bài Hát không hợp lệ.</span>
+                </div>
+                <div class="form-group col-md-6">
+                    <label for="feFirstName" class="ten_input">Mô tả</label>
+                    <input type="text" ng-model="model.mota" class="input_upload_baihat" id="feF1irstName" value="Sierra">
+                </div>
+
+            </div>
+            <div class="form-row">
+                <div class="form-group col-md-6">
+                    <label for="baihat" class="ten_input">Bài Hát</label>
+                    <input type="file" ng-model="addLinkBaiHat" class="input_upload_baihat" style="font-size: 20px; font-style: italic; font-family: ui-monospace;" name="addLinkBaiHat" id="file" ng-files="getTheFiles($files)" accept="audio/*" required >
+                    <span class="thong_bao_sai" ng-show="addBaiHat.addLinkBaiHat.$touched && addBaiHat.addLinkBaiHat.$invalid">Vui Lòng Chọn Bài Hát.</span>
+                    <span class="thong_bao_sai" ng-show="dinhDangBaiHat != 'audio/mpeg' ">Sai Định Dạng Bài Hát (*.mp3).</span>
+                    <audio id="audio" style="display: none;"></audio>
+                    <!--audio thấy thời lượng-->
+                </div>
+                <div class="form-group col-md-6">
+                    <label for="hinhanh" class="ten_input">Hình Ảnh</label>
+                    <input type="file" ng-model="addLinkHinhAnh" class="input_upload_baihat" style="font-size: 20px; font-style: italic; font-family: ui-monospace;" name="addLinkHinhAnh" id="hinhanh" ng-files="getTheFilesHinhAnh($files)" accept="image/*" required >
+                    <span class="thong_bao_sai" ng-show="addBaiHat.addLinkHinhAnh.$touched && addBaiHat.addLinkHinhAnh.$invalid">Vui Lòng Chọn Hình Ảnh.</span>
+                    <span class="thong_bao_sai" ng-show="dinhDangHinhAnh != 'image/'  ">Sai Định Dạng Hình Ảnh (*.jpg, *.png).</span>
+                </div>
+            </div>
+
+            <div class="form-row">
+                <div class="form-group col-md-6">
+                    <label for="feFirstName" class="ten_input">Chủ Đề</label>
+                    <select ng-model="valueChuDe" style="width: 100%; " class="input_upload_baihat" ng-change="changeChuDe()">
+                        <option class="option_upload_baihat" ng-value="x.id" value="{{x.id}}" ng-repeat="x in taiChuDe">{{x.tenchude}}</option>
+
+                    </select>
+                </div>
+                <div class="form-group col-md-6">
+                    <label for="feFirstName" class="ten_input">Ca Sĩ</label>
+                    <input type="text" ng-model="addTenCaSi" name="addTenCaSi" class="input_upload_baihat" maxlength="255" id="feFir12stNa2me" value="Sierra" required>
+                    <span class="thong_bao_sai" ng-show="addBaiHat.addTenCaSi.$touched && addBaiHat.addTenCaSi.$invalid" >Tên Ca Sĩ không hợp lệ.</span>
+                </div>
+            </div>
+            <div class="form-row">
+                <div class="form-group col-md-6">
+                    <label for="feFirstName" class="ten_input">Thể Loại</label>
+                    <select ng-model="valueTheLoai" style="width: 100%; " class="input_upload_baihat" ng-change="changeTheLoai()">
+                        <option class="option_upload_baihat" ng-value="x.id" value="{{x.id}}" ng-repeat="x in taiTheLoai">{{x.tentheloai}}</option>
+
+                    </select>
+                </div>
+                <div class="form-group col-md-6">
+                    <label for="feFirstName" class="ten_input">Danh Sách Phát Thể Loại</label>
+                    <select ng-model="valueDanhSachPhatTheLoai" style="width: 100%; " class="input_upload_baihat" ng-change="changeDanhSachPhatTheLoai()">
+                        <option  class="option_upload_baihat" ng-value="x.id" value="{{x.id}}" ng-repeat="x in taiDanhSachPhatTheLoai">{{x.tendanhsachphattheloai}}</option>
+
+                    </select>
+                </div>
+            </div>
+            <div class="form-row" style="padding-bottom: 0px;">
+                <div class="form-group col-md-6">
+                    <label id="addLoiBaiHat" class="ten_input" for="feLastName">Lời Bài Hát</label>
+                    <!--<input type="text" ng-model="model.loibaihat" class="form-control" value="Sierra">-->
+                    <textarea ng-model="model.loibaihat" name="okem1" class="textarea_uploadbaihat" rows="8" cols="100" >
+                                    </textarea>
+                    <!--<textarea id="okem1" rows="8" cols="100">
+                                    </textarea>-->
+                </div>
+            </div>
+        </form>
+    </div>
+    <div class="modal-footer" style="margin:0px 10px -20px 10px;">
+        <button type="submit" ng-click="submit()" class="package__btn123" id="submitcd">Tạo Bài Hát</button>
+        <button type="submit" ng-click="cancel()" class="package__btn123">Thoát</button>
+    </div>
+<!--</div>-->
+<style>
+    /*.modal_content_upload_baihat {
+        background-image: url(https://firebasestorage.googleapis.com/v0/b/tfourmusic-1e3ff.appspot.com/o/image%2Fvip%2Fbg_library.jpg?alt=media&token=4935137f-0fc3-4f02-9b8d-54f5116af8bc);
+        height: 70%;
+        width: 50%;
+        position: absolute;
+        left: 25%;
+        background-size: cover;
+        border-radius: 40px;
+        color: white;
+        top: 10%;
+    }*/
+    .input[type="file" i] {
+        background: #b30e6d;
+        
+    }
+    .package__btn123 {
+        -webkit-appearance: media-slider;
+        cursor: pointer;
+        border-radius: 999px;
+        background-color: #ed2b91;
+        color: #f3f591 !important;
+        font-size: 1.5em;
+        text-transform: uppercase;
+        font-weight: bold;
+        padding: 0.4em 2em;
+        display: inline-block;
+        margin-bottom: 1.5em;
+        -webkit-tap-highlight-color: rgba(0,0,0,0.2) !important;
+    }
+    .textarea_uploadbaihat {
+        border-color: #fff;
+        width: 204%;
+        /*        border-radius: 999px;*/
+      /*  border: 1px solid #fff;*/
+        background-color: #ffffff1a;
+        color: #fff;
+    }
+    .modal-title {
+        color: white;
+        font-family: ui-monospace;
+        font-size: 21px;
+    }
+    .thong_bao_sai {
+        color: yellow;
+    }
+    .option_upload_baihat {
+        /* background: #b30e6d;*/
+        color: #f3f591;
+        background-color: #ed2b91;
+    }
+    .form-row {
+        display: -ms-flexbox;
+        display: flex;
+        -ms-flex-wrap: wrap;
+        flex-wrap: wrap;
+        margin-right: -5px;
+        margin-left: -5px;
+        padding-bottom: 10px;
+    }
+    .modal-card, .modal-content > * {
+        margin: 10px 10px 0px 10px;
+    }
+    .modal-content {
+        background-image: url(https://firebasestorage.googleapis.com/v0/b/tfourmusic-1e3ff.appspot.com/o/image%2Fvip%2Fbg.jpg?alt=media&token=edcad8d4-01df-4530-a5c3-80d0dff2bd34);
+        border-radius: 40px;
+        background-size: cover;
+    }
+    .modal-header {
+ 
+        display: block;
+    }
+    .fade:not(.show) {
+        opacity: 100% !important;
+    }
+    .ten_input {
+        color: white;
+        font-size: 14px;
+    }
+    .input_upload_baihat {
+        height: 40px;
+        width: 100%;
+        border-radius: 999px;
+        border: 1px solid #fff;
+        background-color: #ffffff1a;
+        padding: 0 15px;
+        font-size: 14px;
+        max-width: 100%;
+        align-items: center;
+        display: inline-flex;
+        justify-content: flex-start;
+        line-height: 1.5;
+        vertical-align: top;
+        outline: none;
+        color: #fff;
+    }
+  
+</style>
 

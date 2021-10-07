@@ -418,3 +418,37 @@ input:checked + .slider1:before {
         background-color: #CCCCCC;
         cursor: default;
     }
+.mau {
+  
+}
+.hinhanh {
+    height: 50px;
+    width: 50px;
+    border-radius: 10px;
+    object-fit: cover;
+}
+.dodai{
+    height:520px;
+    max-height:520px;
+}
+.dodaibang {
+    height: 420px;
+    max-height: 420px;
+}
+.vitrigiua {
+    padding-top: 1.5em !important;
+}
+.table thead th {
+    vertical-align: bottom;
+    background: #bdd9f6;
+}
+.chuot {
+    cursor: pointer;
+}
+.sortorder:after {
+    content: '\25b2';
+}
+
+.sortorder.hoatdong:after {
+    content: '\25bc';
+}

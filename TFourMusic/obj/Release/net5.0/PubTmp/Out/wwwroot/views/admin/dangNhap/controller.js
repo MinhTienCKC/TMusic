@@ -21,7 +21,10 @@ app.factory('dataservice', function ($http) {
                
             }).then(callback);
           
-        }
+        },
+        kiemTra: function (data, callback) {
+            $http.post('/Admin/DangNhap/kiemTra', data).then(callback);
+        },
         //login1: function (token,callback) {
         //    $http({
         //        method: 'post',
@@ -68,38 +71,60 @@ app.config(function ($routeProvider) {
             controller: 'index'
         })
 })
-app.controller('T_Music', function () {
+app.controller('T_Music', function ($rootScope, $scope, dataservice) {
+    $scope.model1 = {
+        returnUrl: ''
+        // returnSecureToken: "true"
 
+    }   
 });
 app.controller('index', function ($rootScope, $scope, dataservice) {
 
     $scope.model = {
         email: '',
         password: '',
-        returnSecureToken: "true"
+        returnUrl: ''
+       // returnSecureToken: "true"
        
     }
+    //$scope.submit = function () {
+
+    //    //alert($scope.password);
+    //    $scope.model.email = $scope.email;
+    //    $scope.model.password = $scope.password;
+    //    dataservice.token($scope.model, function (rs) {
+
+    //        rs = rs.data;
+
+    //        $scope.satthuc = rs;
+    //        //dataservice.satthuc($scope.satthuc, function (rs) {
+    //        //    rs = rs.data;            
+    //        //});
+           
+    //        dataservice.login($scope.satthuc, function (rs) {
+    //            rs = rs.data;
+                
+    //            window.location.href = '/admin/TheLoai';
+    //        });
+           
+    //    });
+    //}
     $scope.submit = function () {
 
         //alert($scope.password);
         $scope.model.email = $scope.email;
         $scope.model.password = $scope.password;
-        dataservice.token($scope.model, function (rs) {
+        $scope.model.returnUrl = $scope.model1.returnUrl; 
+        dataservice.kiemTra($scope.model, function (rs) {
 
             rs = rs.data;
-
-            $scope.satthuc = rs;
-            //dataservice.satthuc($scope.satthuc, function (rs) {
-            //    rs = rs.data;            
-            //});
-           
-            dataservice.login($scope.satthuc, function (rs) {
-                rs = rs.data;
+            if (rs == false) {
                 
-                window.location.href = '/admin/TheLoai';
-            });
+                alert("sai mật khẩu");
+            } else {
+                window.location.href = rs.returnUrl;
+            }
            
         });
     }
-
 });

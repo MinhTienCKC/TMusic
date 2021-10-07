@@ -1,0 +1,182 @@
+﻿
+
+<div class="modal-header" style="margin: 0px 0px 0px 0px;">
+    <h6 class="m-0">Xử Lý Vi Phạm : {{data.email_nguoidung_baocao}}</h6>
+    <button type="submit" id="btntext" style="display:none;" class="btn btn-accent"></button>
+</div>
+<div class="modal-body" style="padding: 15px 30px 0px 30px !important;">
+    <form name="editChuDe">
+
+        <div class="form-row" ng-if="taiBaiHatViPham.length > 0">
+            <table class="table mb-0">
+                <thead class="bg-light">
+                    <tr>
+                        <th scope="col" class="border-0 " style="width: 20%;">Bài Hát Vi Phạm</th>
+                        <th scope="col" class="border-0 ">Nội Dung</th>
+                        <th scope="col" class="border-0" style="width: 8%;">Mô Tả</th>
+                        <th scope="col" class="border-0">Phát Nhạc</th>
+                        <th scope="col" class="border-0" title="Vô hiệu hóa bài hát">VHH Bài Hát</th>
+                        <th scope="col" class="border-0" title="Vô hiệu hóa người dùng">VHH Người Dùng</th>
+
+
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td class="vitrigiua" style="display: flex; padding: 0px 0px 0px 20px; padding-top:30px !important;">
+                            <div><img src="{{taiBaiHatViPham[0].linkhinhanh}}" class="icon-category hinhanh"></div>
+                            <div style="padding-left: 10px;">
+                                <span style="display: block; text-align: left;">{{taiBaiHatViPham[0].tenbaihat}}</span>
+                                <span style="display: block; font-size: 12px; text-align: left;">{{taiBaiHatViPham[0].casi}}</span>
+                            </div>
+                        </td>
+                        <td class="vitrigiua"><p ng-repeat="data1 in data.noidung " style="margin-bottom: 0px !important;">{{data1}}</p></td>
+                        <td class="vitrigiua">{{data.motavande}}</td>
+                        <td class="vitrigiua1">
+                            <audio controls>
+                                <source src="{{taiBaiHatViPham[0].link}}" type="audio/mpeg">
+                            </audio>
+                        </td>
+                        <td class="vitrigiua">
+                            <label class="switch1">
+                                <input ng-change="voHieuHoaBaiHat(taiBaiHatViPham[0])" type="checkbox" ng-model="taiBaiHatViPham[0].vohieuhoa"
+                                       ng-true-value="1" ng-false-value="0">
+                                <span ng-if="taiBaiHatViPham[0].vohieuhoa == 1" class="slider1 round" title="Đã vô hiệu hóa"></span>
+                                <span ng-if="taiBaiHatViPham[0].vohieuhoa == 0" class="slider1 round" title="Chưa vô hiệu hóa"></span>
+                            </label>
+                        </td>
+                        <td class="vitrigiua">
+                            <label class="switch1">
+                                <input ng-change="voHieuHoaNguoiDung(taiChiTietNguoiDungViPham[0])" type="checkbox" ng-model="taiChiTietNguoiDungViPham[0].vohieuhoa"
+                                       ng-true-value="1" ng-false-value="0">
+                                <span ng-if="taiChiTietNguoiDungViPham[0].vohieuhoa == 1" class="slider1 round" title="Đã vô hiệu hóa"></span>
+                                <span ng-if="taiChiTietNguoiDungViPham[0].vohieuhoa == 0" class="slider1 round" title="chưa vô hiệu hóa"></span>
+                            </label>
+                        </td>
+
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+        <div class="form-row" ng-if="taiBaiHatBangQuyen.length > 0">
+            <table class="table mb-0">
+                <thead class="bg-light">
+                    <tr>
+                        <th scope="col" class="border-0 " style="width: 20%;">Bài Hát Vi Phạm</th>
+                        <th scope="col" class="border-0 ">Nội Dung</th>
+                        <th scope="col" class="border-0" style="width: 8%;">Mô Tả</th>
+                        <th scope="col" class="border-0">Phát Nhạc</th>
+                        <th scope="col" class="border-0" title="Vô hiệu hóa người dùng">VHH Người Dùng</th>
+                        <th scope="col" class="border-0" title="Vô hiệu hóa bài hát">VHH Bài Hát</th>
+
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td class="vitrigiua" style="display: flex; padding: 0px 0px 0px 20px; padding-top:30px !important;">
+                            <div><img src="{{taiBaiHatBangQuyen[0].linkhinhanh}}" class="icon-category hinhanh"></div>
+                            <div style="padding-left: 10px;">
+                                <span style="display: block; text-align: left;">{{taiBaiHatBangQuyen[0].tenbaihat}}</span>
+                                <span style="display: block; font-size: 12px; text-align: left;">{{taiBaiHatBangQuyen[0].casi}}</span>
+                            </div>
+                        </td>
+                        <td class="vitrigiua2">
+                            <audio controls>
+                                <source src="{{taiBaiHatBangQuyen[0].link}}" type="audio/mpeg">
+                            </audio>
+                        </td>
+
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+        <!--<div class="form-row" ng-if="taiBaiHatViPham.length > 0">
+            <table class="table mb-0">
+                <thead class="bg-light">
+                <th scope="col" class="border-0 " style="width: 20%;">Bài Hát Vi Phạm</th>
+                <th scope="col" class="border-0 ">Nội Dung</th>
+                <th scope="col" class="border-0" style="width: 8%;">Mô Tả</th>
+                <th scope="col" class="border-0">Phát Nhạc</th>
+                <th scope="col" class="border-0" title="Vô hiệu hóa người dùng">VHH Người Dùng</th>
+                <th scope="col" class="border-0" title="Vô hiệu hóa bài hát">VHH Bài Hát</th>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td class="vitrigiua" style="display: flex; padding: 0px 0px 0px 20px; padding-top:30px !important;">
+                            <div><img src="{{taiBaiHatViPham[0].linkhinhanh}}" class="icon-category hinhanh"></div>
+                            <div style="padding-left: 10px;">
+                                <span style="display: block; text-align: left;">{{taiBaiHatViPham[0].tenbaihat}}</span>
+                                <span style="display: block; font-size: 12px; text-align: left;">{{taiBaiHatViPham[0].casi}}</span>
+                            </div>
+                        </td>
+                        <td class="vitrigiua"><p ng-repeat="data1 in data.noidung " style="margin-bottom: 0px !important;">{{data1}}</p></td>
+                        <td class="vitrigiua">{{data.motavande}}</td>
+                        <td class="vitrigiua">
+                            <audio controls>
+                                <source src="{{taiBaiHatViPham[0].link}}" type="audio/mpeg">
+                            </audio>
+                        </td>
+                        <td class="vitrigiua">
+                            <label class="switch1">
+                                <input ng-change="cheDo(taiBaiHatViPham[0])" type="checkbox" ng-model="taiBaiHatViPham[0].vohieuhoa"
+                                       ng-true-value="1" ng-false-value="0">
+                                <span ng-if="taiBaiHatViPham[0].vohieuhoa == 1" class="slider1 round" title="Công Khai"></span>
+                                <span ng-if="taiBaiHatViPham[0].vohieuhoa == 0" class="slider1 round" title="Cá Nhân"></span>
+                            </label>
+                        </td>
+                        <td class="vitrigiua">
+                            <label class="switch1">
+                                <input ng-change="cheDo(taiBaiHatViPham[0])" type="checkbox" ng-model="taiBaiHatViPham[0].vohieuhoa"
+                                       ng-true-value="1" ng-false-value="0">
+                                <span ng-if="taiBaiHatViPham[0].vohieuhoa == 1" class="slider1 round" title="Công Khai"></span>
+                                <span ng-if="taiBaiHatViPham[0].vohieuhoa == 0" class="slider1 round" title="Cá Nhân"></span>
+                            </label>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>-->
+    </form>
+</div>
+<div class="modal-footer" style="margin:0px 0px 0px 0px;">
+
+    <button type="submit" ng-click="pheDuyet(data,taiChiTietNguoiDungViPham[0].vohieuhoa,taiBaiHatViPham[0].vohieuhoa)" class="btn btn-accent" id="submitcd">Phê Duyệt</button>
+    <button type="submit" ng-click="cancel()" class="btn btn-accent">Thoát</button>
+</div>
+<style>
+    .modal-content {
+        border-radius: 30px;
+        border: 1px solid #007bff;
+        top: 160px;
+        background: #F5F6F8;
+        width: 230%;
+        left: -35%;
+    }
+
+    .thong_bao_sai {
+        color: red;
+        font-size: 11px;
+    }
+
+    .kiemtra, .kiemtra.form-group {
+        height: 88px !important;
+        max-height: 88px !important;
+        margin-bottom: 0.1rem !important;
+    }
+
+    .modal-header {
+        display: block;
+        color: white;
+        border-bottom: 1px solid #007bff !important;
+    }
+
+    .modal-body {
+        padding: 0px 0px 0px 0px !important;
+    }
+
+    .modal-footer {
+        border-top: 1px solid #007bff !important;
+    }
+</style>
+
+

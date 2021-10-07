@@ -364,9 +364,9 @@
 }
 
 .icon_account {
-    font-size: 21px;
+    font-size: 16px;
     color: #ed2b91;
-    margin-top: 5px;
+    margin-top: 8px;
 }
 
 .icon_account_notfocus {
@@ -734,12 +734,12 @@
 }
 
 .icon_nav_right_first_canhan {
-    margin-top: 5px;
+    margin-top: 8px;
     position: absolute;
     right: 165px;
     /* opacity: 0; */
-    font-size: 21px;
-    color: #ffffff80;
+    font-size: 14px;
+    color: #ffffff;
 }
 
 .icon_active_yeuthich {
@@ -748,7 +748,7 @@
     right: 165px;
     color: #ed2b91;
     /* opacity: 0; */
-    font-size: 22px;
+    font-size: 16px;
 }
 
 .private {
@@ -1044,4 +1044,9 @@
     vertical-align: top;
     outline: none;
     color: #fff;
+}
+.list .list-item:hover {
+    background: #ffffff21;
+    opacity: 0.8;
+    transition: .2s;
 }

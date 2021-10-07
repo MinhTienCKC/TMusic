@@ -64,11 +64,13 @@ app.config(function ($routeProvider) {
 });
 app.filter('startFrom', function () {
     return function (input, start) {
+        if (!input || !input.length) { return; }
         start = +start; //parse to int
         return input.slice(start);
     }
 });
 app.controller('T_Music', function () {
+
 
 });
 app.controller('index', function ($rootScope, $scope, dataservice, $uibModal) {

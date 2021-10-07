@@ -4,26 +4,23 @@ var app = angular.module('T_Music', ["ui.bootstrap", "ngRoute"]);
 //var app = angular.module('T_Music', ["ui.bootstrap", "ngRoute", "ngValidate", "datatables", "datatables.bootstrap", 'datatables.colvis', "ui.bootstrap.contextMenu", 'datatables.colreorder', 'angular-confirm', "ngJsTree", "treeGrid", "ui.select", "ngCookies", "pascalprecht.translate"])
 app.factory('dataservice', function ($http) {
     return {
-        createchude: function (data, callback) {
-            $http.post('/Admin/ChuDe/CreateChuDe',data).then(callback);
+        taiChuDe: function ( callback) {
+            $http.post('/Admin/ChuDe/taiChuDe').then(callback);
         },
-        deletechude: function (data, callback) {
-            $http.post('/Admin/ChuDe/DeleteChuDe', data).then(callback);
+        xoaChuDe: function (data, callback) {
+            $http.post('/Admin/ChuDe/xoaChuDe', data).then(callback);
         },
-        editchude: function (data, callback) {
-            $http.post('/Admin/ChuDe/EditChuDe', data).then(callback);
+        suaChuDe: function (data, callback) {
+            $http.post('/Admin/ChuDe/suaChuDe', data).then(callback);
         },
-        loadchude: function (callback) {
-            $http.post('/Admin/ChuDe/LoadChuDe').then(callback);
-          
-        },
-        //loadtheloai: function (callback) {
-        //    $http.post('/Admin/ChuDe/LoadTheloai').then(callback);
+        suaLinkHinhAnhChuDe: function (data, callback) {
+            $http.post('/Admin/ChuDe/suaLinkHinhAnhChuDe', data).then(callback);
 
-        //},
+        },  
+        taoChuDe: function (data, callback) {
+            $http.post('/Admin/ChuDe/taoChuDe', data).then(callback);
+        },
        
-
-        
         uploadHinhAnh: function (data, callback) {
             $http({
                 method: 'post',
@@ -58,8 +55,32 @@ app.directive('ngFiles', ['$parse', function ($parse) {
     }
 
 }]);
+app.directive('validatekitudacbiet', function () {
+    function link(scope, elem, attrs, ngModel) {
+        ngModel.$parsers.push(function (viewValue) {
+            var reg = /^[^`~!@#$%\^&*_+={}|[\]\\:';"<>?,./]*$/;
+            // if view values matches regexp, update model value
+            if (viewValue.match(reg)) {
+                return viewValue;
+            }
+            // keep the model value as it is
+            var transformedValue = ngModel.$modelValue;
+            ngModel.$setViewValue(transformedValue);
+            ngModel.$render();
+            return transformedValue;
+        });
+    }
+
+
+    return {
+        restrict: 'A',
+        require: 'ngModel',
+        link: link
+    };
+});
 app.filter('startFrom', function () {
     return function (input, start) {
+        if (!input || !input.length) { return; }
         start = +start; //parse to int
         return input.slice(start);
     }
@@ -75,82 +96,45 @@ app.controller('T_Music', function () {
 
 });
 app.controller('index', function ($rootScope, $scope, dataservice, $uibModal) {
-  
-    $scope.max = 100;
-    $scope.dynamic = 0;
-    var downloadbaihat = document.getElementById("btntext");
-    $scope.text123 = function () {
-        $scope.dynamic += 10;
-    }   
-        setTimeout(function () {
-            downloadbaihat.click();
-            setTimeout(function () {
-                 downloadbaihat.click();
-                setTimeout(function () {
-                     downloadbaihat.click();
-                    setTimeout(function () {
-                        downloadbaihat.click();
-                        setTimeout(function () {
-                            downloadbaihat.click();
-                            setTimeout(function () {
-                                 downloadbaihat.click();
-                                setTimeout(function () {
-                                    downloadbaihat.click();
-                                    setTimeout(function () {
-                                        downloadbaihat.click();
-                                        setTimeout(function () {
-                                            downloadbaihat.click();
-                                            setTimeout(function () {
-                                                downloadbaihat.click();
-                                            }, 1000);
-                                        }, 1000);
-                                    }, 1000);
-                                }, 1000);
-                            }, 1000);
-                        }, 1000);
-                    }, 1000);
-                }, 1000);
-            }, 1000);
-        },1000);
-  
-   
-    //$scope.initData = function () {
-    //    dataservice.loadchude(function (rs) {
-            
-    //        rs = rs.data;
-    //        $scope.dataloadchude = rs;
-          
 
-            
-    //    });
+    $scope.tenbien = 'null';
+    $scope.hoatdong = false;
+    $scope.modelsapxep = 'null';
+    $scope.sapXep = function (data) {
+        $scope.hoatdong = ($scope.tenbien === data) ? !$scope.hoatdong : false;
+        $scope.tenbien = data;
+    }
 
-    //};
-
-    //$scope.initData();
+    $(".nav-noidung").addClass("active");
+    $scope.hienTimKiem = false;
+    $scope.showSearch = function () {
+        if (!$scope.hienTimKiem) {
+            $scope.hienTimKiem = true;
+        } else {
+            $scope.hienTimKiem = false;
+        }
+    }
+      
     
     $scope.model = {
         id: '',
-        chude_id: '',
+        mota: '',
         tenchude: '',
         linkhinhanh: ''
     }
     $scope.initData = function () {
 
-        dataservice.loadchude( function (rs) {
+        dataservice.taiChuDe( function (rs) {
 
             rs = rs.data;
-            $scope.dataloadchude = rs;
+            $scope.taiChuDe = rs;
 
-            $scope.q = '';
-
-            $scope.getData = function () {
-
-                return $filter('filter')($scope.dataloadchude, $scope.q)
-
-            }
-
+           
             $scope.numberOfPages = function () {
-                return Math.ceil($scope.dataloadchude.length / $scope.pageSize);
+                return Math.ceil($scope.taiChuDe.length / $scope.pageSize);
+            }
+            if ($scope.numberOfPages() < 8) {
+                $scope.soLuong = $scope.numberOfPages();
             }
         });
     };
@@ -169,30 +153,63 @@ app.controller('index', function ($rootScope, $scope, dataservice, $uibModal) {
         $scope.currentPage = data;
     };
 
-
     $scope.currentPage = 0;
     $scope.pageSize = 5;
+    $scope.size = 0;
+    $scope.soLuong = 8;
 
-
-
-    $scope.Prev = function () {
-        if ($scope.currentPage == 0) {
-
-            $scope.currentPage = 0;
+    $scope.Truoc = function () {
+        if ($scope.numberOfPages() < 8) {
+            return;
         }
-        else
+        else {
+            if ($scope.size == 0) {
+                return;
+            } else {
+                $scope.size -= 8;
+                $scope.soLuong = 8
+            }
+            $scope.currentPage = $scope.size;
+        }
 
-            $scope.currentPage = $scope.currentPage - 1;
     }
-    $scope.Next = function () {
-        if ($scope.currentPage < $scope.numberOfPages() - 1) {
-            $scope.currentPage = $scope.currentPage + 1;
+    $scope.Sau = function () {
+        if ($scope.numberOfPages() < 8) {
+            return;
+        }
+        else {
 
-        } else
-            $scope.currentPage = 0;
+            if ($scope.numberOfPages() % 8 == 0) {
+                if ($scope.size + $scope.soLuong >= $scope.numberOfPages())
+                    $scope.size = 0;
+                else {
+                    $scope.size += $scope.soLuong;
+                }
+                $scope.currentPage = $scope.size;
+            }
+            else {
+                $scope.bienTam = $scope.numberOfPages() % 8;
+                $scope.bienTam2 = $scope.numberOfPages() - $scope.bienTam;
+                if ($scope.size + $scope.soLuong == $scope.bienTam2) {
+
+                    $scope.size += 8;
+                    $scope.soLuong = $scope.bienTam;
+                }
+                else if ($scope.size + $scope.soLuong >= $scope.numberOfPages()) {
+                    $scope.size = 0;
+                    $scope.soLuong = 8
+                }
+                else {
+                    $scope.size += 8;
+
+                }
+                $scope.currentPage = $scope.size;
+            }
+        }
+
 
     }
-    $scope.add = function () {
+    $scope.taoChuDe_index = function () {
       
         var modalInstance =  $uibModal.open({
             animation: true,
@@ -247,92 +264,103 @@ app.controller('index', function ($rootScope, $scope, dataservice, $uibModal) {
         }, function () {
         });
     };
-    $scope.submit = function () {
-        dataservice.createchude($scope.model, function (rs) {
-            rs = rs.data;
-            $scope.data = rs;
-            $scope.initData();
-        });
-      
-    }
-    var config = {
-        apiKey: "AIzaSyAgokfQmJQ94XIHgQTHdZ3Kyd1rWUWPj5Q",
-        authDomain: "tfourmusic-1e3ff.firebaseapp.com",
-        databaseURL: "tfourmusic-1e3ff-default-rtdb.firebaseio.com",
-        projectId: "tfourmusic-1e3ff",
-        storageBucket: "tfourmusic-1e3ff.appspot.com"
+    
+    
 
-
-    };
-    firebase.initializeApp(config);
-    $scope.delete = function (key) {
-     
-        $scope.model.id = key;
-        dataservice.deletechude($scope.model, function (rs) {
+    $scope.xoaChuDe = function (data) {
+    
+        dataservice.xoaChuDe(data, function (rs) {
             rs = rs.data;
-            $scope.deletedata = rs;
-            $scope.initData();
+            $scope.xoaChuDe = rs;
+           
         });
 
     }
+    var duLieuHinh = new FormData();
+    $scope.suaHinhAnhChuDe = function ($files, data) {
+        $scope.BienTam = {
+            linkhinhanhmoi: '',
+            linkhinhanhcu: '',
+            chude_id: ''
+        }
+        $scope.modelchudecs = data;
 
+        if ($files[0].type == "image/png" || $files[0].type == "image/jpeg") {
+            duLieuHinh = new FormData();
+            duLieuHinh.append("File", $files[0]);
+            dataservice.uploadHinhAnh(duLieuHinh, function (rs) {
+                rs = rs.data;
+                $scope.BienTam.linkhinhanhmoi = rs;
+                $scope.BienTam.linkhinhanhcu = data.linkhinhanh;
+                $scope.BienTam.chude_id = data.id;
+                dataservice.suaLinkHinhAnhChuDe($scope.BienTam, function (rs) {
+                    rs = rs.data;
+                    $scope.modelchudecs.linkhinhanh = $scope.BienTam.linkhinhanhmoi;
+                });
+            });
+        } else {
+            alert("Sai định đạng ảnh (*.jpg, *.png)");
+        }
+
+        //for (var i = 0; i < $files.length; i++) {
+        //    formData.append("File", $files[i]);
+        //}
+
+    }
 });
 app.controller('add', function ($rootScope, $scope, dataservice, $uibModalInstance) {
 
-    $scope.ok = function () {
-        $uibModalInstance.close();
-    };
+   
     $scope.cancel = function () {
         $uibModalInstance.dismiss('cancel');
       
     };
-    $scope.initData = function () {
-       
-        //dataservice.loadtheloai(function (rs) {
-
-
-        //    rs = rs.data;
-        //    $scope.dataloadtheloai = rs;
-           
-
-        //    $scope.valueTheLoai = rs[0].object.id;
-           
-        //});
-
-    };
-    
-    $scope.initData();
+      
+  
     $scope.model = {
         id: '',
         tenchude: '',
         linkhinhanh: ''
     }
-    var formData = new FormData();
+   
+    var duLieuHinh = new FormData();
+    $scope.dinhDangHinhAnh = "image/";
     $scope.submit = function () {
-       
-        dataservice.uploadHinhAnh(formData, function (rs) {
-            rs = rs.data;
-            $scope.model.linkhinhanh = rs;
-
-            dataservice.createchude($scope.model, function (rs) {
+        if ($scope.dinhDangHinhAnh != "image/"
+            || !$scope.addChuDe.addLinkHinhAnh.$valid
+            || !$scope.addChuDe.addTenChuDe.$valid) {
+            alert("Vùng Lòng  Điền Đầy Đủ Và Kiểm Tra Thông Tin !!!");
+        }
+        else {
+           
+            $scope.model.tenchude = $scope.addTenChuDe;
+            dataservice.uploadHinhAnh(duLieuHinh, function (rs) {
                 rs = rs.data;
-                $scope.data = rs;
+                $scope.model.linkhinhanh = rs;
 
-            });
-        })
-       
-        $uibModalInstance.dismiss('cancel');
+                dataservice.taoChuDe($scope.model, function (rs) {
+                    rs = rs.data;
+
+                });
+            })
+            $uibModalInstance.dismiss('cancel');
+        }
+
+        
     }
    
-    $scope.getTheFilesHinhAnh = function ($files) {
-        //chọn nhiều ảnh
-        //for (var i = 0; i < $files.length; i++) {
-        //    formData.append("file", $files[i]);
-        //}    
-        formData = new FormData();
-            formData.append("File", $files[0]);          
-     //   $scope.link = $files[0].name;                      
-                      
+     $scope.getTheFilesHinhAnh = function ($files) {
+        $scope.addLinkHinhAnh = "Đã Chọn Hình Ảnh";
+        duLieuHinh = new FormData();
+        duLieuHinh.append("File", $files[0]);     
+        if ($files[0].type == "image/png" || $files[0].type == "image/jpg" || $files[0].type == "image/jpeg") {
+            $scope.dinhDangHinhAnh = "image/"
+        }
+        else {
+            $scope.dinhDangHinhAnh = $files[0].type;
+        }
+        var nutao = document.getElementById("btntext");
+         nutao.click();        
     }
 });
 app.controller('edit', function ($rootScope, $scope, $uibModalInstance, dataservice,para) {
@@ -340,78 +368,26 @@ app.controller('edit', function ($rootScope, $scope, $uibModalInstance, dataserv
         $uibModalInstance.dismiss('cancel');
     }
 
-    $scope.data1 = para;
-    
-    $scope.model = {
-        id: '',
-        tenchude: '',    
-        linkhinhanh: ''
-    }
+    $scope.modelChuDe = para;        
     $scope.initData = function () {
-    /* $scope.valueTheLoai = $scope.data1.tentheloai;*/
-        //$scope.model = $scope.data1;
-      
-        //dataservice.loadtheloai(function (rs) {
 
-        //    rs = rs.data;
-        //    $scope.dataloadtheloai = rs;
-        //  //  var so = $scope.dataloadtheloai.length;
-            
-        //    for (var i = 0; i < $scope.dataloadtheloai.length; i++) {
-        //        if ($scope.data1.tentheloai == rs[i].object.tentheloai) {
-        //            $scope.valueTheLoai = rs[i].object.id;
-        //            break;
-        //        }
-        //    }      
-
-        //});
-        $scope.kt = 0;
+        $scope.editTenChuDe = $scope.modelChuDe.tenchude;
     };
     $scope.initData();
-    //$scope.changeGrade = function () {
-
-
-    //}
-    var formData = new FormData();
     $scope.submit = function () {
-       // delete $scope.model['tentheloai'];
-        //  $scope.model.theloai_id = $scope.valueTheLoai;
-        $scope.model = $scope.data1;
-        if ($scope.kt == 1) {
-                 dataservice.uploadHinhAnh(formData, function (rs) {
-                rs = rs.data;
-                $scope.model.object.linkhinhanh = rs;
-
-                dataservice.editchude($scope.model.object, function (rs) {
+        if (!$scope.editChuDe.editTenChuDe.$valid) {
+            alert("Vùng Lòng  Điền Đầy Đủ Và Kiểm Tra Thông Tin !!!");
+        }
+        else {
+            $scope.modelChuDe.tenchude = $scope.editTenChuDe;
+        
+            dataservice.suaChuDe($scope.modelChuDe, function (rs) {
                     rs = rs.data;
-                    $scope.EditItem = rs;
+             
 
                 });
-                 })
-            $uibModalInstance.dismiss('cancel');
-        } else {
-                         dataservice.editchude($scope.model.object, function (rs) {
-                             rs = rs.data;
-                             $scope.EditItem = rs;
-
-                         });
+            
             $uibModalInstance.dismiss('cancel');
         }
-       
-       
-       
-                  
-
-        //$uibModalInstance.dismiss('cancel');
     }
-    
-    $scope.getTheFilesHinhAnh = function ($files) {
-         
-        formData = new FormData();
-        formData.append("File", $files[0]);
-      
-        $scope.kt = 1;
-    }
-
-
 });
