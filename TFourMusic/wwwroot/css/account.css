@@ -263,6 +263,7 @@
     flex-grow: 0;
     flex-shrink: 0;
     height: 55px;
+    position: relative;
 }
 
 .icon_nhac_luu {
@@ -271,15 +272,22 @@
 }
 
 .hinh_baihat_daluu {
-    margin-right: 10px;
+    margin-right: 20px;
     flex-shrink: 0;
     display: block;
     position: relative;
     overflow: hidden;
     border-radius: 4px;
     cursor: pointer;
+   
 }
-
+.icon_edithinhanh {
+    color: #fff;
+    position: absolute;
+    left: 25%;
+    top: 70%;
+    font-size: 17px;
+}
 .info_da_luu {
     display: flex;
     flex-direction: column;
