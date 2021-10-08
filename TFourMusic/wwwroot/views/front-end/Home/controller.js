@@ -3275,7 +3275,7 @@ app.controller('Ctrl_ESEIM', function ($scope, dataservice, $uibModal, $rootScop
                 if ($scope.downloadBaiHatVeMayNguoiDung != "") {
                     setTimeout(function () {
                         var downloadbaihat = document.getElementById("btntaixuong");
-                        downloadbaihat.href = "../../../music/Download/" + $scope.downloadBaiHatVeMayNguoiDung;
+                        downloadbaihat.href = "../../../music/Download/" + "Rang-Khon-Phi-Phuong-Anh-RIN9.mp3";
                         downloadbaihat.click();
                         //setTimeout(function () {
                         //    dataservice.xoaNhacDaTaiXuong($scope.texttaixuong, function () {
