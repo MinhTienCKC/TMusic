@@ -1790,7 +1790,7 @@ app.controller('Ctrl_ESEIM', function ($scope, dataservice, $uibModal, $rootScop
 
     $scope.upLoadNhac = function () {
         if ($rootScope.checklogin.dadangnhap) {
-            if ($scope.listBaiHatDaTaiLen.lenght <= 1) {
+            if ($scope.listBaiHatDaTaiLen.lenght <= 50 || $rootScope.checklogin.vip) {
                 var modalInstance = $uibModal.open({
                     animation: true,
                     templateUrl: ctxfolderurl + '/add.html',
