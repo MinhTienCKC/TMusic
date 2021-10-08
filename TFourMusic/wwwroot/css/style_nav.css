@@ -287,8 +287,8 @@ section .loader span{
 .suggest__list {
     position: absolute;
     overflow: hidden;
-    width: 42.7%;
-    margin-left: 89px;
+    width: 42.3%;
+    margin-left: 95px;
     height: auto;
     min-height: 0;
     max-height: 601px;
