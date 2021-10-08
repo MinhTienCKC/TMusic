@@ -24,7 +24,7 @@
 }
 
 .header__left__action-item {
-    margin-top: 9%;
+    margin-top: 15%;
     padding: 0 1rem;
 }
 
@@ -162,6 +162,7 @@
     background-repeat: no-repeat;
     background-position: center center;
     background-size: cover;
+    background-image: url(https://firebasestorage.googleapis.com/v0/b/tfourmusic-1e3ff.appspot.com/o/image%2Fvip%2Faudio_default.png?alt=media&token=09b1f552-a42b-4b20-b364-76a117717084);
 }
 
 .icon_click_toggle {
@@ -583,18 +584,30 @@
     top: 8%;
     bottom: 0;
     /* background-size: 3rem; */
-    font-size: 20px;
+    font-size: 17px;
     color: #ccc5d4;
 }
+    .searchitem:hover{
+        opacity: 0.8;
+        color: #fff;
+        cursor:pointer;
+    }
+    .iconheadersearch {
+        color: #fff;
+    }
+    .iconheadersearch:hover{
+        opacity:0.7;
+        cursor:pointer;
+    }
 
-.iconheadersearch {
-    color: #623c80;
+    .iconmusic {
+        font-size: 1.7rem;
+    }
+.fa-volume-mute:hover{
+    opacity:0.8;
+    color: #fff;
+    cursor: pointer;
 }
-
-.iconmusic {
-    font-size: 1.7rem;
-}
-
 .progress {
     width: 100%;
     -webkit-appearance: none;

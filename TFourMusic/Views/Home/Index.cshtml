@@ -224,15 +224,21 @@
         <div class="header">
             <div class="header__left">
                 <div class="header__left__action">
-                    <div class="header__left__action-item">
-                        <i class="fas fa-arrow-left icon_index iconheadersearch"></i>
+                    <div class="header__left__action-item" ng-click="backHistory(0)">
+                        <span class="material-icons-outlined iconheadersearch icon_index">
+                            arrow_back
+                        </span>
+                        @*<i class="fas fa-arrow-left icon_index iconheadersearch"></i>*@
                     </div>
-                    <div class="header__left__action-item">
-                        <i class="fas fa-arrow-right icon_index iconheadersearch"></i>
+                    <div class="header__left__action-item" ng-click="backHistory(1)">
+                        <span class="material-icons-outlined iconheadersearch icon_index">
+                            arrow_forward
+                        </span>
+                        @*<i class="fas fa-arrow-right icon_index "></i>*@
                     </div>
                 </div>
                 <div class="header__left__search" ng-class="{'tim_kiem_bai_hat': timKiemBaiHat==1}">
-                    <i class="fas fa-search searchitem"></i>
+                    <i ng-mousedown="mousedowmTimKiemKq()" ng-mouseup="mouseupTimKiem(timKiem)" class="fas fa-search searchitem"></i>
                     <input id="tim_kiem_bai_hat" type="text" style="border: none" ng-keypress="suKienNhanPhimEnter($event)" ng-change="loadKetQuaTimKiem()" ng-model="timKiem" ng-blur="blurTimKiem()" ng-focus="focusTimKiemBaiHat(1)" class="form-search" placeholder="Nhập tên bài hát, Nghệ sĩ hoặc MV...">
                     <i ng-mousedown="mousedowmTimKiem()" ng-mouseup="mouseupTimKiem()" ng-show="timKiemBaiHat" ng-click="clickCloseTimKiem()" class="fas fa-times searchitem searchitemclose"></i>
                 </div>
@@ -325,7 +331,7 @@
 
             </div>*@
         </div>
-        <div class="wapper">
+        <div class="wapper" >
 
             <div ng-show="soGioConLai != '00:00:00' && soGioConLai !=undefined" class="alarm-countdown">
                 <span>Nhạc sẽ dừng sau:</span>
@@ -337,8 +343,8 @@
 
                 </div>
                 <div class="wapper__musicName">
-                    <div id="music_name" style=" max-width: 220px; white-space: nowrap; text-overflow: ellipsis; overflow: hidden;" class="music_name">Lời xin lỗi vụng về</div>
-                    <div id="siger_name" style="display:block;">Quân AP</div>
+                    <div id="music_name" style=" max-width: 220px; white-space: nowrap; text-overflow: ellipsis; overflow: hidden;" class="music_name">Chưa có bài hát</div>
+                    <div id="siger_name" style="display:block;"></div>
                 </div>
                 <div class="wapper__musicAction">
                     <div style="cursor:pointer;" class="wapper__musicAction-icon">
@@ -384,19 +390,19 @@
             <div class="wapper__right">
 
                 <div class="wapper__right__icon">
-                    <i class="fas fa-microphone"></i>
+                    @*<i class="fas fa-microphone"></i>*@
 
                 </div>
                 <div class="wapper__right__icon">
                     <div class="wapper__volume">
 
-                        <i ng-show="volumechange == 0" style="font-size:20px;font-size: 22.5px;opacity: 0.8;margin: 0 5px;" class="fas fa-volume-mute"></i>
-                        <i ng-show="volumechange > 0" style="font-size:20px;font-size: 20px;opacity: 0.8;margin: 0 5px;" class="fas fa-volume-up"></i>
+                        <i ng-show="volumechange == 0" ng-click="muteSong(75)" style="font-size:20px;font-size: 22.5px;opacity: 0.8;margin: 0 5px;" class="fas fa-volume-mute"></i>
+                        <i ng-show="volumechange > 0" ng-click="muteSong(0)" style="font-size:20px;font-size: 20px;opacity: 0.8;margin: 0 5px;" class="fas fa-volume-up"></i>
                         <input type="range" ng-click="changVolumeSong()" ng-model="volumechange" style="filter: hue-rotate(-675deg);" min="0" value="90" max="100" id="volume_song" step="1" class="process__bar progress_volume">
                     </div>
                 </div>
                 <div class="wapper__right__icon">
-                    <i class="fas fa-search-plus"></i>
+                    @*<i class="fas fa-search-plus"></i>*@
                 </div>
                 <div class="wapper__right__icon__space">
                 </div>

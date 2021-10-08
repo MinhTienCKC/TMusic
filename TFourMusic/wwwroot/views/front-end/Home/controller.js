@@ -1716,15 +1716,27 @@ app.controller('Ctrl_ESEIM', function ($scope, dataservice, $uibModal, $rootScop
         }
 
     }
+    $scope.volumechange = 100;
     $scope.changVolumeSong = function () {
 
         audio.volume = event.target.value / 100;
         $scope.volumechange = event.target.value;
     }
+    $scope.muteSong = function (index) {
+        if (index == 0) {
+            audio.volume = 0;
+            $scope.volumechange = 0;
+        }
+        else {
+            audio.volume = index / 100;
+            $scope.volumechange = index;
+        }
+        
+    }
     $scope.setAutoPlayNhac = function () {
         $scope.playmusic = 0;
     }
-    const playlist = document.getElementById("playlist_music_ul");
+    //const playlist = document.getElementById("playlist_music_ul");
 
     //playlist.onclick = function (e) {
     //}
@@ -3265,14 +3277,14 @@ app.controller('Ctrl_ESEIM', function ($scope, dataservice, $uibModal, $rootScop
                         var downloadbaihat = document.getElementById("btntaixuong");
                         downloadbaihat.href = "../../../music/Download/" + $scope.downloadBaiHatVeMayNguoiDung;
                         downloadbaihat.click();
-                        setTimeout(function () {
-                            dataservice.xoaNhacDaTaiXuong($scope.texttaixuong, function () {
-                                rs = rs.data;
-                                $scope.xoaNhacDaTaiXuong = rs;
-                                $("#loaddingdownload").css("display", "none");
-                                $("#loaddingdownload1").css("display", "none");
-                            });
-                        }, 1000);
+                        //setTimeout(function () {
+                        //    dataservice.xoaNhacDaTaiXuong($scope.texttaixuong, function () {
+                        //        rs = rs.data;
+                        //        $scope.xoaNhacDaTaiXuong = rs;
+                        //        $("#loaddingdownload").css("display", "none");
+                        //        $("#loaddingdownload1").css("display", "none");
+                        //    });
+                        //}, 1000);
 
                     }, 5000);
                 }
@@ -3507,7 +3519,15 @@ app.controller('Ctrl_ESEIM', function ($scope, dataservice, $uibModal, $rootScop
         }
 
     }
-
+    $scope.backHistory = function (index) {
+        if (index == 0) {
+            window.history.back();
+        }
+        else {
+            window.history.forward();
+        }
+        
+    }
 
 
 
