@@ -1,7 +1,11 @@
 ﻿@{
-    ViewData["Title"] = "Zing Mp3";
+    ViewData["Title"] = "T-Music";
 }
-
+<style>
+    [ng\:cloak], [ng-cloak], [data-ng-cloak], [x-ng-cloak], .ng-cloak, .x- ng-cloak {
+        display: none !important;
+    }
+</style>
 <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.6.9/angular.min.js"></script>
 <div id="container" style="width:100vh; height:98vh;">
 
@@ -34,11 +38,11 @@
             <div class="zm-sidebar-wrapper">
                 <nav class="zm-navbar">
                     <div class="zm-navbar-brand">
-                        <a class="zm-btn_index button" tabindex="0">
+                        <a class="zm-btn_index button" href="/" tabindex="0">
                             <div class="zmp3-logo">
 
                             </div>
-                            <label class="zmp3-label-top">Mp3</label>
+                            @*<label class="zmp3-label-top">Mp3</label>*@
                         </a>
                     </div>
                 </nav>
@@ -147,7 +151,7 @@
                                         <span style="margin: 0 10px;" class="material-icons-outlined">
                                             queue_music
                                         </span>
-                                           {{x.tendanhsachphat}}                
+                                        {{x.tendanhsachphat}}
                                     </a>
                                 </li>
                             </ul>
@@ -243,7 +247,7 @@
                     <i ng-mousedown="mousedowmTimKiem()" ng-mouseup="mouseupTimKiem()" ng-show="timKiemBaiHat" ng-click="clickCloseTimKiem()" class="fas fa-times searchitem searchitemclose"></i>
                 </div>
 
-                <ul class="suggest__list" style="z-index:9999;" ng-show="timKiemBaiHat">
+                <ul ng-cloak  class="suggest__list" style="z-index:9999;" ng-show="timKiemBaiHat">
 
                     <li ng-mousedown="mousedowmTimKiemKq()" ng-mouseup="mouseupTimKiem(timKiem)" ng-show="timKiem.length > 0" class="suggest__item"> <i class="fas fa-search searchitem searchsubitem"></i><span class="item_search">Tìm Kiếm "{{timKiem}}"</span></li>
 
@@ -278,7 +282,7 @@
                     <i class="fas fa-tshirt icon_index"></i>
                 </div>*@
                 <div class="header__action-item">
-                    <a ng-click="$event.preventDefault(); clickShowVip();" class="mua_vip_account">
+                    <a style="color: #32323d;" ng-click="$event.preventDefault(); clickShowVip();" class="mua_vip_account">
                         MUA VIP NGAY
                     </a>
                 </div>
@@ -331,9 +335,9 @@
 
             </div>*@
         </div>
-        <div class="wapper" >
+        <div class="wapper">
 
-            <div ng-show="soGioConLai != '00:00:00' && soGioConLai !=undefined" class="alarm-countdown">
+            <div ng-cloak  ng-show="soGioConLai != '00:00:00' && soGioConLai !=undefined" class="alarm-countdown">
                 <span>Nhạc sẽ dừng sau:</span>
                 <span class="countdown">{{ soGioConLai }}</span>
                 <span ng-click="huyhengioshow = 1" class="zm-btn zm-tooltip-btn is-hover-circle button" tabindex="0"><i style="position: absolute; right: 15px; top: 6px;" class="fas fa-times"></i></span>
@@ -623,9 +627,44 @@
         </div>
         <div ng-login></div>
 
-  
+
         <div ng-taonguoidung></div>
-        <div ng-xacthuc></div>
+        <label class="overplaycanhan" ng-cloak ng-if="xacthucemail == 1">
+            overlay
+        </label>
+        <div ng-if="xacthucemail == 1" ng-cloak class="tao_playlist_layout_xacthuc" >
+
+            <div class="modal_laylist_layout">
+                <div class="modal_laylist_layout_item">
+                    <div class="modal_content_xacthuc">
+                        <h3 style=" font-size: 18px; margin-bottom: 15px;">Thông Báo</h3>
+
+                        <div class="option_playlist">
+
+                            <div>
+                                <h3 style=" font-size: 14px; margin-bottom: 5px; font-weight: 400;">Tài khoản TMusic của bạn chưa xác thực</h3>
+                                <h3 style=" font-size: 14px; margin-bottom: 5px; font-weight: 400;">Vui lòng xác thực tài khoản của bạn để đăng nhập.</h3>
+                                <h3 style=" font-size: 14px; margin-bottom: 5px; font-weight: 400;">Nếu chưa nhận được email thì bạn có thể gửi lại email xác thực. Nếu đã xác thực email xong thì bạn có thể chọn <i>"Tôi Đã Xác Thực"</i> để đăng nhập</h3>
+                            </div>
+
+
+                        </div>
+                        <div style="display: flex; padding-top: 20px;">
+
+                            <button ng-click="dangXuatNguoiDung()" style="display: flex; justify-content: center; align-items: center; font-weight: 400; background-color: #ffffff1a; border: 1px solid #ffffff1a; color: rgb(255 255 255); margin: 0 auto;" class="button_create_playlist">Hủy</button>
+                            <button ng-click="ResendEmailXacThuc()" ng-disabled="kiemtraXacThucEmail" ng-class="{'disable_button': kiemtraXacThucEmail}" class="button_create_playlist">
+                                {{titleGuiLaiXacThucEmail}}
+                            </button>
+                            <button ng-click="dangNhapEmailvaPass(model.email, model.matkhau);" class="button_create_playlist">
+                                Tôi Đã Xác Thực
+                            </button>
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+
+        </div>
 
 
 
@@ -633,10 +672,10 @@
 
         @*//comment*@
         <div ng-binhluan></div>
-      
+
         @*báo cáo*@
         <div ng-chitietbaocao> </div>
-       
+
         @*bài hát người dung*@
         <div ng-baocao></div>
         <div ng-thongbao></div>

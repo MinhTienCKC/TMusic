@@ -1745,7 +1745,7 @@ app.controller('Ctrl_ESEIM', function ($scope, dataservice, $uibModal, $rootScop
 
     $scope.upLoadNhac = function () {
         if ($rootScope.checklogin.dadangnhap) {
-            if ($scope.listBaiHatDaTaiLen.lenght <= 50 || $rootScope.checklogin.vip == 1) {
+            if ($scope.listBaiHatDaTaiLen.lenght <= 50 || $scope.listBaiHatDaTaiLen.lenght == undefined || $rootScope.checklogin.vip == 1) {
                 var modalInstance = $uibModal.open({
                     animation: true,
                     templateUrl: ctxfolderurl + '/add.html',
@@ -1915,8 +1915,8 @@ app.controller('Ctrl_ESEIM', function ($scope, dataservice, $uibModal, $rootScop
             $scope.dangNhapLoi = "Vui lòng điền đầy đủ thông tin tài khoản.";
             $("#loading_main").css("display", "none");
         }
-        $scope.login.email = "";
-        $scope.login.password = "";
+        //$scope.login.email = "";
+        //$scope.login.password = "";
 
     }
     $scope.dangNhapEmailvaPass = function (email, pass) {
@@ -2066,18 +2066,19 @@ app.controller('Ctrl_ESEIM', function ($scope, dataservice, $uibModal, $rootScop
         }
 
     }
+    $scope.titleGuiLaiXacThucEmail = "Gửi lại mã xác thực";
     $scope.ResendEmailXacThuc = function () {
         $scope.time = 60;
-
+        $("#loading_main").css("display", "block");
         if (!$scope.kiemtraXacThucEmail) {
             firebase.auth().currentUser.sendEmailVerification()
                 .then(() => {
-
+                    $("#loading_main").css("display", "none");
                     var timeXacThuc = $interval(function () {
                         if ($scope.time == 0) {
                             $interval.cancel(timeXacThuc);
                             $scope.kiemtraXacThucEmail = false;
-                            $scope.titleGuiLaiXacThucEmail = "Gửi lại mã xác thực"
+                            $scope.titleGuiLaiXacThucEmail = "Gửi lại mã xác thực";
                         }
                         else {
                             $scope.time--;
@@ -2088,9 +2089,8 @@ app.controller('Ctrl_ESEIM', function ($scope, dataservice, $uibModal, $rootScop
                     }, 1000);
                 });
         }
-        else {
-
-        }
+        $("#loading_main").css("display", "none");
+        
     }
     $scope.dangXuatNguoiDung = function () {
         $("#loading_main").css("display", "block");
