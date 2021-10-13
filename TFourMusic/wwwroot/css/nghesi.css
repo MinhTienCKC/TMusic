@@ -21,7 +21,7 @@
     -webkit-box-lines: multiple;
     -moz-box-lines: multiple;
     box-lines: multiple;
-    flex-wrap: wrap;
+    flex-wrap: nowrap;
     position: relative;
     margin: 0 -15px;
     justify-content: space-between;
