@@ -420,7 +420,7 @@
                                 <i class="fa fa-play" style=""></i>
                             </div>
                             <label class="hover_remove_playlist_dots" context-menu1="contextMenuPlaylist_CaNhan" ng-click="$event.preventDefault(); moChiTietDSP_TheLoai(x); ">
-                                <span style="font-size:23px;" class="material-icons-outlined">
+                                <span style="font-size:16px;" class="material-icons-outlined">
                                     more_horiz
                                 </span>
                             </label>
@@ -469,7 +469,7 @@
                         
                         <div class="hover_playlist" ng-class="{'display_block' : kiemTraDSPNguoiDungClick == x.id  }">
                             <label class="hover_remove_playlist" ng-click="$event.preventDefault();listDSPyeuThichNgheSi.splice($index, 1);yeuThichDanhSachPhatNguoiDungID(x.id);">
-                                <i style="font-size:23px;" class="fas fa-heart icon_account"></i>
+                                <i style="font-size:16px;" class="fas fa-heart icon_account"></i>
                             </label>
                             <div ng-click="$event.preventDefault(); Play(); " class="play1-play2 nut_dsp_tl vong_tron_play" style="" tabindex="0" ng-show="kiemTraDSPNguoiDungClick == x.id">
                                 <div ng-show="playmusic == 1 " class="play_baihat_dsptl" style="top: 51%;left: 38%; height: 26px; width: 27px;"> </div>
@@ -493,7 +493,7 @@
                     </a>
                     <div class="ten_danh_sach_phat_da_tao" style="margin:4px;">
                         <h4 class="ten_bai_hat_da_luu hover_ten_dsphat"><a> {{x.tendanhsachphat}}</a></h4>
-                        <h3 class="ca_si_bai_hat_da_luu"><a href="#/nghesi/{{x.nguoidung_id}}">{{checklogin.hovaten}}</a></h3>
+                        <h3 class="ca_si_bai_hat_da_luu"><a href="#/nghesi/{{x.nguoidung_id}}"></a></h3>
                     </div>
                 </div>
             </div>
@@ -535,7 +535,7 @@
                     </a>
                     <div class="ten_danh_sach_phat_da_tao" style="margin:4px;">
                         <h4 class="ten_bai_hat_da_luu hover_ten_dsphat"><a> {{x.tendanhsachphattheloai}}</a></h4>
-                        <h3 class="ca_si_bai_hat_da_luu"><a>Zing mp3</a></h3>
+                        <h3 class="ca_si_bai_hat_da_luu"></h3>
                     </div>
                 </div>
             </div>

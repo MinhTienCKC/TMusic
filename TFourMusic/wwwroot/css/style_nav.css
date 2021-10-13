@@ -72,27 +72,30 @@ html {
 }
 
 .zmp3-logo {
-    margin-top: 12%;
-    /* margin-left: 5px; */
+    /* margin-top: 12%; */
+    margin-left: 20px;
     margin-bottom: 5%;
     height: 100%;
-    /*background-image: url(/image/logo.png);*/
-    background-image: url('../image/logo (2).png');
+    /* background-image: url(/image/logo.png); */
+    background-image: url('../image/8.png');
     background-repeat: no-repeat;
-    background-size: 59%;
+    background-size: 100%;
     border-radius: 0;
     border: 0;
     cursor: pointer;
-    width: 120px;
+    width: 122px;
 }
+    .zmp3-logo:hover{
+        opacity:0.7;
+    }
 
-.zm-btn_index {
-    position: relative;
-    width: 100%;
-    height: 100%;
-    box-sizing: border-box;
-    background-color: var(--sidebar-bg);
-}
+    .zm-btn_index {
+        position: relative;
+        width: 100%;
+        height: 100%;
+        box-sizing: border-box;
+        background-color: var(--sidebar-bg);
+    }
 
 .zm-navbar-item {
     list-style-type: none;

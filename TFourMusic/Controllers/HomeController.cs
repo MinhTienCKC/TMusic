@@ -2223,7 +2223,7 @@ namespace TFourMusic.Controllers
 
                     }
                     var datakq = (from baihat in list
-                                  where baihat.tenbaihat.ToUpper().Contains(tuKhoa.ToUpper()) && baihat.chedo == 1
+                                  where baihat.tenbaihat.ToUpper().Contains(tuKhoa.ToUpper()) || baihat.casi.ToUpper().Contains(tuKhoa.ToUpper()) || baihat.loibaihat.ToUpper().Contains(tuKhoa.ToUpper()) && baihat.chedo == 1
                                   select baihat).ToList().Take(list.Count > 5 ? 5 : list.Count);
 
                     return Json(datakq);
@@ -2858,7 +2858,7 @@ namespace TFourMusic.Controllers
                 {
 
                     var datakq = (from baihat in list
-                                  where baihat.tenbaihat.ToUpper().Contains(model.tuKhoa.ToUpper()) && baihat.chedo == 1 && baihat.daxoa == 0 && baihat.vohieuhoa == 0
+                                  where baihat.tenbaihat.ToUpper().Contains(model.tuKhoa.ToUpper()) || baihat.casi.ToUpper().Contains(model.tuKhoa.ToUpper()) || baihat.loibaihat.ToUpper().Contains(model.tuKhoa.ToUpper()) && baihat.chedo == 1 && baihat.daxoa == 0 && baihat.vohieuhoa == 0
                                   select baihat).OrderBy(x => x.tenbaihat).ToList();
                     if (model.uid != null)
                     {
