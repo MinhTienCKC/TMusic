@@ -138,10 +138,6 @@
                                             </div>
 
                                             <div class="media-content">
-
-
-
-
                                             </div>
                                             <div class="media-right">
                                                 <div class="level">
@@ -149,8 +145,8 @@
                                                   
                                                     <div class="level-item">
                                                         <button class="button-item1" ng-click="yeuThichBaiHatUi($index); yeuThichBaiHat(data.id)">
-                                                            <i ng-show="!checklogin.dadangnhap" class="ibutton far fa-heart iconmusic" style="font-size: 14px;"></i>
-                                                            <i ng-show="data.yeuthich==0  " class="ibutton far fa-heart iconmusic" style="font-size: 14px;"></i>
+                                                            <!--<i ng-show="!checklogin.dadangnhap" class="ibutton far fa-heart iconmusic" style="font-size: 14px;"></i>-->
+                                                            <i ng-show="data.yeuthich==0 || !checklogin.dadangnhap " class="ibutton far fa-heart iconmusic" style="font-size: 14px;"></i>
                                                             <i ng-show="data.yeuthich==1  " class="fas fa-heart " style="color:#ed2b91;"></i>
 
 

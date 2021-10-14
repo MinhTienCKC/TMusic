@@ -27,6 +27,11 @@
                         <button ng-show="!checklogin.dadangnhap" ng-click="theoDoi_NgheSi(0);" style="width: 140px;    margin: 0px 20px;" class="zm-btn button_theodoi is-outlined mar-t-15 mar-b-20 is-small is-upper button" tabindex="0">
                             <i style=" font-size: 14px; margin: 0px 5px; " class="fas fa-user-plus"></i><span>Theo Dõi</span>
                         </button>
+                        <button  ng-click="BaoCaoNguoiDung();" style="width: 140px;    margin-right: 15px; margin-left: 0;" class="zm-btn button_theodoi is-outlined mar-t-15 mar-b-20 is-small is-upper button" tabindex="0">
+                            <span style=" font-size: 14px; margin: 0px 5px; "  class="material-icons-outlined">
+                                report_gmailerrorred
+                            </span> <span>Báo Cáo</span>
+                        </button>
                         <div class="subtitle_timkiem" style="color: #fff; text-transform: capitalize; font-size: 15px;"><span class="followers"> {{NgheSi[0].soluongtheodoi}} Người Theo Dõi</span></div>
                     </div>
 
@@ -79,11 +84,11 @@
                 </figure>
 
             </div>
-            
+
         </div>
     </div>
-   
-  
+
+
 </div>
 <div class="tab_nghesi">
     <div class="zm-narbar-container_account">
@@ -138,7 +143,7 @@
 
         <div class="list_bhnghesi">
 
-            <div class="item_nhac_da_luu_timkiem"  ng-class="{'active_baihat_timkiem' : kiemTraBaiHatDangPhat == x.id}" ng-repeat="x in listDaTaiLenNgheSi"  context-menu="contextMenuBaiHat_BaiHat" ng-right-click="moChiTietBaiHat(x)">
+            <div class="item_nhac_da_luu_timkiem" ng-class="{'active_baihat_timkiem' : kiemTraBaiHatDangPhat == x.id}" ng-repeat="x in listDaTaiLenNgheSi" context-menu="contextMenuBaiHat_BaiHat" ng-right-click="moChiTietBaiHat(x)">
                 <div class="border_nhac_luu" ng-if="$index > 0">
                     <div class="media_luu_baihat_timkiem">
                         <div class="media_luu_left_baihat_timkiem" animate>
@@ -197,7 +202,7 @@
             </div>
         </div>
     </div>
-    <div ng-if="listDSPNgheSi.length > 0 && tabactiveIndex == 0"  class="danh_sach_phat_account">
+    <div ng-if="listDSPNgheSi.length > 0 && tabactiveIndex == 0" class="danh_sach_phat_account">
         <div class="button_nextplaylist">
             <a href="" class="btn-next" ng-click="nextPlaylist()"><i class="fa fa-chevron-right" aria-hidden="true"></i></a>
             <a href="" style="margin-right: 24px;" class="btn-prev" ng-click="backPlaylist()"><i class="fa fa-chevron-left" aria-hidden="true"></i></a>
@@ -205,11 +210,11 @@
         </div>
         <div class="item_danh_sach_phat">
 
-            <div class="item_ds_chitiet_item animate" ng-repeat="x in listDSPNgheSi">
+            <div class="item_ds_chitiet_item animate" ng-repeat="x in listDSPNgheSi" context-menu="contextMenuPlaylist" ng-right-click="moChiTietDSP_TheLoai(x)">
                 <div class="tao_playlist_item">
-                    <a href="/#/playlist/{{x.id}}" class="item_tao_playlist_curent" >
-                        <div class="img_playlist add-to-cart" ng-style="{'background-image': 'url(' + x.linkhinhanh + ')'}" > </div>
-                       
+                    <a href="/#/playlist/{{x.id}}" class="item_tao_playlist_curent">
+                        <div class="img_playlist add-to-cart" ng-style="{'background-image': 'url(' + x.linkhinhanh + ')'}"> </div>
+
                         <div class="hover_playlist item" animate ng-class="{'display_block' : kiemTraDSPNguoiDungClick == x.id  }">
 
                             <label style="cursor:pointer" title="bỏ yêu thích danh sách phát" ng-click="$event.preventDefault();yeuThichDanhSachPhatNgheSi($index);yeuThichDanhSachPhatNguoiDungID(x.id)" class="hover_remove_playlist">
@@ -229,7 +234,7 @@
                                 <i class="fa fa-play" style=""></i>
                             </div>
 
-                            <label style="cursor:pointer;" class="hover_remove_playlist_dots">
+                            <label style="cursor:pointer;" class="hover_remove_playlist_dots" context-menu1="contextMenuPlaylist" ng-click="$event.preventDefault(); moChiTietDSP_TheLoai(x); ">
                                 <span style="font-size:23px;" class="material-icons-outlined">
                                     more_horiz
                                 </span>
@@ -333,7 +338,7 @@
         </div>
         <div class="item_danh_sach_phat">
 
-            <div class="item_ds_chitiet_item animate" ng-repeat="x in listDSPNgheSi">
+            <div class="item_ds_chitiet_item animate" ng-repeat="x in listDSPNgheSi" context-menu="contextMenuPlaylist" ng-right-click="moChiTietDSP_TheLoai(x)">
                 <div class="tao_playlist_item">
                     <a href="/#/playlist/{{x.id}}" class="item_tao_playlist_curent">
                         <div class="img_playlist" ng-style="{'background-image': 'url(' + x.linkhinhanh + ')'}"></div>
@@ -354,7 +359,7 @@
                                 <!--<i class="fa fa-play-circle"></i>-->
                                 <i class="fa fa-play" style=""></i>
                             </div>
-                            <label style="cursor:pointer;" class="hover_remove_playlist_dots">
+                            <label style="cursor:pointer;" class="hover_remove_playlist_dots" context-menu1="contextMenuPlaylist" ng-click="$event.preventDefault(); moChiTietDSP_TheLoai(x); ">
                                 <span style="font-size:23px;" class="material-icons-outlined">
                                     more_horiz
                                 </span>
@@ -375,3 +380,62 @@
         </div>
     </div>
 </div>
+<div class="zm-portal-modal" ng-show="showBaoCaoNguoiDung" ng-cloak>
+    <div class="modal_comment is-active">
+        <div class="modal-background" style="color:#fff;">
+            <div class="">
+                <div class="comment-content">
+                    <div class="header_comment">
+                        <h3 class="title">Báo Cáo Vi Phạm</h3>
+                        <button ng-click="showBaoCaoNguoiDung =!showBaoCaoNguoiDung" style=" background-color: inherit; color:#fff;" class="zm-btn-comment zm-tooltip-btn is-hover-circle button" tabindex="0"><span class="material-icons-outlined">close</span></button>
+                    </div>
+                    <div class="action"><h3 style="margin-left:20px" class="subtitle has-text-weight-bold">Hãy chọn vấn đề cần báo cáo</h3><div>Nếu bạn nhận thấy ai đó đang gặp nguy hiểm, đừng chần chừ mà hãy tìm ngay sự giúp đỡ trước khi báo cáo với TMusic.</div></div>
+                    <div class="mar-t-10 comment-list">
+                        <div style="position: relative; overflow: hidden; width: 100%; height: 100%;">
+
+
+                            <div id="modal-scroll" class="baocao">
+
+                                <div class="itemreport">
+                                    <label class="checkbox">
+                                        <input ng-model="taikhoangiamao" type="checkbox" />
+                                    </label>
+                                    <div ng-class="{'activebaocao': taikhoangiamao}" for="taikhoangiamao">Tài Khoản Giả Mạo Tôi</div>
+                                </div>
+                                <div class="itemreport">
+                                    <label class="checkbox">
+                                        <input ng-model="anhdaidienvipham" type="checkbox" />
+                                    </label>
+                                    <div ng-class="{'activebaocao': anhdaidienvipham}" for="tengiamao">Ảnh đại diện không phù hợp hoặc có sự xuất hiện của tôi</div>
+                                </div>
+                                <div class="itemreport">
+                                    <label class="checkbox">
+                                        <input ng-model="motanguoidungvipham" type="checkbox" />
+                                    </label>
+                                    <div ng-class="{'activebaocao': motanguoidungvipham}" for="dangnoidungkhongphuhop">Mô tả người dùng không phù hợp hoặc vi phạm chính sách</div>
+                                </div>
+
+
+                                <div class="action motabaocao">
+                                    <h3 style="margin-bottom:6px;" class="subtitle has-text-weight-bold">Mô tả thêm</h3>
+                                    <textarea ng-model="motabaocaonguoidung" name="okem1" class="textarea_uploadbaihat textmotathem" rows="8" cols="100">  </textarea>
+                                </div>
+
+
+
+
+                            </div>
+                            <div class="baocaobuton" style="">
+                                <button ng-click="showBaoCaoNguoiDung = !showBaoCaoNguoiDung" style="display: flex; justify-content: center; align-items: center; font-weight: 400; background-color: #ffffff1a; border: 1px solid #ffffff1a; color: rgb(255 255 255); margin: 0 auto;" class="button_create_playlist">Hủy</button>
+
+                                <button ng-click="GuiBaoCao();" ng-disabled=" !taikhoangiamao && !anhdaidienvipham && !motabaocaonguoidung && !motanguoidungvipham " ng-class="{'disable_button': !taikhoangiamao && !anhdaidienvipham && !motabaocaonguoidung && !motanguoidungvipham }" class="button_create_playlist">Báo Cáo</button>
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </div>
+    </div>

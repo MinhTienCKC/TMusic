@@ -340,8 +340,7 @@
                             <div ng-show="kiemTraBaiHatDangPhat !=x.id" class="background_icon_play add-to-cart" ng-click="playMotBanNhac(x); viTriBanNhac($index)">
                                 <i class="far fa-play-circle icon_play_canhan"></i>
                             </div>
-                            <img class="hinh_da_luu" src="{{x.linkhinhanh
-                        }}" />
+                            <img class="hinh_da_luu" src="{{x.linkhinhanh}}" />
 
                         </div>
 
@@ -353,7 +352,7 @@
                     <div class="media_luu_content"><div class="time_bai_hat">{{x.thoiluongbaihat}}</div></div>
                     <div class="media_luu_right">
                         <label class="label_account" ng-click="listBaiHatYeuThich.splice($index, 1); yeuThichBaiHat(x.id)">
-                            <i class="fas fa-heart icon_account"></i>
+                            <i style="margin-left: 0px;" class="fas fa-heart icon_account"></i>
                         </label>
                         <!--<label class="label_account">
                             <i class="far fa-heart icon_account_notfocus"></i>
@@ -392,21 +391,21 @@
                     </label>
                 </label>
             </label>
-            <div ng-if="playlist_canhan.length ==0" class="container page-search">
+            <!--<div ng-if="playlist_canhan.length ==0" class="container page-search">
                 <div class="container no-content mar-t-30">
                     <div class="no-content-box">
                         <i class="icon main-icon ic-svg-dics-music-icon"></i>
                         <span class="no-content-text">Không có kết quả được tìm thấy</span>
                     </div>
                 </div>
-            </div>
+            </div>-->
             <div ng-if="playlist_canhan.length > 0" class="item_ds_chitiet_item" ng-repeat="x in playlist_canhan" context-menu="contextMenuPlaylist_CaNhan" ng-right-click="moChiTietDSP_TheLoai(x)">
                 <div class="tao_playlist_item">
                     <a href="/#/playlist/{{x.id}}" class="item_tao_playlist_curent">
                         <div class="img_playlist" ng-style="{'background-image': 'url(' + x.linkhinhanh + ')'}"></div>
                         <div class="hover_playlist" ng-class="{'display_block' : kiemTraDSPNguoiDungClick == x.id  }">
                             <label style="cursor:pointer;" class="hover_remove_playlist" ng-click="$event.preventDefault(); showXoaDanhSachPhat(x.id)">
-                                <i style="font-size:23px;" class="fas fa-trash"></i>
+                                <i   class="fas fa-trash icon_delete"></i>
                             </label>
                             <div ng-click="$event.preventDefault(); Play(); " class="play1-play2 nut_dsp_tl vong_tron_play" style="" tabindex="0" ng-show="kiemTraDSPNguoiDungClick == x.id">
                                 <div ng-show="playmusic == 1 " class="play_baihat_dsptl" style="top: 51%;left: 38%; height: 26px; width: 27px;"> </div>
@@ -454,7 +453,7 @@
         </div>
 
         <div class="item_danh_sach_phat">
-            <div ng-if="listDSPyeuThichNgheSi.length ==0" class="container page-search">
+            <div ng-if="listDSPyeuThichNgheSi.length == 0 && listTop20YeuThich.length == 0 && listDanhSachPhatYeuThich.length ==0" class="container page-search">
                 <div class="container no-content mar-t-30">
                     <div class="no-content-box">
                         <i class="icon main-icon ic-svg-dics-music-icon"></i>
@@ -539,14 +538,14 @@
                     </div>
                 </div>
             </div>
-            <div ng-if="listTop20YeuThich.length ==0" class="container page-search">
+            <!--<div ng-if="listTop20YeuThich.length ==0" class="container page-search">
                 <div class="container no-content mar-t-30">
                     <div class="no-content-box">
                         <i class="icon main-icon ic-svg-dics-music-icon"></i>
                         <span class="no-content-text">Không Danh Sách Phát Top 20 Yêu Thích</span>
                     </div>
                 </div>
-            </div>
+            </div>-->
             <div class="item_ds_chitiet_item" ng-repeat="x in listTop20YeuThich" context-menu="contextMenuTop20" ng-right-click="moChiTietDSP_TheLoai(x)">
                 <div class="tao_playlist_item">
                     <a href="/#/danhsachphattop20/{{x.id}}" class="item_tao_playlist_curent">
@@ -667,29 +666,29 @@
         <div class="item_danh_sach_phat">
             <div class="item_ds_chitiet">
                 <div class="tao_playlist">
-                    <div class="item_tao_playlist">
+                    <label for="showplaylist" class="item_tao_playlist">
                         <span class="material-icons-outlined icon_taodsphat">
                             add
                         </span>
                         <span>Tạo playlist mới</span>
-                    </div>
+                    </label>
                 </div>
             </div>
-            <div ng-if="playlist_canhan.length ==0" class="container page-search">
+            <!--<div ng-if="playlist_canhan.length ==0" class="container page-search">
                 <div class="container no-content mar-t-30">
                     <div class="no-content-box">
                         <i class="icon main-icon ic-svg-dics-music-icon"></i>
                         <span class="no-content-text">Không Có Kết Quả Được Tìm Thấy</span>
                     </div>
                 </div>
-            </div>
+            </div>-->
             <div ng-if="playlist_canhan.length > 0" class="item_ds_chitiet_item" ng-repeat="x in playlist_canhan" context-menu="contextMenuPlaylist_CaNhan" ng-right-click="moChiTietDSP_TheLoai(x)">
                 <div class="tao_playlist_item">
                     <a href="/#/playlist/{{x.id}}" class="item_tao_playlist_curent">
                         <div class="img_playlist" ng-style="{'background-image': 'url(' + x.linkhinhanh + ')'}"></div>
                         <div class="hover_playlist" ng-class="{'display_block' : kiemTraDSPNguoiDungClick == x.id  }">
-                            <label class="hover_remove_playlist" ng-click="$event.preventDefault();listDSPyeuThichNgheSi.splice($index, 1);yeuThichDanhSachPhatNguoiDungID(x.id);">
-                                <i style="font-size:23px;" class="fas fa-heart icon_account"></i>
+                            <label style="cursor:pointer;" class="hover_remove_playlist" ng-click="$event.preventDefault(); showXoaDanhSachPhat(x.id)">
+                                <i class="fas fa-trash icon_delete"></i>
                             </label>
                             <div ng-click="$event.preventDefault(); Play(); " class="play1-play2 nut_dsp_tl vong_tron_play" style="" tabindex="0" ng-show="kiemTraDSPNguoiDungClick == x.id">
                                 <div ng-show="playmusic == 1 " class="play_baihat_dsptl" style="top: 51%;left: 38%; height: 26px; width: 27px;"> </div>
@@ -780,7 +779,12 @@
                             <img class="hinh_da_luu" src="{{x.linkhinhanh}}" />
 
                         </div>
-                        <i class="fas fa-camera icon_edithinhanh"></i>
+
+                        <label>
+                            <i class="fas fa-camera icon_edithinhanh"></i>
+                            <input type="file" class="" style="  display: none;" ng-files="suaHinhAnhBaiHat($files,x)" accept="image/png, image/jpeg" required multiple>
+                        </label>
+
                         <div class="info_da_luu">
                             <span class="ten_bai_hat_da_luu">{{x.tenbaihat}}</span>
                             <h3 class="ca_si_bai_hat_da_luu">{{x.casi}}</h3>

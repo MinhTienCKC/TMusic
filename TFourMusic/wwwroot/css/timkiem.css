@@ -688,12 +688,14 @@ icon_nav_right_first_timkiem_tab1 {
 }
 .icon_nav_right_first_timkiem_a {
     margin-top: 1px;
+    margin-top: 10px;
+    margin-left: 9px;
     /* position: absolute; */
     right: 153px;
     /* opacity: 0; */
-    font-size: 21px;
+    font-size: 16px;
     color: #fff;
-    cursor:pointer;
+    cursor: pointer;
 }
 .active_baihat_timkiem {
     background-color: rgb(255 255 255 / 10%);

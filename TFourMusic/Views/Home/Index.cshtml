@@ -160,7 +160,7 @@
                     </div>
 
                 </div>
-                <div ng-showvip></div>
+
 
                 <div class="add-playlist-sidebar">
                     <label for="showplaylist" class="add-playlist-sidebar-button " tabindex="0">
@@ -225,6 +225,7 @@
 
             </div>
         </div>
+        <div ng-showvip></div>
         <div class="header">
             <div class="header__left">
                 <div class="header__left__action">
@@ -247,7 +248,7 @@
                     <i ng-mousedown="mousedowmTimKiem()" ng-mouseup="mouseupTimKiem()" ng-show="timKiemBaiHat" ng-click="clickCloseTimKiem()" class="fas fa-times searchitem searchitemclose"></i>
                 </div>
 
-                <ul ng-cloak  class="suggest__list" style="z-index:9999;" ng-show="timKiemBaiHat">
+                <ul ng-cloak class="suggest__list" style="z-index:9999;" ng-show="timKiemBaiHat">
 
                     <li ng-mousedown="mousedowmTimKiemKq()" ng-mouseup="mouseupTimKiem(timKiem)" ng-show="timKiem.length > 0" class="suggest__item"> <i class="fas fa-search searchitem searchsubitem"></i><span class="item_search">Tìm Kiếm "{{timKiem}}"</span></li>
 
@@ -306,6 +307,7 @@
             </div>
         </div>
         <div id="xoahengio" ng-template>
+            t
             @*<label ng-if="huyhengioshow == 1" ng-click="huyhengioshow = 0" class="tao_playlist_layout_label_hengio"></label>
             <div ng-if="huyhengioshow == 1" class="tao_playlist_layout_hengio">
 
@@ -337,7 +339,7 @@
         </div>
         <div class="wapper">
 
-            <div ng-cloak  ng-show="soGioConLai != '00:00:00' && soGioConLai !=undefined" class="alarm-countdown">
+            <div ng-cloak ng-show="soGioConLai != '00:00:00' && soGioConLai !=undefined" class="alarm-countdown">
                 <span>Nhạc sẽ dừng sau:</span>
                 <span class="countdown">{{ soGioConLai }}</span>
                 <span ng-click="huyhengioshow = 1" class="zm-btn zm-tooltip-btn is-hover-circle button" tabindex="0"><i style="position: absolute; right: 15px; top: 6px;" class="fas fa-times"></i></span>
@@ -632,7 +634,7 @@
         <label class="overplaycanhan" ng-cloak ng-if="xacthucemail == 1">
             overlay
         </label>
-        <div ng-if="xacthucemail == 1" ng-cloak class="tao_playlist_layout_xacthuc" >
+        <div ng-if="xacthucemail == 1" ng-cloak class="tao_playlist_layout_xacthuc">
 
             <div class="modal_laylist_layout">
                 <div class="modal_laylist_layout_item">
@@ -678,6 +680,7 @@
 
         @*bài hát người dung*@
         <div ng-baocao></div>
+
         <div ng-thongbao></div>
     </div>
 
