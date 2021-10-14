@@ -9,7 +9,7 @@
 
 .zm-sidebar {
     position: fixed;
-    z-index: 5;
+    z-index: 4;
     width: 240px;
     background-color: var(--sidebar-bg);
     top: 0;
@@ -100,7 +100,7 @@ html {
 .zm-navbar-item {
     list-style-type: none;
     font-size: 2rem;
-    padding: 6.5%;
+    padding: 5%;
     margin-left: -4%;
 }
 
@@ -290,7 +290,8 @@ section .loader span{
 .suggest__list {
     position: absolute;
     overflow: hidden;
-    width: 42.3%;
+    width: 401px;
+    min-width:401px;
     margin-left: 95px;
     height: auto;
     min-height: 0;

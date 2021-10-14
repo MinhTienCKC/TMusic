@@ -333,6 +333,10 @@ app.factory('dataservice', function ($http) {
             $http.post('/Home/BaoCaoBaiHat', data).then(callback);
 
         },
+        BaoCaoBaiHatNguoiDung: function (data, callback) {
+            $http.post('/Home/BaoCaoBaiHatNguoiDung', data).then(callback);
+
+        },
         XoaDanhSachPhatNguoiDung: function (data, callback) {
             $http.post('/Home/XoaDanhSachPhatNguoiDung', data).then(callback);
         },
@@ -492,6 +496,12 @@ app.factory('dataservice', function ($http) {
         },
         taiTheLoaiKetHopTop20TheoThoiGian: function (data, callback) {
             $http.post('/Home/taiTheLoaiKetHopTop20TheoThoiGian', data).then(callback);
+
+        },
+
+
+        suaLinkHinhAnhBaiHat: function (data, callback) {
+            $http.post('/Home/suaLinkHinhAnhBaiHat', data).then(callback);
 
         },
 
@@ -1109,7 +1119,7 @@ app.controller('Ctrl_ESEIM', function ($scope, dataservice, $uibModal, $rootScop
     let curr_time = document.getElementById("process__start_time");
     let total_duration = document.getElementById("process__end_time");
     let audio = document.createElement("audio");
-   
+
     let timeOutCongLuotNghe;
     var idBaiHatDangNghe = "";
     $rootScope.BaiHatDangPhat;
@@ -1139,7 +1149,7 @@ app.controller('Ctrl_ESEIM', function ($scope, dataservice, $uibModal, $rootScop
                 $location.path('/');
                 $scope.$apply();
             }
-            
+
 
         }
         else {
@@ -1216,7 +1226,7 @@ app.controller('Ctrl_ESEIM', function ($scope, dataservice, $uibModal, $rootScop
                     $location.path('/');
                     $scope.$apply();
                 }
-               
+
 
             }).catch(function () {
                 alert("Lỗi Đăng Nhập");
@@ -1409,7 +1419,7 @@ app.controller('Ctrl_ESEIM', function ($scope, dataservice, $uibModal, $rootScop
         })
         // Create a callback which logs the current auth state
 
-       /* $scope.model.ngaysinh = new Date();*/
+        /* $scope.model.ngaysinh = new Date();*/
 
 
         $scope.buttonnav = 1;
@@ -1417,7 +1427,7 @@ app.controller('Ctrl_ESEIM', function ($scope, dataservice, $uibModal, $rootScop
         $scope.playmusic = 0;
         $scope.show = 0;
         $scope.sttmusic = 0;
-       
+
         var progress = document.getElementById("progress");
         $scope.lickPlaylist = false;
         const $ = document.querySelector.bind(document);
@@ -1686,7 +1696,7 @@ app.controller('Ctrl_ESEIM', function ($scope, dataservice, $uibModal, $rootScop
             audio.volume = index / 100;
             $scope.volumechange = index;
         }
-        
+
     }
     $scope.setAutoPlayNhac = function () {
         $scope.playmusic = 0;
@@ -1765,7 +1775,7 @@ app.controller('Ctrl_ESEIM', function ($scope, dataservice, $uibModal, $rootScop
             }
             else {
                 $rootScope.thongBao = "Tài khoản của bạn đã đạt giới hạn dung lượng lưu trữ bài hát, vui lòng nâng cấp vip !!!";
-               /* $scope.thongBao = 1;*/
+                /* $scope.thongBao = 1;*/
             }
 
         }
@@ -2090,7 +2100,7 @@ app.controller('Ctrl_ESEIM', function ($scope, dataservice, $uibModal, $rootScop
                 });
         }
         $("#loading_main").css("display", "none");
-        
+
     }
     $scope.dangXuatNguoiDung = function () {
         $("#loading_main").css("display", "block");
@@ -3169,6 +3179,7 @@ app.controller('Ctrl_ESEIM', function ($scope, dataservice, $uibModal, $rootScop
     //contexxtmenu bài hát
     $scope.baihatCookie = ""; // lưu dữ liệu một bài hát khi click hiển thị context menu
     // xem contextmenu bai hat khi click
+    /* <span class="zm-btn button"><i class="icon fa fa-ban" aria-hidden="true"></i><span>Chặn</span></span>*/
     $scope.moChiTietBaiHat = function (data, vitri) {
         $scope.baihatCookie = data;                                                                                                                                                                                                                                                                                                                                   //link hinh                                                                                           // chuyển qua bai hat theo id                                                                                                     //tenbai                                                                                                                                      //luoc yeu thich                                                                                                          // luoc nghe                                                                                                                                                                              //taiXuong                                                                                                                                                                                                                                     // lời bài hát                                                                                               //chặn                                                                                                                                             //thêm vào danh sách phát                                                                                                                                                         // phát tiếp theo                                                                                                                                //subtextmenuPlaylist                                                                                                               //thêm vào plaulist                                                                                                                                                                                    //Bình Luận                                                                                                                                                                                                                     // Sao chép Link                                                                                                                                                                                                                                                                // chia sẻ       <i class="icon fa fa-chevron-right" style="margin-left: auto;"></i>                                                                                                                                                                                                                                    
         $scope.contextMenuBaiHat_CaNhan = '<div id="contextmenubaihat_canhan" class="zm-contextmenu song-menu" style=" padding:10px 0;"><div class="menu"><ul class="menu-list"><div class="menu-list--submenu"><div class="media song-info-menu"><div class="media-left"><figure class="image is-40x40" style = "width: 65px;"><img style="height:40px;object-fit: cover;" src="' + data.linkhinhanh + '" alt=""></figure></div><div class="is-w-150 media-content"><a href="/#/baihat/' + data.id + '" class="a-hover"><div class="title-wrapper"><span class="item-title title" title="Sài Gòn Ơi Xin Lỗi Cảm Ơn">' + data.tenbaihat + '</span></div></a><div class="song-stats"><div class="stat-item"><i class="icon far fa-heart iconmusic" aria-hidden="true"></i><span>' + data.luotthich + 'K</span></div><div class="stat-item"><i class="icon fa fa-headphones" aria-hidden="true"></i><span>' + data.luotnghe + 'K</span></div></div></div></div></div></ul><ul class="menu-list"><div class="group-button-menu"><div class="group-button-list"><button class="zm-btn button" ng-click="taiXuong()"><i class="icon fa fa-download" aria-hidden="true"></i><span>Tải xuống</span></button><button class="zm-btn button" tabindex="0" data-toggle="modal" data-target="#myModal"><i class="icon fa fa-book" aria-hidden="true"></i><span>Lời bài hát</span></button><span ng-click="showBaoCao()" class="zm-btn button"><i class="icon fa fa-ban" aria-hidden="true"></i><span>Báo Cáo</span></span></div></div></ul><ul class="menu-list"><li><button class="zm-btn button" tabindex="0" ng-click="themBaiHatVaoDanhSachPhat(baihatCookie)"><i class="icon far fa-list-alt"></i><span>Thêm vào danh sách phát</span></button></li><li><button class="zm-btn button" tabindex="0" ng-click="themBaiHatVaoPhatTiepTheo(baihatCookie)"><i class="icon fa fa-play" aria-hidden="true"></i><span>Phát tiếp theo</span></button></li><li ><div class="menu-list--submenu" subtext-menu="subtextMenuPlayList"><button class="zm-btn button" tabindex="0" ng-click="kiemTraThemBaiHatVaoPlayList()"><i class="icon fa fa-plus" aria-hidden="true"></i><span>Thêm vào playlist</span><i class="icon fa fa-chevron-right" style="margin-left: auto;"></i></button></div></li><li><button class="zm-btn button" tabindex="0"       ng-click="ShowChinhSuaBaiHat()" ><i class="icon far fa-comment"></i><span>Chỉnh Sửa</span><span class="comment-badge"></span></button></li><li><button class="zm-btn button" ng-click="xoaBaiHatNguoiDung()" tabindex="0"><i class="icon fa fa-link"></i><span>Xóa</span></button></li></ul></div></div>';
@@ -3177,7 +3188,7 @@ app.controller('Ctrl_ESEIM', function ($scope, dataservice, $uibModal, $rootScop
         $scope.contextMenuBaiHat_BaiHat = '<div id="contextmenubaihat_baihat" class="zm-contextmenu song-menu" style=" padding:10px 0;"><div class="menu"><ul class="menu-list"><div class="menu-list--submenu"><div class="media song-info-menu"><div class="media-left"><figure class="image is-40x40" style = "width: 65px;"><img style="height:40px;object-fit: cover;" src="' + data.linkhinhanh + '" alt=""></figure></div><div class="is-w-150 media-content"><a href="/#/baihat/' + data.id + '" class="a-hover"><div class="title-wrapper"><span class="item-title title" title="Sài Gòn Ơi Xin Lỗi Cảm Ơn">' + data.tenbaihat + '</span></div></a><div class="song-stats"><div class="stat-item"><i class="icon far fa-heart iconmusic" aria-hidden="true"></i><span>' + data.luotthich + 'K</span></div><div class="stat-item"><i class="icon fa fa-headphones" aria-hidden="true"></i><span>' + data.luotnghe + 'K</span></div></div></div></div></div></ul><ul class="menu-list"><div class="group-button-menu"><div class="group-button-list"><button class="zm-btn button" ng-click="taiXuong()"><i class="icon fa fa-download" aria-hidden="true"></i><span>Tải xuống</span></button><button class="zm-btn button" tabindex="0" data-toggle="modal" data-target="#myModal"><i class="icon fa fa-book" aria-hidden="true"></i><span>Lời bài hát</span></button><span ng-click="showBaoCao()" class="zm-btn button"><i class="icon fa fa-ban" aria-hidden="true"></i><span>Báo Cáo</span></span></div></div></ul><ul class="menu-list"><li><button class="zm-btn button" tabindex="0" ng-click="themBaiHatVaoDanhSachPhat(baihatCookie)"><i class="icon far fa-list-alt"></i><span>Thêm vào danh sách phát</span></button></li><li><button class="zm-btn button" tabindex="0" ng-click="themBaiHatVaoPhatTiepTheo(baihatCookie)"><i class="icon fa fa-play" aria-hidden="true"></i><span>Phát tiếp theo</span></button></li><li ><div class="menu-list--submenu" subtext-menu="subtextMenuPlayList"><button class="zm-btn button" tabindex="0" ng-click="kiemTraThemBaiHatVaoPlayList()"><i class="icon fa fa-plus" aria-hidden="true"></i><span>Thêm vào playlist</span><i class="icon fa fa-chevron-right" style="margin-left: auto;"></i></button></div></li><li><button class="zm-btn button" tabindex="0"       ng-click="loadBinhLuanBaiHat(' + "'" + data.id + "'" + ')" ><i class="icon far fa-comment"></i><span>Bình luận</span><span class="comment-badge"></span></button></li><li><button class="zm-btn button" ng-click="copyLinkBaiHat(' + "'https://localhost:44348/#/baihat/" + data.id + "'" + ')" tabindex="0"><i class="icon fa fa-link"></i><span>Sao chép link</span></button></li><li><div class="menu-list--submenu" subtext-menu="subtextMenuChiaSe"><button class="zm-btn button" tabindex="0" ng-click="share()"><i class="icon fa fa-share"></i><span>Chia sẻ Facebook</span></button></div></li></ul></div></div>';
         //xài cho  trang trang playlist
         if ($rootScope.checklogin.uid == $rootScope.idNguoiDungVoiPlayListHienTai) {
-            $scope.contextMenuBaiHatPlaylist = '<div id="contextmenubaihat_baihat" class="zm-contextmenu song-menu" style=" padding:10px 0;"><div class="menu"><ul class="menu-list"><div class="menu-list--submenu"><div class="media song-info-menu"><div class="media-left"><figure class="image is-40x40" style = "width: 65px;"><img style="height:40px;object-fit: cover;" src="' + data.linkhinhanh + '" alt=""></figure></div><div class="is-w-150 media-content"><a href="/#/baihat/' + data.id + '" class="a-hover"><div class="title-wrapper"><span class="item-title title" title="Sài Gòn Ơi Xin Lỗi Cảm Ơn">' + data.tenbaihat + '</span></div></a><div class="song-stats"><div class="stat-item"><i class="icon far fa-heart iconmusic" aria-hidden="true"></i><span>5K</span></div><div class="stat-item"><i class="icon fa fa-headphones" aria-hidden="true"></i><span>122K</span></div></div></div></div></div></ul><ul class="menu-list"><div class="group-button-menu"><div class="group-button-list"><button class="zm-btn button" ng-click="taiXuong()"><i class="icon fa fa-download" aria-hidden="true"></i><span>Tải xuống</span></button><button class="zm-btn button" tabindex="0" data-toggle="modal" data-target="#myModal"><i class="icon fa fa-book" aria-hidden="true"></i><span>Lời bài hát</span></button><span class="zm-btn button"><i class="icon fa fa-ban" aria-hidden="true"></i><span>Chặn</span></span></div></div></ul><ul class="menu-list"><li><button class="zm-btn button" tabindex="0" ng-click="themBaiHatVaoDanhSachPhat(dspCookie)"><i class="icon far fa-list-alt"></i><span>Thêm vào danh sách phát</span></button></li><li><button class="zm-btn button" tabindex="0" ng-click="themBaiHatVaoPhatTiepTheo(dspCookie)"><i class="icon fa fa-play" aria-hidden="true"></i><span>Phát tiếp theo</span></button></li><li ><div class="menu-list--submenu" subtext-menu="subtextMenuPlayList"><button class="zm-btn button" tabindex="0" ng-click="kiemTraThemBaiHatVaoPlayList()"><i class="icon fa fa-plus" aria-hidden="true"></i><span>Thêm vào playlist</span><i class="icon fa fa-chevron-right" style="margin-left: auto;"></i></button></div></li><li><button ng-click="loadBinhLuanBaiHat(' + "'" + data.id + "'" + ')" class="zm-btn button" tabindex="0"><i class="icon far fa-comment"></i><span>Bình luận</span><span class="comment-badge"></span></button></li><li><button class="zm-btn button" ng-click="copyLinkBaiHat(' + "'https://localhost:44348/#/baihat/" + data.id + "'" + ')" tabindex="0"><i class="icon fa fa-link"></i><span>Sao chép link</span></button></li><li><div class="menu-list--submenu" subtext-menu="subtextMenuChiaSe"><button class="zm-btn button" tabindex="0" ng-click="share()"><i class="icon fa fa-share"></i><span>Chia sẻ Facebook</span></button></div></li><li><button class="zm-btn button" tabindex="0" ng-click="xoaBaiHatKhoiPlaylist(' + vitri + ')"><i class="icon fa fa-trash"></i><span>Xóa khỏi playlist này</span><span class="comment-badge"></span></button></li></ul></div></div>';
+            $scope.contextMenuBaiHatPlaylist = '<div id="contextmenubaihat_baihat" class="zm-contextmenu song-menu" style=" padding:10px 0;"><div class="menu"><ul class="menu-list"><div class="menu-list--submenu"><div class="media song-info-menu"><div class="media-left"><figure class="image is-40x40" style = "width: 65px;"><img style="height:40px;object-fit: cover;" src="' + data.linkhinhanh + '" alt=""></figure></div><div class="is-w-150 media-content"><a href="/#/baihat/' + data.id + '" class="a-hover"><div class="title-wrapper"><span class="item-title title" title="Sài Gòn Ơi Xin Lỗi Cảm Ơn">' + data.tenbaihat + '</span></div></a><div class="song-stats"><div class="stat-item"><i class="icon far fa-heart iconmusic" aria-hidden="true"></i><span>' + data.luotthich + 'K</span></div><div class="stat-item"><i class="icon fa fa-headphones" aria-hidden="true"></i><span>' + data.luotnghe + 'K</span></div></div></div></div></div></ul><ul class="menu-list"><div class="group-button-menu"><div class="group-button-list"><button class="zm-btn button" ng-click="taiXuong()"><i class="icon fa fa-download" aria-hidden="true"></i><span>Tải xuống</span></button><button class="zm-btn button" tabindex="0" data-toggle="modal" data-target="#myModal"><i class="icon fa fa-book" aria-hidden="true"></i><span>Lời bài hát</span></button></div></div></ul><ul class="menu-list"><li><button class="zm-btn button" tabindex="0" ng-click="themBaiHatVaoDanhSachPhat(dspCookie)"><i class="icon far fa-list-alt"></i><span>Thêm vào danh sách phát</span></button></li><li><button class="zm-btn button" tabindex="0" ng-click="themBaiHatVaoPhatTiepTheo(dspCookie)"><i class="icon fa fa-play" aria-hidden="true"></i><span>Phát tiếp theo</span></button></li><li ><div class="menu-list--submenu" subtext-menu="subtextMenuPlayList"><button class="zm-btn button" tabindex="0" ng-click="kiemTraThemBaiHatVaoPlayList()"><i class="icon fa fa-plus" aria-hidden="true"></i><span>Thêm vào playlist</span><i class="icon fa fa-chevron-right" style="margin-left: auto;"></i></button></div></li><li><button ng-click="loadBinhLuanBaiHat(' + "'" + data.id + "'" + ')" class="zm-btn button" tabindex="0"><i class="icon far fa-comment"></i><span>Bình luận</span><span class="comment-badge"></span></button></li><li><button class="zm-btn button" ng-click="copyLinkBaiHat(' + "'https://localhost:44348/#/baihat/" + data.id + "'" + ')" tabindex="0"><i class="icon fa fa-link"></i><span>Sao chép link</span></button></li><li><div class="menu-list--submenu" subtext-menu="subtextMenuChiaSe"><button class="zm-btn button" tabindex="0" ng-click="share()"><i class="icon fa fa-share"></i><span>Chia sẻ Facebook</span></button></div></li><li><button class="zm-btn button" tabindex="0" ng-click="xoaBaiHatKhoiPlaylist(' + vitri + ')"><i class="icon fa fa-trash"></i><span>Xóa khỏi playlist này</span><span class="comment-badge"></span></button></li></ul></div></div>';
 
         } else {
             $scope.contextMenuBaiHatPlaylist = $scope.contextMenuBaiHat_BaiHat;
@@ -3273,6 +3284,7 @@ app.controller('Ctrl_ESEIM', function ($scope, dataservice, $uibModal, $rootScop
 
 
         if (DSPPlayList_id != " ") {
+            $("#loading_main").css("display", "block");
             // key = id danhsachphat nguoi dung playlist
             // uid = là id  nguoi dung 
             $scope.text.key = DSPPlayList_id;
@@ -3302,6 +3314,7 @@ app.controller('Ctrl_ESEIM', function ($scope, dataservice, $uibModal, $rootScop
                             // alert("Bài Hát Đã Có Trong PlayList");
                             alertify.success("Thêm thành công.");
                             $scope.kiemTraBaiHatTonTai = false;
+                            $("#loading_main").css("display", "none");
                             return;
                         }
                     };
@@ -3312,17 +3325,18 @@ app.controller('Ctrl_ESEIM', function ($scope, dataservice, $uibModal, $rootScop
                         $scope.text.uid = DSPPlayList_id;
 
                         $scope.modelThemBaiHatVaoDSPNguoiDung = {
-                            baihat_id: '',
+                            baihat: $scope.baihatCookie,
                             uid: $rootScope.checklogin.uid,
                             danhsachphatnguoidung_id: ''
                         }
-                        $scope.modelThemBaiHatVaoDSPNguoiDung.baihat_id = $scope.baihatCookie.id;
+                        /* $scope.modelThemBaiHatVaoDSPNguoiDung.baihat_id = $scope.baihatCookie.id;*/
                         $scope.modelThemBaiHatVaoDSPNguoiDung.danhsachphatnguoidung_id = DSPPlayList_id;
 
                         dataservice.themBaiHatVaoDanhSachPhatNguoiDung_NhacMoi($scope.modelThemBaiHatVaoDSPNguoiDung, function (rs) {
                             rs = rs.data;
                             $scope.themBaiHatVaoDanhSachPhatNguoiDung_NhacMoi = rs;
                             // alert("thêm thành công");
+                            $("#loading_main").css("display", "none");
                             alertify.success("Thêm thành công.");
 
                         });
@@ -3481,7 +3495,7 @@ app.controller('Ctrl_ESEIM', function ($scope, dataservice, $uibModal, $rootScop
         else {
             window.history.forward();
         }
-        
+
     }
 
 
@@ -3999,7 +4013,7 @@ app.controller('canhan', function ($scope, dataservice, $rootScope, $location, $
 
     }
     $scope.toggleYeuThichBHDaLuu_CaNhan = function (index) {
-
+        $("#loading_main").css("display", "block");
         $scope.yeuThichbhmodel = {
             id: '',
             nguoidung_id: $rootScope.checklogin.uid,
@@ -4007,6 +4021,7 @@ app.controller('canhan', function ($scope, dataservice, $rootScope, $location, $
         };
         dataservice.yeuThichBaiHat($scope.yeuThichbhmodel, function (rs) {
             rs = rs.data;
+            $("#loading_main").css("display", "none");
             if (rs.Error) { }
             else {
                 if (rs) {
@@ -4018,7 +4033,7 @@ app.controller('canhan', function ($scope, dataservice, $rootScope, $location, $
         });
     }
     $scope.toggleYeuThichBHDaTaiLen_CaNhan = function (index) {
-
+        $("#loading_main").css("display", "block");
         $scope.yeuThichbhmodel = {
             id: '',
             nguoidung_id: $rootScope.checklogin.uid,
@@ -4026,6 +4041,7 @@ app.controller('canhan', function ($scope, dataservice, $rootScope, $location, $
         };
         dataservice.yeuThichBaiHat($scope.yeuThichbhmodel, function (rs) {
             rs = rs.data;
+            $("#loading_main").css("display", "none");
             if (rs.Error) { }
             else {
                 if (rs) {
@@ -4455,6 +4471,40 @@ app.controller('canhan', function ($scope, dataservice, $rootScope, $location, $
             }
         }
     }
+    $scope.suaHinhAnhBaiHat = function ($files, data) {
+        $scope.BienTam = {
+            linkhinhanhmoi: '',
+            linkhinhanhcu: '',
+            baihat_id: '',
+            nguoidung_id: ''
+        }
+        $scope.modelbaihatcs = data;
+
+        if ($files[0].type == "image/png" || $files[0].type == "image/jpeg") {
+            duLieuHinh = new FormData();
+            duLieuHinh.append("File1", $files[0]);
+            duLieuHinh.append("uid", $rootScope.checklogin.uid);
+            dataservice.uploadHinhAnh(duLieuHinh, function (rs) {
+                rs = rs.data;
+                $scope.BienTam.linkhinhanhmoi = rs;
+                $scope.BienTam.linkhinhanhcu = data.linkhinhanh;
+                $scope.BienTam.baihat_id = data.id;
+                $scope.BienTam.nguoidung_id = data.nguoidung_id;
+                dataservice.suaLinkHinhAnhBaiHat($scope.BienTam, function (rs) {
+                    rs = rs.data;
+                    $scope.modelbaihatcs.linkhinhanh = $scope.BienTam.linkhinhanhmoi;
+                });
+            });
+        } else {
+            alert("Sai định đạng ảnh (*.jpg, *.png)");
+        }
+
+        //for (var i = 0; i < $files.length; i++) {
+        //    formData.append("File", $files[i]);
+        //}
+
+    }
+
 
 });
 app.controller('timkiem', function ($scope, $routeParams, dataservice, $rootScope, $location) {
@@ -4591,7 +4641,7 @@ app.controller('timkiem', function ($scope, $routeParams, dataservice, $rootScop
     }
     $scope.initData();
     $scope.toggleYeuThichBH_TimKiem = function (index) {
-
+        $("#loading_main").css("display", "block");
         $scope.yeuThichbhmodel = {
             id: '',
             nguoidung_id: $rootScope.checklogin.uid,
@@ -4600,6 +4650,7 @@ app.controller('timkiem', function ($scope, $routeParams, dataservice, $rootScop
         if ($rootScope.checklogin.dadangnhap) {
             dataservice.yeuThichBaiHat($scope.yeuThichbhmodel, function (rs) {
                 rs = rs.data;
+                $("#loading_main").css("display", "none");
                 if (rs.Error) { }
                 else {
                     if (rs) {
@@ -4611,11 +4662,13 @@ app.controller('timkiem', function ($scope, $routeParams, dataservice, $rootScop
             });
         }
         else {
+            $("#loading_main").css("display", "none");
             $rootScope.closelogin = true;
         }
 
     }
     $scope.theoDoi_Timkiem = function (theodoi) {
+        $("#loading_main").css("display", "block");
         if ($rootScope.checklogin.dadangnhap) {
 
             $scope.modelTheoDoi = {
@@ -4625,6 +4678,7 @@ app.controller('timkiem', function ($scope, $routeParams, dataservice, $rootScop
             }
             dataservice.theoDoiNguoiDung($scope.modelTheoDoi, function (rs) {
                 rs = rs.data;
+                $("#loading_main").css("display", "none");
                 if (rs) {
                     $scope.danhsachNgheSi[theodoi].theodoi = 1;
                 }
@@ -4634,6 +4688,7 @@ app.controller('timkiem', function ($scope, $routeParams, dataservice, $rootScop
             })
         }
         else {
+            $("#loading_main").css("display", "none");
             $rootScope.closelogin = true;
         }
 
@@ -4680,6 +4735,7 @@ app.controller('nghesi', function ($scope, $routeParams, dataservice, $rootScope
                     key: $rootScope.checklogin.uid,
                     uid: $routeParams.uid
                 }
+                $scope.uidNgheSi = $routeParams.uid;
                 dataservice.timKiemNgheSi($scope.modelNgheSi, function (rs) {
                     rs = rs.data;
                     if (rs.Error) { } else {
@@ -4734,6 +4790,7 @@ app.controller('nghesi', function ($scope, $routeParams, dataservice, $rootScope
             $scope.checkplaymusicnghesi = index;
         }
         $scope.toggleYeuThichBH_NgheSi = function (index) {
+            $("#loading_main").css("display", "block");
             if ($rootScope.checklogin.dadangnhap) {
                 $scope.yeuThichbhmodel = {
                     id: '',
@@ -4742,6 +4799,7 @@ app.controller('nghesi', function ($scope, $routeParams, dataservice, $rootScope
                 };
                 dataservice.yeuThichBaiHat($scope.yeuThichbhmodel, function (rs) {
                     rs = rs.data;
+                    $("#loading_main").css("display", "none");
                     if (rs.Error) { }
                     else {
                         if (rs) {
@@ -4752,6 +4810,7 @@ app.controller('nghesi', function ($scope, $routeParams, dataservice, $rootScope
                     }
                 });
             } else {
+                $("#loading_main").css("display", "none");
                 $rootScope.closelogin = true;
             }
 
@@ -4786,10 +4845,60 @@ app.controller('nghesi', function ($scope, $routeParams, dataservice, $rootScope
 
 
     }
-
+    $scope.BaoCaoNguoiDung = function () {
+        if ($rootScope.checklogin.dadangnhap) {
+            $scope.showBaoCaoNguoiDung = !$scope.showBaoCaoNguoiDung;
+        } else {
+            $rootScope.closelogin = true;
+        }
+    }
     $scope.initData();
 
+    $scope.GuiBaoCao = function () {
+        if ($scope.uidNgheSi.length > 0 && $scope.uidNgheSi != '' && $scope.uidNgheSi != null && $scope.uidNgheSi != undefined) {
 
+
+            $("#loading_main").css("display", "block");
+            $scope.showBaoCaoNguoiDung = !$scope.showBaoCaoNguoiDung;
+            $scope.noidung = [];
+            $scope.modelbaocao = {
+                id: '',
+                noidung: '',
+                motavande: '',
+                nguoidung_id: $rootScope.checklogin.uid,
+                nguoidung_baocao_id: $scope.uidNgheSi,
+                trangthai: 0 // 0 - Đã Tiếp Nhận      1 - Đang Xử Lí     2- Đã Xử lí
+            };
+
+            if ($scope.motabaocaonguoidung != undefined && $scope.motabaocaonguoidung.length > 0) {
+                $scope.modelbaocao.motavande = $scope.motabaocaonguoidung;
+                $scope.motabaocaonguoidung = null;
+            }
+            if ($scope.taikhoangiamao) {
+                $scope.noidung.push("Tài khoản giả mạo tôi");
+                $scope.taikhoangiamao = false;
+            }
+            if ($scope.anhdaidienvipham) {
+                $scope.noidung.push("Ảnh đại diện không phù hợp hoặc có sự xuất hiện của tôi ");
+                $scope.anhdaidienvipham = false;
+            }
+            if ($scope.motanguoidungvipham) {
+                $scope.noidung.push("Mô tả người dùng không phù hợp hoặc vi phạm chính sách");
+                $scope.motanguoidungvipham = false;
+            }
+
+            if ($scope.modelbaocao != null) {
+                var a = JSON.stringify($scope.noidung);
+                $scope.modelbaocao.noidung = a;
+                dataservice.BaoCaoBaiHatNguoiDung($scope.modelbaocao, function (rs) {
+                    rs = rs.data;
+                    $rootScope.thongBao = rs;
+                    $("#loading_main").css("display", "none");
+                })
+            }
+        }
+
+    }
 
 
 

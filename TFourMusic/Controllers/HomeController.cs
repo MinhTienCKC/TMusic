@@ -1748,6 +1748,61 @@ namespace TFourMusic.Controllers
             }
 
         }
+        public List<baocaonguoidungModel> LayBangBaoCaoNguoiDungChuaXuLi(string uid = null)
+        {
+            try
+            {
+                if (uid == null)
+                {
+                    client = new FireSharp.FirebaseClient(config);
+                    FirebaseResponse response = client.Get("csdlmoi/baocao/nguoidungvipham/chuaxuly");
+                    var data = JsonConvert.DeserializeObject<dynamic>(response.Body);
+                    var list = new List<baocaonguoidungModel>();
+
+
+                    if (data != null)
+                    {
+                        foreach (var item in data)
+                        {
+                            foreach (var x in item)
+                            {
+                                foreach (var y in x)
+
+                                {
+                                    list.Add(JsonConvert.DeserializeObject<baocaonguoidungModel>(((JProperty)y).Value.ToString()));
+
+                                }
+
+                            }
+
+                        }
+                    }
+                    return list;
+                }
+                else
+                {
+                    client = new FireSharp.FirebaseClient(config);
+                    FirebaseResponse response = client.Get("csdlmoi/baocao/nguoidungvipham/chuaxuly/" + uid);
+                    var data = JsonConvert.DeserializeObject<dynamic>(response.Body);
+                    var list = new List<baocaonguoidungModel>();
+
+                    if (data != null)
+                    {
+                        foreach (var item in data)
+                        {
+                            list.Add(JsonConvert.DeserializeObject<baocaonguoidungModel>(((JProperty)item).Value.ToString()));
+
+                        }
+                    }
+                    return list;
+                }
+            }
+            catch
+            {
+                return null;
+            }
+
+        }
         //17-08 Đã sữa CSDL mới
         public List<baihatcustomModel> convertBaiHat(List<baihatModel> list, string uid)
         {
@@ -2729,7 +2784,7 @@ namespace TFourMusic.Controllers
                 {
                     var listPlaylist = LayBangDanhSachPhatNguoiDung();
                     var datakq = (from platlist in listPlaylist
-                                  where platlist.tendanhsachphat.ToUpper().Contains(model.tuKhoa.ToUpper()) && platlist.chedo == 1
+                                  where platlist.tendanhsachphat.ToUpper().Contains(model.tuKhoa.ToUpper()) && platlist.chedo == 1 && platlist.vohieuhoa == 0
                                   select platlist).OrderBy(x => x.tendanhsachphat).ToList();
                     if (model.uid != null)
                     {
@@ -2933,7 +2988,7 @@ namespace TFourMusic.Controllers
 
                     var listnguoidung = LayBangNguoiDung();
                     var datakq = (from nguoidung in listnguoidung
-                                  where nguoidung.hoten.ToUpper().Contains(model.tuKhoa.ToUpper())
+                                  where nguoidung.hoten.ToUpper().Contains(model.tuKhoa.ToUpper()) && nguoidung.vohieuhoa == 0
                                   select nguoidung).OrderBy(x => x.hoten).ToList();
 
                     if (model.uid != null)
@@ -3643,6 +3698,103 @@ namespace TFourMusic.Controllers
             return false;
         }
         [HttpPost]
+        public async Task<object> BaoCaoBaiHatNguoiDung([FromBody] baocaonguoidungModel baocao)
+        {
+            //string output = JsonConvert.SerializeObject(baocao.noidung);
+            var listbaocao = LayBangBaoCaoNguoiDungChuaXuLi(baocao.nguoidung_id);
+            listbaocao = (from bc in listbaocao
+                          where bc.nguoidung_baocao_id == baocao.nguoidung_baocao_id
+                          select bc).ToList();
+            if (listbaocao.Count > 0)
+            {
+
+                return Json("Bạn Đã Báo Cáo Bài Hát Vui Lòng Đợi Nhân Viên Xử Lý");
+            }
+            else
+            {
+                baocao.thoigian = DateTime.Now;
+                baocao.ngayxuly = DateTime.Now;
+                var firebase = new FirebaseClient(Key);
+
+                if (baocao != null)
+                {
+                    var dino = await firebase.Child("csdlmoi").Child("baocao").Child("nguoidungvipham").Child("chuaxuly").Child(baocao.nguoidung_id).PostAsync(baocao);
+                    string idkey = dino.Key.ToString();
+                    baocao.id = idkey;
+                    await firebase.Child("csdlmoi").Child("baocao").Child("nguoidungvipham").Child("chuaxuly").Child(baocao.nguoidung_id).Child(idkey).PutAsync(baocao);
+                    var nguoibaocao = LayBangNguoiDung(baocao.nguoidung_id);
+                    var nguoibibaocao = LayBangNguoiDung(baocao.nguoidung_baocao_id);
+
+
+                    if (nguoibaocao.Count > 0 && nguoibaocao[0].email != "admin")
+                    {
+                        var message = new MimeMessage();
+                        message.From.Add(new MailboxAddress("Admin TMUSIC", "0306181280@caothang.edu.vn"));
+                        message.To.Add(new MailboxAddress(nguoibaocao[0].hoten, nguoibaocao[0].email));
+                        message.Subject = "TMUSIC - CÁM ƠN BẠN ĐÃ BÁO CÁO";
+                        message.Body = new TextPart("plain")
+                        {
+                            Text = "Xin chào: " + nguoibaocao[0].hoten + "\n" +
+                            "Cám ơn bạn đã báo cáo người dùng mà bạn đã cho rằng vi phạm tiêu chuẩn cộng đồng. \n\n" +
+                            "Chúng tôi đã tiếp nhận báo cáo của bạn và sẽ xử lý vi phạm trong thời gian sớm nhất. \n\n" +
+                            "Chúng tôi sẽ thông báo cho bạn ngay khi có kết quả xử lý vi phạm.  \n" +
+                            "Cám ơn bạn. \n" +
+                            "Admin TMUSIC"
+                        };
+                        using (var client = new SmtpClient())
+                        {
+                            // client.ServerCertificateValidationCallback = (s, c, h, e) => true;
+                            client.CheckCertificateRevocation = false;
+                            // client.SslProtocols = SslProtocols.Ssl3 | SslProtocols.Tls | SslProtocols.Tls11 | SslProtocols.Tls12 | SslProtocols.Tls13;
+                            client.Connect("smtp.gmail.com", 587, false);
+                            //  await client.ConnectAsync("smtp.gmail.com", 587, false);
+                            client.Authenticate("0306181280@caothang.edu.vn", "0965873520");
+
+                            client.Send(message);
+                            client.Disconnect(true);
+                        }
+
+                    }
+                    // gửi email
+
+
+                    if (nguoibibaocao.Count > 0 && nguoibibaocao[0].email != "admin")
+                    {
+                        // gửi email
+                        var messagenguoibibaocao = new MimeMessage();
+                        messagenguoibibaocao.From.Add(new MailboxAddress("Admin TMUSIC", "0306181280@caothang.edu.vn"));
+                        messagenguoibibaocao.To.Add(new MailboxAddress(nguoibibaocao[0].hoten, nguoibibaocao[0].email));
+                        messagenguoibibaocao.Subject = "TMUSIC - Tài Khoản Của Bạn Bị Báo Cáo Vi Phạm Tiêu Chuẩn Cộng Đồng";
+                        messagenguoibibaocao.Body = new TextPart("plain")
+                        {
+                            Text = "Xin chào: " + nguoibibaocao[0].hoten + "\n" +
+                            "Chúng tôi đã nhận được báo cáo tài khoản của bạn vi phạm tiêu chuẩn cộng đồng của chúng tôi. \n" +
+                            "Nhằm đảm bảo cho tiêu chuẩn cộng đồng chúng tôi sẽ xem xét về trường hợp của bạn. \n" +
+                            "Nếu bạn cho rằng báo cáo nhầm lẫn hoặc không chính xác vui lòng  reply email cho chúng tôi với các thông tin chứng minh rằng bạn đã không vi phạm bất cứ tiêu chuẩn cộng đồng của chúng tôi. \n\n" +
+                            "Chúng tôi luôn đảm bảo rằng TMusic là một cộng đồng người dùng văn minh.   \n" +
+                            "Cám ơn bạn. \n" +
+                            "Admin TMUSIC"
+                        };
+                        using (var client = new SmtpClient())
+                        {
+                            // client.ServerCertificateValidationCallback = (s, c, h, e) => true;
+                            client.CheckCertificateRevocation = false;
+                            // client.SslProtocols = SslProtocols.Ssl3 | SslProtocols.Tls | SslProtocols.Tls11 | SslProtocols.Tls12 | SslProtocols.Tls13;
+                            client.Connect("smtp.gmail.com", 587, false);
+                            //  await client.ConnectAsync("smtp.gmail.com", 587, false);
+                            client.Authenticate("0306181280@caothang.edu.vn", "0965873520");
+
+                            client.Send(messagenguoibibaocao);
+                            client.Disconnect(true);
+                        }
+                    }
+                    return Json("Cảm Ơn Bạn Bạn Đã Báo Cáo. Chúng Tôi Đã Tiếp Nhận Báo Cáo Của Bạn. Chúng Tôi Sẽ Phản Hồi Tình Trạng Qua Email Của Bạn.");
+                }
+            }
+
+            return false;
+        }
+        [HttpPost]
         public bool ChinhSuaTenDanhSachPhat([FromBody] danhsachphatnguoidungModel dsp)
         {
             try
@@ -4237,7 +4389,7 @@ namespace TFourMusic.Controllers
                         select dsptl).ToList();
             try
             {
-                if (item.uid != "")
+                if (item.uid != "" && item.uid != "null" && item.uid != null)
                 {
                     var datachuyendoi = convertDanhSachPhatTheLoai(data, item.uid.ToString()).ToList();
                     return Json(datachuyendoi);
@@ -4805,7 +4957,7 @@ namespace TFourMusic.Controllers
                 var chitietdspnguoidung = LayBangChiTietDanhSachPhatNguoiDung(item.uid);
 
                 var data = (from ctdspnd in chitietdspnguoidung
-                            where ctdspnd.danhsachphat_id.Equals(item.danhsachphatnguoidung_id.ToString()) && ctdspnd.baihat_id.Equals(item.baihat_id.ToString())
+                            where ctdspnd.danhsachphat_id.Equals(item.danhsachphatnguoidung_id.ToString()) && ctdspnd.baihat_id.Equals(item.baihat.id.ToString())
                             select ctdspnd).ToList();
                 if (data.Count() > 0)
                 {
@@ -4824,7 +4976,7 @@ namespace TFourMusic.Controllers
         //03/08 bổ sung kiểm tra id
         public class modelThemBaiHatVaoDSPNguoiDung
         {
-            public string baihat_id { get; set; }
+            public baihatModel baihat { get; set; }
             public string uid { get; set; }
 
             public string danhsachphatnguoidung_id { get; set; }
@@ -4837,8 +4989,7 @@ namespace TFourMusic.Controllers
 
             try
             {
-                if (item.baihat_id == null && item.baihat_id == ""
-                    || item.danhsachphatnguoidung_id == null && item.danhsachphatnguoidung_id == ""
+                if ( item.danhsachphatnguoidung_id == null && item.danhsachphatnguoidung_id == ""
                     || item.uid == null && item.uid == ""
                     )
                 {
@@ -4849,7 +5000,7 @@ namespace TFourMusic.Controllers
 
                 // add new item to list of data and let the client generate new key for you (done offline)
                 chitietdanhsachphatnguoidungModel ctdspnd = new chitietdanhsachphatnguoidungModel();
-                ctdspnd.baihat_id = item.baihat_id;
+                ctdspnd.baihat_id = item.baihat.id;
                 ctdspnd.danhsachphat_id = item.danhsachphatnguoidung_id;
 
                 var dino = await firebase
@@ -4868,13 +5019,13 @@ namespace TFourMusic.Controllers
                    .Child(idTam)
                    .PutAsync(ctdspnd);
 
-                var baihat = getListBaiHat();
+                //var baihat = getListBaiHat();
 
-                var databh = (from bh in baihat
-                            where bh.id.Equals(item.baihat_id.ToString()) && bh.daxoa == 0 && bh.vohieuhoa == 0
-                            select bh).ToList();
+                //var databh = (from bh in baihat
+                //            where bh.id.Equals(item.baihat_id.ToString()) && bh.daxoa == 0 && bh.vohieuhoa == 0
+                //            select bh).ToList();
                 client = new FireSharp.FirebaseClient(config);
-                object p = client.Set("csdlmoi/danhsachphatnguoidung/" + item.uid + "/" + item.danhsachphatnguoidung_id  + "/linkhinhanh", databh[0].linkhinhanh);
+                object p = client.Set("csdlmoi/danhsachphatnguoidung/" + item.uid + "/" + item.danhsachphatnguoidung_id  + "/linkhinhanh", item.baihat.linkhinhanh);
 
             }
             catch (Exception ex)
@@ -5561,6 +5712,79 @@ namespace TFourMusic.Controllers
                 return Json(ex.Message.ToString());
             }
         }
+
+        public async Task<IActionResult> xoaStorageBangLink(string link)
+        {
+            bool success = true;
+            try
+            {
+                if (link != "")
+                {
+                    var auth = new FirebaseAuthProvider(new FirebaseConfig(ApiKey));
+                    var a = await auth.SignInWithEmailAndPasswordAsync(AuthEmail, AuthPassword);
+
+                    var opiton = new FirebaseStorage(Bucket, new FirebaseStorageOptions
+                    {
+                        AuthTokenAsyncFactory = () => Task.FromResult(a.FirebaseToken),
+                        ThrowOnCancel = true
+                    });
+                    var resultContent = "N/A";
+                    // var link = "https://firebasestorage.googleapis.com/v0/b/tfourmusic-1e3ff.appspot.com/o/music%2Fnguoidung%2Fa%20whole%20new%20world.mp3?alt=media&token=bececcb8-1a5b-4a5e-bff5-2df24235c621";
+                    using (var http = await opiton.Options.CreateHttpClientAsync().ConfigureAwait(false))
+                    {
+                        var result = await http.DeleteAsync(link).ConfigureAwait(false);
+
+                        resultContent = await result.Content.ReadAsStringAsync().ConfigureAwait(false);
+
+                        result.EnsureSuccessStatusCode();
+                    }
+                    success = true;
+                }
+                else
+                {
+                    success = false;
+                }
+
+
+            }
+            catch (Exception ex)
+            {
+                success = false;
+            }
+            return Json(success);
+        }
+        public class BienTamChuaLinkAnhBH
+        {
+            public string linkhinhanhmoi { get; set; }
+            public string linkhinhanhcu { get; set; }
+            public string baihat_id { get; set; }
+            public string nguoidung_id { get; set; }
+
+        }
+        [HttpPost]
+        public async Task<IActionResult> suaLinkHinhAnhBaiHat([FromBody] BienTamChuaLinkAnhBH item)
+        {
+            bool success = true;
+            try
+            {
+
+                if (item.linkhinhanhcu != "")
+                {
+                    var xoaHinhAnhStorage = xoaStorageBangLink(item.linkhinhanhcu.ToString());
+                }
+                client = new FireSharp.FirebaseClient(config);
+                object p = client.Set("csdlmoi/baihat/" + item.nguoidung_id + "/" + item.baihat_id + "/" + "linkhinhanh", item.linkhinhanhmoi);
+                success = true;
+            }
+            catch (Exception ex)
+            {
+                success = false;
+            }
+
+            return Json(success);
+        }
+
+
 
 
 

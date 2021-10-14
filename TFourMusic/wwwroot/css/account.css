@@ -374,9 +374,14 @@
 .icon_account {
     font-size: 16px;
     color: #ed2b91;
-    margin-top: 8px;
+    margin-top: 9px;
+    margin-left: 9px;
 }
-
+.icon_delete {
+    font-size: 16px;
+    margin-left: 10px;
+    margin-top: 10px;
+}
 .icon_account_notfocus {
     font-size: 21px;
     margin-top: 5px;
@@ -605,9 +610,11 @@
 }
 
 .hover_remove_playlist {
-    padding: 10px;
+   /* padding: 10px;*/
     border-radius: 50%;
-    cursor:pointer;
+    cursor: pointer;
+    height: 35px;
+    width: 35px;
 }
 
 @keyframes hover {
