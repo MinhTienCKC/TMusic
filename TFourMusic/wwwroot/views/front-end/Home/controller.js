@@ -4278,7 +4278,7 @@ app.controller('canhan', function ($scope, dataservice, $rootScope, $location, $
                 /*  $scope.valueDanhSachPhatTheLoai = rs[0].id;*/
             });
         }
-        //$scope.apply();
+   
     }
 
     $scope.initData();
