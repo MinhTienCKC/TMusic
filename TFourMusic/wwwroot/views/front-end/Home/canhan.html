@@ -87,12 +87,17 @@
                     <span class="name_tab_account">PLAYLIST</span>
                 </div>
             </li>
-
             <li ng-click="tabActiveClick(3)" ng-class="{'is-active_account':  tabactive==3}" class="zm-navbar-item_account">
+                <div class="navbar-link">
+                    <span class="name_tab_account">THEO DÕI</span>
+                </div>
+            </li>
+            <li ng-click="tabActiveClick(4)" ng-class="{'is-active_account':  tabactive==4}" class="zm-navbar-item_account">
                 <div class="navbar-link">
                     <span class="name_tab_account">TẢI LÊN</span>
                 </div>
             </li>
+
         </ul>
     </div>
 
@@ -405,7 +410,7 @@
                         <div class="img_playlist" ng-style="{'background-image': 'url(' + x.linkhinhanh + ')'}"></div>
                         <div class="hover_playlist" ng-class="{'display_block' : kiemTraDSPNguoiDungClick == x.id  }">
                             <label style="cursor:pointer;" class="hover_remove_playlist" ng-click="$event.preventDefault(); showXoaDanhSachPhat(x.id)">
-                                <i   class="fas fa-trash icon_delete"></i>
+                                <i class="fas fa-trash icon_delete"></i>
                             </label>
                             <div ng-click="$event.preventDefault(); Play(); " class="play1-play2 nut_dsp_tl vong_tron_play" style="" tabindex="0" ng-show="kiemTraDSPNguoiDungClick == x.id">
                                 <div ng-show="playmusic == 1 " class="play_baihat_dsptl" style="top: 51%;left: 38%; height: 26px; width: 27px;"> </div>
@@ -424,7 +429,7 @@
                                 </span>
                             </label>
                         </div>
-                        <div class="hover_background"  ng-class="{'display_blockbg' : kiemTraDSPNguoiDungClick == x.id  }">
+                        <div class="hover_background" ng-class="{'display_blockbg' : kiemTraDSPNguoiDungClick == x.id  }">
                         </div>
                     </a>
                     <div class="ten_danh_sach_phat_da_tao" style="margin:4px;">
@@ -465,7 +470,7 @@
                 <div class="tao_playlist_item">
                     <a href="/#/playlist/{{x.id}}" class="item_tao_playlist_curent">
                         <div class="img_playlist " ng-style="{'background-image': 'url(' + x.linkhinhanh + ')'}" animate> <img src="{{x.quangcao.linkhinhanh}}" hidden style="width: 0; height:0;object-fit:cover" /></div>
-                        
+
                         <div class="hover_playlist" ng-class="{'display_block' : kiemTraDSPNguoiDungClick == x.id  }">
                             <label class="hover_remove_playlist" ng-click="$event.preventDefault();listDSPyeuThichNgheSi.splice($index, 1);yeuThichDanhSachPhatNguoiDungID(x.id);">
                                 <i style="font-size:16px;" class="fas fa-heart icon_account"></i>
@@ -508,7 +513,7 @@
                 <div class="tao_playlist_item">
                     <a href="/#/danhsachphat/{{x.id}}" class="item_tao_playlist_curent">
                         <div class="img_playlist" ng-style="{'background-image': 'url(' + x.linkhinhanh + ')'}"></div>
-                        <div class="hover_playlist"ng-class="{'display_block' : kiemTraDSPTLClick == x.id  }">
+                        <div class="hover_playlist" ng-class="{'display_block' : kiemTraDSPTLClick == x.id  }">
                             <label style="cursor:pointer" title="bỏ yêu thích danh sách phát" ng-click="$event.preventDefault();listDanhSachPhatYeuThich.splice($index, 1);yeuThichDanhSachPhat(x.id);" class="hover_remove_playlist">
                                 <i class="fas fa-heart icon_account"></i>
                             </label>
@@ -572,6 +577,53 @@
                 </div>
             </div>
 
+        </div>
+    </div>
+    <div class="header_option">
+        <h1 class="titleis-2">
+            <span>Theo Dõi</span>
+        </h1>
+
+    </div>
+    <div style="display:flex; height:auto; flex-wrap:wrap">
+        <div class="column_timkiem mar-b-30_timkiem is-fullhd-20_timkiem is-widescreen-20_timkiem is-desktop-3_timkiem is-touch-3_timkiem is-tablet-3_timkiem" ng-repeat="x in danhsachNgheSiTheoDoiCaNhan">
+            <div class="zm-card_timkiem zm-card--artist_timkiem">
+                <div class="zm-card-image_timkiem is-rounded_timkiem">
+                    <a class="" title="Jack" href="#/nghesi/{{x.uid}}">
+                        <figure class="image_timkiem is-48x48_timkiem figure_timkiem">
+                            <img ng-if="x.hinhdaidien.length > 5" src="{{x.hinhdaidien}}" alt="">
+                            <img ng-if="x.hinhdaidien.length < 5" class="img_account" src="https://avatar.talk.zdn.vn/default.jpg" />
+                        </figure>
+                        <div class="opacity_timkiem "></div><div class="zm-actions-container_timkiem">
+                            <div class="zm-box zm-actions_timkiem artist-actions_timkiem">
+                                <button class="zm-btn_timkiem zm-tooltip-btn_timkiem animation-like_timkiem is-hidden_timkiem active_timkiem is-hover-circle_timkiem button_timkiem" tabindex="0">
+                                    <i class="icon ic-like"></i>
+                                    <i class="icon ic-like-full"></i>
+                                </button>
+                                <button class="zm-btn_timkiem action-play_timkiem  button_timkiem" tabindex="0">
+                                    <i class="icon action-play ic-svg-play-circle"></i>
+                                </button>
+                                <button class="zm-btn_timkiem zm-tooltip-btn_timkiem is-hidden_timkiem is-hover-circle_timkiem button_timkiem" tabindex="0"><i class="icon ic-more"></i></button>
+                            </div>
+                        </div>
+                    </a>
+                </div>
+                <div class="zm-card-content_timkiem">
+                    <div class="title_timkiem">
+                        <a class="is-ghost_timkiem" href="/nghe-si/Trinh-Tran-Phuong-Tuan">{{x.hoten}}</a>
+                    </div>
+                    <div class="subtitle_timkiem"><span class="followers">{{x.soluongtheodoi}} theo dõi</span></div>
+                </div>
+                <div class="zm-card-footer_timkiem">
+                    <button ng-show="x.theodoi==1" ng-click="theoDoi_Canhan($index); x.soluongtheodoi = x.soluongtheodoi-1" style="cursor:pointer;" class="zm-btn_timkiem is-outlined_timkiem active_timkiem mar-t-15_timkiem mar-b-20_timkiem is-small_timkiem is-upper_timkiem button_timkiem" tabindex="0">
+                        <span class="material-icons-outlined">check</span><span>Đã Theo Dõi</span>
+                    </button>
+                    <button ng-show="x.theodoi==0" ng-click="theoDoi_Canhan($index); x.soluongtheodoi = x.soluongtheodoi+1;" class="zm-btn button_theodoi is-outlined mar-t-15 mar-b-20 is-small is-upper button" tabindex="0">
+                        <i style=" font-size: 14px; margin: 0px 5px; " class="fas fa-user-plus"></i><span>Theo Dõi</span>
+                    </button>
+
+                </div>
+            </div>
         </div>
     </div>
 </div>
@@ -722,6 +774,56 @@
     </div>
 </div>
 <div ng-if="tabactive==3" class="tongquan_account">
+    <h1 style="padding-top:35px;" class="titleis-2">
+        <span>Đã Theo Dõi</span>
+    </h1>
+
+    <div style="display:flex; height:auto; flex-wrap:wrap">
+        <div class="column_timkiem mar-b-30_timkiem is-fullhd-20_timkiem is-widescreen-20_timkiem is-desktop-3_timkiem is-touch-3_timkiem is-tablet-3_timkiem" ng-repeat="x in danhsachNgheSiTheoDoiCaNhan">
+            <div class="zm-card_timkiem zm-card--artist_timkiem">
+                <div class="zm-card-image_timkiem is-rounded_timkiem">
+                    <a class="" title="Jack" href="#/nghesi/{{x.uid}}">
+                        <figure class="image_timkiem is-48x48_timkiem figure_timkiem">
+                            <img ng-if="x.hinhdaidien.length > 5" src="{{x.hinhdaidien}}" alt="">
+                            <img ng-if="x.hinhdaidien.length < 5" class="img_account" src="https://avatar.talk.zdn.vn/default.jpg" />
+                        </figure>
+                        <div class="opacity_timkiem "></div><div class="zm-actions-container_timkiem">
+                            <div class="zm-box zm-actions_timkiem artist-actions_timkiem">
+                                <button class="zm-btn_timkiem zm-tooltip-btn_timkiem animation-like_timkiem is-hidden_timkiem active_timkiem is-hover-circle_timkiem button_timkiem" tabindex="0">
+                                    <i class="icon ic-like"></i>
+                                    <i class="icon ic-like-full"></i>
+                                </button>
+                                <button class="zm-btn_timkiem action-play_timkiem  button_timkiem" tabindex="0">
+                                    <i class="icon action-play ic-svg-play-circle"></i>
+                                </button>
+                                <button class="zm-btn_timkiem zm-tooltip-btn_timkiem is-hidden_timkiem is-hover-circle_timkiem button_timkiem" tabindex="0"><i class="icon ic-more"></i></button>
+                            </div>
+                        </div>
+                    </a>
+                </div>
+                <div class="zm-card-content_timkiem">
+                    <div class="title_timkiem">
+                        <a class="is-ghost_timkiem" href="/nghe-si/Trinh-Tran-Phuong-Tuan">{{x.hoten}}</a>
+                    </div>
+                    <div class="subtitle_timkiem"><span class="followers">{{x.soluongtheodoi}} theo dõi</span></div>
+                </div>
+                <div class="zm-card-footer_timkiem">
+                    <button ng-show="x.theodoi==1" ng-click="theoDoi_Canhan($index);x.soluongtheodoi = x.soluongtheodoi-1;" style="cursor:pointer;" class="zm-btn_timkiem is-outlined_timkiem active_timkiem mar-t-15_timkiem mar-b-20_timkiem is-small_timkiem is-upper_timkiem button_timkiem" tabindex="0">
+                        <span class="material-icons-outlined">check</span><span>Đã Theo Dõi</span>
+                    </button>
+                    <button ng-show="x.theodoi==0" ng-click="theoDoi_Canhan($index); x.soluongtheodoi = x.soluongtheodoi+1;" class="zm-btn button_theodoi is-outlined mar-t-15 mar-b-20 is-small is-upper button" tabindex="0">
+                        <i style=" font-size: 14px; margin: 0px 5px; " class="fas fa-user-plus"></i><span>Theo Dõi</span>
+                    </button>
+
+                </div>
+            </div>
+        </div>
+
+    </div>
+
+
+</div>
+<div ng-if="tabactive==4" class="tongquan_account">
 
 
     <div class="is-center_option_tailen">

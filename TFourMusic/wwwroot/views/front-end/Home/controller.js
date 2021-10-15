@@ -173,6 +173,9 @@ app.factory('dataservice', function ($http) {
         getListBaiHatDowloadNhieuNhat: function (data, callback) {
             $http.post('/Home/getListDowloadNhieuNhat?uid=' + data).then(callback);
         },
+        getListTheoDoiNguoiDung: function (data, callback) {
+            $http.post('/Home/getListTheoDoiNguoiDung?uid=' + data).then(callback);
+        },
         timKiemBaiHat: function (data, callback) {
             $http.post('/Home/TimKiemBaiHat?tuKhoa=' + data).then(callback);
         },
@@ -3748,6 +3751,7 @@ app.controller('theodoi', function ($rootScope, $scope, $cookies, dataservice, $
 
     }
     $scope.theoDoi_TheoDoi = function (theodoi) {
+        $("#loading_main").css("display", "block");
         if ($rootScope.checklogin.dadangnhap) {
 
             $scope.modelTheoDoi = {
@@ -3757,6 +3761,7 @@ app.controller('theodoi', function ($rootScope, $scope, $cookies, dataservice, $
             }
             dataservice.theoDoiNguoiDung($scope.modelTheoDoi, function (rs) {
                 rs = rs.data;
+                $("#loading_main").css("display", "none");
                 if (rs) {
                     $scope.listTheoDoi[theodoi].nguoidung.theodoi = 1;
                 }
@@ -3766,6 +3771,7 @@ app.controller('theodoi', function ($rootScope, $scope, $cookies, dataservice, $
             })
         }
         else {
+            $("#loading_main").css("display", "none");
             $rootScope.closelogin = true;
         }
 
@@ -3830,6 +3836,15 @@ app.controller('canhan', function ($scope, dataservice, $rootScope, $location, $
         }
         if (index == 3) {
             $scope.tabactive = 3;
+            dataservice.getListTheoDoiNguoiDung($rootScope.checklogin.uid, function (rs) {
+                rs = rs.data;
+                if (rs.Error) { } else {
+                    $scope.danhsachNgheSiTheoDoiCaNhan = rs;
+                }
+            })
+        }
+        if (index == 4) {
+            $scope.tabactive = 4;
             dataservice.getListDaTaiLen_CaNhan($rootScope.checklogin.uid, function (rs) {
                 rs = rs.data
                 if (rs.Error) { } else {
@@ -4245,6 +4260,12 @@ app.controller('canhan', function ($scope, dataservice, $rootScope, $location, $
                     $scope.listHoaDonNguoiDung = rs;
                 }
             })
+            dataservice.getListTheoDoiNguoiDung($rootScope.checklogin.uid, function (rs) {
+                rs = rs.data;
+                if (rs.Error) { } else {
+                    $scope.danhsachNgheSiTheoDoiCaNhan = rs;
+                }
+            })
         });
         $scope.taiDSPTheLoai = function (idtl) {
             $scope.text = {
@@ -4261,7 +4282,32 @@ app.controller('canhan', function ($scope, dataservice, $rootScope, $location, $
     }
 
     $scope.initData();
+    $scope.theoDoi_Canhan = function (theodoi) {
+        $("#loading_main").css("display", "block");
+        if ($rootScope.checklogin.dadangnhap) {
 
+            $scope.modelTheoDoi = {
+                id: '',
+                nguoidung_id: $rootScope.checklogin.uid,
+                nguoidung_theodoi_id: $scope.danhsachNgheSiTheoDoiCaNhan[theodoi].uid
+            }
+            dataservice.theoDoiNguoiDung($scope.modelTheoDoi, function (rs) {
+                rs = rs.data;
+                $("#loading_main").css("display", "none");
+                if (rs) {
+                    $scope.danhsachNgheSiTheoDoiCaNhan[theodoi].theodoi = 1;
+                }
+                else {
+                    $scope.danhsachNgheSiTheoDoiCaNhan[theodoi].theodoi = 0;
+                }
+            })
+        }
+        else {
+            $("#loading_main").css("display", "none");
+            $rootScope.closelogin = true;
+        }
+
+    }
     // 02/08 suữa ảnh cá nhân
     var duLieuHinh = new FormData();
 

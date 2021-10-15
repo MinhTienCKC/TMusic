@@ -3059,6 +3059,52 @@ namespace TFourMusic.Controllers
             }
 
         }
+        [HttpPost]
+        public object getListTheoDoiNguoiDung( string uid)
+        {
+            try
+            {
+                if (uid != null)
+                {
+
+                    var listtheodoi = LayBangTheoDoi(uid);
+                    var list = new List<nguoidungModel>();
+                    var listcustom = new List<nguoidungcustomModel>();
+                    client = new FireSharp.FirebaseClient(config);
+                    foreach (var item in listtheodoi)
+                    {
+                        FirebaseResponse rp = client.Get("csdlmoi/nguoidung/" + item.nguoidung_theodoi_id.ToString() );
+                        var datarp = JsonConvert.DeserializeObject<nguoidungModel>(rp.Body);
+
+                        if (datarp != null)
+                        {
+                           
+
+                            list.Add(datarp);
+                        }
+                    }
+                    if(list.Count > 0)
+                    {
+                        listcustom = convertNguoiDung(list, uid);
+                        listcustom = (from ng in listcustom
+                                      where ng.vohieuhoa == 0 && ng.daxoa == 0
+                                      select ng).ToList();
+                        return listcustom;
+                    }
+                    return Json(null);
+                }
+                else
+                {
+                    return Json(null);
+                }
+
+            }
+            catch (Exception ex)
+            {
+                return Json(ex.Message);
+            }
+
+        }
         // 18/08 Đã Sữa CSDL Mới
         [HttpPost]
         public object gettopNgheSi(string uid)
