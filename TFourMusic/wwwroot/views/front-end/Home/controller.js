@@ -3500,7 +3500,9 @@ app.controller('Ctrl_ESEIM', function ($scope, dataservice, $uibModal, $rootScop
         }
 
     }
-
+    $scope.clickTabCaNhan = function (index) {
+        $rootScope.tabactive = index;
+    }
 
 
 
@@ -3783,7 +3785,7 @@ app.controller('theodoi', function ($rootScope, $scope, $cookies, dataservice, $
 app.controller('canhan', function ($scope, dataservice, $rootScope, $location, $interval) {
     $scope.tabActiveClick = function (index) {
         if (index == 0) {
-            $scope.tabactive = 0;
+            $rootScope.tabactive = 0;
             dataservice.getListBaiHatYeuThich($rootScope.checklogin.uid, function (rs) {
                 rs = rs.data;
                 if (rs.Error) {
@@ -3816,7 +3818,7 @@ app.controller('canhan', function ($scope, dataservice, $rootScope, $location, $
             })
         }
         if (index == 1) {
-            $scope.tabactive = 1;
+            $rootScope.tabactive = 1;
             dataservice.getListDaTaiXuong_CaNhan($rootScope.checklogin.uid, function (rs) {
                 rs = rs.data;
                 if (rs.Error) { } else {
@@ -3826,7 +3828,7 @@ app.controller('canhan', function ($scope, dataservice, $rootScope, $location, $
 
         }
         if (index == 2) {
-            $scope.tabactive = 2;
+            $rootScope.tabactive = 2;
             dataservice.getPlaylist_CaNhan($rootScope.checklogin.uid, function (rs) {
                 rs = rs.data;
                 if (rs.Error) { } else {
@@ -3835,7 +3837,7 @@ app.controller('canhan', function ($scope, dataservice, $rootScope, $location, $
             });
         }
         if (index == 3) {
-            $scope.tabactive = 3;
+            $rootScope.tabactive = 3;
             dataservice.getListTheoDoiNguoiDung($rootScope.checklogin.uid, function (rs) {
                 rs = rs.data;
                 if (rs.Error) { } else {
@@ -3844,7 +3846,7 @@ app.controller('canhan', function ($scope, dataservice, $rootScope, $location, $
             })
         }
         if (index == 4) {
-            $scope.tabactive = 4;
+            $rootScope.tabactive = 4;
             dataservice.getListDaTaiLen_CaNhan($rootScope.checklogin.uid, function (rs) {
                 rs = rs.data
                 if (rs.Error) { } else {
@@ -4173,8 +4175,8 @@ app.controller('canhan', function ($scope, dataservice, $rootScope, $location, $
 
     }
     $scope.initData = function () {
-        if ($scope.tabactive == null || $scope.tabactive == undefined) {
-            $scope.tabactive = 0;
+        if ($rootScope.tabactive == null || $rootScope.tabactive == undefined) {
+            $rootScope.tabactive = 0;
         }
         var promise = new Promise(function (resolve, reject) {
             firebase.auth().onAuthStateChanged(function (userlogin) {
@@ -4282,6 +4284,7 @@ app.controller('canhan', function ($scope, dataservice, $rootScope, $location, $
     }
 
     $scope.initData();
+   
     $scope.theoDoi_Canhan = function (theodoi) {
         $("#loading_main").css("display", "block");
         if ($rootScope.checklogin.dadangnhap) {
