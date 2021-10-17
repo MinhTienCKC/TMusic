@@ -15,7 +15,7 @@ using TFourMusic.Models;
 namespace TFourMusic.Controllers
 {
     [Area("Admin")]
-   
+    [Authorize]
     public class QuanLyNoiDungController : Controller
     {
         //private readonly ILogger<QuanLyNoiDungController> _logger;

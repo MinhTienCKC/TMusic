@@ -1,0 +1,213 @@
+﻿
+
+<div class="modal-header" style="margin: 0px 0px 0px 0px;" ng-show="!layBaiHatNut">
+    <h6 class="m-0">Xử Lý Vi Phạm : {{data.email_nguoidung_baocao}}</h6>
+    <button type="submit" id="btntext" style="display:none;" class="btn btn-accent"></button>
+</div>
+<div class="modal-body" style="padding: 15px 30px 0px 30px !important;" ng-show="!layBaiHatNut">
+    <form name="editChuDe">
+
+        <div class="form-row" >
+            <table class="table mb-0">
+                <thead class="bg-light">
+                    <tr>
+                        <!--<th scope="col" class="border-0 " style="width: 20%;">Email Vi Phạm</th>-->
+                        <th ng-show="data.email_nguoidung_baocao != 'admin'" scope="col" class="border-0">ND Tố Cáo</th>
+                        <th scope="col" class="border-0 ">Nội Dung</th>
+                        <th scope="col" class="border-0" style="width: 8%;">Mô Tả</th>
+                        <!--<th scope="col" class="border-0">Phát Nhạc</th>-->
+                        <th scope="col" class="border-0" title="Vô hiệu hóa người dùng">VHH Người Dùng</th>
+                        <th ng-show="data.email_nguoidung_baocao != 'admin'" scope="col" class="border-0">ND Vi Phạm</th>
+
+
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td class="vitrigiua" style=" padding-left: 1.75rem;"> <button type="submit" ng-click="moBangLayBaiHat('tocao')" style="width: 50px; height: 30px; padding: 0px;-webkit-box-shadow: 0 2px 5px 0 rgba(230,60,95,0.45)" class="btn btn-accent red "><i class="fa fa-user-circle" aria-hidden="true"></i></button></td>
+
+                        <td class="vitrigiua"><p ng-repeat="data1 in data.noidung " style="margin-bottom: 0px !important;">{{data1}}</p></td>
+                        <td class="vitrigiua">{{data.motavande}}</td>
+
+                        <!--<td class="vitrigiua" ng-show="data.trangthai == 2">
+
+
+        <span ng-if="taiBaiHatViPham[0].vohieuhoa == 1" style="color:green;" title="Đã vô hiệu hóa">Đã VHH</span>
+        <span ng-if="taiBaiHatViPham[0].vohieuhoa == 0" style="color:green;" title="Chưa vô hiệu hóa">Chưa VHH</span>
+
+    </td>-->
+                        <td ng-show="data.email_nguoidung_baocao != 'admin' && data.trangthai == 2" class="vitrigiua">
+
+                            <span ng-if="taiChiTietNguoiDungViPham[0].vohieuhoa == 1" style="color:green;" title="Đã vô hiệu hóa">Đã VHH</span>
+                            <span ng-if="taiChiTietNguoiDungViPham[0].vohieuhoa == 0" style="color:green;" title="Chưa vô hiệu hóa">Chưa VHH</span>
+                        </td>
+                        <td ng-show="data.email_nguoidung_baocao != 'admin' && data.trangthai != 2" class="vitrigiua">
+                            <label class="switch1">
+
+                                <input ng-change="voHieuHoaNguoiDung(taiChiTietNguoiDungViPham[0])" type="checkbox" ng-model="taiChiTietNguoiDungViPham[0].vohieuhoa"
+                                       ng-true-value="1" ng-false-value="0">
+                                <span ng-if="taiChiTietNguoiDungViPham[0].vohieuhoa == 1" class="slider1 round" title="Đã vô hiệu hóa"></span>
+                                <span ng-if="taiChiTietNguoiDungViPham[0].vohieuhoa == 0" class="slider1 round" title="chưa vô hiệu hóa"></span>
+                            </label>
+                        </td>
+                        <td class="vitrigiua" style=" padding-left: 1.75rem;"> <button type="submit" ng-click="moBangLayBaiHat('vipham')" style="width: 50px; height: 30px; padding: 0px;-webkit-box-shadow: 0 2px 5px 0 rgba(230,60,95,0.45)" class="btn btn-accent red "><i class="fa fa-user-circle" aria-hidden="true"></i></button></td>
+
+
+                    </tr>
+                </tbody>
+            </table>
+        </div>   
+    </form>
+</div>
+<div class="modal-footer" style="margin:0px 0px 0px 0px;" ng-show="!layBaiHatNut">
+    <button ng-show="data.trangthai == 2 && taiChiTietNguoiDungViPham[0].vohieuhoa != 0" type="submit" ng-click="khoiPhuc(data,taiChiTietNguoiDungViPham[0].vohieuhoa)" class="btn btn-accent" id="submitcd">Khôi Phục</button>
+    <button ng-show="data.trangthai != 2" type="submit" ng-click="pheDuyet(data,taiChiTietNguoiDungViPham[0].vohieuhoa)" class="btn btn-accent" id="submitcd">Phê Duyệt</button>
+    <button type="submit" ng-click="cancel()" class="btn btn-accent">Thoát</button>
+</div>
+
+<!--thông tin chi tiet người dùng-->
+<div class="modal-header" style="margin: 0px 0px 0px 0px; display:flex;" ng-show="layBaiHatNut">
+    <h6 class="m-0" ng-if="nguoiDung == 'tocao'">Chi Tiết Người Dùng Tố Cáo</h6>
+    <h6 class="m-0" ng-if="nguoiDung == 'vipham'">Chi Tiết Người Dùng Vi Phạm</h6>
+    <button type="submit" id="btntext" ng-click="hienThiTaiXuong()" style="display:none;" class="btn btn-accent"></button>
+    <!--<h6 class="m-0" style="padding-left: 50%;">Vô hiệu hóa: </h6>
+    <div>-->
+    <!--<label for="feLastName"></label>-->
+    <!--<label class="switch1">
+            <input ng-change="voHieuHoaNguoiDung(taiChiTietNguoiDungViPham[0])" type="checkbox" ng-model="taiChiTietNguoiDungViPham[0].vohieuhoa"
+                   ng-true-value="1" ng-false-value="0">
+            <span ng-if="taiChiTietNguoiDungViPham[0].vohieuhoa == 1" class="slider1 round" title="Đã vô hiệu hóa"></span>
+            <span ng-if="taiChiTietNguoiDungViPham[0].vohieuhoa == 0" class="slider1 round" title="chưa vô hiệu hóa"></span>
+        </label>
+    </div>-->
+</div>
+<div class="modal-body" style="padding: 15px 30px 10px 30px !important;" ng-show="layBaiHatNut">
+    <div style="display:flex;">
+        <div>
+            <img ng-if="taiChiTietNguoiDung[0].hinhdaidien.length > 5" src="{{taiChiTietNguoiDung[0].hinhdaidien}}" class="" style=" height: 200px; width: 200px; border-radius: 10px; object-fit: cover;">
+            <img ng-if="taiChiTietNguoiDung[0].hinhdaidien.length < 5" src="https://s120-ava-talk.zadn.vn/0/5/1/5/0/120/4ff9b54b6eb2292f46483676eda192ae.jpg" class="" style=" height: 200px; width: 200px; border-radius: 10px; object-fit: cover;">
+            <div class="form-group col-md-6" style="display:flex;  padding-top:10px;">
+                <label for="feLastName" style=" font-size: x-large;">Vip: </label>
+                <img ng-if="taiChiTietNguoiDung[0].vip == 0" src="../../../image/khongvip.png" class="icon-category iconvip" style="width:55px; height:35px;" />
+                <img ng-if="taiChiTietNguoiDung[0].vip == 1" src="../../../image/iconvip.png" class="icon-category iconvip" style="width:55px; height:35px;">
+            </div>
+            <div class="form-group col-md-6" style="     flex: 0 0 100%;
+    max-width: 100%;">
+                <a ng-if="taiChiTietNguoiDung[0].vip == 1" style="" ng-click="$event.preventDefault();" class="mua_vip_account ng-binding ng-scope">
+                    Ngày hết hạn vip: 26-12-2029
+                </a>
+            </div>
+
+        </div>
+        <div style="padding-left: 20px;">
+            <div class="form-row kiemtra">
+                <div class="form-group col-md-6">
+                    <label for="feLastName">Họ Tên</label>
+                    <span class="thong_bao_sai">{{taiChiTietNguoiDung[0].hoten}}</span>
+                </div>
+                <div class="form-group col-md-6">
+                    <label for="feLastName">Email</label>
+                    <span class="thong_bao_sai">{{taiChiTietNguoiDung[0].email}}</span>
+                </div>
+            </div>
+            <div class="form-row kiemtra">
+                <div class="form-group col-md-6">
+                    <label for="feLastName">Ngày Sinh</label>
+                    <span ng-if="taiChiTietNguoiDung[0].ngaysinh.length > 1" class="thong_bao_sai">{{taiChiTietNguoiDung[0].ngaysinh | date:'dd-MM-yyyy'}}</span>
+                    <span ng-if="taiChiTietNguoiDung[0].ngaysinh.length < 1" class="thong_bao_sai">Đang cập nhật.</span>
+                </div>
+                <div class="form-group col-md-6">
+                    <label for="feLastName">Giới Tính</label>
+                    <span ng-if="taiChiTietNguoiDung[0].gioitinh.length > 1" class="thong_bao_sai">{{taiChiTietNguoiDung[0].gioitinh}}</span>
+                    <span ng-if="taiChiTietNguoiDung[0].gioitinh.length < 1" class="thong_bao_sai">Đang cập nhật.</span>
+                </div>
+            </div>
+            <div class="form-row kiemtra">
+                <div class="form-group col-md-6" style=" flex: 0 0 100%; max-width: 100%;">
+                    <label for="feLastName">Mô Tả</label>
+                    <span ng-if="taiChiTietNguoiDung[0].mota.length > 5" class="thong_bao_sai">{{taiChiTietNguoiDung[0].mota}}</span>
+                    <span ng-if="taiChiTietNguoiDung[0].mota.length < 5" class="thong_bao_sai">Đang cập nhật.</span>
+                </div>
+
+            </div>
+        </div>
+    </div>
+   
+</div>
+<div class="modal-footer" style="margin:0px 0px 0px 0px;" ng-show="layBaiHatNut">
+
+    <!--<button type="submit" ng-click="submit()" class="btn btn-accent" id="submitcd">Tạo Chủ Đề</button>-->
+    <button type="submit" ng-click="troLai()" class="package__btn123">Trở Lại</button>
+</div>
+<style>
+    .mua_vip_account {
+        background-color: #f8e71c;
+        color: #32323d;
+        font-size: 12px;
+        padding: 6px 9px;
+        text-transform: uppercase;
+        overflow: hidden;
+        border-radius: 999px !important;
+        margin-right: 23px;
+    }
+    .vitrigiua {
+        padding-top: 2.5em !important;
+    }
+    .form-row .col-md-6 {
+        padding-left: 40px;
+    }
+    .modal-content {
+        border-radius: 30px;
+        border: 1px solid #007bff;
+        top: 160px;
+        background: #F5F6F8;
+        width: 230%;
+        left: -35%;
+        
+    }
+
+    .thong_bao_sai {
+        color: red;
+        font-size: 12px;
+        display: block;
+        font-size: unset;
+    }
+
+    .kiemtra, .kiemtra.form-group {
+        height: 88px !important;
+        max-height: 88px !important;
+        margin-bottom: 0.1rem !important;
+    }
+
+    .modal-header {
+        display: block;
+        color: white;
+        border-bottom: 1px solid #007bff !important;
+    }
+
+    .modal-body {
+        padding: 0px 0px 0px 0px !important;
+    }
+
+    .modal-footer {
+        border-top: 1px solid #007bff !important;
+    }
+
+    .package__btn123 {
+        -webkit-appearance: media-slider;
+        cursor: pointer;
+        border-radius: 999px;
+        background-color: #007bff;
+        /*   #ed2b91;*/
+        color: #f3f591 !important;
+        font-size: 15px;
+        text-transform: uppercase;
+        font-weight: bold;
+        /* padding: 0.4em 2em;*/
+        display: inline-block;
+        margin-bottom: -0.5em;
+        -webkit-tap-highlight-color: rgba(0,0,0,0.2) !important;
+    }
+</style>
+
+

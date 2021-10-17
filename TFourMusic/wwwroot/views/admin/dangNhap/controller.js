@@ -120,7 +120,7 @@ app.controller('index', function ($rootScope, $scope, dataservice) {
             rs = rs.data;
             if (rs == false) {
                 
-                alert("sai mật khẩu");
+                alert("tài khoản không tồn tại hay sai mật khẩu !!!");
             } else {
                 window.location.href = rs.returnUrl;
             }

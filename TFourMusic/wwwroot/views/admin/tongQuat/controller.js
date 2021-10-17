@@ -38,6 +38,9 @@ app.factory('dataservice', function ($http) {
             $http.post('/Admin/BaiHat/taiTheloai').then(callback);
 
         },
+        taiTaiKhoanQuanTri: function (callback) {
+            $http.post('/Admin/TongQuat/taiTaiKhoanQuanTri').then(callback);
+        },   
     }
 
 });
@@ -374,7 +377,13 @@ app.controller('index', function ($rootScope, $scope, dataservice, $uibModal) {
            
 
         });
+        dataservice.taiTaiKhoanQuanTri(function (rs) {
 
+            rs = rs.data;
+            $scope.taiTaiKhoanQuanTri = rs;
+
+           
+        });
 
         dataservice.taiBangBaiHat(function (rs) {
            

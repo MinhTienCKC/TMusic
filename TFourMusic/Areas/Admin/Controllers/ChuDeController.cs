@@ -32,7 +32,7 @@ using Newtonsoft.Json.Linq;
 namespace TFourMusic.Controllers
 {
     [Area("Admin")]
-  
+    [Authorize]
     public class ChuDeController : Controller
     {
         IFirebaseConfig config = new FireSharp.Config.FirebaseConfig

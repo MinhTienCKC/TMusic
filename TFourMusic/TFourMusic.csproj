@@ -66,6 +66,7 @@
     <None Include="Areas\Admin\Views\Shared\_Partial_Header.cshtml" />
     <None Include="Areas\Admin\Views\Shared\_Partial_Sidebar.cshtml" />
     <None Include="Areas\Admin\Views\Shared\_ValidationScriptsPartial.cshtml" />
+    <None Include="Areas\Admin\Views\TaiKhoanQuanTri\Index.cshtml" />
     <None Include="Areas\Admin\Views\TheLoai\Index.cshtml" />
     <None Include="Areas\Admin\Views\ThongKe\Index.cshtml" />
     <None Include="Areas\Admin\Views\TongQuat\Index.cshtml" />
@@ -261,6 +262,7 @@
     <None Include="wwwroot\views\admin\quangCao\controller.js" />
     <None Include="wwwroot\views\admin\quanLyNguoiDung\controller.js" />
     <None Include="wwwroot\views\admin\quanLyNoiDung\controller.js" />
+    <None Include="wwwroot\views\admin\taikhoanquantri\controller.js" />
     <None Include="wwwroot\views\admin\theLoai\controller.js" />
     <None Include="wwwroot\views\admin\thongke\controller.js" />
     <None Include="wwwroot\views\admin\tongQuat\controller.js" />

@@ -30,11 +30,12 @@ using FirebaseAdmin.Auth;
 using MimeKit;
 using MailKit.Net.Smtp;
 using System.Security.Authentication;
+using System.Security.Claims;
 
 namespace TFourMusic.Controllers
 {
     [Area("Admin")]
-  
+    [Authorize]
     public class TongQuatController : Controller
     {
         IFirebaseConfig config = new FireSharp.Config.FirebaseConfig
@@ -1348,6 +1349,24 @@ namespace TFourMusic.Controllers
             }
         }
 
+        [HttpPost]
+        public async Task<IActionResult> taiTaiKhoanQuanTri()
+        {
+
+            var firebase = new FirebaseClient(Key);
+
+            var dino = await firebase
+                .Child("csdlmoi")
+                .Child("taikhoanquantri")
+                .OnceAsync<taikhoanquantriModel>();
+            var data = from tkqt in dino
+
+                       select tkqt.Object;
+
+            var ok = User.Identity as ClaimsIdentity;
+            var o = ok.Claims.FirstOrDefault(c => c.Type == ClaimTypes.Role).Value;
+            return Json(data);       
+        }
 
     }
 }

@@ -2013,7 +2013,12 @@ namespace TFourMusic.Controllers
 
                 var listbh = getListBaiHat();
                 var listnd = LayBangNguoiDung();
-
+                listbh = (from bh in listbh
+                          where bh.chedo == 1 && bh.daxoa == 0 && bh.vohieuhoa == 0
+                          select bh).ToList();
+                listnd = (from ng in listnd
+                          where ng.vohieuhoa == 0 && ng.daxoa == 0
+                          select ng).ToList();
                 if (uid != null && uid != "")
                 {
                     var convertnd = convertNguoiDung(listnd, uid);
@@ -3841,7 +3846,7 @@ namespace TFourMusic.Controllers
                         messagenguoibibaocao.From.Add(new MailboxAddress("Admin TMUSIC", "0306181280@caothang.edu.vn"));
                         messagenguoibibaocao.To.Add(new MailboxAddress(nguoibibaocao[0].hoten, nguoibibaocao[0].email));
                         messagenguoibibaocao.Subject = "TMUSIC - Tài Khoản Của Bạn Bị Báo Cáo Vi Phạm Tiêu Chuẩn Cộng Đồng";
-                        messagenguoibibaocao.Body = new TextPart("plain")
+                        messagenguoibibaocao.Body = new TextPart("html")
                         {
                             //Text = "Xin chào: " + nguoibibaocao[0].hoten + "\n" +
                             //"Chúng tôi đã nhận được báo cáo tài khoản của bạn vi phạm tiêu chuẩn cộng đồng của chúng tôi. \n" +
@@ -4683,6 +4688,7 @@ namespace TFourMusic.Controllers
 
 
         // 21/08 Đã Sữa CSDL Mới
+
         public List<danhsachphatcustomModel> convertDanhSachPhatTheLoai(List<danhsachphattheloaiModel> list, string uid)
         {
             var listyeuthichdsp = LayBangYeuThichDSPTheLoai();

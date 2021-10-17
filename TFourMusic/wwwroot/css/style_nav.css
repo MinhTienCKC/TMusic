@@ -459,7 +459,10 @@ section .loader span{
 .overplay:checked ~ .tao_playlist_layout {
     display: flex;
 }
-.overplay:checked ~ .tao_playlist_layout_label {
+/*.overplay:checked ~ .tao_playlist_layout_label {
+    display: block;
+}*/
+.overplaylayout:checked ~ .tao_playlist_layout_label {
     display: block;
 }
 .showtimers:checked ~ .tao_playlist_layout_label{
@@ -467,6 +470,9 @@ section .loader span{
 }
 .showtimers:checked ~ .tao_playlist_timer {
     display: flex;
+}
+.overplay:checked ~ .tao_playlist_layout_lb {
+    display: block;
 }
 .tao_playlist_timer {
     z-index: 1000000;
@@ -480,7 +486,18 @@ section .loader span{
     width: auto;
     height: auto;
 }
-
+.tao_playlist_layout_lb {
+    background-color: hsl(0deg 0% 0% / 80%);
+    display: none;
+    justify-content: center;
+    align-items: center;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: 10;
+}
 .modal_laylist_layout {
     background-color: hsl(265deg 51% 45%);
     border-radius: 8px;

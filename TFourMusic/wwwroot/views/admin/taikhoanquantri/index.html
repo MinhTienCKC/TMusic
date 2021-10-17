@@ -141,22 +141,23 @@
     <!-- Page Header -->
     <div class="page-header row no-gutters py-4" style="padding-bottom: 0.1rem!important;">
         <div class="col-12 col-sm-4 text-center text-sm-left mb-0">
+            <button id="" type="submit" ng-click="taoTaiKhoanQuanTri_index()" class="btn btn-accent " style=""><i class="fa fa-plus"></i>  Tạo Tài Khoản</button>
             <button type="submit" ng-show="!hienTimKiem" ng-click="showSearch();currentPage = 0;" class="btn btn-accent " style=" font-size: 0.75rem; width: 95px;"><i class="fa fa-search"></i>  Tìm Kiếm</button>
+            <!--<button id="" type="submit" ng-click="thungrac()" class="btn btn-accent " style="left: 223%; position: inherit;"><i class="fa fa-trash"></i>  Thùng rác</button>-->
 
 
 
-        </div>     
+        </div>
+       
     </div>
     <div class="page-header row no-gutters py-4" style="padding-top: 0rem !important; padding-bottom: 0.1rem!important;" ng-show="hienTimKiem">
         <div class="col-12 col-sm-4 text-center text-sm-left mb-0">
-            <input type="text" ng-model="timkiem.hoten" class="form-control " id="feLastName23" placeholder="Tìm theo tên người dùng" value="Brooks" ng-change="currentPage = 0;">
-            <input type="text" ng-model="timkiem.email" class="form-control " id="feLastName2" placeholder="Tìm theo email" value="Brooks" ng-change="currentPage = 0;">
-            <!--<input type="text" ng-model="timkiem.object.tenbaihat" class="form-control" id="feLastName" placeholder="Tìm theo tên" value="Brooks">-->
+            <input type="text" ng-model="timkiem.taikhoan" class="form-control " id="feLastName23" placeholder="Tìm theo tài khoản" value="Brooks" ng-change="currentPage = 0;">
         </div>
         <div class="col-12 col-sm-4 text-center text-sm-left mb-0">
 
             <!--<button type="submit"  ng-click="timKiem()" class="btn btn-accent" style="padding: 28px 15px;">Tìm Kiếm</button>-->
-            <button type="submit" ng-click="showSearch(); timkiem.hoten = '';timkiem.email =''; " class="btn btn-accent" style="padding: 28px 8px;">Ẩn Tìm Kiếm</button>
+            <button type="submit" ng-click="showSearch(); timkiem.taikhoan = '';" class="btn btn-accent" style="padding: 10px 10px; margin-left: 10px;">Ẩn Tìm Kiếm</button>
 
 
         </div>
@@ -169,38 +170,43 @@
         <div class="col">
             <div class="card card-small mb-4 dodai" style="height:520px; max-height:520px;">
                 <div class="card-header border-bottom">
-                    <h6 class="m-0">Người Dùng</h6>
+                    <h6 class="m-0">Tài Khoản Quản Trị</h6>
                 </div>
                 <div class="card-body p-0 pb-3 text-center">
                     <table class="table mb-0 dodaibang" style="">
                         <thead class="bg-light">
                             <tr>
                                 <!--<th scope="col" class="border-0">id</th>-->
-                                <th scope="col" class="border-0">Tên Người Dùng</th>
-                                <th scope="col" class="border-0">Email</th>
-                                <th scope="col" class="border-0">Hình Ảnh</th>
-                                <th scope="col" class="border-0">Vip</th>
-                                <th scope="col" class="border-0" title="Xem bài hát của người dùng">Xem BH</th>
-                                <th scope="col" class="border-0" title="Xem danh sách phát người dùng">Xem DSP</th>
+                                <th scope="col" class="border-0">Tài Khoản</th>
+                                <th scope="col" class="border-0">Quyền</th>
+                                <th scope="col" class="border-0">Thời Gian</th>
+                                <!--<th scope="col" class="border-0">Vip</th>
+    <th scope="col" class="border-0" title="Xem bài hát của người dùng">Xem BH</th>
+    <th scope="col" class="border-0" title="Xem danh sách phát người dùng">Xem DSP</th>-->
                                 <th scope="col" class="border-0" title="Vô hiệu hóa không có người dùng đăng nhập">Vô Hiệu Hóa</th>
+                                <th scope="col" class="border-0">Sửa</th>
+                                <th scope="col" class="border-0">Xóa</th>
 
                             </tr>
                         </thead>
                         <tbody>
-                            <tr style="" ng-repeat="data in taiNguoiDung | filter:timkiem | startFrom:currentPage*pageSize | limitTo:pageSize">
-                                <td class="vitrigiua">{{data.hoten}}</td>
-                                <td class="vitrigiua">{{data.email}}</td>
-                                <td>
+                            <tr style="" ng-repeat="data in taiTaiKhoanQuanTri | filter:timkiem | startFrom:currentPage*pageSize | limitTo:pageSize">
+                                <td class="vitrigiua">{{data.taikhoan}}</td>
+                                <!--<td class="vitrigiua">{{data.email}}</td>-->
+                                <!--<td>
                                     <img ng-if="data.hinhdaidien != ''" src="{{data.hinhdaidien}}" class="icon-category hinhanh" />
 
                                     <img ng-if="data.hinhdaidien == ''" class="icon-category hinhanh" src="https://s120-ava-talk.zadn.vn/0/5/1/5/0/120/4ff9b54b6eb2292f46483676eda192ae.jpg" />
-                                </td>
-                                <td>
+                                </td>-->
+                                <!--<td>
                                     <img ng-if="data.vip == 0" src="../../../image/khongvip.png" class="icon-category iconvip" />
                                     <img ng-if="data.vip == 1" src="../../../image/iconvip.png" class="icon-category iconvip">
+                                </td>-->
+                                 <td class="vitrigiua">
+                                    <p ng-if="data.phanquyen == 0" style="color:red;">Nhân Viên</p>
+                                    <p ng-if="data.phanquyen == 1" style="color:#2e15f9;">Admin</p>
                                 </td>
-                                <td class="vitrigiua"> <button ng-click="xemBaiHat(data)" style="width: 25px; height: 25px; padding: 0px;-webkit-box-shadow: 0 2px 5px 0 rgba(85,168,253,0.45);" class="btn btn-accent blue"><i class="fa fa-music" aria-hidden="true"></i></button> </td>
-                                <td class="vitrigiua"> <button ng-click="xemDanhSachPhat(data)" style="width: 25px; height: 25px; padding: 0px;-webkit-box-shadow: 0 2px 5px 0 rgba(85,168,253,0.45);" class="btn btn-accent blue"><i class="far fa-list-alt"></i></button> </td>
+                                  <td class="vitrigiua">{{data.thoigian | date:'dd/MM/yyyy'}}</td>
 
                                 <td class="vitrigiua">
                                     <label class="switch1">
@@ -211,7 +217,8 @@
                                         <span ng-if="data.vohieuhoa == 0" class="slider1 round" title="Chưa vô hiệu hóa"></span>
                                     </label>
                                 </td>
-
+                                <td class="vitrigiua"> <button ng-click="edit(data)" style="width: 25px; height: 25px; padding: 0px;-webkit-box-shadow: 0 2px 5px 0 rgba(85,168,253,0.45);" class="btn btn-accent blue"><i class="fa fa-music" aria-hidden="true"></i></button> </td>
+                                <td class="vitrigiua"> <button ng-click="xoa(data)" style="width: 25px; height: 25px; padding: 0px;-webkit-box-shadow: 0 2px 5px 0 rgba(85,168,253,0.45);" class="btn btn-accent blue"><i class="fa fa-trash"></i></button> </td>
                             </tr>
                         </tbody>
                     </table>

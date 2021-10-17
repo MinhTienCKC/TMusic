@@ -167,63 +167,64 @@
                         <i class="fas fa-plus iconadd-playlist"></i><span>Tạo playlist mới</span>
                     </label>
 
-                    <input type="checkbox" hidden class="overplay" id="showplaylist" ng-model="checktaoplaylist" />
-                    <label for="showplaylist" class="tao_playlist_layout_label"></label>
-                    <div class="tao_playlist_layout">
-                        <div class="modal_laylist_layout">
-                            <div class="modal_laylist_layout_item">
-                                <div class="modal_content">
-                                    <h3 style=" font-size: 18px; margin-bottom: 15px;">Tạo playlist mới</h3>
-                                    <input class="input_playlist " ng-model="tenplaylist" type="text" placeholder="Nhập tên playlist" />
-                                    <div class="option_playlist">
 
-                                        <div>
-                                            <h3 style=" font-size: 14px; margin-bottom: 5px; font-weight: 400;">Công khai</h3>
-                                            <h3 style="color: #ffffff80;     font-size: 12px;font-weight: 400;">Mọi người có thể nhìn thấy playlist này</h3>
-                                        </div>
-
-                                        <input id="checkboxplaylist" ng-model="swithoffon" hidden style=" border-color: #ffffff33; border-radius: 3px; margin: 0; padding: 6px;" type="checkbox" />
-
-                                        <label for="checkboxplaylist">
-                                            <i ng-show="swithoffon" class="icon ic-svg-switch">
-                                                <svg style=" fill: hsl(328deg 84% 55%);" id="Layer_1" x="0px" y="0px" width="24px" height="15px" viewBox="0 0 24 15" xml:space="preserve">
-                                                <style type="text/css">
-                                                    .st1 {
-                                                        fill-rule: evenodd;
-                                                        clip-rule: evenodd;
-                                                    }
-</style>
-                                                <path id="Rectangle-8" class="st0" d="M16.5,0h-9C3.4,0,0,3.4,0,7.5l0,0C0,11.6,3.4,15,7.5,15h9c4.1,0,7.5-3.4,7.5-7.5l0,0 C24,3.4,20.6,0,16.5,0z"></path>
-                                                <circle id="Oval-2" class="st1" cx="16.5" cy="7.5" r="6.5"></circle>
-                                        </svg>
-                                            </i>
-
-                                            <i ng-show="!swithoffon" class="icon ic-svg-switch zm-switch-off">
-                                                <svg style=" fill: #a0a0a0;" id="Layer_1" x="0px" y="0px" width="24px" height="15px" viewBox="0 0 24 15" xml:space="preserve"><style type="text/css">
-                                                                                                                                                                                  .st1 {
-                                                                                                                                                                                      fill-rule: evenodd;
-                                                                                                                                                                                      clip-rule: evenodd;
-                                                                                                                                                                                      fill: #FFFFFF;
-                                                                                                                                                                                  }
-</style>
-                                                <path id="Rectangle-8" class="st0" d="M7.5,0h9C20.6,0,24,3.4,24,7.5l0,0c0,4.1-3.4,7.5-7.5,7.5h-9C3.4,15,0,11.6,0,7.5l0,0 C0,3.4,3.4,0,7.5,0z"></path>
-                                                <circle id="Oval-2" class="st1" cx="7.5" cy="7.5" r="6.5">
-                                    </circle>
-                                </svg>
-                                            </i>
-                                        </label>
-
-                                    </div>
-                                    <button ng-click="clickTaoPlaylist()" ng-disabled="tenplaylist.length < 1 || tenplaylist == undefined " ng-class="{'disable_button': tenplaylist.length < 1 ||tenplaylist == undefined   }" class="button_create_playlist">TẠO MỚI</button>
-
-                                </div>
-                            </div>
-                        </div>
-
-                    </div>
                 </div>
 
             </div>
+        </div>
+        <input type="checkbox" hidden class="overplay" id="showplaylist" ng-model="checktaoplaylist" />
+        <label for="showplaylist" class="tao_playlist_layout_lb"></label>
+        <div class="tao_playlist_layout">
+            <div class="modal_laylist_layout">
+                <div class="modal_laylist_layout_item">
+                    <div class="modal_content">
+                        <h3 style=" font-size: 18px; margin-bottom: 15px;">Tạo playlist mới</h3>
+                        <input class="input_playlist " ng-model="tenplaylist" type="text" placeholder="Nhập tên playlist" />
+                        <div class="option_playlist">
+
+                            <div>
+                                <h3 style=" font-size: 14px; margin-bottom: 5px; font-weight: 400;">Công khai</h3>
+                                <h3 style="color: #ffffff80;     font-size: 12px;font-weight: 400;">Mọi người có thể nhìn thấy playlist này</h3>
+                            </div>
+
+                            <input id="checkboxplaylist" ng-model="swithoffon" hidden style=" border-color: #ffffff33; border-radius: 3px; margin: 0; padding: 6px;" type="checkbox" />
+
+                            <label for="checkboxplaylist">
+                                <i ng-show="swithoffon" class="icon ic-svg-switch">
+                                    <svg style=" fill: hsl(328deg 84% 55%);" id="Layer_1" x="0px" y="0px" width="24px" height="15px" viewBox="0 0 24 15" xml:space="preserve">
+                                    <style type="text/css">
+                                        .st1 {
+                                            fill-rule: evenodd;
+                                            clip-rule: evenodd;
+                                        }
+</style>
+                                    <path id="Rectangle-8" class="st0" d="M16.5,0h-9C3.4,0,0,3.4,0,7.5l0,0C0,11.6,3.4,15,7.5,15h9c4.1,0,7.5-3.4,7.5-7.5l0,0 C24,3.4,20.6,0,16.5,0z"></path>
+                                    <circle id="Oval-2" class="st1" cx="16.5" cy="7.5" r="6.5"></circle>
+                                        </svg>
+                                </i>
+
+                                <i ng-show="!swithoffon" class="icon ic-svg-switch zm-switch-off">
+                                    <svg style=" fill: #a0a0a0;" id="Layer_1" x="0px" y="0px" width="24px" height="15px" viewBox="0 0 24 15" xml:space="preserve"><style type="text/css">
+                                                                                                                                                                      .st1 {
+                                                                                                                                                                          fill-rule: evenodd;
+                                                                                                                                                                          clip-rule: evenodd;
+                                                                                                                                                                          fill: #FFFFFF;
+                                                                                                                                                                      }
+</style>
+                                    <path id="Rectangle-8" class="st0" d="M7.5,0h9C20.6,0,24,3.4,24,7.5l0,0c0,4.1-3.4,7.5-7.5,7.5h-9C3.4,15,0,11.6,0,7.5l0,0 C0,3.4,3.4,0,7.5,0z"></path>
+                                    <circle id="Oval-2" class="st1" cx="7.5" cy="7.5" r="6.5">
+                                    </circle>
+                                </svg>
+                                </i>
+                            </label>
+
+                        </div>
+                        <button ng-click="clickTaoPlaylist()" ng-disabled="tenplaylist.length < 1 || tenplaylist == undefined " ng-class="{'disable_button': tenplaylist.length < 1 ||tenplaylist == undefined   }" class="button_create_playlist">TẠO MỚI</button>
+
+                    </div>
+                </div>
+            </div>
+
         </div>
         <div ng-showvip></div>
         <div class="header">

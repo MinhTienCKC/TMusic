@@ -74,6 +74,15 @@ app.controller('T_Music', function () {
 
 });
 app.controller('index', function ($rootScope, $scope, dataservice, $uibModal) {
+
+    $scope.hienTimKiem = false;
+    $scope.showSearch = function () {
+        if (!$scope.hienTimKiem) {
+            $scope.hienTimKiem = true;
+        } else {
+            $scope.hienTimKiem = false;
+        }
+    }
     $scope.tenbien = 'null';
     $scope.hoatdong = false;
     $scope.modelsapxep = 'null';
@@ -180,7 +189,16 @@ app.controller('index', function ($rootScope, $scope, dataservice, $uibModal) {
 
         dataservice.voHieuHoa(data, function (rs) {
             rs = rs.data;
-
+            if (rs == "") {
+                alertify.success("Tài khoản Admin mới thực hiện chức năng này !!!");
+                if (data.vohieuhoa == 1) {
+                    data.vohieuhoa = 0;
+                }
+                else {
+                    data.vohieuhoa = 1;
+                }
+                return;
+            }
             if (rs == true) {
                 if (data.vohieuhoa == 1) {
                     alertify.success("Đã vô hiệu hóa !!!.");
