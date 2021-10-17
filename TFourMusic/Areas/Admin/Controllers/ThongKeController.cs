@@ -30,7 +30,7 @@ using Newtonsoft.Json.Linq;
 namespace TFourMusic.Controllers
 {
     [Area("Admin")]
-  
+    [Authorize]
     public class ThongKeController : Controller
     {
         IFirebaseConfig config = new FireSharp.Config.FirebaseConfig

@@ -32,7 +32,7 @@ using Newtonsoft.Json.Linq;
 namespace TFourMusic.Controllers
 {
     [Area("Admin")]
-
+    [Authorize(Roles = "Admin")]
     public class GoiVipController : Controller
     {
         IFirebaseConfig config = new FireSharp.Config.FirebaseConfig

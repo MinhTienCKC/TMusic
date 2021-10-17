@@ -78,6 +78,10 @@ app.config(function ($routeProvider, $locationProvider) {
             templateUrl: ctxfolderurl + '/thanhtoanthatbai.html',
             controller: 'thanhtoanthatbai'
         })
+        .when('/chude/:idchude', {
+            templateUrl: ctxfolderurl + '/chude.html',
+            controller: 'chude'
+        })
 
 });
 
@@ -1894,7 +1898,11 @@ app.controller('Ctrl_ESEIM', function ($scope, dataservice, $uibModal, $rootScop
                     else {
                         $("#loading_main").css("display", "none");
                         //$scope.signOut();
-                        $scope.xacthucemail = true;
+                        $timeout(function () {
+                            $rootScope.closelogin = false;
+                            $scope.xacthucemail = true;
+                        }, 500)
+                       
 
                     }
 
@@ -4812,11 +4820,11 @@ app.controller('nghesi', function ($scope, $routeParams, dataservice, $rootScope
 
             $scope.checkindexli++;
             $scope.checkindexsecond++;
-            if ($scope.checkindexli >= $scope.listDaTaiLenNgheSi.lenght) {
+            if ($scope.checkindexli >= $scope.listDaTaiLenNgheSi.length) {
                 $scope.checkindexli = 0;
             }
 
-            if ($scope.checkindexsecond >= $scope.listDaTaiLenNgheSi.lenght) {
+            if ($scope.checkindexsecond >= $scope.listDaTaiLenNgheSi.length ) {
                 $scope.checkindexsecond = 0;
             }
 
@@ -4974,13 +4982,14 @@ app.directive("animate", function () {
                     })
                     .removeClass()
                     .css({
-                        'opacity': '0.9',
+                        'opacity': '1',
                         'position': 'absolute',
                         'height': '80px  ',
                         'width': '80px',
                         'z-index': '100',
                         'border-radius': '999px',
-                        'display': 'block'
+                        'display': 'block',
+                        'object-fit': 'cover'
                     })
                     .appendTo($('body'))
                     .animate({

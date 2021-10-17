@@ -910,7 +910,7 @@
     height: auto;
 }
 .tao_playlist_layout_xacthuc {
-    z-index: 6;
+    z-index: 10;
     /* background-color: hsl(0deg 0% 0% / 80%); */
     justify-content: center;
     align-items: center;

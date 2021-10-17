@@ -26,7 +26,7 @@ using Microsoft.AspNetCore.Authorization;
 namespace TFourMusic.Controllers
 {
     [Area("Admin")]
-  
+    [Authorize]
     public class DanhSachPhatController : Controller
     {
         //IFirebaseConfig config = new FirebaseConfig

@@ -4,22 +4,7 @@ var app = angular.module('T_Music', ["ui.bootstrap", "ngRoute"]);
 //var app = angular.module('T_Music', ["ui.bootstrap", "ngRoute", "ngValidate", "datatables", "datatables.bootstrap", 'datatables.colvis', "ui.bootstrap.contextMenu", 'datatables.colreorder', 'angular-confirm', "ngJsTree", "treeGrid", "ui.select", "ngCookies", "pascalprecht.translate"])
 app.factory('dataservice', function ($http) {
     return {
-        taiChuDe: function ( callback) {
-            $http.post('/Admin/ChuDe/taiChuDe').then(callback);
-        },
-        xoaChuDe: function (data, callback) {
-            $http.post('/Admin/ChuDe/xoaChuDe', data).then(callback);
-        },
-        suaChuDe: function (data, callback) {
-            $http.post('/Admin/ChuDe/suaChuDe', data).then(callback);
-        },
-        suaLinkHinhAnhChuDe: function (data, callback) {
-            $http.post('/Admin/ChuDe/suaLinkHinhAnhChuDe', data).then(callback);
-
-        },  
-        taoChuDe: function (data, callback) {
-            $http.post('/Admin/ChuDe/taoChuDe', data).then(callback);
-        },
+       
         taiBaiHatViPhamChuaXuLy: function ( callback) {
             $http.post('/Admin/BaoCaoViPham/taiBaiHatViPhamChuaXuLy').then(callback);
         },
@@ -41,8 +26,35 @@ app.factory('dataservice', function ($http) {
         capNhatTrangThai: function (data, callback) {
             $http.post('/Admin/BaoCaoViPham/capNhatTrangThai', data).then(callback);
         },  
+        capNhatTrangThaiNguoiDung: function (data, callback) {
+            $http.post('/Admin/BaoCaoViPham/capNhatTrangThaiNguoiDung', data).then(callback);
+        },  
         pheDuyetBaiHatViPham: function (data, callback) {
             $http.post('/Admin/BaoCaoViPham/pheDuyetBaiHatViPham', data).then(callback);
+        },  
+        taiBaiHatViPhamDaXuLy_ViPham: function (callback) {
+            $http.post('/Admin/BaoCaoViPham/taiBaiHatViPhamDaXuLy_ViPham').then(callback);
+        },
+        taiBaiHatViPhamDaXuLy_KhongViPham: function (callback) {
+            $http.post('/Admin/BaoCaoViPham/taiBaiHatViPhamDaXuLy_KhongViPham').then(callback);
+        },
+        khoiPhucBaiHatViPham: function (data, callback) {
+            $http.post('/Admin/BaoCaoViPham/khoiPhucBaiHatViPham', data).then(callback);
+        },  
+        taiNguoiDungViPhamChuaXuLy: function (callback) {
+            $http.post('/Admin/BaoCaoViPham/taiNguoiDungViPhamChuaXuLy').then(callback);
+        },
+        taiNguoiDungViPhamDaXuLy_ViPham: function (callback) {
+            $http.post('/Admin/BaoCaoViPham/taiNguoiDungViPhamDaXuLy_ViPham').then(callback);
+        },
+        taiNguoiDungViPhamDaXuLy_KhongViPham: function (callback) {
+            $http.post('/Admin/BaoCaoViPham/taiNguoiDungViPhamDaXuLy_KhongViPham').then(callback);
+        },
+        pheDuyetNguoiDungViPham: function (data, callback) {
+            $http.post('/Admin/BaoCaoViPham/pheDuyetNguoiDungViPham', data).then(callback);
+        },  
+        khoiPhucNguoiDungViPham: function (data, callback) {
+            $http.post('/Admin/BaoCaoViPham/khoiPhucNguoiDungViPham', data).then(callback);
         },  
         uploadHinhAnh: function (data, callback) {
             $http({
@@ -121,13 +133,37 @@ app.controller('T_Music', function () {
 app.controller('index', function ($rootScope, $scope, dataservice, $uibModal) {
 
     $scope.capNhatTrangThai = function (data, vitri) {
+        if (data.trangthai == 2) {
+            return;
+        }
         $scope.modelTrangThai = {
             nguoidung_id: data.nguoidung_id,
             id: data.id
         }
+       
         dataservice.capNhatTrangThai($scope.modelTrangThai, function (rs) {
             rs = rs.data;
           
+            if (rs == true) {
+                $scope.taiBaoCaoViPham[vitri].trangthai = 1;
+            }
+            else {
+                $scope.taiBaoCaoViPham[vitri].trangthai = 0;
+            }
+        });
+    }
+    $scope.capNhatTrangThaiNguoiDung = function (data, vitri) {
+        if (data.trangthai == 2) {
+            return;
+        }
+        $scope.modelTrangThai = {
+            nguoidung_id: data.nguoidung_id,
+            id: data.id
+        }
+
+        dataservice.capNhatTrangThaiNguoiDung($scope.modelTrangThai, function (rs) {
+            rs = rs.data;
+
             if (rs == true) {
                 $scope.taiBaoCaoViPham[vitri].trangthai = 1;
             }
@@ -144,15 +180,14 @@ app.controller('index', function ($rootScope, $scope, dataservice, $uibModal) {
         theothang: $scope.date,
         hienTimKiem: 'baihat'
     }
+    $scope.daxuly = 'vipham';
     $scope.baiHatViPhamXuLy = 'chuaxuly';
     $scope.chuyenDoi = function (data) {
         $scope.model.hienTimKiem = data;
         $scope.loading = true;
-    }
-    $scope.layDanhSach = function (xuly) {
-        $scope.loading = true;
-        if (xuly == 'chuaxuly') {
-            $scope.baiHatViPhamXuLy = 'chuaxuly';
+        if ($scope.model.hienTimKiem == 'baihat') {
+           
+                $scope.baiHatViPhamXuLy = 'chuaxuly';
             dataservice.taiBaiHatViPhamChuaXuLy(function (rs) {
 
                 rs = rs.data;
@@ -164,11 +199,13 @@ app.controller('index', function ($rootScope, $scope, dataservice, $uibModal) {
                 if ($scope.numberOfPages() < 8) {
                     $scope.soLuong = $scope.numberOfPages();
                 }
-            });       
+
+            });         
         }
-        if (xuly == 'daxuly') {
-            $scope.baiHatViPhamXuLy = 'daxuly';
-            dataservice.taiBaiHatViPhamDaXuLy(function (rs) {
+        else {
+            $scope.baiHatViPhamXuLy = 'chuaxuly';
+            dataservice.taiNguoiDungViPhamChuaXuLy(function (rs) {
+
                 rs = rs.data;
                 $scope.taiBaoCaoViPham = rs;
                 $scope.loading = false;
@@ -178,8 +215,145 @@ app.controller('index', function ($rootScope, $scope, dataservice, $uibModal) {
                 if ($scope.numberOfPages() < 8) {
                     $scope.soLuong = $scope.numberOfPages();
                 }
-            });       
+
+            });         
         }
+    }
+    $scope.layDanhSach = function (xuly) {
+        $scope.loading = true;
+        if ($scope.model.hienTimKiem == 'baihat') {
+            if (xuly == 'chuaxuly') {
+                $scope.baiHatViPhamXuLy = 'chuaxuly';
+                dataservice.taiBaiHatViPhamChuaXuLy(function (rs) {
+
+                    rs = rs.data;
+                    $scope.taiBaoCaoViPham = rs;
+                    $scope.loading = false;
+                    $scope.numberOfPages = function () {
+                        return Math.ceil($scope.taiBaoCaoViPham.length / $scope.pageSize);
+                    }
+                    if ($scope.numberOfPages() < 8) {
+                        $scope.soLuong = $scope.numberOfPages();
+                    }
+                });
+            }
+            if (xuly == 'daxuly') {
+                $scope.baiHatViPhamXuLy = 'daxuly';
+                $scope.daxuly = 'vipham';
+                dataservice.taiBaiHatViPhamDaXuLy_ViPham(function (rs) {
+                    rs = rs.data;
+                    $scope.taiBaoCaoViPham = rs;
+                    $scope.loading = false;
+                    $scope.numberOfPages = function () {
+                        return Math.ceil($scope.taiBaoCaoViPham.length / $scope.pageSize);
+                    }
+                    if ($scope.numberOfPages() < 8) {
+                        $scope.soLuong = $scope.numberOfPages();
+                    }
+                });
+            }
+        }
+        else {
+            if (xuly == 'chuaxuly') {
+                $scope.baiHatViPhamXuLy = 'chuaxuly';
+                dataservice.taiNguoiDungViPhamChuaXuLy(function (rs) {
+
+                    rs = rs.data;
+                    $scope.taiBaoCaoViPham = rs;
+                    $scope.loading = false;
+                    $scope.numberOfPages = function () {
+                        return Math.ceil($scope.taiBaoCaoViPham.length / $scope.pageSize);
+                    }
+                    if ($scope.numberOfPages() < 8) {
+                        $scope.soLuong = $scope.numberOfPages();
+                    }
+                });
+            }
+            if (xuly == 'daxuly') {
+                $scope.baiHatViPhamXuLy = 'daxuly';
+                $scope.daxuly = 'vipham';
+                dataservice.taiNguoiDungViPhamDaXuLy_ViPham(function (rs) {
+                    rs = rs.data;
+                    $scope.taiBaoCaoViPham = rs;
+                    $scope.loading = false;
+                    $scope.numberOfPages = function () {
+                        return Math.ceil($scope.taiBaoCaoViPham.length / $scope.pageSize);
+                    }
+                    if ($scope.numberOfPages() < 8) {
+                        $scope.soLuong = $scope.numberOfPages();
+                    }
+                });
+            }
+        }
+       
+    }
+    $scope.layDanhSach_daxuly = function (xuly) {
+        $scope.loading = true;
+        if ($scope.model.hienTimKiem == 'baihat') {
+            if (xuly == 'vipham') {
+                $scope.baiHatViPhamXuLy = 'daxuly';
+                $scope.daxuly = 'vipham';
+                dataservice.taiBaiHatViPhamDaXuLy_ViPham(function (rs) {
+                    rs = rs.data;
+                    $scope.taiBaoCaoViPham = rs;
+                    $scope.loading = false;
+                    $scope.numberOfPages = function () {
+                        return Math.ceil($scope.taiBaoCaoViPham.length / $scope.pageSize);
+                    }
+                    if ($scope.numberOfPages() < 8) {
+                        $scope.soLuong = $scope.numberOfPages();
+                    }
+                });
+            }
+            if (xuly == 'khongvipham') {
+                $scope.baiHatViPhamXuLy = 'daxuly';
+                $scope.daxuly = 'khongvipham';
+                dataservice.taiBaiHatViPhamDaXuLy_KhongViPham(function (rs) {
+                    rs = rs.data;
+                    $scope.taiBaoCaoViPham = rs;
+                    $scope.loading = false;
+                    $scope.numberOfPages = function () {
+                        return Math.ceil($scope.taiBaoCaoViPham.length / $scope.pageSize);
+                    }
+                    if ($scope.numberOfPages() < 8) {
+                        $scope.soLuong = $scope.numberOfPages();
+                    }
+                });
+            }
+        }
+        else {
+            if (xuly == 'vipham') {
+                $scope.baiHatViPhamXuLy = 'daxuly';
+                $scope.daxuly = 'vipham';
+                dataservice.taiNguoiDungViPhamDaXuLy_ViPham(function (rs) {
+                    rs = rs.data;
+                    $scope.taiBaoCaoViPham = rs;
+                    $scope.loading = false;
+                    $scope.numberOfPages = function () {
+                        return Math.ceil($scope.taiBaoCaoViPham.length / $scope.pageSize);
+                    }
+                    if ($scope.numberOfPages() < 8) {
+                        $scope.soLuong = $scope.numberOfPages();
+                    }
+                });
+            }
+            if (xuly == 'khongvipham') {
+                $scope.baiHatViPhamXuLy = 'daxuly';
+                $scope.daxuly = 'khongvipham';
+                dataservice.taiNguoiDungViPhamDaXuLy_KhongViPham(function (rs) {
+                    rs = rs.data;
+                    $scope.taiBaoCaoViPham = rs;
+                    $scope.loading = false;
+                    $scope.numberOfPages = function () {
+                        return Math.ceil($scope.taiBaoCaoViPham.length / $scope.pageSize);
+                    }
+                    if ($scope.numberOfPages() < 8) {
+                        $scope.soLuong = $scope.numberOfPages();
+                    }
+                });
+            }
+        }
+
     }
     $scope.tenbien = 'null';
     $scope.hoatdong = false;
@@ -311,43 +485,13 @@ app.controller('index', function ($rootScope, $scope, dataservice, $uibModal) {
 
 
     }
-    $scope.taoChuDe_index = function () {
-      
-        var modalInstance =  $uibModal.open({
-            animation: true,
-            templateUrl: ctxfolderurl + '/add.html',
-            controller: 'add',
-            backdrop: 'true',
-            backdropClass: ".fade:not(.show)",
-            backdropClass: ".modal-backdrop",
-            backdropClass: ".col-lg-8",
-            backdropClass: ".modal-content",
-            
-            size: '100'
-        });
-        modalInstance.result.then(function () {
-          
-        }, function () {
-                setTimeout(function () {
-                   
 
-                });
-
-                setTimeout(function () {
-                    $scope.initData();
-                }, 2000);
-              
-        });
-        //modalInstance.closed.then(function () {
-        //    alert("ok");
-        //});
-    };
-    $scope.edit = function (key,vitri) {
+    $scope.chitietbaihatvipham = function (key,vitri) {
      /*   $scope.model.id = key;*/
         var modalInstance =  $uibModal.open({
             animation: true,
-            templateUrl: ctxfolderurl + '/edit.html',
-            controller: 'edit',
+            templateUrl: ctxfolderurl + '/chitietbaihatvipham.html',
+            controller: 'chitietbaihatvipham',
             backdrop: 'true',
             backdropClass: ".fade:not(.show)",
             backdropClass: ".modal-backdrop",
@@ -366,111 +510,55 @@ app.controller('index', function ($rootScope, $scope, dataservice, $uibModal) {
                 $scope.taiBaoCaoViPham.splice(vitri, 1);
             }
         }, function () {
-                $scope.initData();
+/*                $scope.initData();*/
         });
 
      
     };
-    
-    alertify.set('notifier', 'position', 'bottom-left');
+    $scope.chitietnguoidungvipham = function (key, vitri) {
+        /*   $scope.model.id = key;*/
+        var modalInstance = $uibModal.open({
+            animation: true,
+            templateUrl: ctxfolderurl + '/chitietnguoidungvipham.html',
+            controller: 'chitietnguoidungvipham',
+            backdrop: 'true',
+            backdropClass: ".fade:not(.show)",
+            backdropClass: ".modal-backdrop",
+            backdropClass: ".col-lg-8",
+            backdropClass: ".modal-content",
 
-    $scope.xoaChuDe = function (data) {
-    
-        dataservice.xoaChuDe(data, function (rs) {
-            rs = rs.data;
-            $scope.xoaChuDe = rs;
-           
+            size: '100',
+            resolve: {
+                para: function () {
+                    return key;
+                }
+            }
+        });
+        modalInstance.result.then(function (bienxoa) {
+            if (bienxoa == 1) {
+                $scope.taiBaoCaoViPham.splice(vitri, 1);
+            }
+        }, function () {
+            /*                $scope.initData();*/
         });
 
-    }
-    var duLieuHinh = new FormData();
-    $scope.suaHinhAnhChuDe = function ($files, data) {
-        $scope.BienTam = {
-            linkhinhanhmoi: '',
-            linkhinhanhcu: '',
-            chude_id: ''
-        }
-        $scope.modelchudecs = data;
 
-        if ($files[0].type == "image/png" || $files[0].type == "image/jpeg") {
-            duLieuHinh = new FormData();
-            duLieuHinh.append("File", $files[0]);
-            dataservice.uploadHinhAnh(duLieuHinh, function (rs) {
-                rs = rs.data;
-                $scope.BienTam.linkhinhanhmoi = rs;
-                $scope.BienTam.linkhinhanhcu = data.linkhinhanh;
-                $scope.BienTam.chude_id = data.id;
-                dataservice.suaLinkHinhAnhChuDe($scope.BienTam, function (rs) {
-                    rs = rs.data;
-                    $scope.modelchudecs.linkhinhanh = $scope.BienTam.linkhinhanhmoi;
-                });
-            });
-        } else {
-            alert("Sai định đạng ảnh (*.jpg, *.png)");
-        }
-
-        //for (var i = 0; i < $files.length; i++) {
-        //    formData.append("File", $files[i]);
-        //}
-
-    }
-});
-app.controller('add', function ($rootScope, $scope, dataservice, $uibModalInstance) {
-
-   
-    $scope.cancel = function () {
-        $uibModalInstance.dismiss('cancel');
-      
     };
-      
-  
-    $scope.model = {
-        id: '',
-        tenchude: '',
-        linkhinhanh: ''
-    }
-   
-    var duLieuHinh = new FormData();
-    $scope.dinhDangHinhAnh = "image/";
-    $scope.submit = function () {
-        if ($scope.dinhDangHinhAnh != "image/"
-            || !$scope.addChuDe.addLinkHinhAnh.$valid
-            || !$scope.addChuDe.addTenChuDe.$valid) {
-            alert("Vùng Lòng  Điền Đầy Đủ Và Kiểm Tra Thông Tin !!!");
-        }
-        else {
-           
-            $scope.model.tenchude = $scope.addTenChuDe;
-            dataservice.uploadHinhAnh(duLieuHinh, function (rs) {
-                rs = rs.data;
-                $scope.model.linkhinhanh = rs;
+    alertify.set('notifier', 'position', 'bottom-left');
 
-                dataservice.taoChuDe($scope.model, function (rs) {
-                    rs = rs.data;
-
-                });
-            })
-            $uibModalInstance.dismiss('cancel');
-        }
-
-        
-    }
-   
-     $scope.getTheFilesHinhAnh = function ($files) {
-        $scope.addLinkHinhAnh = "Đã Chọn Hình Ảnh";
-        duLieuHinh = new FormData();
-        duLieuHinh.append("File", $files[0]);     
-        if ($files[0].type == "image/png" || $files[0].type == "image/jpg" || $files[0].type == "image/jpeg") {
-            $scope.dinhDangHinhAnh = "image/"
-        }
-        else {
-            $scope.dinhDangHinhAnh = $files[0].type;
-        }
-        var nutao = document.getElementById("btntext");
-         nutao.click();        
-    }
 });
-app.controller('edit', function ($rootScope, $scope, $uibModalInstance, dataservice,para) {
+
+app.controller('chitietbaihatvipham', function ($rootScope, $scope, $uibModalInstance, dataservice, para) {
+    $scope.layBaiHatNut = false;
+    $scope.moBangLayBaiHat = function () {
+        $scope.layBaiHatNut = true;
+        $(".modal-content").css({"width": "145%","color":"black" ,"left":"5%"});
+       
+    }
+    $scope.troLai = function () {
+        $scope.layBaiHatNut = false;
+        $(".modal-content").css({ "width": "230%", "color": "#5A6169", "left": "-35%" });
+    }
     $scope.cancel = function () {
         $uibModalInstance.dismiss('cancel');
     }
@@ -512,7 +600,16 @@ app.controller('edit', function ($rootScope, $scope, $uibModalInstance, dataserv
 
         dataservice.voHieuHoaNguoiDung(data, function (rs) {
             rs = rs.data;
-
+            if (rs == "") {
+                alertify.success("Tài khoản Admin mới thực hiện chức năng này !!!");
+                if (data.vohieuhoa == 1) {
+                    data.vohieuhoa = 0;
+                }
+                else {
+                    data.vohieuhoa = 1;
+                }
+                return;
+            }
             if (rs == true) {
                 if (data.vohieuhoa == 1) {
                     alertify.success("Đã vô hiệu hóa !!!.");
@@ -569,7 +666,181 @@ app.controller('edit', function ($rootScope, $scope, $uibModalInstance, dataserv
             
         });
     }
+    $scope.khoiPhuc = function (data, vhh_nguoidung, vhh_baihat) {
 
+        $scope.baocaomodel1 = {
+            nguoidung_id: data.nguoidung_id,
+            id: $scope.data.id,
+            vhh_baihat: vhh_baihat,
+            vhh_nguoidung: vhh_nguoidung
+        }
+        //alert(data.email_nguoidung_baocao + vhh_nguoidung + vhh_baihat);
+        dataservice.khoiPhucBaiHatViPham($scope.baocaomodel1, function (rs) {
+            rs = rs.data;
+
+      
+            if (rs == true) {
+
+                alertify.success("Khôi Phục thành công !!!.");
+               // $uibModalInstance.close(1);
+                $uibModalInstance.close(1);
+            }
+            else {
+                alertify.success("Khôi Phục thất bại !!!");
+            }
+
+            $uibModalInstance.dismiss('cancel');
+
+        });
+    }
+
+
+});
+app.controller('chitietnguoidungvipham', function ($rootScope, $scope, $uibModalInstance, dataservice, para) {
+    $scope.layBaiHatNut = false;
+    $scope.nguoiDung = 'tocao';
+    $scope.moBangLayBaiHat = function (data) {
+        if (data == 'tocao') {
+            $scope.nguoiDung = 'tocao';
+            $scope.taiChiTietNguoiDung = $scope.taiChiTietNguoiDungToCao;
+        }
+        else {
+            $scope.nguoiDung = 'vipham';
+            $scope.taiChiTietNguoiDung = $scope.taiChiTietNguoiDungViPham;
+        }
+        $scope.layBaiHatNut = true;
+        $(".modal-content").css({ "width": "145%", "color": "black", "left": "5%" });
+
+    }
+    $scope.troLai = function () {
+        $scope.layBaiHatNut = false;
+        $(".modal-content").css({ "width": "230%", "color": "#5A6169", "left": "-35%" });
+    }
+    $scope.cancel = function () {
+        $uibModalInstance.dismiss('cancel');
+    }
+    alertify.set('notifier', 'position', 'bottom-left');
+    $scope.data = para;
+    $scope.initData = function () {
+        $scope.baihatbangquyen = {
+            nguoidung_id: $scope.data.nguoidung_baocao_id,
+            baihat_id: $scope.data.baihat_baocao_id
+        }
+        $scope.baihatbangquyen1 = {
+            nguoidung_id: $scope.data.nguoidung_id,
+            baihat_id: $scope.data.baihat_id
+        }      
+        dataservice.taiChiTietNguoiDungViPham($scope.baihatbangquyen, function (rs) {
+
+            rs = rs.data;
+            $scope.taiChiTietNguoiDungViPham = rs;
+            $scope.taiChiTietNguoiDung = $scope.taiChiTietNguoiDungViPham;
+        });
+        dataservice.taiChiTietNguoiDungViPham($scope.baihatbangquyen1, function (rs) {
+
+            rs = rs.data;
+            $scope.taiChiTietNguoiDungToCao = rs;
+        });
+        if ($scope.data.baihat_id != "") {
+            $scope.baihatbangquyen = {
+                nguoidung_id: $scope.data.nguoidung_id,
+                baihat_id: $scope.data.baihat_id
+            }
+            dataservice.taiBaiHatBangQuyen($scope.baihatbangquyen, function (rs) {
+
+                rs = rs.data;
+                $scope.taiBaiHatBangQuyen = rs;
+            });
+        }
+
+    };
+    $scope.initData();
+    $scope.submit = function () {
+
+    }
+    $scope.voHieuHoaNguoiDung = function (data) {
+
+        dataservice.voHieuHoaNguoiDung(data, function (rs) {
+            rs = rs.data;
+            if (rs == "") {
+                alertify.success("Tài khoản Admin mới thực hiện chức năng này !!!");
+                if (data.vohieuhoa == 1) {
+                    data.vohieuhoa = 0;
+                }
+                else {
+                    data.vohieuhoa = 1;
+                }
+                return;
+            }
+            if (rs == true) {
+                if (data.vohieuhoa == 1) {
+                    alertify.success("Đã vô hiệu hóa !!!.");
+                }
+                else {
+                    alertify.success("Đã bỏ vô hiệu hóa !!!");
+                }
+            }
+            else {
+                alertify.success("Lỗi không thực hiện vô hiệu hóa !!!.");
+            }
+        });
+    }
+   
+    $scope.pheDuyet = function (data, vhh_nguoidung) {
+
+        $scope.baocaomodel1 = {
+            nguoidung_id: data.nguoidung_id,
+            id: $scope.data.id,
+            vhh_baihat: 0,
+            vhh_nguoidung: vhh_nguoidung
+        }
+        //alert(data.email_nguoidung_baocao + vhh_nguoidung + vhh_baihat);
+        dataservice.pheDuyetNguoiDungViPham($scope.baocaomodel1, function (rs) {
+            rs = rs.data;
+
+            if (rs == true) {
+
+                alertify.success("Phê duyệt thành công !!!.");
+                $uibModalInstance.close(1);
+            }
+            else {
+                alertify.success("Phê duyệt thất bại !!!");
+            }
+
+            $uibModalInstance.dismiss('cancel');
+
+        });
+    }
+    $scope.khoiPhuc = function (data, vhh_nguoidung) {
+
+        $scope.baocaomodel1 = {
+            nguoidung_id: data.nguoidung_id,
+            id: $scope.data.id,
+            vhh_baihat: 0,
+            vhh_nguoidung: vhh_nguoidung
+        }
+        //alert(data.email_nguoidung_baocao + vhh_nguoidung + vhh_baihat);
+        dataservice.khoiPhucNguoiDungViPham($scope.baocaomodel1, function (rs) {
+            rs = rs.data;
+
+            //if (rs == 1) {
+
+            //    alertify.success("Khôi Phục thành công !!!.");
+            //    $uibModalInstance.close(1);
+            //}
+            if (rs == true) {
+
+                alertify.success("Khôi Phục thành công !!!.");
+                 $uibModalInstance.close(1);
+            }
+            else {
+                alertify.success("Khôi Phục thất bại !!!");
+            }
+
+            $uibModalInstance.dismiss('cancel');
+
+        });
+    }
 
 
 });

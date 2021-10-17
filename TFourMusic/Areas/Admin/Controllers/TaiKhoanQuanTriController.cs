@@ -25,13 +25,16 @@ using PayPalCheckoutSdk.Orders;
 using FirebaseAdmin.Auth;
 using FirebaseAdmin;
 using Google.Apis.Auth.OAuth2;
+using MimeKit;
+using MailKit.Net.Smtp;
 using Microsoft.AspNetCore.Authorization;
+using System.Security.Claims;
 
 namespace TFourMusic.Controllers
 {
     [Area("Admin")]
-    [Authorize]
-    public class DanhSachPhatNguoiDungController : Controller
+    [Authorize(Roles = "Admin")]
+    public class TaiKhoanQuanTriController : Controller
     {
         IFirebaseConfig config = new FireSharp.Config.FirebaseConfig
         {
@@ -54,7 +57,7 @@ namespace TFourMusic.Controllers
         //    _logger = logger;
         //}
 
-        public DanhSachPhatNguoiDungController(IHostingEnvironment env)
+        public TaiKhoanQuanTriController(IHostingEnvironment env)
         {
             _env = env;
         }
@@ -145,117 +148,89 @@ namespace TFourMusic.Controllers
 
         }
         [HttpPost]
-        public async Task<IActionResult> taiNguoiDung()
+        public async Task<IActionResult> taiTaiKhoanQuanTri()
         {
 
             var firebase = new FirebaseClient(Key);
 
-            var NguoiDung = LayBangNguoiDung();
+            var dino = await firebase
+                .Child("csdlmoi")
+                .Child("taikhoanquantri")
+                .OnceAsync<taikhoanquantriModel>();
+            var data = from tkqt in dino
 
-            var data = from t20 in NguoiDung
+                       select tkqt.Object;
 
-                       select t20;
-            var auth = new FirebaseConfig1(ApiKey);
-
-
-            //UserRecordArgs args = new UserRecordArgs()
-            //{
-            //    Uid = userRecord.Uid,
-            //    Email = userRecord.Email,
-            //    PhoneNumber = userRecord.PhoneNumber,
-            //    EmailVerified = userRecord.EmailVerified,
-            //    Password = userRecord.Passw,
-            //    DisplayName = "Jane Doe",
-            //    PhotoUrl = "http://www.example.com/12345678/photo.png",
-            //    Disabled = true,
-            //};
-
-            //   UserRecord userRecord123 = await FirebaseAuth123.DefaultInstance.UpdateUserAsync(args);
             return Json(data);
         }
-        public List<danhsachphatnguoidungModel> LayBangDanhSachPhatNguoiDung(string uid = null)
-        {
-            if (uid == null)
-            {
-                client = new FireSharp.FirebaseClient(config);
-                FirebaseResponse response = client.Get("csdlmoi/danhsachphatnguoidung");
-                var data = JsonConvert.DeserializeObject<dynamic>(response.Body);
-                var list = new List<danhsachphatnguoidungModel>();
 
-                if (data != null)
+        [HttpPost]
+        public async Task<IActionResult> voHieuHoa([FromBody] taikhoanquantriModel item)
+        {
+            var heThong = User.Identity as ClaimsIdentity;
+            var phanQuyen = heThong.Claims.FirstOrDefault(c => c.Type == ClaimTypes.Role).Value;
+            if (phanQuyen == "Admin")
+            {
+                bool success = true;
+                try
                 {
 
-                    foreach (var item in data)
+                    if (item.vohieuhoa == 0)
                     {
-                        foreach (var x in item)
-                        {
-                            foreach (var y in x)
 
-                            {
-                                list.Add(JsonConvert.DeserializeObject<danhsachphatnguoidungModel>(((JProperty)y).Value.ToString()));
-
-                            }
-
-                        }
+                        client = new FireSharp.FirebaseClient(config);
+                        object p = client.Set("csdlmoi/taikhoanquantri/" + item.id + "/" + "vohieuhoa", item.vohieuhoa);
 
                     }
+                    else
+                    {
+
+                        client = new FireSharp.FirebaseClient(config);
+                        object p = client.Set("csdlmoi/taikhoanquantri/" + item.id + "/" + "vohieuhoa", item.vohieuhoa);
+
+                    }
+                    success = true;
+                }
+                catch (Exception ex)
+                {
+                    success = false;
                 }
 
-
-                return list;
+                return Json(success);
             }
             else
             {
-                client = new FireSharp.FirebaseClient(config);
-                FirebaseResponse response = client.Get("csdlmoi/danhsachphatnguoidung/" + uid);
-                var data = JsonConvert.DeserializeObject<dynamic>(response.Body);
-                var list = new List<danhsachphatnguoidungModel>();
-
-                if (data != null)
-                {
-                    foreach (var item in data)
-                    {
-                        list.Add(JsonConvert.DeserializeObject<danhsachphatnguoidungModel>(((JProperty)item).Value.ToString()));
-
-                    }
-                }
-                return list;
+                return Json("");
             }
-
-
-
+           
         }
+
         [HttpPost]
-        public async Task<IActionResult> voHieuHoa([FromBody] nguoidungModel item)
+        public async Task<IActionResult> taoTaiKhoanQuanTri([FromBody] taikhoanquantriModel item)
         {
 
-
             bool success = true;
+            item.vohieuhoa = 0;
+            item.thoigian = DateTime.Now;      
             try
             {
 
-                if (item.vohieuhoa == 0)
-                {
-                    UserRecordArgs args = new UserRecordArgs()
-                    {
-                        Uid = item.uid,
-                        Disabled = false,
-                    };
-                    UserRecord userRecord = await FirebaseAdmin.Auth.FirebaseAuth.DefaultInstance.UpdateUserAsync(args);
-                    client = new FireSharp.FirebaseClient(config);
-                    object p = client.Set("csdlmoi/nguoidung/" + item.uid + "/" + "vohieuhoa", item.vohieuhoa);
-                }
-                else
-                {
-                    UserRecordArgs args = new UserRecordArgs()
-                    {
-                        Uid = item.uid,
-                        Disabled = true,
-                    };
-                    UserRecord userRecord = await FirebaseAdmin.Auth.FirebaseAuth.DefaultInstance.UpdateUserAsync(args);
-                    client = new FireSharp.FirebaseClient(config);
-                    object p = client.Set("csdlmoi/nguoidung/" + item.uid + "/" + "vohieuhoa", item.vohieuhoa);
-                }
+                var firebase = new FirebaseClient(Key);
+
+                // add new item to list of data and let the client generate new key for you (done offline)
+                var dino = await firebase
+                    .Child("csdlmoi")
+                  .Child("taikhoanquantri")
+               //   .Child(item.nguoidung_id)
+                  .PostAsync(item)
+                  ;
+                string kk = dino.Key.ToString();
+                item.id = kk;
+                await firebase
+                    .Child("csdlmoi")
+                  .Child("taikhoanquantri")                 
+                   .Child(kk)
+                   .PutAsync(item);
                 success = true;
             }
             catch (Exception ex)
@@ -264,6 +239,34 @@ namespace TFourMusic.Controllers
             }
 
             return Json(success);
+        }
+        [HttpPost]
+        public async Task<IActionResult> suaTaiKhoanQuanTri([FromBody] taikhoanquantriModel item)
+        {
+
+            bool success = true;
+        
+            try
+            {
+
+                var firebase = new FirebaseClient(Key);
+
+
+
+                await firebase
+                     .Child("csdlmoi")
+                  .Child("taikhoanquantri")
+                   .Child(item.id)
+                  .PutAsync(item);
+                success = true;
+            }
+            catch (Exception ex)
+            {
+                success = false;
+            }
+
+            return Json(success);
+
         }
     }
 }
