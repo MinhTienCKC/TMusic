@@ -513,9 +513,9 @@
 
                     </label>
 
-                    <div style="background-color:#6e3898; cursor:pointer;" class="nav__right__title__action-item">
-                        <span class="material-icons-outlined">
-                            more_horiz
+                    <div title="Xóa danh sách phát" style="background-color:#6e3898; cursor:pointer;" class="nav__right__title__action-item">
+                        <span ng-click="xoaDanhSachPhatNhac()" class="material-icons-outlined">
+                            delete_sweep
                         </span>
                     </div>
                 </div>
@@ -589,7 +589,7 @@
 
                     </li>
                     <li ng-if="listQuangCao.length > 0" style="padding: 10px;">  <label>Gợi Ý</label></li>
-                    <li ng-if="listQuangCao.length > 0" ng-repeat="x in listQuangCao" class="nav__right__list__item ">
+                    <li ng-if="listQuangCao.length > 0" ng-repeat="x in baiHatGoiY" class="nav__right__list__item " >
 
                         <div class="music__player">
                             <div class="music__player__image">
@@ -599,7 +599,7 @@
                                          src="{{x.baihat.linkhinhanh}}"
                                          alt="Avatar">
 
-                                    <label class="background_icon_play_index" ng-click="listQuangCao.splice($index, 1);playMotBanNhac(x.baihat)">
+                                    <label class="background_icon_play_index" ng-click="baiHatGoiY.splice($index, 1);playMotBanNhac(x.baihat)">
 
                                         <i class="fas fa-play icon_play_index"></i>
                                     </label>
@@ -611,7 +611,7 @@
                                 <div title="{{x.baihat.casi}}" class="music__player__contain-singer">{{x.baihat.casi}} </div>
                                 <div id="icon_option" class="icon_nav_right_final">
 
-                                    <span ng-click="listQuangCao.splice($index, 1); themBaiHatVaoDanhSachPhat(x.baihat)" style=" margin-top: -3px; font-size: 20px; margin-left: -4px; " class="material-icons-outlined icon_nav_right_first_goiy">
+                                    <span ng-click="baiHatGoiY.splice($index, 1); themBaiHatVaoDanhSachPhat(x.baihat)" style=" margin-top: -3px; font-size: 20px; margin-left: -4px; " class="material-icons-outlined icon_nav_right_first_goiy">
                                         add
                                     </span>
 
