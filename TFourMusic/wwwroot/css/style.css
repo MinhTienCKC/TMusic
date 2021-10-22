@@ -712,7 +712,8 @@ slider_show {
 .content-scooll {
     overflow-y: auto;
     overflow-x: hidden;
-    height: 36%;
+    height: 42%;
+    padding-bottom:60px;
 }
 
     .content-scooll::-webkit-scrollbar-track {
