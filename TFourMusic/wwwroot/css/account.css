@@ -397,6 +397,7 @@
     height: 29px;
     /* background: red; */
     border-radius: 50%;
+    position:relative;
 }
 
     .label_account:hover {
