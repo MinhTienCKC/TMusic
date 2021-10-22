@@ -1905,7 +1905,7 @@ app.controller('Ctrl_ESEIM', function ($scope, dataservice, $uibModal, $rootScop
                         $timeout(function () {
                             $rootScope.closelogin = false;
                             $scope.xacthucemail = true;
-                        }, 500)
+                        }, 1000);
                        
 
                     }
@@ -4989,13 +4989,14 @@ app.directive("animate", function () {
             //  e.preventDefault();
             var cart = $('.shopping-cart');
             var imgtodrag = $(this).parent('.item').find("img").eq(0).removeAttr("hidden");
-
+          
             if (imgtodrag) {
 
                 var imgclone = imgtodrag.clone()
                     .offset({
                         top: imgtodrag.offset().top,
-                        left: imgtodrag.offset().left
+                        left: imgtodrag.offset().left,
+                        
                     })
                     .removeClass()
                     .css({
@@ -5005,7 +5006,7 @@ app.directive("animate", function () {
                         'width': '80px',
                         'z-index': '100',
                         'border-radius': '999px',
-                        'display': 'block',
+                        /*'display': 'block',*/
                         'object-fit': 'cover'
                     })
                     .appendTo($('body'))
@@ -5029,7 +5030,9 @@ app.directive("animate", function () {
                 }, function () {
                     $(this).detach()
                 });
+                
             }
+            imgtodrag.css("display", "none");
 
         });
     };
@@ -5309,6 +5312,14 @@ app.controller('toptrending', function ($scope, dataservice, $rootScope, $locati
             else {
                 $scope.DataDanhSachTopTrenDingThang[index].yeuthich = 0;
             }
+        }
+    }
+    $scope.phatNhacXuHuong = function () {
+        if ($scope.activeXuHuong == 0) {
+            $scope.playMotBanNhac($scope.DataDanhSachTopTrenDing);
+        }
+        else {
+            $scope.playMotBanNhac($scope.DataDanhSachTopTrenDingThang);
         }
     }
 })
