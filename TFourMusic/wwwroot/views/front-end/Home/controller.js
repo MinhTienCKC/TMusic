@@ -5032,7 +5032,7 @@ app.directive("animate", function () {
                 });
                 
             }
-            imgtodrag.css("display", "none");
+            /*imgtodrag.css("display", "none");*/
 
         });
     };
