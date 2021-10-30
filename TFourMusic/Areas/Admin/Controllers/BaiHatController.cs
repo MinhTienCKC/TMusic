@@ -341,7 +341,7 @@ namespace TFourMusic.Controllers
 
             DateTime ok = DateTime.Parse(DateTime.Now.AddMonths(1).ToString("dd/MM/yyyy"));
             var dsbhdaxoa = (from bh in baihat
-                             where bh.daxoa.Equals(1) && DateTime.Parse(bh.thoigianxoa.ToString("dd-MM-yyyy")) == DateTime.Parse(DateTime.Now.ToString("dd/MM/yyyy"))
+                             where bh.daxoa.Equals(1) && DateTime.Parse(bh.thoigianxoa.ToString("dd/MM/yyyy")) == DateTime.Parse(DateTime.Now.ToString("dd/MM/yyyy"))
                              select bh).ToList();
             if (dsbhdaxoa.Count > 0)
             {
@@ -405,23 +405,196 @@ namespace TFourMusic.Controllers
             }
             return Json(success);
         }
+        public List<chitietdanhsachphattheloaiModel> LayBangChiTietDanhSachPhatTheLoai(string iddsptheloai = null)
+        {
+            if (iddsptheloai == null)
+            {
+                client = new FireSharp.FirebaseClient(config);
+                FirebaseResponse response = client.Get("csdlmoi/chitietdanhsachphattheloai");
+                var data = JsonConvert.DeserializeObject<dynamic>(response.Body);
+                var list = new List<chitietdanhsachphattheloaiModel>();
+                if (data != null)
+                {
+
+                    foreach (var item in data)
+                    {
+                        foreach (var x in item)
+                        {
+                            foreach (var y in x)
+
+                            {
+                                list.Add(JsonConvert.DeserializeObject<chitietdanhsachphattheloaiModel>(((JProperty)y).Value.ToString()));
+
+                            }
+
+                        }
+
+                    }
+                }
+
+
+
+                return list;
+            }
+            else
+            {
+                client = new FireSharp.FirebaseClient(config);
+                FirebaseResponse response = client.Get("csdlmoi/chitietdanhsachphattheloai/" + iddsptheloai);
+                var data = JsonConvert.DeserializeObject<dynamic>(response.Body);
+                var list = new List<chitietdanhsachphattheloaiModel>();
+                if (data != null)
+                {
+
+                    foreach (var item in data)
+                    {
+                        list.Add(JsonConvert.DeserializeObject<chitietdanhsachphattheloaiModel>(((JProperty)item).Value.ToString()));
+
+                    }
+
+
+                }
+                return list;
+            }
+        }
+        public List<chitietdanhsachphatnguoidungModel> LayBangChiTietDanhSachPhatNguoiDung(string uid = null)
+        {
+            if (uid == null)
+            {
+                client = new FireSharp.FirebaseClient(config);
+                FirebaseResponse response = client.Get("csdlmoi/chitietdanhsachphatnguoidung");
+                var data = JsonConvert.DeserializeObject<dynamic>(response.Body);
+                var list = new List<chitietdanhsachphatnguoidungModel>();
+                if (data != null)
+                {
+
+                    foreach (var item in data)
+                    {
+                        foreach (var x in item)
+                        {
+                            foreach (var y in x)
+
+                            {
+                                list.Add(JsonConvert.DeserializeObject<chitietdanhsachphatnguoidungModel>(((JProperty)y).Value.ToString()));
+
+                            }
+
+                        }
+
+                    }
+                }
+
+
+
+                return list;
+            }
+            else
+            {
+                client = new FireSharp.FirebaseClient(config);
+                FirebaseResponse response = client.Get("csdlmoi/chitietdanhsachphatnguoidung/" + uid);
+                var data = JsonConvert.DeserializeObject<dynamic>(response.Body);
+                var list = new List<chitietdanhsachphatnguoidungModel>();
+                if (data != null)
+                {
+
+                    foreach (var item in data)
+                    {
+                        list.Add(JsonConvert.DeserializeObject<chitietdanhsachphatnguoidungModel>(((JProperty)item).Value.ToString()));
+
+                    }
+
+
+                }
+                return list;
+            }
+        }
+        public List<yeuthichModel> LayBangYeuThichBaiHat(string uid = null)
+        {
+
+            if (uid == null)
+            {
+                client = new FireSharp.FirebaseClient(config);
+                FirebaseResponse response = client.Get("csdlmoi/yeuthich/yeuthichbaihat");
+                var data = JsonConvert.DeserializeObject<dynamic>(response.Body);
+                var list = new List<yeuthichModel>();
+
+                if (data != null)
+                {
+                    foreach (var item in data)
+                    {
+                        foreach (var x in item)
+                        {
+                            foreach (var y in x)
+
+                            {
+                                list.Add(JsonConvert.DeserializeObject<yeuthichModel>(((JProperty)y).Value.ToString()));
+
+                            }
+
+                        }
+
+                    }
+                }
+
+                return list;
+            }
+            else
+            {
+                client = new FireSharp.FirebaseClient(config);
+                FirebaseResponse response = client.Get("csdlmoi/yeuthich/yeuthichbaihat/" + uid);
+                var data = JsonConvert.DeserializeObject<dynamic>(response.Body);
+                var list = new List<yeuthichModel>();
+
+                if (data != null)
+                {
+                    foreach (var item in data)
+                    {
+                        list.Add(JsonConvert.DeserializeObject<yeuthichModel>(((JProperty)item).Value.ToString()));
+                    }
+                }
+                return list;
+            }
+
+        }
         public async Task XoaBaiHatVinhVien(baihatModel item)
         {
-                if (item.link != "")
+              
+               var chidsptheloai = LayBangChiTietDanhSachPhatTheLoai();
+           
+            var datatl = (from fb in chidsptheloai
+                       where fb.baihat_id == item.id
+                       select fb).ToList();
+        
+           
+            if (datatl.Count > 0)
+            {
+                foreach (var bh in datatl)
                 {
-                    var xoaBaiHatStorage = xoaStorageBangLink(item.link);
+                    var firebase = new FirebaseClient(Key);
+                    await firebase
+                   .Child("csdlmoi")
+                  .Child("chitietdanhsachphattheloai")
+                  .Child(bh.danhsachphattheloai_id)
+                  .Child(bh.id)
+                  .DeleteAsync();
                 }
-                if (item.linkhinhanh != "")
-                {
-                    var xoaHinhAnhStorage = xoaStorageBangLink(item.linkhinhanh);
-                }
-                var firebase = new FirebaseClient(Key);
-                     await firebase
-                    .Child("csdlmoi")
-                   .Child("baihat")
-                   .Child(item.nguoidung_id)
-                   .Child(item.id)
-                   .DeleteAsync();
+            }
+
+            var ok = datatl;
+            //if (item.link != "")
+            //{
+            //    var xoaBaiHatStorage = xoaStorageBangLink(item.link);
+            //}
+            //if (item.linkhinhanh != "")
+            //{
+            //    var xoaHinhAnhStorage = xoaStorageBangLink(item.linkhinhanh);
+            //}
+            //var firebase = new FirebaseClient(Key);
+            //         await firebase
+            //        .Child("csdlmoi")
+            //       .Child("baihat")
+            //       .Child(item.nguoidung_id)
+            //       .Child(item.id)
+            //       .DeleteAsync();
         }
         public async Task<IActionResult> xoaStorageBangLink(string link)
         {
@@ -504,7 +677,70 @@ namespace TFourMusic.Controllers
         {
             public string key { get; set; }
         }
+        public List<nguoidungModel> LayBangNguoiDung(string uid = null)
+        {
+            try
+            {
 
+                if (uid == null)
+                {
+                    client = new FireSharp.FirebaseClient(config);
+                    FirebaseResponse response = client.Get("csdlmoi/nguoidung");
+                    var data = JsonConvert.DeserializeObject<dynamic>(response.Body);
+                    var list = new List<nguoidungModel>();
+
+                    if (data != null)
+                    {
+                        foreach (var item in data)
+                        {
+                            list.Add(JsonConvert.DeserializeObject<nguoidungModel>(((JProperty)item).Value.ToString()));
+
+                        }
+                    }
+
+                    return list;
+                }
+                else
+                {
+
+                    //return list;
+                    client = new FireSharp.FirebaseClient(config);
+                    FirebaseResponse response = client.Get("csdlmoi/nguoidung/" + uid);
+                    var data = JsonConvert.DeserializeObject<nguoidungModel>(response.Body);
+                    List<nguoidungModel> list = new List<nguoidungModel>();
+                    if (data != null)
+                    {
+                        list.Add(data);
+                    }
+
+                    return list;
+                }
+            }
+            catch
+            {
+                List<nguoidungModel> list = new List<nguoidungModel>();
+                return list;
+            }
+
+        }
+        public async Task<IActionResult> taiChiTietNguoiDungQuaUID([FromBody] baihatModel item)
+        {
+
+
+            var firebase = new FirebaseClient(Key);
+
+            var data = LayBangNguoiDung(item.nguoidung_id);
+           
+
+
+            //var data = from bh in baihat
+            //           where (string.IsNullOrEmpty(item.tenbaihat) || (bh.Object.tenbaihat != null && bh.Object.tenbaihat.ToLower().Contains(item.tenbaihat.ToLower())))
+            //           && (string.IsNullOrEmpty(item.casi) || (bh.Object.casi != null && bh.Object.casi.ToLower().Contains(item.casi.ToLower())))
+            //           select new { 
+            //            bh.Object
+            //           };
+            return Json(data);
+        }
         [HttpPost]
         public async Task<IActionResult> taiChuDe()
         {

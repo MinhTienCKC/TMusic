@@ -78,7 +78,35 @@ namespace TFourMusic.Controllers
             return View(new ErrorViewModel { RequestId = Activity.Current?.Id ?? HttpContext.TraceIdentifier });
         }
 
+        public async Task<IActionResult> xoaTaiKhoanQuanTri([FromBody] taikhoanquantriModel item)
+        {
+            var heThong = User.Identity as ClaimsIdentity;
+            var phanQuyen = heThong.Claims.FirstOrDefault(c => c.Type == ClaimTypes.Role).Value;
+            var uid = heThong.Claims.FirstOrDefault(c => c.Type == "uid").Value;
+            bool success = true;
 
+            if (uid == item.id)
+            {
+                return Json("loi");
+            }
+            try
+            {
+
+                var firebase = new FirebaseClient(Key);
+                 await firebase
+                .Child("csdlmoi")
+                .Child("taikhoanquantri")
+                .Child(item.id)
+                .DeleteAsync();
+                success = true;
+            }
+            catch (Exception ex)
+            {
+                success = false;
+            }
+
+            return Json(success);
+        }
 
         //[HttpPost]
         //public async Task<IActionResult> thayDoiTrangThaiNguoiDung([FromBody] nguoidungModel item)
@@ -169,6 +197,13 @@ namespace TFourMusic.Controllers
         {
             var heThong = User.Identity as ClaimsIdentity;
             var phanQuyen = heThong.Claims.FirstOrDefault(c => c.Type == ClaimTypes.Role).Value;
+            var uid = heThong.Claims.FirstOrDefault(c => c.Type == "uid").Value;
+       
+
+            if (uid == item.id)
+            {
+                return Json("loi");
+            }
             if (phanQuyen == "Admin")
             {
                 bool success = true;

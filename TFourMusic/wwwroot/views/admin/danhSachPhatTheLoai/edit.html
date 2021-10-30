@@ -1,5 +1,5 @@
 ﻿<div class="modal-header" style="margin: 0px 0px 0px 0px;">
-    <h6 class="m-0">Sữa Danh Sách Phát Thể Loại</h6>
+    <h6 class="m-0">Sửa Danh Sách Phát Thể Loại</h6>
     <button type="submit" id="btntext" ng-click="hienThiTaiXuong()" style="display:none;" class="btn btn-accent"></button>
 </div>
 <div class="modal-body" style="padding: 15px 30px 0px 30px !important;">
@@ -7,31 +7,35 @@
         <div class="form-row kiemtra">
             <div class="form-group col-md-6">
                 <label for="feLastName">Tên bài hát</label>
-                <input style="width: 200%; border-color:#007bff;" type="text" validatekitudacbiet ng-model="editTenDanhSachPhatTheLoai" name="editTenDanhSachPhatTheLoai" class="form-control" id="feLastName12" maxlength="255" value="Brooks" required>
+                <input style=" border-color:#007bff;" type="text" validatekitudacbiet ng-model="editTenDanhSachPhatTheLoai" name="editTenDanhSachPhatTheLoai" class="form-control" id="feLastName12" maxlength="255" value="Brooks" required>
                 <span class="thong_bao_sai" ng-show="editDanhSachPhatTheLoai.editTenDanhSachPhatTheLoai.$touched && editDanhSachPhatTheLoai.editTenDanhSachPhatTheLoai.$invalid">Tên Bài Hát không hợp lệ.</span>
             </div>
+            <div class="form-group col-md-6">
+                <label for="feFirstName">Mô tả</label>
+                <input style=" border-color:#007bff;" type="text" validatekitudacbiet ng-model="modelDanhSachPhatTheLoai.mota" maxlength="500" class="form-control" id="feF1irstName" value="Sierra">
+            </div>
         </div>
-        <div class="form-row kiemtra">
+        <!--<div class="form-row kiemtra">
            
             <div class="form-group col-md-6">
                 <label for="feFirstName">Mô tả</label>
                 <input style="width: 200%; border-color:#007bff;" type="text" validatekitudacbiet ng-model="modelDanhSachPhatTheLoai.mota" maxlength="500" class="form-control" id="feF1irstName" value="Sierra">
             </div>
 
-        </div>
-        <div class="form-row">
+        </div>-->
+        <!--<div class="form-row">
             <div class="form-group col-md-6">
                 <label for="feFirstName">Thể Loại</label>
                 <select ng-model="valueTheLoai" style="width: 200%; border-color:#007bff;" class="form-control" ng-change="changeTheLoai()">
                     <option style="width: 100%; color: #007bff;" ng-value="x.id" value="{{x.id}}" ng-repeat="x in taiTheLoai">{{x.tentheloai}}</option>
                 </select>
             </div>
-        </div>
+        </div>-->
     </form>
 </div>
 <div class="modal-footer" style="margin:0px 0px 0px 0px;">
 
-    <button type="submit" ng-click="submit()" class="btn btn-accent" id="submitcd">Sữa Danh Sách Phát Thể Loại</button>
+    <button type="submit" ng-click="submit()" class="btn btn-accent" id="submitcd">Sửa Danh Sách Phát Thể Loại</button>
     <button type="submit" ng-click="cancel()" class="btn btn-accent">Thoát</button>
 </div>
 <style>
@@ -40,7 +44,7 @@
         border: 1px solid #007bff;
         top: 160px;
         background: #F5F6F8;
-        width:100%;
+        width:150%;
     }
 
     .thong_bao_sai {

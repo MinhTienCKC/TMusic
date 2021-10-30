@@ -44,7 +44,7 @@
             <div class="card card-small mb-4 dodai">
                 <div class="card-header border-bottom">
                     <h6 class="m-0">
-                        {{ clock | date:'HH:mm:ss'}}
+                        <!--{{ clock | date:'HH:mm:ss'}}-->
                         <span ng-if="timkiem.nguoidung_id == '' || !timkiem" class="chuot" ng-click="sapXep('null'); hoatdong=false; currentPage = 0;">Bài Hát</span>
                         <span ng-if="timkiem.nguoidung_id == 'admin'" class="chuot" ng-click="sapXep('null'); hoatdong=false; currentPage = 0;">Bài Hát Của Admin</span>
                     </h6>
@@ -98,7 +98,7 @@
                             <tr  ng-repeat="data in taiBaiHat | orderBy:tenbien:hoatdong | filter:timkiem | startFrom:currentPage*pageSize | limitTo:pageSize ">
                                 <!--<td class="vitrigiua "><span>{{data.tenbaihat}}</span></td>-->
                                 <td class="vitrigiua" style="width: 200px;">
-                                    <p style="margin-bottom: 0px !important;" class="motadsptl" title="{{data.tenbaihat}}">{{data.tenbaihat}}</p>
+                                    <p style="margin-bottom: 0px !important;" class="motadsptl tenbaihat123" title="{{data.tenbaihat}}" ng-click="xemChiTietBaiHat(data)">{{data.tenbaihat}}</p>
                                  
                                 <td>
                                     <img src="{{data.linkhinhanh}}" class="icon-category hinhanh">
@@ -158,6 +158,13 @@
     <!-- End Default Dark Table -->
 </div>
 <style>
+    .tenbaihat123 {
+        color: #006fe6;
+        cursor:pointer;
+    }
+    .tenbaihat123:hover{
+        color:black!important;
+    }
     .motadsptl {
         text-overflow: Ellipsis;
         width: 200px;

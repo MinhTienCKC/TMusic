@@ -319,3 +319,4 @@ C:\Users\ad\Desktop\file delete đô an\16-08-21\8.7.2021\TFourMusic\TFourMusic\
 C:\Users\ad\Desktop\file delete đô an\16-08-21\8.7.2021\TFourMusic\TFourMusic\TFourMusic\bin\Debug\net5.0\runtimes\win\lib\netstandard1.5\System.ServiceProcess.ServiceController.dll
 C:\Users\ad\Desktop\file delete đô an\16-08-21\8.7.2021\TFourMusic\TFourMusic\TFourMusic\obj\Debug\net5.0\TFourMusic.csprojAssemblyReference.cache
 C:\Users\ad\Desktop\file delete đô an\16-08-21\8.7.2021\TFourMusic\TFourMusic\TFourMusic\obj\Debug\net5.0\Razor\Areas\Admin\Views\TaiKhoanQuanTri\Index.cshtml.g.cs
+C:\Users\ad\Desktop\file delete đô an\16-08-21\8.7.2021\TFourMusic\TFourMusic\TFourMusic\obj\Debug\net5.0\Razor\Areas\Admin\Views\HoaDonNguoiDung\Index.cshtml.g.cs

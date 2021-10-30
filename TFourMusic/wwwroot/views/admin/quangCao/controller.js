@@ -269,7 +269,10 @@ app.controller('index', function ($rootScope, $scope, dataservice, $uibModal) {
 
 
     $scope.xoaQuangCao = function (data) {
-
+        if ($scope.taiQuangCao.length <= 4) {
+            alertify.success("Không thể xóa tổng số quảng cáo lớn hơn bằng 4 !!!");
+            return;
+        }
         dataservice.xoaQuangCao(data, function (rs) {
             rs = rs.data;
             $scope.xoaQuangCao = rs;

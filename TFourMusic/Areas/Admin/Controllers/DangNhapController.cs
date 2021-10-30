@@ -99,6 +99,7 @@ namespace TFourMusic.Controllers
                 {
                     var claims = new List<Claim>();
                     claims.Add(new Claim("username", item.email));
+                    claims.Add(new Claim("uid", data[0].id));
                     claims.Add(new Claim(ClaimTypes.NameIdentifier, item.email));
                     claims.Add(new Claim(ClaimTypes.Name, item.email));
                     claims.Add(new Claim(ClaimTypes.Role, "Admin"));
@@ -117,6 +118,7 @@ namespace TFourMusic.Controllers
                 {
                     var claims = new List<Claim>();
                     claims.Add(new Claim("username", item.email));
+                    claims.Add(new Claim("uid", data[0].id));
                     claims.Add(new Claim(ClaimTypes.NameIdentifier, item.email));
                     claims.Add(new Claim(ClaimTypes.Name, item.email));
                     claims.Add(new Claim(ClaimTypes.Role, "NhanVien"));

@@ -2,9 +2,9 @@
     <!-- Page Header -->
     <div class="page-header row no-gutters py-4">
         <div class="col-12 col-sm-4 text-center text-sm-left mb-0">
-            <button ng-class="{'Chon': model.hienTimKiem == 'baihat' }" id="" type="submit" ng-click="chuyenDoi('baihat');currentPage=0;" class="btn btn-accent " style="">Bài Hát</button>
+            <!--<button ng-class="{'Chon': model.hienTimKiem == 'baihat' }" id="" type="submit" ng-click="chuyenDoi('baihat');currentPage=0;" class="btn btn-accent " style="">Bài Hát</button>-->
             <!--<button ng-class="{'Chon': model.hienTimKiem == 'danhsachphat' }" id="" type="submit" ng-click="chuyenDoi('danhsachphat')" class="btn btn-accent " style="">Danh Sách Phát </button>-->
-            <button ng-class="{'Chon': model.hienTimKiem == 'nguoidung' }" id="" type="submit" ng-click="chuyenDoi('nguoidung');currentPage=0;" class="btn btn-accent " style="">Người Dùng</button>
+            <!--<button ng-class="{'Chon': model.hienTimKiem == 'nguoidung' }" id="" type="submit" ng-click="chuyenDoi('nguoidung');currentPage=0;" class="btn btn-accent " style="">Người Dùng</button>-->
         </div>
         <div class="col-12 col-sm-4 text-center text-sm-left mb-0">
 
@@ -22,15 +22,18 @@
     </div>
     <div class="page-header row no-gutters py-4" style="padding-top: 0rem !important; padding-bottom: 0.1rem!important;">
         <div class="col-12 col-sm-4 text-center text-sm-left mb-0" style="display:flex;flex: 0 0 70%;max-width: 70%;">
-
+            <button ng-class="{'Chon': model.hienTimKiem == 'baihat' }" id="" type="submit" ng-click="chuyenDoi('baihat');currentPage=0;" class="btn btn-accent " style="">Bài Hát</button>
+            <button ng-class="{'Chon': model.hienTimKiem == 'nguoidung' }" id="" type="submit" ng-click="chuyenDoi('nguoidung');currentPage=0;" class="btn btn-accent " style="margin-right: 5px; margin-left: 5px;">Người Dùng</button>
             <button ng-class="{'Chon': baiHatViPhamXuLy == 'chuaxuly' }" id="" type="submit" ng-click="layDanhSach('chuaxuly');currentPage=0;" class="btn btn-accent " style="">Chưa xử lý</button>
-            <button ng-class="{'Chon': baiHatViPhamXuLy == 'daxuly' }" id="" type="submit" ng-click="layDanhSach('daxuly');currentPage=0;" class="btn btn-accent " style=" margin-left: 5px;">Đã xử lý</button>
-        </div>
-        <div class="col-12 col-sm-4 text-center text-sm-left mb-0" style="display:flex;flex: 0 0 70%;max-width: 70%;     padding-top: 2px; padding-left: 93px;">
-
+            <button ng-class="{'Chon': baiHatViPhamXuLy == 'daxuly' }" id="" type="submit" ng-click="layDanhSach('daxuly');currentPage=0;" class="btn btn-accent " style="margin-right: 5px; margin-left: 5px;">Đã xử lý</button>
             <button ng-if="baiHatViPhamXuLy == 'daxuly' " ng-class="{'Chon': daxuly == 'vipham' }" id="" type="submit" ng-click="layDanhSach_daxuly('vipham');currentPage=0;" class="btn btn-accent " style="">Vi Phạm</button>
             <button ng-if="baiHatViPhamXuLy == 'daxuly' " ng-class="{'Chon': daxuly == 'khongvipham' }" id="" type="submit" ng-click="layDanhSach_daxuly('khongvipham');currentPage=0;" class="btn btn-accent " style=" margin-left: 5px;">Không Vi Phạm</button>
         </div>
+        <!--<div class="col-12 col-sm-4 text-center text-sm-left mb-0" style="display:flex;flex: 0 0 70%;max-width: 70%;     padding-top: 2px; padding-left: 93px;">
+
+            <button ng-if="baiHatViPhamXuLy == 'daxuly' " ng-class="{'Chon': daxuly == 'vipham' }" id="" type="submit" ng-click="layDanhSach_daxuly('vipham');currentPage=0;" class="btn btn-accent " style="">Vi Phạm</button>
+            <button ng-if="baiHatViPhamXuLy == 'daxuly' " ng-class="{'Chon': daxuly == 'khongvipham' }" id="" type="submit" ng-click="layDanhSach_daxuly('khongvipham');currentPage=0;" class="btn btn-accent " style=" margin-left: 5px;">Không Vi Phạm</button>
+        </div>-->
      
     </div>
    
@@ -62,7 +65,7 @@
 
                                 <th scope="col" class="border-0">Xử Lý</th>
                                 <th scope="col" class="border-0">Trạng Thái</th>
-                                <th scope="col" class="border-0">Xóa</th>
+                                <!--<th scope="col" class="border-0">Xóa</th>-->
                             </tr>
         
 
@@ -95,7 +98,7 @@
                                     <p ng-if="data.trangthai == 1" style="color:#2e15f9;">Đang Xử Lý</p>
                                     <p ng-if="data.trangthai == 2" style="color:green;">Đã Xử Lý</p>
                                 </td>
-                                <td class="vitrigiua"> <button type="submit" ng-click="xoaBaoCaoViPham(data,($index + ((currentPage+1)*pageSize)-pageSize))" style="width: 25px; height: 25px; padding: 0px;-webkit-box-shadow: 0 2px 5px 0 rgba(230,60,95,0.45)" class="btn btn-accent red "><i class="fa fa-trash"></i></button></td>
+                                <!--<td class="vitrigiua"> <button type="submit" ng-click="xoaBaoCaoViPham(data,($index + ((currentPage+1)*pageSize)-pageSize))" style="width: 25px; height: 25px; padding: 0px;-webkit-box-shadow: 0 2px 5px 0 rgba(230,60,95,0.45)" class="btn btn-accent red "><i class="fa fa-trash"></i></button></td>-->
                             </tr>
                         </tbody>
                     </table>

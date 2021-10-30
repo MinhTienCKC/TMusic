@@ -2384,9 +2384,12 @@ namespace TFourMusic.Controllers
                     baihatModel qery = (from bh in listbaihat
                                         where bh.id == idbh && bh.daxoa == 0 && bh.vohieuhoa == 0
                                         select bh).FirstOrDefault();
-                    qery.luotnghe = qery.luotnghe + 1;
-                    client = new FireSharp.FirebaseClient(config);
-                    SetResponse response = client.Set("csdlmoi/baihat/" + qery.nguoidung_id + "/" + qery.id, qery);
+                    if(qery != null)
+                    {
+                        qery.luotnghe = qery.luotnghe + 1;
+                        client = new FireSharp.FirebaseClient(config);
+                        SetResponse response = client.Set("csdlmoi/baihat/" + qery.nguoidung_id + "/" + qery.id, qery);
+                    }
                     return true;
                 }
                 else
@@ -2539,6 +2542,7 @@ namespace TFourMusic.Controllers
                         }
 
                         listxh = (from bh in listxh
+                                
                                   select bh).OrderByDescending(x => x.luotnghe).Take(20).ToList();
                         if (listxh.Count > 20)
                         {
@@ -2585,6 +2589,7 @@ namespace TFourMusic.Controllers
                         {
 
                             listbh = (from bh in listbh
+                                      where bh.chedo == 1 && bh.daxoa == 0 && bh.vohieuhoa == 0
                                       select bh).OrderByDescending(x => x.luotnghe).Take(20).ToList();
 
                             if (model.uid != null && model.uid != "null")
@@ -2663,6 +2668,7 @@ namespace TFourMusic.Controllers
                 {
 
                     listbh = (from bh in listbh
+                              where bh.chedo == 1 && bh.daxoa == 0 && bh.vohieuhoa == 0
                               select bh).OrderByDescending(x => x.luotnghe).Take(20).ToList();
 
                     if (model.uid != null && model.uid != "null")
@@ -2824,7 +2830,7 @@ namespace TFourMusic.Controllers
                     var listPlaylist = LayBangDanhSachPhatTheLoai();
                     var datakq = (from platlist in listPlaylist
                                   where platlist.tendanhsachphattheloai.ToUpper().Contains(model.tuKhoa.ToUpper())
-                                  select platlist).OrderBy(x => x.tendanhsachphattheloai).ToList();
+                                  select platlist).ToList();
                     if (model.uid != null)
                     {
                         var data = convertDanhSachPhatTheLoai(datakq, model.uid);
@@ -4091,11 +4097,9 @@ namespace TFourMusic.Controllers
 
                 var listbaihat = getListBaiHat();
                 baihatModel qery = (from bh in listbaihat
-                                    where bh.id == item.key && bh.daxoa == 0 && bh.vohieuhoa == 0
+                                    where bh.id == item.key && bh.daxoa == 0 
                                     select bh).FirstOrDefault();
-                qery.luottaixuong = qery.luottaixuong + 1;
-                client = new FireSharp.FirebaseClient(config);
-                SetResponse response = client.Set("csdlmoi/baihat/" + qery.nguoidung_id + "/" + qery.id, qery);
+              
                 if (item.uid == "" && item.uid == null)
                 {
                     success = false;
@@ -4112,8 +4116,10 @@ namespace TFourMusic.Controllers
 
                 else
                 {
+                    qery.luottaixuong = qery.luottaixuong + 1;
+                    client = new FireSharp.FirebaseClient(config);
+                    SetResponse response = client.Set("csdlmoi/baihat/" + qery.nguoidung_id + "/" + qery.id, qery);
                     var firebase = new FirebaseClient(Key);
-
                     // add new item to list of data and let the client generate new key for you (done offline)
                     dataixuongModel dtx = new dataixuongModel();
                     dtx.nguoidung_id = item.uid;

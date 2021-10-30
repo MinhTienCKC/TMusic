@@ -91,8 +91,17 @@ namespace TFourMusic.Controllers
         {
             try
             {
-               
-
+                var BaoCaoBaiHatDaXuLy_KhongViPham = LayBangBaoCaoBaiHatDaXuLy_KhongViPham();
+                var BaoCaoNguoiDungDaXuLy_KhongViPham = LayBangBaoCaoNguoiDungDaXuLy_KhongViPham();
+                //var okok = from okok in baihatbaocao123
+                //           where okok.thoigian
+                //DateTime ok = DateTime.Parse(DateTime.Now.AddMonths(1).ToString("dd/MM/yyyy"));
+                var dsbhvpdaxoa = (from bh in BaoCaoBaiHatDaXuLy_KhongViPham
+                                   where bh.trangthai == 2 && DateTime.Parse(bh.ngayxuly.AddDays(7).ToString("dd-MM-yyyy")) <= DateTime.Parse(DateTime.Now.ToString("dd/MM/yyyy"))
+                                 select bh).ToList();
+                var dsndvpdaxoa = (from nd in BaoCaoNguoiDungDaXuLy_KhongViPham
+                                   where nd.trangthai == 2 && DateTime.Parse(nd.ngayxuly.AddDays(7).ToString("dd-MM-yyyy")) <= DateTime.Parse(DateTime.Now.ToString("dd/MM/yyyy"))
+                                   select nd).ToList();
                 var baihatbaocao = LayBangBaoCaoBaiHatChuaXuLy();
                 var nguoidung = LayBangNguoiDung();
                 nguoidungModel admin = new nguoidungModel();
@@ -1069,15 +1078,28 @@ namespace TFourMusic.Controllers
                     message.From.Add(new MailboxAddress("Admin TMUSIC", "0306181067@caothang.edu.vn"));
                     message.To.Add(new MailboxAddress("Người Dùng", nguoidung[0].email));
                     message.Subject = "TMUSIC - BÀI HÁT VI PHẠM TIÊU CHUẨN CỘNG ĐỒNG";
-                    message.Body = new TextPart("plain")
+                    message.Body = new TextPart("html")
                     {
-                        Text = "Chào: Anh/chị "+ nguoidung[0].hoten +"\n\n" +
-                        "Chúng tôi đã vô hiệu hóa bài hát bạn báo cáo.\n" +
-                        "Chúng tôi đã xem xét bài hát bạn báo cáo. Vì bài hát đã vi phạm tiêu chuẩn cộng đồng của chúng tôi nên chúng tôi đã vô hiệu hóa bài hát đó. " +
-                        "Cảm ơn bạn đã báo cáo và sự đóng góp của bạn để phát triển cộng đồng Tmusic.. Chúng tôi thông báo cho chủ bài biết rằng bài hát của họ đã bị vô hiệu hóa. \n\n" +
-                        //"Nếu bạn gặp bất kì sự cố khi đăng nhập vào tài khoản của mình hay có thắc mắc vui lòng trả lời thư này hoặc liên hệ fanpage: TMUSIC Nghe Nhạc Trực Tuyến \n\n" +
-                        "Cám ơn bạn đã xem. \n" +
-                        "Admin TMUSIC"
+                        //Text = "Chào: Anh/chị "+ nguoidung[0].hoten +"\n\n" + 
+                                  //  <p>Chúng tôi đã vô hiệu hóa bài hát bạn báo cáo. </p> </br>
+                        //"Chúng tôi đã vô hiệu hóa bài hát bạn báo cáo.\n" +
+                        //"Chúng tôi đã xem xét bài hát bạn báo cáo. Vì bài hát đã vi phạm tiêu chuẩn cộng đồng của chúng tôi nên chúng tôi đã vô hiệu hóa bài hát đó. " +
+                        //"Cảm ơn bạn đã báo cáo và sự đóng góp của bạn để phát triển cộng đồng Tmusic.. Chúng tôi thông báo cho chủ bài biết rằng bài hát của họ đã bị vô hiệu hóa. \n\n" +
+                        ////"Nếu bạn gặp bất kì sự cố khi đăng nhập vào tài khoản của mình hay có thắc mắc vui lòng trả lời thư này hoặc liên hệ fanpage: TMUSIC Nghe Nhạc Trực Tuyến \n\n" +
+                        //"Cám ơn bạn đã xem. \n" +
+                        //"Admin TMUSIC"
+                        Text = $@"<h3>Chào: {nguoidung[0].hoten}</h3>
+
+                                    <p>Chúng tôi đã xem xét bài hát bạn báo cáo. </p> </br>
+                                     <p>Vì bài hát đã vi phạm tiêu chuẩn cộng đồng nên chúng tôi đã vô hiệu hóa bài hát đó. </p> </br>
+                                    <p>Cảm ơn bạn đã báo cáo và sự đóng góp của bạn để phát triển cộng đồng Tmusic. </p> </br>
+                                    <p>Chúng tôi thông báo cho chủ bài biết rằng bài hát của họ đã bị vô hiệu hóa. </p> </br>
+                                    <p>Nếu bạn có thắc mắc vui lòng trả lời thư này. </p> </br>
+                                    </br>
+                                    <p>Cám ơn bạn.</p> </br>
+                                    <h5>Admin TMUSIC.</h5> </br></br></br></br></br>
+                                    <table cellpadding='0' cellspacing='0' style='vertical-align:-webkit-baseline-middle;font-family:Arial'><tbody><tr><td style='vertical-align:top'><table cellpadding='0' cellspacing='0' style='vertical-align:-webkit-baseline-middle;font-family:Arial'><tbody><tr><td style='text-align:center'><img src='https://firebasestorage.googleapis.com/v0/b/music-77ac9.appspot.com/o/8.png?alt=media&amp;token=ae9c1de7-661c-4b35-a04b-c4ab02bce360' width='130' style='max-width:128px;display:block'></td></tr><tr><td height='30'></td></tr><tr><td style='text-align:center'><table cellpadding='0' cellspacing='0' style='vertical-align:-webkit-baseline-middle;font-family:Arial;display:inline-block'><tbody><tr><td><a href='https://www.facebook.com/minhtien6120/' color='#243edd' style='display:inline-block;padding:0px;background-color:rgb(36,62,221)' target='_blank'><img src='https://cdn2.hubspot.net/hubfs/53/tools/email-signature-generator/icons/facebook-icon-2x.png' alt='Facebook' color='#243edd' height='24' style='max-width:135px;display:block'></a></td><td width='5'><div></div></td><td><a href='https://www.instagram.com/hominhtienckc/' color='#243edd' style='display:inline-block;padding:0px;background-color:rgb(36,62,221)' target='_blank'><img src='https://cdn2.hubspot.net/hubfs/53/tools/email-signature-generator/icons/instagram-icon-2x.png' alt='instagram' color='#243edd' height='24' style='max-width:135px;display:block'></a></td><td width='5'><div></div></td></tr></tbody></table></td></tr></tbody></table></td><td width='46'><div></div></td><td style='padding:0px;vertical-align:middle'><h3 color='#333333' style='margin:0px;font-size:18px;color:rgb(51,51,51)'><font style='vertical-align:inherit'>&nbsp; Hồ&nbsp;</font><font style='vertical-align:inherit'>Minh Tiến</font>&nbsp;<font style='vertical-align:inherit'></font></h3><p color='#333333' style='margin:0px;color:rgb(51,51,51);font-size:14px;line-height:22px'><font style='vertical-align:inherit'>&nbsp; &nbsp;T-Music</font></p><table cellpadding='0' cellspacing='0' style='vertical-align:-webkit-baseline-middle;font-family:Arial;width:644px'><tbody><tr><td height='30'></td></tr><tr><td color='#ff5f88' height='1' style='width:644px;border-bottom:1px solid rgb(255,95,136);border-left:none;display:block'></td></tr><tr><td height='30'></td></tr></tbody></table><table cellpadding='0' cellspacing='0' style='vertical-align:-webkit-baseline-middle;font-family:Arial'><tbody><tr height='25' style='vertical-align:middle'><td width='30' style='vertical-align:middle'><table cellpadding='0' cellspacing='0' style='vertical-align:-webkit-baseline-middle;font-family:Arial'><tbody><tr><td style='vertical-align:bottom'><span color='#ff5f88' width='11' style='display:block;background-color:rgb(255,95,136)'><img src='https://cdn2.hubspot.net/hubfs/53/tools/email-signature-generator/icons/phone-icon-2x.png' color='#ff5f88' width='13' style='display:block'></span></td></tr></tbody></table></td><td style='padding:0px;color:rgb(51,51,51)'><a href='tel:0981275911' color='#333333' style='color:rgb(51,51,51);font-size:12px' target='_blank'>0981275911</a></td></tr><tr height='25' style='vertical-align:middle'><td width='30' style='vertical-align:middle'><table cellpadding='0' cellspacing='0' style='vertical-align:-webkit-baseline-middle;font-family:Arial'><tbody><tr><td style='vertical-align:bottom'><span color='#ff5f88' width='11' style='display:block;background-color:rgb(255,95,136)'><img src='https://cdn2.hubspot.net/hubfs/53/tools/email-signature-generator/icons/email-icon-2x.png' color='#ff5f88' width='13' style='display:block'></span></td></tr></tbody></table></td><td style='padding:0px'><a href='mailto:hominhtienxyz@gmail.com' color='#333333' style='color:rgb(51,51,51);font-size:12px' target='_blank'>hominhtienxyz@gmail.com</a></td></tr><tr height='25' style='vertical-align:middle'><td width='30' style='vertical-align:middle'><table cellpadding='0' cellspacing='0' style='vertical-align:-webkit-baseline-middle;font-family:Arial'><tbody><tr><td style='vertical-align:bottom'><span color='#ff5f88' width='11' style='display:block;background-color:rgb(255,95,136)'><img src='https://cdn2.hubspot.net/hubfs/53/tools/email-signature-generator/icons/link-icon-2x.png' color='#ff5f88' width='13' style='display: block; margin-right: 0px;' height='13'></span></td></tr></tbody></table></td><td style='padding:0px'><a href='https://tmusic-1.herokuapp.com/' color='#333333' style='color:rgb(51,51,51);font-size:12px' target='_blank'>https://tmusic-1.herokuapp.com/</a></td></tr><tr height='25' style='vertical-align:middle'><td width='30' style='vertical-align:middle'><table cellpadding='0' cellspacing='0' style='vertical-align:-webkit-baseline-middle;font-family:Arial'><tbody><tr><td style='vertical-align:bottom'><span color='#ff5f88' width='11' style='display:block;background-color:rgb(255,95,136)'><img src='https://cdn2.hubspot.net/hubfs/53/tools/email-signature-generator/icons/address-icon-2x.png' color='#ff5f88' width='13' style='display:block'></span></td></tr></tbody></table></td><td style='padding:0px'><span color='#333333' style='font-size:12px;color:rgb(51,51,51)'><font style='vertical-align:inherit'><font style='vertical-align:inherit'>41 Bàu Sen, khu phố 6, TT Dầu Tiếng, H. Dầu Tiếng, Tỉnh Bình Dương, 117/157/30 Nguyễn Hữu Cảnh, Phường 22, Quận Bình Thạnh, TP.&nbsp;</font><font style='vertical-align:inherit'>Hồ Chí Minh</font></font></span></td></tr></tbody></table><table cellpadding='0' cellspacing='0' style='vertical-align:-webkit-baseline-middle;font-family:Arial'><tbody><tr><td height='30'></td></tr></tbody></table><a href='https://www.hubspot.com/email-signature-generator?utm_source=create-signature' rel='noopener noreferrer' style='font-size:12px;display:block;color:rgb(51,51,51)' target='_blank'><br></a></td></tr></tbody></table>
+                                        "
                     };
                     using (var client = new SmtpClient())
                     {
@@ -1119,15 +1141,27 @@ namespace TFourMusic.Controllers
                     message.From.Add(new MailboxAddress("Admin TMUSIC", "0306181067@caothang.edu.vn"));
                     message.To.Add(new MailboxAddress("Người Dùng", nguoidung[0].email));
                     message.Subject = "TMUSIC - BÀI HÁT VI PHẠM TIÊU CHUẨN CỘNG ĐỒNG";
-                    message.Body = new TextPart("plain")
+                    message.Body = new TextPart("html")
                     {
-                        Text = "Chào: Anh/chị " + nguoidung[0].hoten + "\n\n" +
-                        //"Chúng tôi đã vô hiệu hóa bài hát bạn báo cáo.\n" +
-                        "Chúng tôi đã xem xét bài hát bạn báo cáo. Vì bài hát không vi phạm tiêu chuẩn cộng đồng của chúng tôi nên chúng tôi nghĩ rằng bạn có chút nhầm lẫn. " +
-                        "Cảm ơn bạn đã báo cáo và sự đóng góp của bạn để phát triển cộng đồng Tmusic. \n\n" +
-                        //"Nếu bạn gặp bất kì sự cố khi đăng nhập vào tài khoản của mình hay có thắc mắc vui lòng trả lời thư này hoặc liên hệ fanpage: TMUSIC Nghe Nhạc Trực Tuyến \n\n" +
-                        "Cám ơn bạn đã xem. \n" +
-                        "Admin TMUSIC"
+                        //Text = "Chào: Anh/chị " + nguoidung[0].hoten + "\n\n" +
+                        ////"Chúng tôi đã vô hiệu hóa bài hát bạn báo cáo.\n" +
+                        //"Chúng tôi đã xem xét bài hát bạn báo cáo. Vì bài hát không vi phạm tiêu chuẩn cộng đồng của chúng tôi nên chúng tôi nghĩ rằng bạn có chút nhầm lẫn. " +
+                        //"Cảm ơn bạn đã báo cáo và sự đóng góp của bạn để phát triển cộng đồng Tmusic. \n\n" +
+                        ////"Nếu bạn gặp bất kì sự cố khi đăng nhập vào tài khoản của mình hay có thắc mắc vui lòng trả lời thư này hoặc liên hệ fanpage: TMUSIC Nghe Nhạc Trực Tuyến \n\n" +
+                        //"Cám ơn bạn đã xem. \n" +
+                        //"Admin TMUSIC"
+                        Text = $@"<h3>Chào: {nguoidung[0].hoten}</h3>
+
+                                
+                                    <p>Chúng tôi đã xem xét bài hát bạn báo cáo. </p> </br>
+                                     <p>Vì bài hát không vi phạm tiêu chuẩn cộng đồng nên chúng tôi nghĩ rằng bạn có chút nhầm lẫn. </p> </br>
+                                    <p>Cảm ơn bạn đã báo cáo và sự đóng góp của bạn để phát triển cộng đồng Tmusic. </p> </br>
+                                    <p>Nếu bạn có thắc mắc vui lòng trả lời thư này. </p> </br>
+                                    </br>
+                                    <p>Cám ơn bạn.</p> </br>
+                                    <h5>Admin TMUSIC.</h5> </br></br></br></br></br>
+                                    <table cellpadding='0' cellspacing='0' style='vertical-align:-webkit-baseline-middle;font-family:Arial'><tbody><tr><td style='vertical-align:top'><table cellpadding='0' cellspacing='0' style='vertical-align:-webkit-baseline-middle;font-family:Arial'><tbody><tr><td style='text-align:center'><img src='https://firebasestorage.googleapis.com/v0/b/music-77ac9.appspot.com/o/8.png?alt=media&amp;token=ae9c1de7-661c-4b35-a04b-c4ab02bce360' width='130' style='max-width:128px;display:block'></td></tr><tr><td height='30'></td></tr><tr><td style='text-align:center'><table cellpadding='0' cellspacing='0' style='vertical-align:-webkit-baseline-middle;font-family:Arial;display:inline-block'><tbody><tr><td><a href='https://www.facebook.com/minhtien6120/' color='#243edd' style='display:inline-block;padding:0px;background-color:rgb(36,62,221)' target='_blank'><img src='https://cdn2.hubspot.net/hubfs/53/tools/email-signature-generator/icons/facebook-icon-2x.png' alt='Facebook' color='#243edd' height='24' style='max-width:135px;display:block'></a></td><td width='5'><div></div></td><td><a href='https://www.instagram.com/hominhtienckc/' color='#243edd' style='display:inline-block;padding:0px;background-color:rgb(36,62,221)' target='_blank'><img src='https://cdn2.hubspot.net/hubfs/53/tools/email-signature-generator/icons/instagram-icon-2x.png' alt='instagram' color='#243edd' height='24' style='max-width:135px;display:block'></a></td><td width='5'><div></div></td></tr></tbody></table></td></tr></tbody></table></td><td width='46'><div></div></td><td style='padding:0px;vertical-align:middle'><h3 color='#333333' style='margin:0px;font-size:18px;color:rgb(51,51,51)'><font style='vertical-align:inherit'>&nbsp; Hồ&nbsp;</font><font style='vertical-align:inherit'>Minh Tiến</font>&nbsp;<font style='vertical-align:inherit'></font></h3><p color='#333333' style='margin:0px;color:rgb(51,51,51);font-size:14px;line-height:22px'><font style='vertical-align:inherit'>&nbsp; &nbsp;T-Music</font></p><table cellpadding='0' cellspacing='0' style='vertical-align:-webkit-baseline-middle;font-family:Arial;width:644px'><tbody><tr><td height='30'></td></tr><tr><td color='#ff5f88' height='1' style='width:644px;border-bottom:1px solid rgb(255,95,136);border-left:none;display:block'></td></tr><tr><td height='30'></td></tr></tbody></table><table cellpadding='0' cellspacing='0' style='vertical-align:-webkit-baseline-middle;font-family:Arial'><tbody><tr height='25' style='vertical-align:middle'><td width='30' style='vertical-align:middle'><table cellpadding='0' cellspacing='0' style='vertical-align:-webkit-baseline-middle;font-family:Arial'><tbody><tr><td style='vertical-align:bottom'><span color='#ff5f88' width='11' style='display:block;background-color:rgb(255,95,136)'><img src='https://cdn2.hubspot.net/hubfs/53/tools/email-signature-generator/icons/phone-icon-2x.png' color='#ff5f88' width='13' style='display:block'></span></td></tr></tbody></table></td><td style='padding:0px;color:rgb(51,51,51)'><a href='tel:0981275911' color='#333333' style='color:rgb(51,51,51);font-size:12px' target='_blank'>0981275911</a></td></tr><tr height='25' style='vertical-align:middle'><td width='30' style='vertical-align:middle'><table cellpadding='0' cellspacing='0' style='vertical-align:-webkit-baseline-middle;font-family:Arial'><tbody><tr><td style='vertical-align:bottom'><span color='#ff5f88' width='11' style='display:block;background-color:rgb(255,95,136)'><img src='https://cdn2.hubspot.net/hubfs/53/tools/email-signature-generator/icons/email-icon-2x.png' color='#ff5f88' width='13' style='display:block'></span></td></tr></tbody></table></td><td style='padding:0px'><a href='mailto:hominhtienxyz@gmail.com' color='#333333' style='color:rgb(51,51,51);font-size:12px' target='_blank'>hominhtienxyz@gmail.com</a></td></tr><tr height='25' style='vertical-align:middle'><td width='30' style='vertical-align:middle'><table cellpadding='0' cellspacing='0' style='vertical-align:-webkit-baseline-middle;font-family:Arial'><tbody><tr><td style='vertical-align:bottom'><span color='#ff5f88' width='11' style='display:block;background-color:rgb(255,95,136)'><img src='https://cdn2.hubspot.net/hubfs/53/tools/email-signature-generator/icons/link-icon-2x.png' color='#ff5f88' width='13' style='display: block; margin-right: 0px;' height='13'></span></td></tr></tbody></table></td><td style='padding:0px'><a href='https://tmusic-1.herokuapp.com/' color='#333333' style='color:rgb(51,51,51);font-size:12px' target='_blank'>https://tmusic-1.herokuapp.com/</a></td></tr><tr height='25' style='vertical-align:middle'><td width='30' style='vertical-align:middle'><table cellpadding='0' cellspacing='0' style='vertical-align:-webkit-baseline-middle;font-family:Arial'><tbody><tr><td style='vertical-align:bottom'><span color='#ff5f88' width='11' style='display:block;background-color:rgb(255,95,136)'><img src='https://cdn2.hubspot.net/hubfs/53/tools/email-signature-generator/icons/address-icon-2x.png' color='#ff5f88' width='13' style='display:block'></span></td></tr></tbody></table></td><td style='padding:0px'><span color='#333333' style='font-size:12px;color:rgb(51,51,51)'><font style='vertical-align:inherit'><font style='vertical-align:inherit'>41 Bàu Sen, khu phố 6, TT Dầu Tiếng, H. Dầu Tiếng, Tỉnh Bình Dương, 117/157/30 Nguyễn Hữu Cảnh, Phường 22, Quận Bình Thạnh, TP.&nbsp;</font><font style='vertical-align:inherit'>Hồ Chí Minh</font></font></span></td></tr></tbody></table><table cellpadding='0' cellspacing='0' style='vertical-align:-webkit-baseline-middle;font-family:Arial'><tbody><tr><td height='30'></td></tr></tbody></table><a href='https://www.hubspot.com/email-signature-generator?utm_source=create-signature' rel='noopener noreferrer' style='font-size:12px;display:block;color:rgb(51,51,51)' target='_blank'><br></a></td></tr></tbody></table>
+                                        "
                     };
                     using (var client = new SmtpClient())
                     {
@@ -1159,7 +1193,8 @@ namespace TFourMusic.Controllers
             {
                 var firebase = new FirebaseClient(Key);
                 var data = LayChiTietBangBaoCaoBaiHatDaXuLy_ViPham(item.nguoidung_id, item.id);
-                var nguoidung = LayBangNguoiDung(data.nguoidung_baocao_id);
+                client = new FireSharp.FirebaseClient(config);
+                object p123 = client.Set("csdlmoi/baocao/baihatvipham/daxuly/vipham/" + item.nguoidung_id + "/" + item.id + "/" + "ngayxuly", DateTime.Now);
                 var baihatbaocao = LayBaiHatQuaID(data.nguoidung_baocao_id, data.baihat_baocao_id);
                 if ( baihatbaocao[0].vohieuhoa == 1)
                 {
@@ -1167,6 +1202,8 @@ namespace TFourMusic.Controllers
 
                         client = new FireSharp.FirebaseClient(config);
                         object p = client.Set("csdlmoi/baihat/" + data.nguoidung_baocao_id + "/" + data.baihat_baocao_id + "/" + "vohieuhoa", 0);
+                    if (data.nguoidung_baocao_id != "admin") {
+                        var nguoidung = LayBangNguoiDung(data.nguoidung_baocao_id);
                         var message = new MimeMessage();
                         message.From.Add(new MailboxAddress("Admin TMUSIC", "0306181067@caothang.edu.vn"));
                         message.To.Add(new MailboxAddress("Người Dùng", nguoidung[0].email));
@@ -1197,6 +1234,8 @@ namespace TFourMusic.Controllers
                             client.Send(message);
                             client.Disconnect(true);
                         }
+                    }
+                  
                     success = true;
                 }
                
@@ -1271,15 +1310,28 @@ namespace TFourMusic.Controllers
                     message.From.Add(new MailboxAddress("Admin TMUSIC", "0306181067@caothang.edu.vn"));
                     message.To.Add(new MailboxAddress("Người Dùng", nguoidung[0].email));
                     message.Subject = "TMUSIC - NGƯỜI DÙNG VI PHẠM TIÊU CHUẨN CỘNG ĐỒNG";
-                    message.Body = new TextPart("plain")
+                    message.Body = new TextPart("html")
                     {
-                        Text = "Chào: Anh/chị " + nguoidung[0].hoten + "\n\n" +
-                        "Chúng tôi đã vô hiệu hóa người dùng bạn báo cáo.\n" +
-                        "Chúng tôi đã xem xét người dùng bạn báo cáo. Vì người dùng đã vi phạm tiêu chuẩn cộng đồng của chúng tôi nên chúng tôi đã vô hiệu hóa tài khoản người dùng đó. " +
-                        "Cảm ơn bạn đã báo cáo và sự đóng góp của bạn để phát triển cộng đồng Tmusic. Chúng tôi thông báo cho chủ tài khoản người dùng, họ đã bị vô hiệu hóa. \n\n" +
-                        //"Nếu bạn gặp bất kì sự cố khi đăng nhập vào tài khoản của mình hay có thắc mắc vui lòng trả lời thư này hoặc liên hệ fanpage: TMUSIC Nghe Nhạc Trực Tuyến \n\n" +
-                        "Cám ơn bạn đã xem. \n" +
-                        "Admin TMUSIC"
+                        //Text = "Chào: Anh/chị " + nguoidung[0].hoten + "\n\n" +   <p>Chúng tôi đã vô hiệu hóa người dùng bạn báo cáo.</p> </br>
+                        //"Chúng tôi đã vô hiệu hóa người dùng bạn báo cáo.\n" +
+                        //"Chúng tôi đã xem xét người dùng bạn báo cáo. Vì người dùng đã vi phạm tiêu chuẩn cộng đồng của chúng tôi nên chúng tôi đã vô hiệu hóa tài khoản người dùng đó. " +
+                        //"Cảm ơn bạn đã báo cáo và sự đóng góp của bạn để phát triển cộng đồng Tmusic. Chúng tôi thông báo cho chủ tài khoản người dùng, họ đã bị vô hiệu hóa. \n\n" +
+                        ////"Nếu bạn gặp bất kì sự cố khi đăng nhập vào tài khoản của mình hay có thắc mắc vui lòng trả lời thư này hoặc liên hệ fanpage: TMUSIC Nghe Nhạc Trực Tuyến \n\n" +
+                        //"Cám ơn bạn đã xem. \n" +
+                        //"Admin TMUSIC"
+                        Text = $@"<h3>Chào: {nguoidung[0].hoten}</h3>
+
+                                  
+                                    <p>Chúng tôi đã xem xét người dùng bạn báo cáo. </p> </br>
+                                     <p>Vì người dùng đã vi phạm tiêu chuẩn cộng đồng của chúng tôi nên chúng tôi đã vô hiệu hóa tài khoản người dùng đó. </p> </br>
+                                    <p>Cảm ơn bạn đã báo cáo và sự đóng góp của bạn để phát triển cộng đồng Tmusic. </p> </br>
+                                    <p>Chúng tôi thông báo cho chủ tài khoản người dùng, họ đã bị vô hiệu hóa. </p> </br>
+                                    <p>Nếu có thắc mắc vui lòng trả lời thư này. </p> </br>
+                                    </br>
+                                    <p>Cám ơn bạn.</p> </br>
+                                    <h5>Admin TMUSIC.</h5> </br></br></br></br></br>
+                                    <table cellpadding='0' cellspacing='0' style='vertical-align:-webkit-baseline-middle;font-family:Arial'><tbody><tr><td style='vertical-align:top'><table cellpadding='0' cellspacing='0' style='vertical-align:-webkit-baseline-middle;font-family:Arial'><tbody><tr><td style='text-align:center'><img src='https://firebasestorage.googleapis.com/v0/b/music-77ac9.appspot.com/o/8.png?alt=media&amp;token=ae9c1de7-661c-4b35-a04b-c4ab02bce360' width='130' style='max-width:128px;display:block'></td></tr><tr><td height='30'></td></tr><tr><td style='text-align:center'><table cellpadding='0' cellspacing='0' style='vertical-align:-webkit-baseline-middle;font-family:Arial;display:inline-block'><tbody><tr><td><a href='https://www.facebook.com/minhtien6120/' color='#243edd' style='display:inline-block;padding:0px;background-color:rgb(36,62,221)' target='_blank'><img src='https://cdn2.hubspot.net/hubfs/53/tools/email-signature-generator/icons/facebook-icon-2x.png' alt='Facebook' color='#243edd' height='24' style='max-width:135px;display:block'></a></td><td width='5'><div></div></td><td><a href='https://www.instagram.com/hominhtienckc/' color='#243edd' style='display:inline-block;padding:0px;background-color:rgb(36,62,221)' target='_blank'><img src='https://cdn2.hubspot.net/hubfs/53/tools/email-signature-generator/icons/instagram-icon-2x.png' alt='instagram' color='#243edd' height='24' style='max-width:135px;display:block'></a></td><td width='5'><div></div></td></tr></tbody></table></td></tr></tbody></table></td><td width='46'><div></div></td><td style='padding:0px;vertical-align:middle'><h3 color='#333333' style='margin:0px;font-size:18px;color:rgb(51,51,51)'><font style='vertical-align:inherit'>&nbsp; Hồ&nbsp;</font><font style='vertical-align:inherit'>Minh Tiến</font>&nbsp;<font style='vertical-align:inherit'></font></h3><p color='#333333' style='margin:0px;color:rgb(51,51,51);font-size:14px;line-height:22px'><font style='vertical-align:inherit'>&nbsp; &nbsp;T-Music</font></p><table cellpadding='0' cellspacing='0' style='vertical-align:-webkit-baseline-middle;font-family:Arial;width:644px'><tbody><tr><td height='30'></td></tr><tr><td color='#ff5f88' height='1' style='width:644px;border-bottom:1px solid rgb(255,95,136);border-left:none;display:block'></td></tr><tr><td height='30'></td></tr></tbody></table><table cellpadding='0' cellspacing='0' style='vertical-align:-webkit-baseline-middle;font-family:Arial'><tbody><tr height='25' style='vertical-align:middle'><td width='30' style='vertical-align:middle'><table cellpadding='0' cellspacing='0' style='vertical-align:-webkit-baseline-middle;font-family:Arial'><tbody><tr><td style='vertical-align:bottom'><span color='#ff5f88' width='11' style='display:block;background-color:rgb(255,95,136)'><img src='https://cdn2.hubspot.net/hubfs/53/tools/email-signature-generator/icons/phone-icon-2x.png' color='#ff5f88' width='13' style='display:block'></span></td></tr></tbody></table></td><td style='padding:0px;color:rgb(51,51,51)'><a href='tel:0981275911' color='#333333' style='color:rgb(51,51,51);font-size:12px' target='_blank'>0981275911</a></td></tr><tr height='25' style='vertical-align:middle'><td width='30' style='vertical-align:middle'><table cellpadding='0' cellspacing='0' style='vertical-align:-webkit-baseline-middle;font-family:Arial'><tbody><tr><td style='vertical-align:bottom'><span color='#ff5f88' width='11' style='display:block;background-color:rgb(255,95,136)'><img src='https://cdn2.hubspot.net/hubfs/53/tools/email-signature-generator/icons/email-icon-2x.png' color='#ff5f88' width='13' style='display:block'></span></td></tr></tbody></table></td><td style='padding:0px'><a href='mailto:hominhtienxyz@gmail.com' color='#333333' style='color:rgb(51,51,51);font-size:12px' target='_blank'>hominhtienxyz@gmail.com</a></td></tr><tr height='25' style='vertical-align:middle'><td width='30' style='vertical-align:middle'><table cellpadding='0' cellspacing='0' style='vertical-align:-webkit-baseline-middle;font-family:Arial'><tbody><tr><td style='vertical-align:bottom'><span color='#ff5f88' width='11' style='display:block;background-color:rgb(255,95,136)'><img src='https://cdn2.hubspot.net/hubfs/53/tools/email-signature-generator/icons/link-icon-2x.png' color='#ff5f88' width='13' style='display: block; margin-right: 0px;' height='13'></span></td></tr></tbody></table></td><td style='padding:0px'><a href='https://tmusic-1.herokuapp.com/' color='#333333' style='color:rgb(51,51,51);font-size:12px' target='_blank'>https://tmusic-1.herokuapp.com/</a></td></tr><tr height='25' style='vertical-align:middle'><td width='30' style='vertical-align:middle'><table cellpadding='0' cellspacing='0' style='vertical-align:-webkit-baseline-middle;font-family:Arial'><tbody><tr><td style='vertical-align:bottom'><span color='#ff5f88' width='11' style='display:block;background-color:rgb(255,95,136)'><img src='https://cdn2.hubspot.net/hubfs/53/tools/email-signature-generator/icons/address-icon-2x.png' color='#ff5f88' width='13' style='display:block'></span></td></tr></tbody></table></td><td style='padding:0px'><span color='#333333' style='font-size:12px;color:rgb(51,51,51)'><font style='vertical-align:inherit'><font style='vertical-align:inherit'>41 Bàu Sen, khu phố 6, TT Dầu Tiếng, H. Dầu Tiếng, Tỉnh Bình Dương, 117/157/30 Nguyễn Hữu Cảnh, Phường 22, Quận Bình Thạnh, TP.&nbsp;</font><font style='vertical-align:inherit'>Hồ Chí Minh</font></font></span></td></tr></tbody></table><table cellpadding='0' cellspacing='0' style='vertical-align:-webkit-baseline-middle;font-family:Arial'><tbody><tr><td height='30'></td></tr></tbody></table><a href='https://www.hubspot.com/email-signature-generator?utm_source=create-signature' rel='noopener noreferrer' style='font-size:12px;display:block;color:rgb(51,51,51)' target='_blank'><br></a></td></tr></tbody></table>
+                                        "
                     };
                     using (var client = new SmtpClient())
                     {
@@ -1321,15 +1373,28 @@ namespace TFourMusic.Controllers
                     message.From.Add(new MailboxAddress("Admin TMUSIC", "0306181067@caothang.edu.vn"));
                     message.To.Add(new MailboxAddress("Người Dùng", nguoidung[0].email));
                     message.Subject = "TMUSIC - NGƯỜI DÙNG VI PHẠM TIÊU CHUẨN CỘNG ĐỒNG";
-                    message.Body = new TextPart("plain")
+                    message.Body = new TextPart("html")
                     {
-                        Text = "Chào: Anh/chị " + nguoidung[0].hoten + "\n\n" +
-                        //"Chúng tôi đã vô hiệu hóa bài hát bạn báo cáo.\n" +
-                        "Chúng tôi đã xem xét người dùng bạn báo cáo. Vì người dùng không vi phạm tiêu chuẩn cộng đồng của chúng tôi nên chúng tôi nghĩ rằng bạn có chút nhầm lẫn. " +
-                        "Cảm ơn bạn đã báo cáo và sự đóng góp của bạn để phát triển cộng đồng Tmusic. \n\n" +
-                        //"Nếu bạn gặp bất kì sự cố khi đăng nhập vào tài khoản của mình hay có thắc mắc vui lòng trả lời thư này hoặc liên hệ fanpage: TMUSIC Nghe Nhạc Trực Tuyến \n\n" +
-                        "Cám ơn bạn đã xem. \n" +
-                        "Admin TMUSIC"
+                        //Text = "Chào: Anh/chị " + nguoidung[0].hoten + "\n\n" +
+                   
+                        //"Chúng tôi đã xem xét người dùng bạn báo cáo. Vì người dùng không vi phạm tiêu chuẩn cộng đồng của chúng tôi nên chúng tôi nghĩ rằng bạn có chút nhầm lẫn. " +
+                        //"Cảm ơn bạn đã báo cáo và sự đóng góp của bạn để phát triển cộng đồng Tmusic. \n\n" +
+                        ////"Nếu bạn gặp bất kì sự cố khi đăng nhập vào tài khoản của mình hay có thắc mắc vui lòng trả lời thư này hoặc liên hệ fanpage: TMUSIC Nghe Nhạc Trực Tuyến \n\n" +
+                        //"Cám ơn bạn đã xem. \n" +
+                        //"Admin TMUSIC"
+                        Text = $@"<h3>Chào: {nguoidung[0].hoten}</h3>
+
+                                   
+                                    <p>Chúng tôi đã xem xét người dùng bạn báo cáo. </p> </br>
+                                     <p>Vì người dùng không vi phạm tiêu chuẩn cộng đồng của chúng tôi nên chúng tôi nghĩ rằng bạn có chút nhầm lẫn. </p> </br>
+                                    <p>Cảm ơn bạn đã báo cáo và sự đóng góp của bạn để phát triển cộng đồng Tmusic. </p> </br>
+                                  
+                                    <p>Nếu có thắc mắc vui lòng trả lời thư này. </p> </br>
+                                    </br>
+                                    <p>Cám ơn bạn.</p> </br>
+                                    <h5>Admin TMUSIC.</h5> </br></br></br></br></br>
+                                    <table cellpadding='0' cellspacing='0' style='vertical-align:-webkit-baseline-middle;font-family:Arial'><tbody><tr><td style='vertical-align:top'><table cellpadding='0' cellspacing='0' style='vertical-align:-webkit-baseline-middle;font-family:Arial'><tbody><tr><td style='text-align:center'><img src='https://firebasestorage.googleapis.com/v0/b/music-77ac9.appspot.com/o/8.png?alt=media&amp;token=ae9c1de7-661c-4b35-a04b-c4ab02bce360' width='130' style='max-width:128px;display:block'></td></tr><tr><td height='30'></td></tr><tr><td style='text-align:center'><table cellpadding='0' cellspacing='0' style='vertical-align:-webkit-baseline-middle;font-family:Arial;display:inline-block'><tbody><tr><td><a href='https://www.facebook.com/minhtien6120/' color='#243edd' style='display:inline-block;padding:0px;background-color:rgb(36,62,221)' target='_blank'><img src='https://cdn2.hubspot.net/hubfs/53/tools/email-signature-generator/icons/facebook-icon-2x.png' alt='Facebook' color='#243edd' height='24' style='max-width:135px;display:block'></a></td><td width='5'><div></div></td><td><a href='https://www.instagram.com/hominhtienckc/' color='#243edd' style='display:inline-block;padding:0px;background-color:rgb(36,62,221)' target='_blank'><img src='https://cdn2.hubspot.net/hubfs/53/tools/email-signature-generator/icons/instagram-icon-2x.png' alt='instagram' color='#243edd' height='24' style='max-width:135px;display:block'></a></td><td width='5'><div></div></td></tr></tbody></table></td></tr></tbody></table></td><td width='46'><div></div></td><td style='padding:0px;vertical-align:middle'><h3 color='#333333' style='margin:0px;font-size:18px;color:rgb(51,51,51)'><font style='vertical-align:inherit'>&nbsp; Hồ&nbsp;</font><font style='vertical-align:inherit'>Minh Tiến</font>&nbsp;<font style='vertical-align:inherit'></font></h3><p color='#333333' style='margin:0px;color:rgb(51,51,51);font-size:14px;line-height:22px'><font style='vertical-align:inherit'>&nbsp; &nbsp;T-Music</font></p><table cellpadding='0' cellspacing='0' style='vertical-align:-webkit-baseline-middle;font-family:Arial;width:644px'><tbody><tr><td height='30'></td></tr><tr><td color='#ff5f88' height='1' style='width:644px;border-bottom:1px solid rgb(255,95,136);border-left:none;display:block'></td></tr><tr><td height='30'></td></tr></tbody></table><table cellpadding='0' cellspacing='0' style='vertical-align:-webkit-baseline-middle;font-family:Arial'><tbody><tr height='25' style='vertical-align:middle'><td width='30' style='vertical-align:middle'><table cellpadding='0' cellspacing='0' style='vertical-align:-webkit-baseline-middle;font-family:Arial'><tbody><tr><td style='vertical-align:bottom'><span color='#ff5f88' width='11' style='display:block;background-color:rgb(255,95,136)'><img src='https://cdn2.hubspot.net/hubfs/53/tools/email-signature-generator/icons/phone-icon-2x.png' color='#ff5f88' width='13' style='display:block'></span></td></tr></tbody></table></td><td style='padding:0px;color:rgb(51,51,51)'><a href='tel:0981275911' color='#333333' style='color:rgb(51,51,51);font-size:12px' target='_blank'>0981275911</a></td></tr><tr height='25' style='vertical-align:middle'><td width='30' style='vertical-align:middle'><table cellpadding='0' cellspacing='0' style='vertical-align:-webkit-baseline-middle;font-family:Arial'><tbody><tr><td style='vertical-align:bottom'><span color='#ff5f88' width='11' style='display:block;background-color:rgb(255,95,136)'><img src='https://cdn2.hubspot.net/hubfs/53/tools/email-signature-generator/icons/email-icon-2x.png' color='#ff5f88' width='13' style='display:block'></span></td></tr></tbody></table></td><td style='padding:0px'><a href='mailto:hominhtienxyz@gmail.com' color='#333333' style='color:rgb(51,51,51);font-size:12px' target='_blank'>hominhtienxyz@gmail.com</a></td></tr><tr height='25' style='vertical-align:middle'><td width='30' style='vertical-align:middle'><table cellpadding='0' cellspacing='0' style='vertical-align:-webkit-baseline-middle;font-family:Arial'><tbody><tr><td style='vertical-align:bottom'><span color='#ff5f88' width='11' style='display:block;background-color:rgb(255,95,136)'><img src='https://cdn2.hubspot.net/hubfs/53/tools/email-signature-generator/icons/link-icon-2x.png' color='#ff5f88' width='13' style='display: block; margin-right: 0px;' height='13'></span></td></tr></tbody></table></td><td style='padding:0px'><a href='https://tmusic-1.herokuapp.com/' color='#333333' style='color:rgb(51,51,51);font-size:12px' target='_blank'>https://tmusic-1.herokuapp.com/</a></td></tr><tr height='25' style='vertical-align:middle'><td width='30' style='vertical-align:middle'><table cellpadding='0' cellspacing='0' style='vertical-align:-webkit-baseline-middle;font-family:Arial'><tbody><tr><td style='vertical-align:bottom'><span color='#ff5f88' width='11' style='display:block;background-color:rgb(255,95,136)'><img src='https://cdn2.hubspot.net/hubfs/53/tools/email-signature-generator/icons/address-icon-2x.png' color='#ff5f88' width='13' style='display:block'></span></td></tr></tbody></table></td><td style='padding:0px'><span color='#333333' style='font-size:12px;color:rgb(51,51,51)'><font style='vertical-align:inherit'><font style='vertical-align:inherit'>41 Bàu Sen, khu phố 6, TT Dầu Tiếng, H. Dầu Tiếng, Tỉnh Bình Dương, 117/157/30 Nguyễn Hữu Cảnh, Phường 22, Quận Bình Thạnh, TP.&nbsp;</font><font style='vertical-align:inherit'>Hồ Chí Minh</font></font></span></td></tr></tbody></table><table cellpadding='0' cellspacing='0' style='vertical-align:-webkit-baseline-middle;font-family:Arial'><tbody><tr><td height='30'></td></tr></tbody></table><a href='https://www.hubspot.com/email-signature-generator?utm_source=create-signature' rel='noopener noreferrer' style='font-size:12px;display:block;color:rgb(51,51,51)' target='_blank'><br></a></td></tr></tbody></table>
+                                        "
                     };
                     using (var client = new SmtpClient())
                     {
@@ -1362,7 +1427,8 @@ namespace TFourMusic.Controllers
                 var firebase = new FirebaseClient(Key);
                 var data = LayChiTietBangBaoCaoNguoiDungDaXuLy_ViPham(item.nguoidung_id, item.id);
                 var nguoidung = LayBangNguoiDung(data.nguoidung_baocao_id);
-
+                client = new FireSharp.FirebaseClient(config);
+                object p123 = client.Set("csdlmoi/baocao/nguoidungvipham/daxuly/vipham" + item.nguoidung_id + "/" + item.id + "/" + "ngayxuly", DateTime.Now);
                 if ( nguoidung[0].vohieuhoa == 1)
                 {
 
@@ -1378,14 +1444,25 @@ namespace TFourMusic.Controllers
                     message.From.Add(new MailboxAddress("Admin TMUSIC", "0306181067@caothang.edu.vn"));
                     message.To.Add(new MailboxAddress("Người Dùng", nguoidung[0].email));
                     message.Subject = "TMUSIC - TÀI KHOẢN VI PHẠM TIÊU CHUẨN CỘNG ĐỒNG";
-                    message.Body = new TextPart("plain")
+                    message.Body = new TextPart("html")
                     {
-                        Text = "Chào: Anh/chị " + nguoidung[0].hoten + " \n\n" +
-                                "Có vẻ như tài khoản của bạn đã bị vô hiệu hóa do nhầm lẫn. Chúng tôi đã mở tài khoản của bạn và xin lỗi vì sự bất tiện này.\n\n" +
-                                " Bây giờ, bạn có thể đăng nhập. \n" +
-                                "Nếu bạn gặp bất kì sự cố khi đăng nhập vào tài khoản của mình hay có thắc mắc vui lòng trả lời thư này hoặc liên hệ fanpage: TMUSIC Nghe Nhạc Trực Tuyến \n\n" +
-                                "Cám ơn bạn đã xem. \n" +
-                                "Admin TMUSIC"
+                        //Text = "Chào: Anh/chị " + nguoidung[0].hoten + " \n\n" +
+                        //        "Có vẻ như tài khoản của bạn đã bị vô hiệu hóa do nhầm lẫn. Chúng tôi đã mở tài khoản của bạn và xin lỗi vì sự bất tiện này.\n\n" +
+                        //        " Bây giờ, bạn có thể đăng nhập. \n" +
+                        //        "Nếu bạn gặp bất kì sự cố khi đăng nhập vào tài khoản của mình hay có thắc mắc vui lòng trả lời thư này hoặc liên hệ fanpage: TMUSIC Nghe Nhạc Trực Tuyến \n\n" +
+                        //        "Cám ơn bạn đã xem. \n" +
+                        //        "Admin TMUSIC"
+                        Text = $@"<h3>Chào: {nguoidung[0].hoten}</h3>
+
+                                    <p>Có vẻ như tài khoản của bạn đã bị vô hiệu hóa do nhầm lẫn. </p> </br>
+                                    <p>Chúng tôi đã mở tài khoản của bạn, xin lỗi vì sự bất tiện này. </p> </br>
+                                    <p>Bây giờ, bạn có thể đăng nhập. </p> </br>
+                                    <p>Nếu bạn gặp bất kì sự cố khi đăng nhập vào tài khoản của mình hay có thắc mắc vui lòng trả lời thư này. </p> </br>
+                                    </br>
+                                    <p>Cám ơn bạn.</p> </br>
+                                    <h5>Admin TMUSIC.</h5> </br></br></br></br></br>
+                                    <table cellpadding='0' cellspacing='0' style='vertical-align:-webkit-baseline-middle;font-family:Arial'><tbody><tr><td style='vertical-align:top'><table cellpadding='0' cellspacing='0' style='vertical-align:-webkit-baseline-middle;font-family:Arial'><tbody><tr><td style='text-align:center'><img src='https://firebasestorage.googleapis.com/v0/b/music-77ac9.appspot.com/o/8.png?alt=media&amp;token=ae9c1de7-661c-4b35-a04b-c4ab02bce360' width='130' style='max-width:128px;display:block'></td></tr><tr><td height='30'></td></tr><tr><td style='text-align:center'><table cellpadding='0' cellspacing='0' style='vertical-align:-webkit-baseline-middle;font-family:Arial;display:inline-block'><tbody><tr><td><a href='https://www.facebook.com/minhtien6120/' color='#243edd' style='display:inline-block;padding:0px;background-color:rgb(36,62,221)' target='_blank'><img src='https://cdn2.hubspot.net/hubfs/53/tools/email-signature-generator/icons/facebook-icon-2x.png' alt='Facebook' color='#243edd' height='24' style='max-width:135px;display:block'></a></td><td width='5'><div></div></td><td><a href='https://www.instagram.com/hominhtienckc/' color='#243edd' style='display:inline-block;padding:0px;background-color:rgb(36,62,221)' target='_blank'><img src='https://cdn2.hubspot.net/hubfs/53/tools/email-signature-generator/icons/instagram-icon-2x.png' alt='instagram' color='#243edd' height='24' style='max-width:135px;display:block'></a></td><td width='5'><div></div></td></tr></tbody></table></td></tr></tbody></table></td><td width='46'><div></div></td><td style='padding:0px;vertical-align:middle'><h3 color='#333333' style='margin:0px;font-size:18px;color:rgb(51,51,51)'><font style='vertical-align:inherit'>&nbsp; Hồ&nbsp;</font><font style='vertical-align:inherit'>Minh Tiến</font>&nbsp;<font style='vertical-align:inherit'></font></h3><p color='#333333' style='margin:0px;color:rgb(51,51,51);font-size:14px;line-height:22px'><font style='vertical-align:inherit'>&nbsp; &nbsp;T-Music</font></p><table cellpadding='0' cellspacing='0' style='vertical-align:-webkit-baseline-middle;font-family:Arial;width:644px'><tbody><tr><td height='30'></td></tr><tr><td color='#ff5f88' height='1' style='width:644px;border-bottom:1px solid rgb(255,95,136);border-left:none;display:block'></td></tr><tr><td height='30'></td></tr></tbody></table><table cellpadding='0' cellspacing='0' style='vertical-align:-webkit-baseline-middle;font-family:Arial'><tbody><tr height='25' style='vertical-align:middle'><td width='30' style='vertical-align:middle'><table cellpadding='0' cellspacing='0' style='vertical-align:-webkit-baseline-middle;font-family:Arial'><tbody><tr><td style='vertical-align:bottom'><span color='#ff5f88' width='11' style='display:block;background-color:rgb(255,95,136)'><img src='https://cdn2.hubspot.net/hubfs/53/tools/email-signature-generator/icons/phone-icon-2x.png' color='#ff5f88' width='13' style='display:block'></span></td></tr></tbody></table></td><td style='padding:0px;color:rgb(51,51,51)'><a href='tel:0981275911' color='#333333' style='color:rgb(51,51,51);font-size:12px' target='_blank'>0981275911</a></td></tr><tr height='25' style='vertical-align:middle'><td width='30' style='vertical-align:middle'><table cellpadding='0' cellspacing='0' style='vertical-align:-webkit-baseline-middle;font-family:Arial'><tbody><tr><td style='vertical-align:bottom'><span color='#ff5f88' width='11' style='display:block;background-color:rgb(255,95,136)'><img src='https://cdn2.hubspot.net/hubfs/53/tools/email-signature-generator/icons/email-icon-2x.png' color='#ff5f88' width='13' style='display:block'></span></td></tr></tbody></table></td><td style='padding:0px'><a href='mailto:hominhtienxyz@gmail.com' color='#333333' style='color:rgb(51,51,51);font-size:12px' target='_blank'>hominhtienxyz@gmail.com</a></td></tr><tr height='25' style='vertical-align:middle'><td width='30' style='vertical-align:middle'><table cellpadding='0' cellspacing='0' style='vertical-align:-webkit-baseline-middle;font-family:Arial'><tbody><tr><td style='vertical-align:bottom'><span color='#ff5f88' width='11' style='display:block;background-color:rgb(255,95,136)'><img src='https://cdn2.hubspot.net/hubfs/53/tools/email-signature-generator/icons/link-icon-2x.png' color='#ff5f88' width='13' style='display: block; margin-right: 0px;' height='13'></span></td></tr></tbody></table></td><td style='padding:0px'><a href='https://tmusic-1.herokuapp.com/' color='#333333' style='color:rgb(51,51,51);font-size:12px' target='_blank'>https://tmusic-1.herokuapp.com/</a></td></tr><tr height='25' style='vertical-align:middle'><td width='30' style='vertical-align:middle'><table cellpadding='0' cellspacing='0' style='vertical-align:-webkit-baseline-middle;font-family:Arial'><tbody><tr><td style='vertical-align:bottom'><span color='#ff5f88' width='11' style='display:block;background-color:rgb(255,95,136)'><img src='https://cdn2.hubspot.net/hubfs/53/tools/email-signature-generator/icons/address-icon-2x.png' color='#ff5f88' width='13' style='display:block'></span></td></tr></tbody></table></td><td style='padding:0px'><span color='#333333' style='font-size:12px;color:rgb(51,51,51)'><font style='vertical-align:inherit'><font style='vertical-align:inherit'>41 Bàu Sen, khu phố 6, TT Dầu Tiếng, H. Dầu Tiếng, Tỉnh Bình Dương, 117/157/30 Nguyễn Hữu Cảnh, Phường 22, Quận Bình Thạnh, TP.&nbsp;</font><font style='vertical-align:inherit'>Hồ Chí Minh</font></font></span></td></tr></tbody></table><table cellpadding='0' cellspacing='0' style='vertical-align:-webkit-baseline-middle;font-family:Arial'><tbody><tr><td height='30'></td></tr></tbody></table><a href='https://www.hubspot.com/email-signature-generator?utm_source=create-signature' rel='noopener noreferrer' style='font-size:12px;display:block;color:rgb(51,51,51)' target='_blank'><br></a></td></tr></tbody></table>
+                                        "
                     };
                     using (var client = new SmtpClient())
                     {
@@ -1508,7 +1585,7 @@ namespace TFourMusic.Controllers
                         message.From.Add(new MailboxAddress("Admin TMUSIC", "0306181067@caothang.edu.vn"));
                         message.To.Add(new MailboxAddress("Người Dùng", item.email));
                         message.Subject = "TMUSIC - TÀI KHOẢN VI PHẠM TIÊU CHUẨN CỘNG ĐỒNG";
-                        message.Body = new TextPart("plain")
+                        message.Body = new TextPart("html")
                         {
                             //Text = "Chào: Anh/chị " + item.hoten + " \n\n" +
                             //"Chúng tôi đã khóa tài khoản của bạn do vi phạm điều khoản cộng đồng. \n" +
@@ -1560,7 +1637,8 @@ namespace TFourMusic.Controllers
             bool success = true;
             try
             {
-                var nguoidung = LayBangNguoiDung(item.nguoidung_id);
+               
+               
 
                 if (item.vohieuhoa == 0)
                 {
@@ -1568,20 +1646,22 @@ namespace TFourMusic.Controllers
                     client = new FireSharp.FirebaseClient(config);
                     object p = client.Set("csdlmoi/baihat/" + item.nguoidung_id + "/" + item.id + "/" + "vohieuhoa", item.vohieuhoa);
 
-             
 
-                    var message = new MimeMessage();
-                    message.From.Add(new MailboxAddress("Admin TMUSIC", "0306181067@caothang.edu.vn"));
-                    message.To.Add(new MailboxAddress("Người Dùng", nguoidung[0].email));
-                    message.Subject = "TMUSIC - BÀI HÁT VI PHẠM TIÊU CHUẨN CỘNG ĐỒNG";
-                    message.Body = new TextPart("html")
+                    if (item.nguoidung_id != "admin")
                     {
-                        //Text = "Chào: Anh/chị " + nguoidung[0].hoten + " \n\n" +
-                        //"Chúng tôi mở khóa bài hát của bạn, bây giờ bài hát có thể xuất hiện trước cộng đồng. \n" +
-                        //"Nếu có thắc mắc vui lòng trả lời thư này hoặc liên hệ fanpage: TMUSIC Nghe Nhạc Trực Tuyến \n\n" +
-                        //"Cám ơn bạn đã xem. \n" +
-                        //"Admin TMUSIC"
-                        Text = $@"<h3>Chào: {nguoidung[0].hoten}</h3>
+                        var nguoidung = LayBangNguoiDung(item.nguoidung_id);
+                        var message = new MimeMessage();
+                        message.From.Add(new MailboxAddress("Admin TMUSIC", "0306181067@caothang.edu.vn"));
+                        message.To.Add(new MailboxAddress("Người Dùng", nguoidung[0].email));
+                        message.Subject = "TMUSIC - BÀI HÁT VI PHẠM TIÊU CHUẨN CỘNG ĐỒNG";
+                        message.Body = new TextPart("html")
+                        {
+                            //Text = "Chào: Anh/chị " + nguoidung[0].hoten + " \n\n" +
+                            //"Chúng tôi mở khóa bài hát của bạn, bây giờ bài hát có thể xuất hiện trước cộng đồng. \n" +
+                            //"Nếu có thắc mắc vui lòng trả lời thư này hoặc liên hệ fanpage: TMUSIC Nghe Nhạc Trực Tuyến \n\n" +
+                            //"Cám ơn bạn đã xem. \n" +
+                            //"Admin TMUSIC"
+                            Text = $@"<h3>Chào: {nguoidung[0].hoten}</h3>
 
                                     <p>Có vẻ như bài hát của bạn đã bị vô hiệu hóa do nhầm lẫn. </p> </br>
                                     <p>Chúng tôi đã mở khóa bài hát của bạn, xin lỗi vì sự bất tiện này. </p> </br>
@@ -1592,39 +1672,43 @@ namespace TFourMusic.Controllers
                                     <h5>Admin TMUSIC.</h5> </br></br></br></br></br>
                                     <table cellpadding='0' cellspacing='0' style='vertical-align:-webkit-baseline-middle;font-family:Arial'><tbody><tr><td style='vertical-align:top'><table cellpadding='0' cellspacing='0' style='vertical-align:-webkit-baseline-middle;font-family:Arial'><tbody><tr><td style='text-align:center'><img src='https://firebasestorage.googleapis.com/v0/b/music-77ac9.appspot.com/o/8.png?alt=media&amp;token=ae9c1de7-661c-4b35-a04b-c4ab02bce360' width='130' style='max-width:128px;display:block'></td></tr><tr><td height='30'></td></tr><tr><td style='text-align:center'><table cellpadding='0' cellspacing='0' style='vertical-align:-webkit-baseline-middle;font-family:Arial;display:inline-block'><tbody><tr><td><a href='https://www.facebook.com/minhtien6120/' color='#243edd' style='display:inline-block;padding:0px;background-color:rgb(36,62,221)' target='_blank'><img src='https://cdn2.hubspot.net/hubfs/53/tools/email-signature-generator/icons/facebook-icon-2x.png' alt='Facebook' color='#243edd' height='24' style='max-width:135px;display:block'></a></td><td width='5'><div></div></td><td><a href='https://www.instagram.com/hominhtienckc/' color='#243edd' style='display:inline-block;padding:0px;background-color:rgb(36,62,221)' target='_blank'><img src='https://cdn2.hubspot.net/hubfs/53/tools/email-signature-generator/icons/instagram-icon-2x.png' alt='instagram' color='#243edd' height='24' style='max-width:135px;display:block'></a></td><td width='5'><div></div></td></tr></tbody></table></td></tr></tbody></table></td><td width='46'><div></div></td><td style='padding:0px;vertical-align:middle'><h3 color='#333333' style='margin:0px;font-size:18px;color:rgb(51,51,51)'><font style='vertical-align:inherit'>&nbsp; Hồ&nbsp;</font><font style='vertical-align:inherit'>Minh Tiến</font>&nbsp;<font style='vertical-align:inherit'></font></h3><p color='#333333' style='margin:0px;color:rgb(51,51,51);font-size:14px;line-height:22px'><font style='vertical-align:inherit'>&nbsp; &nbsp;T-Music</font></p><table cellpadding='0' cellspacing='0' style='vertical-align:-webkit-baseline-middle;font-family:Arial;width:644px'><tbody><tr><td height='30'></td></tr><tr><td color='#ff5f88' height='1' style='width:644px;border-bottom:1px solid rgb(255,95,136);border-left:none;display:block'></td></tr><tr><td height='30'></td></tr></tbody></table><table cellpadding='0' cellspacing='0' style='vertical-align:-webkit-baseline-middle;font-family:Arial'><tbody><tr height='25' style='vertical-align:middle'><td width='30' style='vertical-align:middle'><table cellpadding='0' cellspacing='0' style='vertical-align:-webkit-baseline-middle;font-family:Arial'><tbody><tr><td style='vertical-align:bottom'><span color='#ff5f88' width='11' style='display:block;background-color:rgb(255,95,136)'><img src='https://cdn2.hubspot.net/hubfs/53/tools/email-signature-generator/icons/phone-icon-2x.png' color='#ff5f88' width='13' style='display:block'></span></td></tr></tbody></table></td><td style='padding:0px;color:rgb(51,51,51)'><a href='tel:0981275911' color='#333333' style='color:rgb(51,51,51);font-size:12px' target='_blank'>0981275911</a></td></tr><tr height='25' style='vertical-align:middle'><td width='30' style='vertical-align:middle'><table cellpadding='0' cellspacing='0' style='vertical-align:-webkit-baseline-middle;font-family:Arial'><tbody><tr><td style='vertical-align:bottom'><span color='#ff5f88' width='11' style='display:block;background-color:rgb(255,95,136)'><img src='https://cdn2.hubspot.net/hubfs/53/tools/email-signature-generator/icons/email-icon-2x.png' color='#ff5f88' width='13' style='display:block'></span></td></tr></tbody></table></td><td style='padding:0px'><a href='mailto:hominhtienxyz@gmail.com' color='#333333' style='color:rgb(51,51,51);font-size:12px' target='_blank'>hominhtienxyz@gmail.com</a></td></tr><tr height='25' style='vertical-align:middle'><td width='30' style='vertical-align:middle'><table cellpadding='0' cellspacing='0' style='vertical-align:-webkit-baseline-middle;font-family:Arial'><tbody><tr><td style='vertical-align:bottom'><span color='#ff5f88' width='11' style='display:block;background-color:rgb(255,95,136)'><img src='https://cdn2.hubspot.net/hubfs/53/tools/email-signature-generator/icons/link-icon-2x.png' color='#ff5f88' width='13' style='display: block; margin-right: 0px;' height='13'></span></td></tr></tbody></table></td><td style='padding:0px'><a href='https://tmusic-1.herokuapp.com/' color='#333333' style='color:rgb(51,51,51);font-size:12px' target='_blank'>https://tmusic-1.herokuapp.com/</a></td></tr><tr height='25' style='vertical-align:middle'><td width='30' style='vertical-align:middle'><table cellpadding='0' cellspacing='0' style='vertical-align:-webkit-baseline-middle;font-family:Arial'><tbody><tr><td style='vertical-align:bottom'><span color='#ff5f88' width='11' style='display:block;background-color:rgb(255,95,136)'><img src='https://cdn2.hubspot.net/hubfs/53/tools/email-signature-generator/icons/address-icon-2x.png' color='#ff5f88' width='13' style='display:block'></span></td></tr></tbody></table></td><td style='padding:0px'><span color='#333333' style='font-size:12px;color:rgb(51,51,51)'><font style='vertical-align:inherit'><font style='vertical-align:inherit'>41 Bàu Sen, khu phố 6, TT Dầu Tiếng, H. Dầu Tiếng, Tỉnh Bình Dương, 117/157/30 Nguyễn Hữu Cảnh, Phường 22, Quận Bình Thạnh, TP.&nbsp;</font><font style='vertical-align:inherit'>Hồ Chí Minh</font></font></span></td></tr></tbody></table><table cellpadding='0' cellspacing='0' style='vertical-align:-webkit-baseline-middle;font-family:Arial'><tbody><tr><td height='30'></td></tr></tbody></table><a href='https://www.hubspot.com/email-signature-generator?utm_source=create-signature' rel='noopener noreferrer' style='font-size:12px;display:block;color:rgb(51,51,51)' target='_blank'><br></a></td></tr></tbody></table>
                                         "
-                    };
-                    using (var client = new SmtpClient())
-                    {
-                        // client.ServerCertificateValidationCallback = (s, c, h, e) => true;
-                        client.CheckCertificateRevocation = false;
-                        // client.SslProtocols = SslProtocols.Ssl3 | SslProtocols.Tls | SslProtocols.Tls11 | SslProtocols.Tls12 | SslProtocols.Tls13;
-                        client.Connect("smtp.gmail.com", 587, false);
-                        //  await client.ConnectAsync("smtp.gmail.com", 587, false);
-                        client.Authenticate("0306181067@caothang.edu.vn", "281258964");
+                        };
+                        using (var client = new SmtpClient())
+                        {
+                            // client.ServerCertificateValidationCallback = (s, c, h, e) => true;
+                            client.CheckCertificateRevocation = false;
+                            // client.SslProtocols = SslProtocols.Ssl3 | SslProtocols.Tls | SslProtocols.Tls11 | SslProtocols.Tls12 | SslProtocols.Tls13;
+                            client.Connect("smtp.gmail.com", 587, false);
+                            //  await client.ConnectAsync("smtp.gmail.com", 587, false);
+                            client.Authenticate("0306181067@caothang.edu.vn", "281258964");
 
-                        client.Send(message);
-                        client.Disconnect(true);
+                            client.Send(message);
+                            client.Disconnect(true);
+                        }
                     }
+                   
                 }
                 else
                 {
 
                     client = new FireSharp.FirebaseClient(config);
                     object p = client.Set("csdlmoi/baihat/" + item.nguoidung_id + "/" + item.id + "/" + "vohieuhoa", item.vohieuhoa);
-                   
-                    var message = new MimeMessage();
-                    message.From.Add(new MailboxAddress("Admin TMUSIC", "0306181067@caothang.edu.vn"));
-                    message.To.Add(new MailboxAddress("Người Dùng", nguoidung[0].email));
-                    message.Subject = "TMUSIC - BÀI HÁT VI PHẠM TIÊU CHUẨN CỘNG ĐỒNG";
-                    message.Body = new TextPart("html")
+                    if (item.nguoidung_id != "admin")
                     {
-                        //Text = "Chào: Anh/chị " + nguoidung[0].hoten + " \n\n" +
-                        //"Chúng tôi đã khóa bài hát của bạn, bây giờ bài hát sẽ không được xuất hiện trước cộng đồng. \n" +
-                        //"Vui lòng bạn thay đổi thông tin bài hát cho phù hợp với tiêu chuẩn cộng đồng. \n" +
-                        //"Nếu có thắc mắc vui lòng trả lời thư này hoặc liên hệ fanpage: TMUSIC Nghe Nhạc Trực Tuyến \n\n" +
-                        //"Cám ơn bạn đã xem. \n" +
-                        //"Admin TMUSIC"
-                        Text = $@"<h3>Chào: {nguoidung[0].hoten}</h3>
+                        var nguoidung = LayBangNguoiDung(item.nguoidung_id);
+                        var message = new MimeMessage();
+                        message.From.Add(new MailboxAddress("Admin TMUSIC", "0306181067@caothang.edu.vn"));
+                        message.To.Add(new MailboxAddress("Người Dùng", nguoidung[0].email));
+                        message.Subject = "TMUSIC - BÀI HÁT VI PHẠM TIÊU CHUẨN CỘNG ĐỒNG";
+                        message.Body = new TextPart("html")
+                        {
+                            //Text = "Chào: Anh/chị " + nguoidung[0].hoten + " \n\n" +
+                            //"Chúng tôi đã khóa bài hát của bạn, bây giờ bài hát sẽ không được xuất hiện trước cộng đồng. \n" +
+                            //"Vui lòng bạn thay đổi thông tin bài hát cho phù hợp với tiêu chuẩn cộng đồng. \n" +
+                            //"Nếu có thắc mắc vui lòng trả lời thư này hoặc liên hệ fanpage: TMUSIC Nghe Nhạc Trực Tuyến \n\n" +
+                            //"Cám ơn bạn đã xem. \n" +
+                            //"Admin TMUSIC"
+                            Text = $@"<h3>Chào: {nguoidung[0].hoten}</h3>
 
                                     <p>Chúng tôi đã khóa bài hát của bạn. </p> </br>
                                     <p>Bây giờ bài hát sẽ không được xuất hiện trước cộng đồng. </p> </br>
@@ -1635,18 +1719,19 @@ namespace TFourMusic.Controllers
                                     <h5>Admin TMUSIC.</h5> </br></br></br></br></br>
                                     <table cellpadding='0' cellspacing='0' style='vertical-align:-webkit-baseline-middle;font-family:Arial'><tbody><tr><td style='vertical-align:top'><table cellpadding='0' cellspacing='0' style='vertical-align:-webkit-baseline-middle;font-family:Arial'><tbody><tr><td style='text-align:center'><img src='https://firebasestorage.googleapis.com/v0/b/music-77ac9.appspot.com/o/8.png?alt=media&amp;token=ae9c1de7-661c-4b35-a04b-c4ab02bce360' width='130' style='max-width:128px;display:block'></td></tr><tr><td height='30'></td></tr><tr><td style='text-align:center'><table cellpadding='0' cellspacing='0' style='vertical-align:-webkit-baseline-middle;font-family:Arial;display:inline-block'><tbody><tr><td><a href='https://www.facebook.com/minhtien6120/' color='#243edd' style='display:inline-block;padding:0px;background-color:rgb(36,62,221)' target='_blank'><img src='https://cdn2.hubspot.net/hubfs/53/tools/email-signature-generator/icons/facebook-icon-2x.png' alt='Facebook' color='#243edd' height='24' style='max-width:135px;display:block'></a></td><td width='5'><div></div></td><td><a href='https://www.instagram.com/hominhtienckc/' color='#243edd' style='display:inline-block;padding:0px;background-color:rgb(36,62,221)' target='_blank'><img src='https://cdn2.hubspot.net/hubfs/53/tools/email-signature-generator/icons/instagram-icon-2x.png' alt='instagram' color='#243edd' height='24' style='max-width:135px;display:block'></a></td><td width='5'><div></div></td></tr></tbody></table></td></tr></tbody></table></td><td width='46'><div></div></td><td style='padding:0px;vertical-align:middle'><h3 color='#333333' style='margin:0px;font-size:18px;color:rgb(51,51,51)'><font style='vertical-align:inherit'>&nbsp; Hồ&nbsp;</font><font style='vertical-align:inherit'>Minh Tiến</font>&nbsp;<font style='vertical-align:inherit'></font></h3><p color='#333333' style='margin:0px;color:rgb(51,51,51);font-size:14px;line-height:22px'><font style='vertical-align:inherit'>&nbsp; &nbsp;T-Music</font></p><table cellpadding='0' cellspacing='0' style='vertical-align:-webkit-baseline-middle;font-family:Arial;width:644px'><tbody><tr><td height='30'></td></tr><tr><td color='#ff5f88' height='1' style='width:644px;border-bottom:1px solid rgb(255,95,136);border-left:none;display:block'></td></tr><tr><td height='30'></td></tr></tbody></table><table cellpadding='0' cellspacing='0' style='vertical-align:-webkit-baseline-middle;font-family:Arial'><tbody><tr height='25' style='vertical-align:middle'><td width='30' style='vertical-align:middle'><table cellpadding='0' cellspacing='0' style='vertical-align:-webkit-baseline-middle;font-family:Arial'><tbody><tr><td style='vertical-align:bottom'><span color='#ff5f88' width='11' style='display:block;background-color:rgb(255,95,136)'><img src='https://cdn2.hubspot.net/hubfs/53/tools/email-signature-generator/icons/phone-icon-2x.png' color='#ff5f88' width='13' style='display:block'></span></td></tr></tbody></table></td><td style='padding:0px;color:rgb(51,51,51)'><a href='tel:0981275911' color='#333333' style='color:rgb(51,51,51);font-size:12px' target='_blank'>0981275911</a></td></tr><tr height='25' style='vertical-align:middle'><td width='30' style='vertical-align:middle'><table cellpadding='0' cellspacing='0' style='vertical-align:-webkit-baseline-middle;font-family:Arial'><tbody><tr><td style='vertical-align:bottom'><span color='#ff5f88' width='11' style='display:block;background-color:rgb(255,95,136)'><img src='https://cdn2.hubspot.net/hubfs/53/tools/email-signature-generator/icons/email-icon-2x.png' color='#ff5f88' width='13' style='display:block'></span></td></tr></tbody></table></td><td style='padding:0px'><a href='mailto:hominhtienxyz@gmail.com' color='#333333' style='color:rgb(51,51,51);font-size:12px' target='_blank'>hominhtienxyz@gmail.com</a></td></tr><tr height='25' style='vertical-align:middle'><td width='30' style='vertical-align:middle'><table cellpadding='0' cellspacing='0' style='vertical-align:-webkit-baseline-middle;font-family:Arial'><tbody><tr><td style='vertical-align:bottom'><span color='#ff5f88' width='11' style='display:block;background-color:rgb(255,95,136)'><img src='https://cdn2.hubspot.net/hubfs/53/tools/email-signature-generator/icons/link-icon-2x.png' color='#ff5f88' width='13' style='display: block; margin-right: 0px;' height='13'></span></td></tr></tbody></table></td><td style='padding:0px'><a href='https://tmusic-1.herokuapp.com/' color='#333333' style='color:rgb(51,51,51);font-size:12px' target='_blank'>https://tmusic-1.herokuapp.com/</a></td></tr><tr height='25' style='vertical-align:middle'><td width='30' style='vertical-align:middle'><table cellpadding='0' cellspacing='0' style='vertical-align:-webkit-baseline-middle;font-family:Arial'><tbody><tr><td style='vertical-align:bottom'><span color='#ff5f88' width='11' style='display:block;background-color:rgb(255,95,136)'><img src='https://cdn2.hubspot.net/hubfs/53/tools/email-signature-generator/icons/address-icon-2x.png' color='#ff5f88' width='13' style='display:block'></span></td></tr></tbody></table></td><td style='padding:0px'><span color='#333333' style='font-size:12px;color:rgb(51,51,51)'><font style='vertical-align:inherit'><font style='vertical-align:inherit'>41 Bàu Sen, khu phố 6, TT Dầu Tiếng, H. Dầu Tiếng, Tỉnh Bình Dương, 117/157/30 Nguyễn Hữu Cảnh, Phường 22, Quận Bình Thạnh, TP.&nbsp;</font><font style='vertical-align:inherit'>Hồ Chí Minh</font></font></span></td></tr></tbody></table><table cellpadding='0' cellspacing='0' style='vertical-align:-webkit-baseline-middle;font-family:Arial'><tbody><tr><td height='30'></td></tr></tbody></table><a href='https://www.hubspot.com/email-signature-generator?utm_source=create-signature' rel='noopener noreferrer' style='font-size:12px;display:block;color:rgb(51,51,51)' target='_blank'><br></a></td></tr></tbody></table>
                                         "
-                    };
-                    using (var client = new SmtpClient())
-                    {
-                        // client.ServerCertificateValidationCallback = (s, c, h, e) => true;
-                        client.CheckCertificateRevocation = false;
-                        // client.SslProtocols = SslProtocols.Ssl3 | SslProtocols.Tls | SslProtocols.Tls11 | SslProtocols.Tls12 | SslProtocols.Tls13;
-                        client.Connect("smtp.gmail.com", 587, false);
-                        //  await client.ConnectAsync("smtp.gmail.com", 587, false);
-                        client.Authenticate("0306181067@caothang.edu.vn", "281258964");
+                        };
+                        using (var client = new SmtpClient())
+                        {
+                            // client.ServerCertificateValidationCallback = (s, c, h, e) => true;
+                            client.CheckCertificateRevocation = false;
+                            // client.SslProtocols = SslProtocols.Ssl3 | SslProtocols.Tls | SslProtocols.Tls11 | SslProtocols.Tls12 | SslProtocols.Tls13;
+                            client.Connect("smtp.gmail.com", 587, false);
+                            //  await client.ConnectAsync("smtp.gmail.com", 587, false);
+                            client.Authenticate("0306181067@caothang.edu.vn", "281258964");
 
-                        client.Send(message);
-                        client.Disconnect(true);
+                            client.Send(message);
+                            client.Disconnect(true);
+                        }
                     }
                 }
                 success = true;
@@ -1705,6 +1790,35 @@ namespace TFourMusic.Controllers
 
             return Json(success);
         }
+        [HttpPost]
+        public async Task<IActionResult> xoaTaiKhoanQuanTri([FromBody] taikhoanquantriModel item)
+        {
+            var heThong = User.Identity as ClaimsIdentity;
+            var phanQuyen = heThong.Claims.FirstOrDefault(c => c.Type == ClaimTypes.Role).Value;
+            var uid = heThong.Claims.FirstOrDefault(c => c.Type == "uid").Value;
+            bool success = true;
 
+            if (uid == item.id)
+            {
+                return Json("loi");
+            }
+            try
+            {
+
+                var firebase = new FirebaseClient(Key);
+                await firebase
+               .Child("csdlmoi")
+               .Child("taikhoanquantri")
+               .Child(item.id)
+               .DeleteAsync();
+                success = true;
+            }
+            catch (Exception ex)
+            {
+                success = false;
+            }
+
+            return Json(success);
+        }
     }
 }

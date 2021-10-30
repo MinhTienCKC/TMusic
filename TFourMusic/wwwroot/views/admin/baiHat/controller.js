@@ -47,6 +47,10 @@ app.factory('dataservice', function ($http) {
             $http.post('/Admin/BaiHat/xoaBaiHatVinhVien_ThungRac', data).then(callback);
 
         },
+        taiChiTietNguoiDungQuaUID: function (data, callback) {
+            $http.post('/Admin/BaiHat/taiChiTietNguoiDungQuaUID', data).then(callback);
+
+        },
         //LoadBaiHat: function (callback) {
         //    //$http.post('/Admin/BaiHat/LoadBaiHat').then(callback);
         //    $http({
@@ -422,6 +426,7 @@ app.controller('index', function ($rootScope, $scope, dataservice, $uibModal, $f
             backdropClass: ".modal-content",
             /*  appendTo: document.getElementById("#main-baihat"),*/
             size: '10'
+
         });
         modalInstance.result.then(function () {
             $scope.initData();
@@ -429,9 +434,42 @@ app.controller('index', function ($rootScope, $scope, dataservice, $uibModal, $f
                
             //}, 1500);
         }, function () {
+               
         });
 
     };
+    $scope.xemChiTietBaiHat = function (key) {
+
+        var modalInstance = $uibModal.open({
+            /*animation: true,*/
+
+            //ariaLabelledBy: 'modal-title',
+            //ariaDescribedBy: 'modal-body',
+            templateUrl: ctxfolderurl + '/chitietbaihat.html',
+            controller: 'chitietbaihat',
+            //  backdrop: 'true',
+            backdropClass: ".fade:not(.show)",
+            backdropClass: ".modal-backdrop",
+            backdropClass: ".col-lg-8",
+            backdropClass: ".modal-content",
+      
+            /*  appendTo: document.getElementById("#main-baihat"),*/
+            size: '10',
+            resolve: {
+                para: function () {
+                    return key;
+                }
+            }
+        });
+        modalInstance.result.then(function () {
+            $scope.initData();
+            //setTimeout(function () {
+
+            //}, 1500);
+        }, function () {
+
+        });
+    }
     $scope.xoaBaiHat = function (data,vitribaihat) {
        
         dataservice.xoaBaiHat(data, function (rs) {
@@ -860,4 +898,28 @@ app.controller('edit', function ($rootScope, $scope, $uibModalInstance, dataserv
             $uibModalInstance.dismiss('cancel');
         }   
     }
+});
+app.controller('chitietbaihat', function ($rootScope, $scope, $uibModalInstance, dataservice, para) {
+    $scope.cancel = function () {
+        $uibModalInstance.dismiss('cancel');
+    }
+    $scope.modelbaihat = para;
+
+    $scope.text = {
+        key: ''
+    };
+    $scope.initData = function () {
+        if (para.nguoidung_id !="admin") {
+            dataservice.taiChiTietNguoiDungQuaUID(para, function (rs) {
+                rs = rs.data
+                $scope.taiChiTietNguoiDungQuaUID = rs;
+            })
+        }
+       
+    };
+   
+
+    $scope.initData();
+
+   
 });

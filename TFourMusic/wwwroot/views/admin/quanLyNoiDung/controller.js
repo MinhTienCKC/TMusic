@@ -223,9 +223,7 @@ app.controller('index', function ($rootScope, $scope, dataservice) {
     
 
    
-    $scope.btn = function () {
-        $rootScope.showBanner = 2;
-    }
+ 
     
     var database = firebase.database();
     var  ggProvider = new firebase.auth.GoogleAuthProvider();

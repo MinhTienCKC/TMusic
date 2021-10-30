@@ -57,6 +57,7 @@
     <None Include="Areas\Admin\Views\DanhSachPhatTheLoai\Index.cshtml" />
     <None Include="Areas\Admin\Views\DanhSachPhat\Index.cshtml" />
     <None Include="Areas\Admin\Views\GoiVip\Index.cshtml" />
+    <None Include="Areas\Admin\Views\HoaDonNguoiDung\Index.cshtml" />
     <None Include="Areas\Admin\Views\NguoiDung\Index.cshtml" />
     <None Include="Areas\Admin\Views\QuangCao\Index.cshtml" />
     <None Include="Areas\Admin\Views\QuanLyNguoiDung\Index.cshtml" />
@@ -258,6 +259,7 @@
     <None Include="wwwroot\views\admin\danhSachPhatTheLoai\controller.js" />
     <None Include="wwwroot\views\admin\danhSachPhat\controller.js" />
     <None Include="wwwroot\views\admin\goivip\controller.js" />
+    <None Include="wwwroot\views\admin\hoaDonNguoiDung\controller.js" />
     <None Include="wwwroot\views\admin\nguoiDung\controller.js" />
     <None Include="wwwroot\views\admin\quangCao\controller.js" />
     <None Include="wwwroot\views\admin\quanLyNguoiDung\controller.js" />

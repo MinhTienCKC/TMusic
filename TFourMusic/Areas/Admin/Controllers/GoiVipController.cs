@@ -120,14 +120,16 @@ namespace TFourMusic.Controllers
 
             try
             {
-                var xoaHinhAnhStorage = xoaStorageBangLink(item.linkhinhanh.ToString());
+                client = new FireSharp.FirebaseClient(config);
+                object p = client.Set("csdlmoi/goivip/" + item.id + "/" + "trangthai", 1);
+                //var xoaHinhAnhStorage = xoaStorageBangLink(item.linkhinhanh.ToString());
 
-                var firebase = new FirebaseClient(Key);
-                await firebase
-                    .Child("csdlmoi")
-                    .Child("goivip")
-                   .Child(item.id)
-                   .DeleteAsync();
+                //var firebase = new FirebaseClient(Key);
+                //await firebase
+                //    .Child("csdlmoi")
+                //    .Child("goivip")
+                //   .Child(item.id)
+                //   .DeleteAsync();
                 success = true;
 
 
@@ -250,6 +252,7 @@ namespace TFourMusic.Controllers
               .Child("goivip")
               .OnceAsync<goivipModel>();
             var data = (from tl in goivip
+                        where tl.Object.trangthai == 0
                         select tl.Object).ToList();
 
 
