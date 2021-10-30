@@ -236,6 +236,10 @@ app.controller('index', function ($rootScope, $scope, dataservice, $uibModal) {
     }
     $scope.taoGoiVip_index = function () {
 
+        if ($scope.taiGoiVip.length >= 5 ) {
+            alertify.success("Chỉ được tạo tối da 5 gói vip !!!");
+            return;
+        }
         var modalInstance = $uibModal.open({
             animation: true,
             templateUrl: ctxfolderurl + '/add.html',
@@ -293,7 +297,10 @@ app.controller('index', function ($rootScope, $scope, dataservice, $uibModal) {
     alertify.set('notifier', 'position', 'bottom-left');
 
     $scope.xoaGoiVip = function (data, vitrigoivip) {
-
+        if ($scope.taiGoiVip.length <= 1) {
+            alertify.success("Không thể xóa !!!");
+            return;
+        }
         dataservice.xoaGoiVip(data, function (rs) {
             rs = rs.data;
             $scope.xoaGoiVip = rs;

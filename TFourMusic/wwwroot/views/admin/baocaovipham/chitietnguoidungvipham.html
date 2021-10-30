@@ -12,12 +12,12 @@
                 <thead class="bg-light">
                     <tr>
                         <!--<th scope="col" class="border-0 " style="width: 20%;">Email Vi Phạm</th>-->
-                        <th ng-show="data.email_nguoidung_baocao != 'admin'" scope="col" class="border-0">ND Tố Cáo</th>
-                        <th scope="col" class="border-0 ">Nội Dung</th>
-                        <th scope="col" class="border-0" style="width: 8%;">Mô Tả</th>
+                        <th ng-show="data.email_nguoidung_baocao != 'admin'" scope="col" class="border-0" style=" width: 12%;">ND Tố Cáo</th>
+                        <th scope="col" class="border-0 ">Nội Dung Vi Phạm</th>
+                        <th scope="col" class="border-0" style="width: 15%;">Mô Tả</th>
                         <!--<th scope="col" class="border-0">Phát Nhạc</th>-->
-                        <th scope="col" class="border-0" title="Vô hiệu hóa người dùng">VHH Người Dùng</th>
-                        <th ng-show="data.email_nguoidung_baocao != 'admin'" scope="col" class="border-0">ND Vi Phạm</th>
+                        <th scope="col" class="border-0" title="Vô hiệu hóa người dùng vi phạm" style=" width: 18%;">VHH Người Dùng </th>
+                        <th ng-show="data.email_nguoidung_baocao != 'admin'" scope="col" class="border-0" style=" width: 14%;">ND Vi Phạm</th>
 
 
                     </tr>
@@ -41,7 +41,7 @@
                             <span ng-if="taiChiTietNguoiDungViPham[0].vohieuhoa == 1" style="color:green;" title="Đã vô hiệu hóa">Đã VHH</span>
                             <span ng-if="taiChiTietNguoiDungViPham[0].vohieuhoa == 0" style="color:green;" title="Chưa vô hiệu hóa">Chưa VHH</span>
                         </td>
-                        <td ng-show="data.email_nguoidung_baocao != 'admin' && data.trangthai != 2" class="vitrigiua">
+                        <td ng-show="data.email_nguoidung_baocao != 'admin' && data.trangthai != 2" class="vitrigiua" style="text-align: center;">
                             <label class="switch1">
 
                                 <input ng-change="voHieuHoaNguoiDung(taiChiTietNguoiDungViPham[0])" type="checkbox" ng-model="taiChiTietNguoiDungViPham[0].vohieuhoa"
@@ -83,7 +83,7 @@
 </div>
 <div class="modal-body" style="padding: 15px 30px 10px 30px !important;" ng-show="layBaiHatNut">
     <div style="display:flex;">
-        <div>
+        <div style=" width: 60%;">
             <img ng-if="taiChiTietNguoiDung[0].hinhdaidien.length > 5" src="{{taiChiTietNguoiDung[0].hinhdaidien}}" class="" style=" height: 200px; width: 200px; border-radius: 10px; object-fit: cover;">
             <img ng-if="taiChiTietNguoiDung[0].hinhdaidien.length < 5" src="https://s120-ava-talk.zadn.vn/0/5/1/5/0/120/4ff9b54b6eb2292f46483676eda192ae.jpg" class="" style=" height: 200px; width: 200px; border-radius: 10px; object-fit: cover;">
             <div class="form-group col-md-6" style="display:flex;  padding-top:10px;">
@@ -94,20 +94,20 @@
             <div class="form-group col-md-6" style="     flex: 0 0 100%;
     max-width: 100%;">
                 <a ng-if="taiChiTietNguoiDung[0].vip == 1" style="" ng-click="$event.preventDefault();" class="mua_vip_account ng-binding ng-scope">
-                    Ngày hết hạn vip: 26-12-2029
+                    Ngày hết hạn : {{taiChiTietNguoiDung[0].hansudungvip | date:'dd/MM/yyyy'}}
                 </a>
             </div>
 
         </div>
-        <div style="padding-left: 20px;">
+        <div style="">
             <div class="form-row kiemtra">
                 <div class="form-group col-md-6">
                     <label for="feLastName">Họ Tên</label>
                     <span class="thong_bao_sai">{{taiChiTietNguoiDung[0].hoten}}</span>
                 </div>
-                <div class="form-group col-md-6">
+                <div class="form-group col-md-6" style=" padding-left:0px!important;padding-right:0px">
                     <label for="feLastName">Email</label>
-                    <span class="thong_bao_sai">{{taiChiTietNguoiDung[0].email}}</span>
+                    <span class="thong_bao_sai" >{{taiChiTietNguoiDung[0].email}}</span>
                 </div>
             </div>
             <div class="form-row kiemtra">
@@ -116,7 +116,7 @@
                     <span ng-if="taiChiTietNguoiDung[0].ngaysinh.length > 1" class="thong_bao_sai">{{taiChiTietNguoiDung[0].ngaysinh | date:'dd-MM-yyyy'}}</span>
                     <span ng-if="taiChiTietNguoiDung[0].ngaysinh.length < 1" class="thong_bao_sai">Đang cập nhật.</span>
                 </div>
-                <div class="form-group col-md-6">
+                <div class="form-group col-md-6" style=" padding-left:0px!important;padding-right:0px">
                     <label for="feLastName">Giới Tính</label>
                     <span ng-if="taiChiTietNguoiDung[0].gioitinh.length > 1" class="thong_bao_sai">{{taiChiTietNguoiDung[0].gioitinh}}</span>
                     <span ng-if="taiChiTietNguoiDung[0].gioitinh.length < 1" class="thong_bao_sai">Đang cập nhật.</span>
@@ -144,7 +144,7 @@
         background-color: #f8e71c;
         color: #32323d;
         font-size: 12px;
-        padding: 6px 9px;
+        padding: 6px 6px;
         text-transform: uppercase;
         overflow: hidden;
         border-radius: 999px !important;
@@ -154,15 +154,15 @@
         padding-top: 2.5em !important;
     }
     .form-row .col-md-6 {
-        padding-left: 40px;
+        padding-left: 20px;
     }
     .modal-content {
         border-radius: 30px;
         border: 1px solid #007bff;
         top: 160px;
         background: #F5F6F8;
-        width: 230%;
-        left: -35%;
+        width: 180%;
+        left: -5%;
         
     }
 
@@ -171,6 +171,7 @@
         font-size: 12px;
         display: block;
         font-size: unset;
+        width: 300px;
     }
 
     .kiemtra, .kiemtra.form-group {

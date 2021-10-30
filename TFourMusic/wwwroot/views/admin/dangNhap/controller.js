@@ -110,7 +110,10 @@ app.controller('index', function ($rootScope, $scope, dataservice) {
     //    });
     //}
     $scope.submit = function () {
-
+        if ($scope.email == null || $scope.email == '' || $scope.password == null || $scope.password =='') {
+            alert("Không để tài khoản hoặc mật khẩu trống !!!");
+            return;
+        }
         //alert($scope.password);
         $scope.model.email = $scope.email;
         $scope.model.password = $scope.password;
@@ -120,7 +123,7 @@ app.controller('index', function ($rootScope, $scope, dataservice) {
             rs = rs.data;
             if (rs == false) {
                 
-                alert("tài khoản không tồn tại hay sai mật khẩu !!!");
+                alert("Tài khoản không tồn tại hoặc sai mật khẩu !!!");
             } else {
                 window.location.href = rs.returnUrl;
             }

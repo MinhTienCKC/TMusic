@@ -16,6 +16,9 @@ app.factory('dataservice', function ($http) {
         suaTaiKhoanQuanTri: function (data,callback) {
             $http.post('/Admin/TaiKhoanQuanTri/suaTaiKhoanQuanTri', data).then(callback);
         },  
+        xoaTaiKhoanQuanTri: function (data, callback) {
+            $http.post('/Admin/TaiKhoanQuanTri/xoaTaiKhoanQuanTri', data).then(callback);
+        },  
         uploadHinhAnh: function (data, callback) {
             $http({
                 method: 'post',
@@ -68,6 +71,7 @@ app.controller('T_Music', function () {
 
 });
 app.controller('index', function ($rootScope, $scope, dataservice, $uibModal) {
+    $(".nav-nguoidung").addClass("active");
     $scope.hienTimKiem = false;
     $scope.showSearch = function () {
         if (!$scope.hienTimKiem) {
@@ -203,12 +207,32 @@ app.controller('index', function ($rootScope, $scope, dataservice, $uibModal) {
         });
 
     };
+    function danhsachadmin(lists) {
+        let res = lists.filter(item => item["phanquyen"] == 1);
+        return res
+    }
     $scope.voHieuHoa = function (data) {
-
+        $scope.dsa = danhsachadmin($scope.taiTaiKhoanQuanTri);
+        if (data.phanquyen == 1) {
+            if ($scope.dsa.length <= 1) {
+                alertify.success("Không thể vô hiệu hóa !!!");
+                if (data.vohieuhoa == 1) {
+                    data.vohieuhoa = 0;
+                }
+                else {
+                    data.vohieuhoa = 1;
+                }
+                return;
+            }
+        }
         dataservice.voHieuHoa(data, function (rs) {
             rs = rs.data;
             if (rs == "") {
                 alertify.success("Tài khoản Admin mới thực hiện chức năng này !!!");
+                return;
+            }
+            if (rs == "loi") {
+                alertify.success("Không thể xóa hay vô hiệu hóa chính mình !!!.");
                 return;
             }
             if (rs == true) {
@@ -250,7 +274,32 @@ app.controller('index', function ($rootScope, $scope, dataservice, $uibModal) {
         }, function () {
         });
     };
+    $scope.xoaTaiKhoanQuanTri = function (data,vitri) {
+        $scope.data = data;
+        $scope.dsa = danhsachadmin($scope.taiTaiKhoanQuanTri);
+        if (data.phanquyen == 1) {
+            if ($scope.dsa.length <= 1) {
+                alertify.success("Không thể xóa !!!");
 
+                return;
+            }
+        }
+    
+        dataservice.xoaTaiKhoanQuanTri($scope.data,function (rs) {
+            rs = rs.data;
+            if (rs == "loi") {
+                alertify.success("Không thể xóa hay vô hiệu hóa chính mình !!!.");
+                return;
+            }
+            if (rs == true) {
+                alertify.success("Xóa thành công !!!.");
+                $scope.taiTaiKhoanQuanTri.splice(vitri, 1);
+            } else {
+                alertify.success("Xóa thất bại  !!!.");
+            }
+        });
+
+    }
     
 
 });
@@ -269,8 +318,27 @@ app.controller('add', function ($rootScope, $scope, dataservice, $uibModalInstan
     } 
     $scope.initData = function () {
         $scope.valuePhanQuyen = 'Nhân Viên';
+        dataservice.taiTaiKhoanQuanTri(function (rs) {
+
+            rs = rs.data;
+            $scope.taiTaiKhoanQuanTri = rs;
+
+
+        });
              
     };
+    $scope.kiemTraTrung = false;
+    $scope.kiemtra = function () {
+        
+        for (var i = 0; i < $scope.taiTaiKhoanQuanTri.length; i++) {
+            if ($scope.addTaiKhoan == $scope.taiTaiKhoanQuanTri[i].taikhoan) {
+                $scope.kiemTraTrung = true;
+                break;
+            } else {
+                $scope.kiemTraTrung = false;
+            }
+         }      
+    }
     $scope.changePhanQuyen = function () {
         if ($scope.valuePhanQuyen == 'Admin') {
             $scope.model.phanquyen = 1;
@@ -279,9 +347,13 @@ app.controller('add', function ($rootScope, $scope, dataservice, $uibModalInstan
         }
 
     };
+   
     $scope.initData();
     $scope.submit = function () {
-       
+        if ($scope.kiemTraTrung == true) {
+            alert("Tài Khoản Đã Tồn Tại Vui Lòng Nhập Lại !!!");
+            return;
+        }
         if (
              !$scope.addTaiKhoanQuanTri.addTaiKhoan.$valid
             || !$scope.addTaiKhoanQuanTri.addMatKhau.$valid

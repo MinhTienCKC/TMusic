@@ -188,7 +188,7 @@
                         </thead>
                         <tbody>
                             <tr style="" ng-repeat="data in taiNguoiDung | filter:timkiem | startFrom:currentPage*pageSize | limitTo:pageSize">
-                                <td class="vitrigiua">{{data.hoten}}</td>
+                                <td class="vitrigiua"><a style=" color: #007bff; cursor: pointer;" class="tennguoidung" ng-click="xemChiTietNguoiDung(data)">{{data.hoten}}</a></td>
                                 <td class="vitrigiua">{{data.email}}</td>
                                 <td>
                                     <img ng-if="data.hinhdaidien != ''" src="{{data.hinhdaidien}}" class="icon-category hinhanh" />
@@ -237,7 +237,9 @@
     </div>
 </div>
 <style>
-   
+   .tennguoidung:hover{
+       color:black!important;
+   }
     .iconvip {
         height: 40px;
         width: 40px;

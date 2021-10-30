@@ -107,10 +107,7 @@
                     <h3 class="title">Hot Songs</h3>
                     <div class="columns is-multiline" style=" margin: 0px -15px;">
                         <div class="column mar-b-0 is-fullhd-4 is-widescreen-4 is-desktop-4 is-touch-6 is-tablet-6" style="padding-left: 20px;  padding-right: 30px;">
-                            <div class="list" style="columns: 3;">
-
-
-
+                            <div class="list" style="" ng-class="{'cotbaihat1': taiDanhSachBaiHatTheoTheLoai.length == 1 ,'cotbaihat2': taiDanhSachBaiHatTheoTheLoai.length == 2 ,'cotbaihat3': taiDanhSachBaiHatTheoTheLoai.length >= 3 }">
                                 <div class="chart-song-item on-top first baihat_cttl " ng-repeat="data in taiDanhSachBaiHatTheoTheLoai | limitTo: demSo" context-menu="contextMenuBaiHat_BaiHat" ng-right-click="moChiTietBaiHat(data)" ng-class="{'clickbaihat': checkplaymusic == $index }">
                                     <div class="list-item bor-b-1 media-item" style="height: auto;">
                                         <div class="media animate">
@@ -203,6 +200,15 @@
         width: 370px;
         height: 60px;
         border-bottom: 1px solid rebeccapurple;
+    }
+    .cotbaihat1{
+        columns:1;
+    }
+    .cotbaihat2 {
+        columns: 2;
+    }
+    .cotbaihat3 {
+        columns: 3;
     }
 </style>
 

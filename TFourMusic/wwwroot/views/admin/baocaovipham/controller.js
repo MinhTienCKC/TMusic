@@ -192,6 +192,8 @@ app.controller('index', function ($rootScope, $scope, dataservice, $uibModal) {
 
                 rs = rs.data;
                 $scope.taiBaoCaoViPham = rs;
+                $scope.baiHatViPhamXuLy = 'chuaxuly';
+                $scope.model.hienTimKiem = 'baihat';
                 $scope.loading = false;
                 $scope.numberOfPages = function () {
                     return Math.ceil($scope.taiBaoCaoViPham.length / $scope.pageSize);
@@ -208,6 +210,8 @@ app.controller('index', function ($rootScope, $scope, dataservice, $uibModal) {
 
                 rs = rs.data;
                 $scope.taiBaoCaoViPham = rs;
+                $scope.model.hienTimKiem = 'nguoidung';
+                $scope.baiHatViPhamXuLy = 'chuaxuly';
                 $scope.loading = false;
                 $scope.numberOfPages = function () {
                     return Math.ceil($scope.taiBaoCaoViPham.length / $scope.pageSize);
@@ -225,7 +229,7 @@ app.controller('index', function ($rootScope, $scope, dataservice, $uibModal) {
             if (xuly == 'chuaxuly') {
                 $scope.baiHatViPhamXuLy = 'chuaxuly';
                 dataservice.taiBaiHatViPhamChuaXuLy(function (rs) {
-
+                    $scope.baiHatViPhamXuLy = 'chuaxuly';
                     rs = rs.data;
                     $scope.taiBaoCaoViPham = rs;
                     $scope.loading = false;
@@ -241,6 +245,8 @@ app.controller('index', function ($rootScope, $scope, dataservice, $uibModal) {
                 $scope.baiHatViPhamXuLy = 'daxuly';
                 $scope.daxuly = 'vipham';
                 dataservice.taiBaiHatViPhamDaXuLy_ViPham(function (rs) {
+                    $scope.baiHatViPhamXuLy = 'daxuly';
+                    $scope.daxuly = 'vipham';
                     rs = rs.data;
                     $scope.taiBaoCaoViPham = rs;
                     $scope.loading = false;
@@ -257,7 +263,7 @@ app.controller('index', function ($rootScope, $scope, dataservice, $uibModal) {
             if (xuly == 'chuaxuly') {
                 $scope.baiHatViPhamXuLy = 'chuaxuly';
                 dataservice.taiNguoiDungViPhamChuaXuLy(function (rs) {
-
+                    $scope.baiHatViPhamXuLy = 'chuaxuly';
                     rs = rs.data;
                     $scope.taiBaoCaoViPham = rs;
                     $scope.loading = false;
@@ -274,6 +280,8 @@ app.controller('index', function ($rootScope, $scope, dataservice, $uibModal) {
                 $scope.daxuly = 'vipham';
                 dataservice.taiNguoiDungViPhamDaXuLy_ViPham(function (rs) {
                     rs = rs.data;
+                    $scope.baiHatViPhamXuLy = 'daxuly';
+                    $scope.daxuly = 'vipham';
                     $scope.taiBaoCaoViPham = rs;
                     $scope.loading = false;
                     $scope.numberOfPages = function () {
@@ -295,6 +303,8 @@ app.controller('index', function ($rootScope, $scope, dataservice, $uibModal) {
                 $scope.daxuly = 'vipham';
                 dataservice.taiBaiHatViPhamDaXuLy_ViPham(function (rs) {
                     rs = rs.data;
+                    $scope.baiHatViPhamXuLy = 'daxuly';
+                    $scope.daxuly = 'vipham';
                     $scope.taiBaoCaoViPham = rs;
                     $scope.loading = false;
                     $scope.numberOfPages = function () {
@@ -310,6 +320,8 @@ app.controller('index', function ($rootScope, $scope, dataservice, $uibModal) {
                 $scope.daxuly = 'khongvipham';
                 dataservice.taiBaiHatViPhamDaXuLy_KhongViPham(function (rs) {
                     rs = rs.data;
+                    $scope.baiHatViPhamXuLy = 'daxuly';
+                    $scope.daxuly = 'khongvipham';
                     $scope.taiBaoCaoViPham = rs;
                     $scope.loading = false;
                     $scope.numberOfPages = function () {
@@ -327,6 +339,8 @@ app.controller('index', function ($rootScope, $scope, dataservice, $uibModal) {
                 $scope.daxuly = 'vipham';
                 dataservice.taiNguoiDungViPhamDaXuLy_ViPham(function (rs) {
                     rs = rs.data;
+                    $scope.baiHatViPhamXuLy = 'daxuly';
+                    $scope.daxuly = 'vipham';
                     $scope.taiBaoCaoViPham = rs;
                     $scope.loading = false;
                     $scope.numberOfPages = function () {
@@ -343,6 +357,8 @@ app.controller('index', function ($rootScope, $scope, dataservice, $uibModal) {
                 dataservice.taiNguoiDungViPhamDaXuLy_KhongViPham(function (rs) {
                     rs = rs.data;
                     $scope.taiBaoCaoViPham = rs;
+                    $scope.baiHatViPhamXuLy = 'daxuly';
+                    $scope.daxuly = 'khongvipham';
                     $scope.loading = false;
                     $scope.numberOfPages = function () {
                         return Math.ceil($scope.taiBaoCaoViPham.length / $scope.pageSize);
@@ -363,7 +379,7 @@ app.controller('index', function ($rootScope, $scope, dataservice, $uibModal) {
         $scope.tenbien = data;
     }
 
-    $(".nav-noidung").addClass("active");
+    $(".nav-nguoidung").addClass("active");
     $scope.hienTimKiem = false;
     $scope.showSearch = function () {
         if (!$scope.hienTimKiem) {
@@ -404,6 +420,7 @@ app.controller('index', function ($rootScope, $scope, dataservice, $uibModal) {
             rs = rs.data;
             $scope.taiBaoCaoViPham = rs;
             $scope.baiHatViPhamXuLy = 'chuaxuly';
+            $scope.model.hienTimKiem = 'baihat';
             $scope.loading = false;
             $scope.numberOfPages = function () {
                 return Math.ceil($scope.taiBaoCaoViPham.length / $scope.pageSize);
@@ -549,6 +566,7 @@ app.controller('index', function ($rootScope, $scope, dataservice, $uibModal) {
 });
 
 app.controller('chitietbaihatvipham', function ($rootScope, $scope, $uibModalInstance, dataservice, para) {
+
     $scope.layBaiHatNut = false;
     $scope.moBangLayBaiHat = function () {
         $scope.layBaiHatNut = true;
@@ -597,7 +615,7 @@ app.controller('chitietbaihatvipham', function ($rootScope, $scope, $uibModalIns
       
     }
     $scope.voHieuHoaNguoiDung = function (data) {
-
+        $("#loading_main").css("display", "block");
         dataservice.voHieuHoaNguoiDung(data, function (rs) {
             rs = rs.data;
             if (rs == "") {
@@ -621,9 +639,11 @@ app.controller('chitietbaihatvipham', function ($rootScope, $scope, $uibModalIns
             else {
                 alertify.success("Lỗi không thực hiện vô hiệu hóa !!!.");
             }
+            $("#loading_main").css("display", "none");
         });
     }
     $scope.voHieuHoaBaiHat = function (data) {
+        $("#loading_main").css("display", "block");
         // chỉnh trường daxoa khi người dùng lien hien thì m sữa lại daxoa
         dataservice.voHieuHoaBaiHatNguoiDung(data, function (rs) {
             rs = rs.data;
@@ -639,10 +659,11 @@ app.controller('chitietbaihatvipham', function ($rootScope, $scope, $uibModalIns
             else {
                 alertify.success("Lỗi không thực hiện vô hiệu hóa !!!.");
             }
+            $("#loading_main").css("display", "none");
         });
     }
     $scope.pheDuyet = function (data, vhh_nguoidung, vhh_baihat) {
-       
+        $("#loading_main").css("display", "block");
         $scope.baocaomodel1 = {
             nguoidung_id: data.nguoidung_id,
             id: $scope.data.id,
@@ -661,13 +682,13 @@ app.controller('chitietbaihatvipham', function ($rootScope, $scope, $uibModalIns
             else {
                 alertify.success("Phê duyệt thất bại !!!");
             }
-         
+            $("#loading_main").css("display", "none");
                 $uibModalInstance.dismiss('cancel');
             
         });
     }
     $scope.khoiPhuc = function (data, vhh_nguoidung, vhh_baihat) {
-
+        $("#loading_main").css("display", "block");
         $scope.baocaomodel1 = {
             nguoidung_id: data.nguoidung_id,
             id: $scope.data.id,
@@ -688,7 +709,7 @@ app.controller('chitietbaihatvipham', function ($rootScope, $scope, $uibModalIns
             else {
                 alertify.success("Khôi Phục thất bại !!!");
             }
-
+            $("#loading_main").css("display", "none");
             $uibModalInstance.dismiss('cancel');
 
         });
@@ -714,7 +735,7 @@ app.controller('chitietnguoidungvipham', function ($rootScope, $scope, $uibModal
     }
     $scope.troLai = function () {
         $scope.layBaiHatNut = false;
-        $(".modal-content").css({ "width": "230%", "color": "#5A6169", "left": "-35%" });
+        $(".modal-content").css({ "width": "160%", "color": "#5A6169", "left": "-35%" });
     }
     $scope.cancel = function () {
         $uibModalInstance.dismiss('cancel');
@@ -759,7 +780,7 @@ app.controller('chitietnguoidungvipham', function ($rootScope, $scope, $uibModal
 
     }
     $scope.voHieuHoaNguoiDung = function (data) {
-
+        $("#loading_main").css("display", "block");
         dataservice.voHieuHoaNguoiDung(data, function (rs) {
             rs = rs.data;
             if (rs == "") {
@@ -783,11 +804,12 @@ app.controller('chitietnguoidungvipham', function ($rootScope, $scope, $uibModal
             else {
                 alertify.success("Lỗi không thực hiện vô hiệu hóa !!!.");
             }
+            $("#loading_main").css("display", "none");
         });
     }
    
     $scope.pheDuyet = function (data, vhh_nguoidung) {
-
+        $("#loading_main").css("display", "block");
         $scope.baocaomodel1 = {
             nguoidung_id: data.nguoidung_id,
             id: $scope.data.id,
@@ -806,13 +828,13 @@ app.controller('chitietnguoidungvipham', function ($rootScope, $scope, $uibModal
             else {
                 alertify.success("Phê duyệt thất bại !!!");
             }
-
+            $("#loading_main").css("display", "none");
             $uibModalInstance.dismiss('cancel');
 
         });
     }
     $scope.khoiPhuc = function (data, vhh_nguoidung) {
-
+        $("#loading_main").css("display", "block");
         $scope.baocaomodel1 = {
             nguoidung_id: data.nguoidung_id,
             id: $scope.data.id,
@@ -836,7 +858,7 @@ app.controller('chitietnguoidungvipham', function ($rootScope, $scope, $uibModal
             else {
                 alertify.success("Khôi Phục thất bại !!!");
             }
-
+            $("#loading_main").css("display", "none");
             $uibModalInstance.dismiss('cancel');
 
         });

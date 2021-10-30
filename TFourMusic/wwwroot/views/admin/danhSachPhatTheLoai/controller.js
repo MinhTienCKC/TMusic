@@ -321,7 +321,7 @@ app.controller('index', function ($rootScope, $scope, dataservice, $uibModal) {
         modalInstance.result.then(function () {
             
         }, function () {
-                $scope.initData();
+             /*   $scope.initData();*/
         });
     };           
     $scope.xoaDanhSachPhatTheLoai = function (key,vitridanhsachphattheloai) {
@@ -731,19 +731,19 @@ app.controller('edit', function ($rootScope, $scope, $uibModalInstance, dataserv
     /* $scope.valueTheLoai = $scope.data1.tentheloai;*/
         //$scope.model = $scope.data1;
         $scope.editTenDanhSachPhatTheLoai = $scope.modelDanhSachPhatTheLoai.tendanhsachphattheloai;
-        dataservice.taiTheLoai(function (rs) {
+        //dataservice.taiTheLoai(function (rs) {
 
-            rs = rs.data;
-            $scope.taiTheLoai = rs;
+        //    rs = rs.data;
+        //    $scope.taiTheLoai = rs;
                 
-            for (var i = 0; i < $scope.taiTheLoai.length; i++) {
-                if ($scope.modelDanhSachPhatTheLoai.theloai_id == rs[i].id) {
-                    $scope.valueTheLoai = rs[i].id;
-                    break;
-                }
-            }      
+        //    for (var i = 0; i < $scope.taiTheLoai.length; i++) {
+        //        if ($scope.modelDanhSachPhatTheLoai.theloai_id == rs[i].id) {
+        //            $scope.valueTheLoai = rs[i].id;
+        //            break;
+        //        }
+        //    }      
 
-        });
+        //});
     
     };
     $scope.initData();
@@ -753,14 +753,13 @@ app.controller('edit', function ($rootScope, $scope, $uibModalInstance, dataserv
                               
         $scope.submit = function () {
             if (
-                 $scope.valueTheLoai == null
-                || !$scope.editDanhSachPhatTheLoai.editTenDanhSachPhatTheLoai.$valid
+                 !$scope.editDanhSachPhatTheLoai.editTenDanhSachPhatTheLoai.$valid
                 
             ) {
                 alert("Vùng Lòng  Điền Đầy Đủ Và Kiểm Tra Thông Tin !!!");
             }
             else {
-                $scope.modelDanhSachPhatTheLoai.theloai_id = $scope.valueTheLoai;
+              //  $scope.modelDanhSachPhatTheLoai.theloai_id = $scope.valueTheLoai;
                 $scope.modelDanhSachPhatTheLoai.tendanhsachphattheloai = $scope.editTenDanhSachPhatTheLoai;
 
                 dataservice.suaDanhSachPhatTheLoai($scope.modelDanhSachPhatTheLoai, function (rs) {

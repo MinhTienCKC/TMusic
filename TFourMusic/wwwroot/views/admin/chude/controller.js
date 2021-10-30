@@ -226,10 +226,7 @@ app.controller('index', function ($rootScope, $scope, dataservice, $uibModal) {
         modalInstance.result.then(function () {
           
         }, function () {
-                setTimeout(function () {
-                   
-
-                });
+               
 
                 setTimeout(function () {
                     $scope.initData();

@@ -24,9 +24,9 @@
                     <tr ng-repeat="data in xemDanhSachPhatNguoiDung | filter:timkiemdanhsachphat | startFrom:currentPage*pageSize | limitTo:pageSize">
                         <td style=" padding: 1.3em 0.3em 0.3em 0.3em;"><span class="chinhsua">{{data.tendanhsachphat}}</span></td>
                         <td style=" padding: 1.3em 0.3em 0.3em 0.3em;"><span class="chinhsua">{{data.thoigian | date:'dd-MM-yyyy HH:mm:ss '}}</span></td>
-                        <td class="vitrigiua">
+                        <td class="vitrigiua" style=" pointer-events: none;">
                             <label class="switch1">
-                                <input ng-change="voHieuHoa(data)" type="checkbox" ng-model="data.chedo"
+                                <input  type="checkbox" ng-model="data.chedo"
                                        ng-true-value="1" ng-false-value="0">
                                 <!--<span class="slider1 round"></span>-->
                                 <span ng-if="data.chedo == 1" class="slider1 round" title="Đã vô hiệu hóa"></span>

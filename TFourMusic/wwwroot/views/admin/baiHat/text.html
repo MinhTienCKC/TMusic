@@ -1,81 +1,86 @@
-﻿<div class="modal-header">
-    <h3 class="modal-title" id="modal-title">Tạo Bài Hát</h3>
-</div>
-<div class="modal-body" id="modal-body">
-    <form name="addBaiHat">
-        <div class="form-row">
-            <div class="form-group col-md-6">
-                <label for="feLastName">Tên bài hát</label>
-                <input type="text" ng-model="addTenBaiHat" name="addTenBaiHat" class="form-control" id="feLastName12" maxlength="255" value="Brooks" required>
-                <span ng-show="addBaiHat.addTenBaiHat.$touched && addBaiHat.addTenBaiHat.$invalid" style="color: red;">Tên Bài Hát không hợp lệ.</span>
+﻿<div id="contextmenubaihat_baihat" class="zm-contextmenu song-menu" style=" padding:10px 0;">
+    <div class="menu">
+        <ul class="menu-list">
+            <div class="menu-list--submenu">
+                <div class="media song-info-menu">
+                    <div class="media-left">
+                        <figure class="image is-40x40" style="width: 65px;">
+                            <img style="height:40px;object-fit: cover;" src="` + data.linkhinhanh + `" alt="">
+                        </figure>
+                    </div>
+                    <div class="is-w-150 media-content">
+                        <a href="/#/baihat/` + data.id + `" class="a-hover">
+                            <div class="title-wrapper">
+                                <span class="item-title title" title="` + data.tenbaihat + `">` + data.tenbaihat + `</span>
+                            </div>
+                        </a>
+                        <div class="song-stats">
+                            <div class="stat-item">
+                                <i class="icon far fa-heart iconmusic" aria-hidden="true"></i>
+                                <span>` + data.luotthich + `K</span>
+                            </div>
+                            <div class="stat-item">
+                                <i class="icon fa fa-headphones" aria-hidden="true"></i><span>` + data.luotnghe + `K</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
             </div>
-            <div class="form-group col-md-6">
-                <label for="feFirstName">Mô tả</label>
-                <input type="text" ng-model="model.mota" class="form-control" id="feF1irstName" value="Sierra">
+        </ul>
+        <ul class="menu-list">
+            <div class="group-button-menu">
+                <div class="group-button-list">
+                    <button class="zm-btn button" ng-click="taiXuong()">
+                        <i class="icon fa fa-download" aria-hidden="true"></i>
+                        <span>Tải xuống</span>
+                    </button>
+                    <button class="zm-btn button" tabindex="0" data-toggle="modal" data-target="#myModal">
+                        <i class="icon fa fa-book" aria-hidden="true"></i>
+                        <span>Lời bài hát</span>
+                    </button>
+                    <span ng-click="showBaoCao()" class="zm-btn button">
+                        <i class="icon fa fa-ban" aria-hidden="true"></i>
+                        <span>Báo Cáo</span>
+                    </span>
+
+                </div>
             </div>
-
-        </div>
-        <div class="form-row">
-            <div class="form-group col-md-6">
-                <label for="baihat">Bài Hát</label>
-                <input type="file" ng-model="addLinkBaiHat" class="form-control" style="font-size:15px" name="addLinkBaiHat" id="file" ng-files="getTheFiles($files)" accept="audio/*" required multiple>
-                <span ng-show="addBaiHat.addLinkBaiHat.$touched && addBaiHat.addLinkBaiHat.$invalid" style="color: red;">Vui Lòng Chọn Bài Hát.</span>
-                <audio id="audio" style="display: none;"></audio>
-                <!--audio thấy thời lượng-->
-            </div>
-            <div class="form-group col-md-6">
-                <label for="hinhanh">Hình Ảnh</label>
-                <input type="file" class="form-control" style="font-size:15px" name="hinhanh" id="hinhanh" ng-files="getTheFilesHinhAnh($files)" accept="image/*" required multiple>
-
-            </div>
-        </div>
-
-        <div class="form-row">
-            <div class="form-group col-md-6">
-                <label for="feFirstName">Chủ Đề</label>
-                <select ng-model="valueChuDe" style="width: 100%; border-color:#007bff;" class="form-control" ng-change="changeChuDe()">
-                    <option style="width: 100%; color: #007bff;" ng-value="x.object.id" value="{{x.object.id}}" ng-repeat="x in dataloadchude">{{x.object.tenchude}}</option>
-
-                </select>
-            </div>
-            <div class="form-group col-md-6">
-                <label for="feFirstName">Ca Sĩ</label>
-                <input type="text" ng-model="addTenCaSi" name="addTenCaSi" class="form-control" maxlength="255" id="feFir12stNa2me" value="Sierra" required>
-                <span ng-show="addBaiHat.addTenCaSi.$touched && addBaiHat.addTenCaSi.$invalid" style="color: red;">Tên Ca Sĩ không hợp lệ.</span>
-            </div>
-        </div>
-        <div class="form-row">
-            <div class="form-group col-md-6">
-                <label for="feFirstName">Thể Loại</label>
-                <select ng-model="valueTheLoai" style="width: 100%; border-color:#007bff;" class="form-control" ng-change="changeTheLoai()">
-                    <option style="width: 100%; color: #007bff;" ng-value="x.object.id" value="{{x.object.id}}" ng-repeat="x in dataloadtheloai">{{x.object.tentheloai}}</option>
-
-                </select>
-            </div>
-            <div class="form-group col-md-6">
-                <label for="feFirstName">Danh Sách Phát Thể Loại</label>
-                <select ng-model="valueDanhSachPhatTheLoai" style="width: 100%; border-color:#007bff;" class="form-control" ng-change="changeDanhSachPhatTheLoai()">
-                    <option style="width: 100%; color: #007bff;" ng-value="x.object.id" value="{{x.object.id}}" ng-repeat="x in datataiDanhSachPhatTheLoai">{{x.object.tendanhsachphattheloai}}</option>
-
-                </select>
-            </div>
-        </div>
-        <div class="form-row">
-            <div class="form-group col-md-6">
-                <label id="addLoiBaiHat" class="okemtey" for="feLastName">Lời Bài Hát</label>
-                <input type="text" ng-model="model.loibaihat" class="form-control" value="Sierra">
-            </div>
-        </div>
-
-
-        <button type="submit" ng-click="submit()" class="btn btn-accent" id="submitcd">Tạo Bài Hát</button>
-        <button type="submit" ng-click="cancel()" class="btn btn-accent">Thoát</button>
-
-    </form>
-    <textarea id="okem" name="okem" rows="8" cols="100">
-                                        </textarea>
-</div>
-<div class="modal-footer">
-    <button class="btn btn-primary" type="button" ng-click="$ctrl.ok()">OK</button>
-    <button class="btn btn-warning" type="button" ng-click="$ctrl.cancel()">Cancel</button>
+        </ul>
+        <ul class="menu-list">
+            <li>
+                <button class="zm-btn button" tabindex="0" ng-click="themBaiHatVaoDanhSachPhat(baihatCookie)">
+                    <i class="icon far fa-list-alt"></i><span>Thêm vào danh sách phát</span>
+                </button>
+            </li>
+            <li>
+                <button class="zm-btn button" tabindex="0" ng-click="themBaiHatVaoPhatTiepTheo(baihatCookie)">
+                    <i class="icon fa fa-play" aria-hidden="true"></i><span>Phát tiếp theo</span>
+                </button>
+            </li>
+            <li>
+                <div class="menu-list--submenu" subtext-menu="subtextMenuPlayList">
+                    <button class="zm-btn button" tabindex="0" ng-click="kiemTraThemBaiHatVaoPlayList()">
+                        <i class="icon fa fa-plus" aria-hidden="true"></i><span>Thêm vào playlist</span><i class="icon fa fa-chevron-right" style="margin-left: auto;"></i>
+                    </button>
+                </div>
+            </li>
+            <li>
+                <button class="zm-btn button" tabindex="0" ng-click="loadBinhLuanBaiHat(` + " `" + data.id + "`" + `)">
+                    <i class="icon far fa-comment"></i><span>Bình luận</span><span class="comment-badge"></span>
+                </button>
+            </li>
+            <li>
+                <button class="zm-btn button" ng-click="copyLinkBaiHat(` + " `" + window.location.origin + "/#/baihat/" + data.id + "`" + `)" tabindex="0">
+                    <i class="icon fa fa-link"></i><span>Sao chép link</span>
+                </button>
+            </li>
+            <li>
+                <div class="menu-list--submenu" subtext-menu="subtextMenuChiaSe">
+                    <button class="zm-btn button" tabindex="0" ng-click="share()">
+                        <i class="icon fa fa-share"></i><span>Chia sẻ Facebook</span>
+                    </button>
+                </div>
+            </li>
+        </ul>
+    </div>
 </div>

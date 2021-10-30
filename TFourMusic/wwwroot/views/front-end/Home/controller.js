@@ -676,9 +676,7 @@ app.directive('ngBaocao', function () {
 
 
                                     <div id="modal-scroll" style="height:62vh;" class="baocao">
-                                        commentitem
-
-
+                                      
                                         <div ng-repeat="x in listBaiHatDaTaiLen" class="baihat_moi_baocao hover_baihat_moi   " ng-click="chonBaiHatViPhamBanQuyen(x)" context-menu="contextMenuBaiHat_BaiHat">
                                             <div ng-style="{'background-image': 'url(' + x.linkhinhanh + ')'}" animate class="hinh_baihatmoi item">
 
@@ -1480,21 +1478,25 @@ app.controller('Ctrl_ESEIM', function ($scope, dataservice, $uibModal, $rootScop
             progress.value = 0;
         }
         $scope.loaddefaultmusic = function (e) {
-            clearInterval(updateTimer);
-            resetValues();
-            const namemusic = document.getElementById("music_name");
-            const sigermusic = document.getElementById("siger_name");
-            const imgmusic = document.getElementById("image_music_avatar");
-            namemusic.textContent = $rootScope.songs[e].tenbaihat;
-            sigermusic.textContent = $rootScope.songs[e].casi;
-            imgmusic.style.backgroundImage = "";
-            imgmusic.style.backgroundImage = "url(" + $rootScope.songs[e].linkhinhanh + ")";
-            audio.src = $rootScope.songs[e].link;
-            idBaiHatDangNghe = $rootScope.songs[e].id;
-            $rootScope.kiemTraBaiHatDangPhat = $rootScope.songs[e].id;
-            $rootScope.BaiHatDangPhat = $rootScope.songs[e];
+            if ($rootScope.songs.length > 0) {
 
-            $rootScope.kiemTraDSPTLClick = $rootScope.songs[e].danhsachphattheloai_id;
+
+                clearInterval(updateTimer);
+                resetValues();
+                const namemusic = document.getElementById("music_name");
+                const sigermusic = document.getElementById("siger_name");
+                const imgmusic = document.getElementById("image_music_avatar");
+                namemusic.textContent = $rootScope.songs[e].tenbaihat;
+                sigermusic.textContent = $rootScope.songs[e].casi;
+                imgmusic.style.backgroundImage = "";
+                imgmusic.style.backgroundImage = "url(" + $rootScope.songs[e].linkhinhanh + ")";
+                audio.src = $rootScope.songs[e].link;
+                idBaiHatDangNghe = $rootScope.songs[e].id;
+                $rootScope.kiemTraBaiHatDangPhat = $rootScope.songs[e].id;
+                $rootScope.BaiHatDangPhat = $rootScope.songs[e];
+
+                $rootScope.kiemTraDSPTLClick = $rootScope.songs[e].danhsachphattheloai_id;
+            }
         }
 
     }
@@ -1671,11 +1673,17 @@ app.controller('Ctrl_ESEIM', function ($scope, dataservice, $uibModal, $rootScop
         if ($scope.repeate == true) {
             $scope.loadmusic($scope.sttmusic);
             auto.play();
+            var downloadbaihat = document.getElementById("btntext");
+            downloadbaihat.click();
+            downloadbaihat.click();
         }
         else {
             if ($scope.ramdomsong == true) {
                 $scope.ramdomsongstt();
                 $scope.loadmusic($scope.sttmusic);
+                var downloadbaihat = document.getElementById("btntext");
+                downloadbaihat.click();
+                downloadbaihat.click();
             }
             else {
                 $scope.sttmusic++;
@@ -1711,6 +1719,10 @@ app.controller('Ctrl_ESEIM', function ($scope, dataservice, $uibModal, $rootScop
     }
     $scope.xoaDanhSachPhatNhac = function () {
         $rootScope.songs = [];
+        $scope.playmusic = 1;
+        $scope.Play();
+        
+
     }
     //const playlist = document.getElementById("playlist_music_ul");
 
@@ -1906,7 +1918,7 @@ app.controller('Ctrl_ESEIM', function ($scope, dataservice, $uibModal, $rootScop
                             $rootScope.closelogin = false;
                             $scope.xacthucemail = true;
                         }, 1000);
-                       
+
 
                     }
 
@@ -1947,9 +1959,9 @@ app.controller('Ctrl_ESEIM', function ($scope, dataservice, $uibModal, $rootScop
     $scope.dangNhapEmailvaPass = function (email, pass) {
         if (email != null && email != "" && email != undefined && pass != null && pass != "" && pass != undefined) {
             $("#loading_main").css("display", "block");
-            $timeout(function () {
-                $rootScope.closelogin = true;
-            }, 1400);
+            //$timeout(function () {
+            //    $rootScope.closelogin = true;
+            //}, 1400);
             $scope.dangNhapLoi = "";
             firebase.auth().signInWithEmailAndPassword(email, pass)
                 .then(function (result) {
@@ -2016,9 +2028,9 @@ app.controller('Ctrl_ESEIM', function ($scope, dataservice, $uibModal, $rootScop
         else {
             if ($scope.login.email != null && $scope.login.email != "" && $scope.login.email != undefined && $scope.login.password != null && $scope.login.password != "" && $scope.login.password != undefined) {
                 $("#loading_main").css("display", "block");
-                $timeout(function () {
-                    $rootScope.closelogin = true;
-                }, 1400);
+                //$timeout(function () {
+                //    $rootScope.closelogin = true;
+                //}, 1400);
                 $scope.dangNhapLoi = "";
                 firebase.auth().signInWithEmailAndPassword($scope.login.email, $scope.login.password)
                     .then(function (result) {
@@ -2724,7 +2736,7 @@ app.controller('Ctrl_ESEIM', function ($scope, dataservice, $uibModal, $rootScop
         else {
             $rootScope.closelogin = true;
         }
-        
+
     }
 
     //thanh toan bằng paypal
@@ -3243,24 +3255,25 @@ app.controller('Ctrl_ESEIM', function ($scope, dataservice, $uibModal, $rootScop
             }
             $scope.texttaixuong.linknhac = $scope.baihatCookie.link;
             $scope.texttaixuong.tentaixuong = $scope.baihatCookie.tenbaihat + ".mp3";
-            $("#loaddingdownload").css("display", "block");
-            var downloadbaihat = document.getElementById("btntext");
-            setTimeout(function () {
-                downloadbaihat.click();
-                $("#loaddingdownload1").css("display", "block");
-                setTimeout(function () {
-                    downloadbaihat.click();
-                    setTimeout(function () {
-                        downloadbaihat.click();
-                        setTimeout(function () {
-                            downloadbaihat.click();
-                            setTimeout(function () {
-                                downloadbaihat.click();
-                            }, 1000);
-                        }, 1000);
-                    }, 1000);
-                }, 1000);
-            }, 1000);
+            //$("#loaddingdownload").css("display", "block");
+            //var downloadbaihat = document.getElementById("btntext");
+            //setTimeout(function () {
+            //    downloadbaihat.click();
+            //    $("#loaddingdownload1").css("display", "block");
+            //    setTimeout(function () {
+            //        downloadbaihat.click();
+            //        setTimeout(function () {
+            //            downloadbaihat.click();
+            //            setTimeout(function () {
+            //                downloadbaihat.click();
+            //                setTimeout(function () {
+            //                    downloadbaihat.click();
+            //                }, 1000);
+            //            }, 1000);
+            //        }, 1000);
+            //    }, 1000);
+            //}, 1000);
+        $("#loading_main").css("display", "block");
             dataservice.downloadBaiHatVeMayNguoiDung($scope.texttaixuong, function (rs) {
                 rs = rs.data;
                 $scope.downloadBaiHatVeMayNguoiDung = rs;
@@ -3273,8 +3286,9 @@ app.controller('Ctrl_ESEIM', function ($scope, dataservice, $uibModal, $rootScop
                             dataservice.xoaNhacDaTaiXuong($scope.texttaixuong, function () {
                                 rs = rs.data;
                                 $scope.xoaNhacDaTaiXuong = rs;
-                                $("#loaddingdownload").css("display", "none");
-                                $("#loaddingdownload1").css("display", "none");
+                                //$("#loaddingdownload").css("display", "none");
+                                //$("#loaddingdownload1").css("display", "none");
+                                $("#loading_main").css("display", "none");
                             });
                         }, 1000);
 
@@ -3409,7 +3423,7 @@ app.controller('Ctrl_ESEIM', function ($scope, dataservice, $uibModal, $rootScop
     //$scope.subtextMenuPlayList = '<div id="subtextmenuplaylist-node" class="menu add-playlist-content submenu-content"><ul class="menu-list"><li class="search-box"><input class="input" placeholder="Tìm playlist"></li><li class="mar-t-10"><button class="zm-btn button" tabindex="0"><i class="icon ic- z-ic-svg ic-svg-add"></i><span>Tạo playlist mới</span></button></li></ul><div class="playlist-container"><div class="top-shadow "></div><div class="content"><div style="position: relative; background-color: #6a39af; overflow: hidden; width: 105%; height: 100%;"><div style="position: absolute; inset: 0px; overflow: hidden scroll; margin-right: -6px; margin-bottom: 0px;"><ul class="menu-list"><li><button class="zm-btn button" tabindex="0"><i class="icon ic-list-music"></i><span>dsa</span></button></li><li><button class="zm-btn button" tabindex="0"><i class="icon ic-list-music"></i><span>Ok</span></button></li><li><button class="zm-btn button" tabindex="0"><i class="icon ic-list-music"></i><span>Playlist #3</span></button></li><li><button class="zm-btn button" tabindex="0"><i class="icon ic-list-music"></i><span>Playlist #2</span></button></li><li><button class="zm-btn button" tabindex="0"><i class="icon ic-list-music"></i><span>Fill</span></button></li></ul></div><div class="track-horizontal" style="position: absolute; height: 6px; transition: opacity 200ms ease 0s; opacity: 0;"><div style="position: relative; display: block; height: 100%; cursor: pointer; border-radius: inherit; background-color: rgba(0, 0, 0, 0.2); width: 0px;"></div></div><div class="track-vertical" style="position: absolute; width: 4px; transition: opacity 200ms ease 0s; opacity: 0; right: 2px; top: 2px; bottom: 2px; z-index: 100;"><div class="thumb-vertical" style="position: relative; display: block; width: 100%; height: 0px;"></div></div></div></div></div></div>';
     //$scope.subtextMenuChiaSe = '<div id="subtextmenuchiase-node" class="menu share-content submenu-content"><ul class="menu-list"><li><button class="zm-btn button" tabindex="0" ng-click="share()"><i class="icon ic-list-music"></i><span>Chia Sẻ FB</span></button></li><li><button class="zm-btn button" tabindex="0"><i class="icon ic-list-music"></i><span>Chia Sẻ ZaLo</span></button></li></ul></div>';
     $scope.share = function () {
-      //  u = "https://localhost:44348/#/baihat/" + $scope.baihatCookie.id;
+        //  u = "https://localhost:44348/#/baihat/" + $scope.baihatCookie.id;
         u = window.location.origin + "/#/baihat/" + $scope.baihatCookie.id;
 
         t = $scope.baihatCookie.tenbaihat;
@@ -4305,11 +4319,11 @@ app.controller('canhan', function ($scope, dataservice, $rootScope, $location, $
                 /*  $scope.valueDanhSachPhatTheLoai = rs[0].id;*/
             });
         }
-   
+
     }
 
     $scope.initData();
-   
+
     $scope.theoDoi_Canhan = function (theodoi) {
         $("#loading_main").css("display", "block");
         if ($rootScope.checklogin.dadangnhap) {
@@ -4841,7 +4855,7 @@ app.controller('nghesi', function ($scope, $routeParams, dataservice, $rootScope
                 $scope.checkindexli = 0;
             }
 
-            if ($scope.checkindexsecond >= $scope.listDaTaiLenNgheSi.length ) {
+            if ($scope.checkindexsecond >= $scope.listDaTaiLenNgheSi.length) {
                 $scope.checkindexsecond = 0;
             }
 
@@ -4989,14 +5003,14 @@ app.directive("animate", function () {
             //  e.preventDefault();
             var cart = $('.shopping-cart');
             var imgtodrag = $(this).parent('.item').find("img").eq(0).removeAttr("hidden");
-          
+
             if (imgtodrag) {
 
                 var imgclone = imgtodrag.clone()
                     .offset({
                         top: imgtodrag.offset().top,
                         left: imgtodrag.offset().left,
-                        
+
                     })
                     .removeClass()
                     .css({
@@ -5030,7 +5044,7 @@ app.directive("animate", function () {
                 }, function () {
                     $(this).detach()
                 });
-                
+
             }
             /*imgtodrag.css("display", "none");*/
 
@@ -6588,13 +6602,13 @@ app.controller('playlist', function ($rootScope, $scope, $routeParams, $cookies,
             uid: $rootScope.checklogin.uid,
             danhsachphatnguoidung_id: ''
         }
-      //  $scope.modelThemBaiHatVaoDSPNguoiDung.baihat_id = $scope.baihatCookie.id;
+        //  $scope.modelThemBaiHatVaoDSPNguoiDung.baihat_id = $scope.baihatCookie.id;
         $scope.modelThemBaiHatVaoDSPNguoiDung.danhsachphatnguoidung_id = $routeParams.id;
         dataservice.xoaBaiHatKhoiDSPNguoiDung_Playlist($scope.modelThemBaiHatVaoDSPNguoiDung, function (rs) {
             rs = rs.data;
             $scope.xoaBaiHatKhoiDSPNguoiDung_Playlist = rs;
             alertify.success("Xóa thành công.");
-           // alert("Xóa thành công");
+            // alert("Xóa thành công");
         });
     };
     // yêu thích bài hát khi click bên taiDSBaiHatTheoDSPNguoiDung
@@ -6843,7 +6857,7 @@ app.controller('playlist', function ($rootScope, $scope, $routeParams, $cookies,
             uid: $rootScope.checklogin.uid,
             danhsachphatnguoidung_id: ''
         }
-      //  $scope.modelThemBaiHatVaoDSPNguoiDung.baihat_id = data.id;
+        //  $scope.modelThemBaiHatVaoDSPNguoiDung.baihat_id = data.id;
         $scope.modelThemBaiHatVaoDSPNguoiDung.danhsachphatnguoidung_id = $routeParams.id;
         $scope.text.key = data.id;
         // $scope.text.uid = $routeParams.id;

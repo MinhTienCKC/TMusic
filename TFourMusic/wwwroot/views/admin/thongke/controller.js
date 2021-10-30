@@ -140,6 +140,7 @@ app.controller('index', function ($rootScope, $scope, dataservice, $uibModal, Ex
             if ($scope.numberOfPages() < 8) {
                 $scope.soLuong = $scope.numberOfPages();
             }
+            $scope.tongTien = 0;
             for (var i = 0; i < $scope.taiThongKe.length; i++) {
                 $scope.tongTien += $scope.taiThongKe.hdtt[i].giatien;
             }

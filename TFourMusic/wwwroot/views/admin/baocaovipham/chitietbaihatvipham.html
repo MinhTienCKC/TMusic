@@ -12,11 +12,11 @@
                 <thead class="bg-light">
                     <tr>
                         <th scope="col" class="border-0 " style="width: 20%;">Bài Hát Vi Phạm</th>
-                        <th scope="col" class="border-0 ">Nội Dung</th>
+                        <th scope="col" class="border-0 ">Nội Dung Vi Phạm</th>
                         <th scope="col" class="border-0" style="width: 8%;">Mô Tả</th>
                         <th scope="col" class="border-0">Phát Nhạc</th>
                         <th scope="col" class="border-0" title="Vô hiệu hóa bài hát">VHH Bài Hát</th>
-                        <th ng-show="data.email_nguoidung_baocao != 'admin'" scope="col" class="border-0" title="Vô hiệu hóa người dùng">Người Dùng</th>
+                        <th ng-show="data.email_nguoidung_baocao != 'admin'" scope="col" class="border-0" title="Người Dùng Vi Phạm">ND Vi Phạm</th>
                     </tr>
                 </thead>
                 <tbody>
@@ -31,7 +31,7 @@
                         <td class="vitrigiua"><p ng-repeat="data1 in data.noidung " style="margin-bottom: 0px !important;">{{data1}}</p></td>
                         <td class="vitrigiua">{{data.motavande}}</td>
                         <td class="vitrigiua1">
-                            <audio controls>
+                            <audio controls style=" border-radius: 20px; border: 1px solid;">
                                 <source src="{{taiBaiHatViPham[0].link}}" type="audio/mpeg">
                             </audio>
                         </td>
@@ -80,7 +80,7 @@
                             </div>
                         </td>
                         <td class="vitrigiua2">
-                            <audio controls>
+                            <audio controls style=" border-radius: 20px; border: 1px solid;">
                                 <source src="{{taiBaiHatBangQuyen[0].link}}" type="audio/mpeg">
                             </audio>
                         </td>

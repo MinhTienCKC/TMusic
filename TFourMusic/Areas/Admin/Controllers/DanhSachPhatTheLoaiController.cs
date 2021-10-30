@@ -222,6 +222,19 @@ namespace TFourMusic.Controllers
                 var firebase = new FirebaseClient(Key);
 
                 // add new item to list of data and let the client generate new key for you (done offline)
+                var datatop20 = LayBangTop20(item.theloai_id);
+                var top20 = (from t20 in datatop20
+                             where t20.danhsachphattheloai_id.Equals(item.id)
+                             select t20).ToList();
+                top20[0].mota = item.mota;
+                top20[0].tentop20 = "Top 20 " + item.tendanhsachphattheloai;
+                await firebase
+                  .Child("csdlmoi")
+                      .Child("danhsachphat")
+                       .Child("danhsachphattop20")
+                       .Child(item.theloai_id)
+                       .Child(top20[0].id)
+                 .PutAsync(top20[0]);
 
                 await firebase
                    .Child("csdlmoi")
@@ -495,6 +508,15 @@ namespace TFourMusic.Controllers
                 {
                     var xoaHinhAnhStorage = xoaStorageBangLink(item.linkhinhanhcu.ToString());
                 }
+                var datatop20 = LayBangTop20(item.theloai_id);
+                var top20 = (from t20 in datatop20
+                             where t20.danhsachphattheloai_id.Equals(item.danhsachphattheloai_id)
+                             select t20).ToList();
+                if (top20[0].linkhinhanh == item.linkhinhanhcu)
+                {
+                    client = new FireSharp.FirebaseClient(config);
+                    object p1 = client.Set("csdlmoi/danhsachphat/danhsachphattop20/" + item.theloai_id + "/" + top20[0].id + "/" + "linkhinhanh", item.linkhinhanhmoi);
+                }
                 client = new FireSharp.FirebaseClient(config);
                 object p = client.Set("csdlmoi/danhsachphat/danhsachphattheloai/" + item.theloai_id + "/" + item.danhsachphattheloai_id + "/" + "linkhinhanh", item.linkhinhanhmoi);
                 success = true;
@@ -570,7 +592,7 @@ namespace TFourMusic.Controllers
                           where bh1.danhsachphattheloai_id != key.ToString() && bh1.daxoa == 0 && bh1.chedo == 1
                           select bh1 ).ToList();
 
-            return Json(di123lieu);
+            return Json(di123lieu.OrderByDescending(x => x.thoigian));
         }
         [HttpPost]
         // tải danh sách bài hát đã thêm vào dsp thể loại bằng tay (Đã Thêm)
