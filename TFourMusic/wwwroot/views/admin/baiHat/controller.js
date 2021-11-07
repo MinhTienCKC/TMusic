@@ -426,11 +426,12 @@ app.controller('index', function ($rootScope, $scope, dataservice, $uibModal, $f
             }
         });
         modalInstance.result.then(function () {
-            $scope.initData();
+          
             //setTimeout(function () {
                
             //}, 1500);
         }, function () {
+                $scope.initData();
         });
     };
     $scope.thungrac = function () {
