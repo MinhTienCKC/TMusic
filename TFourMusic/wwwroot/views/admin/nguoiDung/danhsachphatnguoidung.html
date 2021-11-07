@@ -5,7 +5,13 @@
     <input type="text" ng-model="timkiemdanhsachphat.tendanhsachphat" name="addTenBaiHat" class="input_upload_baihat" id="feLastName12" maxlength="255" value="Brooks" placeholder="Tìm theo tên danh sách phát">
 </div>
 <div class="modal-body">
-    <form>
+    <div ng-show="xemDanhSachPhatNguoiDung == 0" class="container no-content mar-0">
+        <div class="no-content-box">
+            <i class="fa fa-music" style="font-size: 80px; margin-bottom: 20px;"></i>
+            <span class="no-content-text">Không có danh sách phát !!!</span>
+        </div>
+    </div>
+    <form ng-show="xemDanhSachPhatNguoiDung > 0">
         <div class="card-body p-0 pb-3 text-center">
             <table class="table mb-0" style=" max-height: 433px; height: 433px !important;">
                 <thead class="">
@@ -26,7 +32,7 @@
                         <td style=" padding: 1.3em 0.3em 0.3em 0.3em;"><span class="chinhsua">{{data.thoigian | date:'dd-MM-yyyy HH:mm:ss '}}</span></td>
                         <td class="vitrigiua" style=" pointer-events: none;">
                             <label class="switch1">
-                                <input  type="checkbox" ng-model="data.chedo"
+                                <input type="checkbox" ng-model="data.chedo"
                                        ng-true-value="1" ng-false-value="0">
                                 <!--<span class="slider1 round"></span>-->
                                 <span ng-if="data.chedo == 1" class="slider1 round" title="Đã vô hiệu hóa"></span>
@@ -50,7 +56,7 @@
         </div>
 
 
-        
+
     </form>
 </div>
 <div class="modal-footer" style="margin:0px 0px 0px 0px;">
@@ -72,6 +78,30 @@
     <button type="submit" ng-click="cancel()" class="package__btn123">Thoát</button>
 </div>
 <style>
+    .no-content.container {
+        width: 100%;
+    }
+
+    .mar-0 {
+        margin: 0 !important;
+    }
+
+    .container {
+        flex-grow: 1;
+        margin: 0 auto;
+        position: relative;
+        width: 100%;
+    }
+    .no-content.container .no-content-box {
+        width: 100%;
+        padding: 30px 0;
+        min-height: 220px;
+        background-color: hsla(0,0%,100%,0.1);
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+    }
     .sotrang {
         -webkit-appearance: media-slider;
         cursor: pointer;

@@ -263,13 +263,19 @@ app.controller('index', function ($rootScope, $scope, dataservice, $uibModal) {
     };
     
     
-
-    $scope.xoaChuDe = function (data) {
+    alertify.set('notifier', 'position', 'bottom-left');
+    $scope.xoaChuDe = function (data, vitritheloai) {
     
         dataservice.xoaChuDe(data, function (rs) {
             rs = rs.data;
             $scope.xoaChuDe = rs;
-           
+            if (rs == true) {
+                alertify.success("Xóa Thành Công");
+                $scope.xoaChuDe.splice(vitritheloai, 1);
+            }
+            else {
+                alertify.success("Xóa Thất Bại");
+            }
         });
 
     }

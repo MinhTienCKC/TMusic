@@ -3956,6 +3956,9 @@ namespace TFourMusic.Controllers
 
                     client = new FireSharp.FirebaseClient(config);
                     SetResponse response = client.Set("csdlmoi/baihat/" + baihat.nguoidung_id + "/" + baihat.id +"/"+ "daxoa", 1);
+                    //client = new FireSharp.FirebaseClient(config);
+                    //object p = client.Set("csdlmoi/baihat/" + item.nguoidung_id + "/" + item.id + "/" + "daxoa", 1);
+                    object tg = client.Set("csdlmoi/baihat/" + baihat.nguoidung_id + "/" + baihat.id + "/" + "thoigianxoa", DateTime.Now.AddMonths(1));
                     return true;
                 }
                 else
