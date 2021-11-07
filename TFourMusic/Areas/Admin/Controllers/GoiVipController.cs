@@ -142,6 +142,139 @@ namespace TFourMusic.Controllers
 
             return Json(success);
         }
+        [HttpPost]
+        public async Task<IActionResult> xoaVinhVienGoiVip([FromBody] goivipModel item)
+        {
+            bool success = true;
+
+            try
+            {
+                var chitiethoadon = LayBangHoaDonThanhToan();
+                var kt = (from cthd in chitiethoadon
+                          where cthd.loaigoivip_id == item.id
+                          select cthd).ToList();
+                if (kt.Count == 0 )
+                {
+                    var xoaHinhAnhStorage = xoaStorageBangLink(item.linkhinhanh.ToString());
+
+                    var firebase = new FirebaseClient(Key);
+                    await firebase
+                        .Child("csdlmoi")
+                        .Child("goivip")
+                       .Child(item.id)
+                       .DeleteAsync();
+                    success = true;
+                }
+                else
+                {
+                    success = false;
+                }
+               
+               
+
+
+
+            }
+            catch (Exception ex)
+            {
+                success = false;
+            }
+
+            return Json(success);
+        }
+        public List<hoadonthanhtoanModel> LayBangHoaDonThanhToan(string uid = null)
+        {
+            if (uid == null)
+            {
+                client = new FireSharp.FirebaseClient(config);
+                FirebaseResponse response = client.Get("csdlmoi/hoadonthanhtoan");
+                var data = JsonConvert.DeserializeObject<dynamic>(response.Body);
+                var list = new List<hoadonthanhtoanModel>();
+
+                if (data != null)
+                {
+                    foreach (var item in data)
+                    {
+                        foreach (var x in item)
+                        {
+                            foreach (var y in x)
+
+                            {
+                                list.Add(JsonConvert.DeserializeObject<hoadonthanhtoanModel>(((JProperty)y).Value.ToString()));
+
+                            }
+
+                        }
+
+                    }
+                }
+                return list;
+            }
+            else
+            {
+                client = new FireSharp.FirebaseClient(config);
+                FirebaseResponse response = client.Get("csdlmoi/hoadonthanhtoan/" + uid);
+                var data = JsonConvert.DeserializeObject<dynamic>(response.Body);
+                var list = new List<hoadonthanhtoanModel>();
+
+                if (data != null)
+                {
+                    foreach (var item in data)
+                    {
+                        list.Add(JsonConvert.DeserializeObject<hoadonthanhtoanModel>(((JProperty)item).Value.ToString()));
+
+                    }
+                }
+                return list;
+            }
+        }
+        [HttpPost]
+        public async Task<IActionResult> khoiPhucGoiVip([FromBody] goivipModel item)
+        {
+            bool success = true;
+
+            try
+            {
+               
+                var firebase = new FirebaseClient(Key);
+                var goivip = await firebase
+             .Child("csdlmoi")
+             .Child("goivip")
+             .OnceAsync<goivipModel>();
+                var data = (from tl in goivip
+                            where tl.Object.trangthai == 0
+                            select tl.Object).ToList();
+                if ( data.Count <= 4)
+                {
+                    client = new FireSharp.FirebaseClient(config);
+                    object p = client.Set("csdlmoi/goivip/" + item.id + "/" + "trangthai", 0);
+                    success = true;
+                }
+                else
+                {
+                    return Json("loi5");
+                }
+              
+                //var xoaHinhAnhStorage = xoaStorageBangLink(item.linkhinhanh.ToString());
+
+                //var firebase = new FirebaseClient(Key);
+                //await firebase
+                //    .Child("csdlmoi")
+                //    .Child("goivip")
+                //   .Child(item.id)
+                //   .DeleteAsync();
+                success = true;
+
+
+
+            }
+            catch (Exception ex)
+            {
+                success = false;
+            }
+
+            return Json(success);
+        }
         public class BienTam
         {
             public string linkhinhanhmoi { get; set; }
@@ -259,7 +392,25 @@ namespace TFourMusic.Controllers
 
             return Json(data);
         }
+        [HttpPost]
+        public async Task<IActionResult> thungRacGoiVip()
+        {
 
+            var firebase = new FirebaseClient(Key);
+
+            // add new item to list of data and let the client generate new key for you (done offline)
+            var goivip = await firebase
+              .Child("csdlmoi")
+              .Child("goivip")
+              .OnceAsync<goivipModel>();
+            var data = (from tl in goivip
+                        where tl.Object.trangthai == 1
+                        select tl.Object).ToList();
+
+
+
+            return Json(data);
+        }
         [HttpPost]
         public async Task<IActionResult> GetLinkHinhAnh([FromForm] IFormCollection file)
         {

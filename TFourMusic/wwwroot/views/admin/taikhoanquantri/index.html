@@ -140,30 +140,32 @@
 <div class="main-content-container container-fluid px-4">
     <!-- Page Header -->
     <div class="page-header row no-gutters py-4" style="padding-bottom: 0.1rem!important;">
-        <div class="col-12 col-sm-4 text-center text-sm-left mb-0">
-            <button id="" type="submit" ng-click="taoTaiKhoanQuanTri_index()" class="btn btn-accent " style=""><i class="fa fa-plus"></i>  Tạo Tài Khoản</button>
+        <div class="col-12 col-sm-4 text-center text-sm-left mb-0" style=" display: flex; flex-direction: row; flex-wrap: nowrap;     height: 35px;">
+            <button id="" type="submit" ng-click="taoTaiKhoanQuanTri_index()" class="btn btn-accent " style="margin-right:5px;"><i class="fa fa-plus"></i>  Tạo Tài Khoản</button>
             <button type="submit" ng-show="!hienTimKiem" ng-click="showSearch();currentPage = 0;" class="btn btn-accent " style=" font-size: 0.75rem; width: 95px;"><i class="fa fa-search"></i>  Tìm Kiếm</button>
             <!--<button id="" type="submit" ng-click="thungrac()" class="btn btn-accent " style="left: 223%; position: inherit;"><i class="fa fa-trash"></i>  Thùng rác</button>-->
 
+            <input ng-show="hienTimKiem" type="text" ng-model="timkiem.taikhoan" class="form-control " id="feLastName23" placeholder="Tìm theo tài khoản" value="Brooks" ng-change="currentPage = 0;">
+            <button ng-show="hienTimKiem" type="submit" ng-click="showSearch(); timkiem.taikhoan = '';" class="btn btn-accent" style="margin:0px 5px;">Ẩn Tìm Kiếm</button>
 
 
         </div>
        
     </div>
-    <div class="page-header row no-gutters py-4" style="padding-top: 0rem !important; padding-bottom: 0.1rem!important;" ng-show="hienTimKiem">
+    <!--<div class="page-header row no-gutters py-4" style="padding-top: 0rem !important; padding-bottom: 0.1rem!important;" ng-show="hienTimKiem">
         <div class="col-12 col-sm-4 text-center text-sm-left mb-0">
             <input type="text" ng-model="timkiem.taikhoan" class="form-control " id="feLastName23" placeholder="Tìm theo tài khoản" value="Brooks" ng-change="currentPage = 0;">
         </div>
-        <div class="col-12 col-sm-4 text-center text-sm-left mb-0">
+        <div class="col-12 col-sm-4 text-center text-sm-left mb-0">-->
 
             <!--<button type="submit"  ng-click="timKiem()" class="btn btn-accent" style="padding: 28px 15px;">Tìm Kiếm</button>-->
-            <button type="submit" ng-click="showSearch(); timkiem.taikhoan = '';" class="btn btn-accent" style="padding: 10px 10px; margin-left: 10px;">Ẩn Tìm Kiếm</button>
+            <!--<button type="submit" ng-click="showSearch(); timkiem.taikhoan = '';" class="btn btn-accent" style="padding: 10px 10px; margin-left: 10px;">Ẩn Tìm Kiếm</button>
 
 
         </div>
 
 
-    </div>
+    </div>-->
     <!-- End Page Header -->
     <!-- Default Light Table -->
     <div class="row">

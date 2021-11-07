@@ -5,7 +5,7 @@
         <div class="col-12 col-sm-4 text-center text-sm-left mb-0">
             <button id="" type="submit" ng-click="taoBaiHat_index()" class="btn btn-accent " style=""><i class="fa fa-plus"></i>  Tạo bài hát</button>
             <button type="submit" ng-show="!hienTimKiem" ng-click="showSearch();currentPage = 0;" class="btn btn-accent " style=" font-size: 0.75rem; width: 95px;"><i class="fa fa-search"></i>  Tìm Kiếm</button>
-            <button id="" type="submit" ng-click="thungrac()" class="btn btn-accent " style="left: 223%; position: inherit;"><i class="fa fa-trash"></i>  Thùng rác</button>
+            <button id="" ng-style="{ left: hienTimKiem ? '246%' : '223%' }" type="submit" ng-click="thungrac()" class="btn btn-accent " style="left: 223%; position: inherit;"><i class="fa fa-trash"></i>  Thùng rác</button>
 
 
 

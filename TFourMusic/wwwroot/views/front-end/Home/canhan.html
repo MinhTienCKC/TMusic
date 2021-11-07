@@ -204,7 +204,7 @@
                 <div style="display: flex; padding-top: 20px;">
                     <button ng-click="doiemail = false" style="display: flex; justify-content: center; align-items: center; font-weight: 400; background-color: #ffffff1a; border: 1px solid #ffffff1a; color: rgb(255 255 255); margin: 0 auto;" class="button_create_playlist">Hủy</button>
 
-                    <button ng-click="doiEmailTaiKhoan(matkhauemailcu,emailmoi)" ng-disabled="matkhauemailcu.length < 6 || matkhauemailcu.length < 6 || emailmoi.length < 6 " ng-class="{'disable_button': matkhauemailcu.length < 6 || matkhauemailcu.length < 6  ||matkhauemailcu.length < 6  }" class="button_create_playlist"> Xác nhận</button>
+                    <button ng-click="doiEmailTaiKhoan(matkhauemailcu)" ng-disabled="matkhauemailcu.length < 6 || matkhauemailcu.length < 6 || emailmoi.length < 6 " ng-class="{'disable_button': matkhauemailcu.length < 6 || matkhauemailcu.length < 6  ||matkhauemailcu.length < 6  }" class="button_create_playlist"> Xác nhận</button>
                 </div>
             </div>
         </div>
@@ -1010,8 +1010,11 @@
                                     </div>
 
                                 </div>
+                                <!--<textarea ng-model="ChinhSualoiBaiHat" name="okem1" class="textarea_uploadbaihat" rows="8" cols="100">
+            </textarea>-->
 
                             </div>
+                            <textarea class="input_playlist " validatekitudacbiet ng-model="loiBaiHatEdit" maxlength="350" type="text" style="height: 206px;border-radius:10px; margin-top: 50px" placeholder="Nhập Lời Bài Hát" />
 
                         </div>
 

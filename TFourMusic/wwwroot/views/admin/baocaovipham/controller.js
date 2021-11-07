@@ -619,7 +619,7 @@ app.controller('chitietbaihatvipham', function ($rootScope, $scope, $uibModalIns
         dataservice.voHieuHoaNguoiDung(data, function (rs) {
             rs = rs.data;
             if (rs == "") {
-                alertify.success("Tài khoản Admin mới thực hiện chức năng này !!!");
+                alertify.success("Tài khoản phân quyền Admin mới thực hiện chức năng này !!!");
                 if (data.vohieuhoa == 1) {
                     data.vohieuhoa = 0;
                 }
@@ -784,7 +784,7 @@ app.controller('chitietnguoidungvipham', function ($rootScope, $scope, $uibModal
         dataservice.voHieuHoaNguoiDung(data, function (rs) {
             rs = rs.data;
             if (rs == "") {
-                alertify.success("Tài khoản Admin mới thực hiện chức năng này !!!");
+                alertify.success("Tài khoản phân quyền Admin mới thực hiện chức năng này !!!");
                 if (data.vohieuhoa == 1) {
                     data.vohieuhoa = 0;
                 }

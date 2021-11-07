@@ -190,13 +190,14 @@ app.controller('index', function ($rootScope, $scope, dataservice, $uibModal) {
         dataservice.voHieuHoa(data, function (rs) {
             rs = rs.data;
             if (rs == "") {
-                alertify.success("Tài khoản Admin mới thực hiện chức năng này !!!");
+                alertify.success("Tài khoản phân quyền Admin mới thực hiện chức năng này !!!");
                 if (data.vohieuhoa == 1) {
                     data.vohieuhoa = 0;
                 }
                 else {
                     data.vohieuhoa = 1;
                 }
+                $("#loading_main").css("display", "none");
                 return;
             }
             if (rs == true) {
