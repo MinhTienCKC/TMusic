@@ -396,8 +396,9 @@ namespace TFourMusic.Controllers
                     || item.theothang.Month == 3
                     || item.theothang.Month == 5
                     || item.theothang.Month == 7
-                    || item.theothang.Month == 9
-                    || item.theothang.Month == 11
+                    || item.theothang.Month == 8
+                    || item.theothang.Month == 10
+                        || item.theothang.Month == 12
                    )
                 {
                    
@@ -412,10 +413,9 @@ namespace TFourMusic.Controllers
                     return Json(data);
                 }
                 else if (item.theothang.Month == 4
-                    || item.theothang.Month == 6
-                    || item.theothang.Month == 8
-                    || item.theothang.Month == 10
-                    || item.theothang.Month == 12)
+                    || item.theothang.Month == 6                
+                    || item.theothang.Month == 9
+                    || item.theothang.Month == 11)
                 {
                     for (int i = 1; i < 31; i++)
                     {

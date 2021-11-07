@@ -1518,8 +1518,8 @@ namespace TFourMusic.Controllers
             bool success = true;
             var heThong = User.Identity as ClaimsIdentity;
             var phanQuyen = heThong.Claims.FirstOrDefault(c => c.Type == ClaimTypes.Role).Value;
-            if (phanQuyen == "Admin")
-            {
+            //if (phanQuyen == "Admin")
+            //{
                
                 try
                 {
@@ -1623,11 +1623,11 @@ namespace TFourMusic.Controllers
                 }
 
                 return Json(success);
-            }
-            else
-            {
-                return Json("");
-            }
+            //}
+            //else
+            //{
+            //    return Json("");
+            //}
         }
         [HttpPost]
         public async Task<IActionResult> voHieuHoaBaiHatNguoiDung([FromBody] baihatModel item)

@@ -1,16 +1,33 @@
-﻿using Firebase.Database;
-using Microsoft.AspNetCore.Authorization;
-using Microsoft.AspNetCore.Hosting;
+﻿
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.Extensions.Logging;
 using System;
 using System.Collections.Generic;
-using System.Diagnostics;
-using System.IO;
 using System.Linq;
-using System.Net;
 using System.Threading.Tasks;
+using System.Web;
+using Newtonsoft.Json;
 using TFourMusic.Models;
+
+using Microsoft.Extensions.Logging;
+using System.Diagnostics;
+using Firebase.Auth;
+using System.Threading;
+using Firebase.Storage;
+using System.IO;
+using Microsoft.AspNetCore.Hosting;
+using Microsoft.AspNetCore.Http;
+using Firebase.Database;
+
+
+using FirebaseConfig123 = Firebase.Auth.FirebaseConfig;
+//using FirebaseConfig = Firebase.Auth.FirebaseConfig;
+using Firebase.Database.Query;
+using Microsoft.AspNetCore.Authorization;
+using System.Net;
+using FireSharp.Interfaces;
+using FireSharp.Response;
+using Newtonsoft.Json.Linq;
+using System.Security.Claims;
 
 namespace TFourMusic.Controllers
 {
@@ -50,6 +67,24 @@ namespace TFourMusic.Controllers
             public string linknhac { get; set; }
             public string tentaixuong { get; set; }
             public string key { get; set; }
+        }
+        [HttpPost]
+        public async Task<IActionResult> kiemTraPhanQuyen()
+        {
+
+
+            var heThong = User.Identity as ClaimsIdentity;
+            var phanQuyen = heThong.Claims.FirstOrDefault(c => c.Type == ClaimTypes.Role).Value;
+            if (phanQuyen == "Admin")
+            {
+                return Json(1);
+            }
+            else
+            {
+                return Json(2);
+            }
+
+
         }
         [HttpPost]
 

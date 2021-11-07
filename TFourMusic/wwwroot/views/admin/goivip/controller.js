@@ -7,6 +7,9 @@ app.factory('dataservice', function ($http) {
         taiGoiVip: function (callback) {
             $http.post('/Admin/GoiVip/taiGoiVip').then(callback);
         },
+        thungRacGoiVip: function (callback) {
+            $http.post('/Admin/GoiVip/thungRacGoiVip').then(callback);
+        },
         xoaGoiVip: function (data, callback) {
             $http.post('/Admin/GoiVip/xoaGoiVip', data).then(callback);
         },
@@ -20,7 +23,12 @@ app.factory('dataservice', function ($http) {
         taoGoiVip: function (data, callback) {
             $http.post('/Admin/GoiVip/taoGoiVip', data).then(callback);
         },
-
+        xoaVinhVienGoiVip: function (data, callback) {
+            $http.post('/Admin/GoiVip/xoaVinhVienGoiVip', data).then(callback);
+        },
+        khoiPhucGoiVip: function (data, callback) {
+            $http.post('/Admin/GoiVip/khoiPhucGoiVip', data).then(callback);
+        },
         uploadHinhAnh: function (data, callback) {
             $http({
                 method: 'post',
@@ -345,6 +353,31 @@ app.controller('index', function ($rootScope, $scope, dataservice, $uibModal) {
         //}
 
     }
+    $scope.thungrac = function () {
+
+        var modalInstance = $uibModal.open({
+
+            templateUrl: ctxfolderurl + '/thungrac.html',
+            controller: 'thungrac',
+
+            backdropClass: ".fade:not(.show)",
+            backdropClass: ".modal-backdrop",
+            backdropClass: ".col-lg-8",
+            backdropClass: ".modal-content",
+
+            size: '10'
+
+        });
+        modalInstance.result.then(function () {
+            $scope.initData();
+            //setTimeout(function () {
+
+            //}, 1500);
+        }, function () {
+
+        });
+
+    };
 });
 app.controller('add', function ($rootScope, $scope, dataservice, $uibModalInstance) {
     $scope.soThangVuot = 37;
@@ -411,6 +444,8 @@ app.controller('add', function ($rootScope, $scope, dataservice, $uibModalInstan
         var nutao = document.getElementById("btntext");
         nutao.click();
     }
+
+   
 });
 app.controller('edit', function ($rootScope, $scope, $uibModalInstance, dataservice, para) {
     $scope.soThangVuot = 37;
@@ -451,4 +486,129 @@ app.controller('edit', function ($rootScope, $scope, $uibModalInstance, dataserv
             $uibModalInstance.dismiss('cancel');
         }
     }
+});
+app.controller('thungrac', function ($rootScope, $scope, dataservice, $uibModalInstance) {
+    $scope.cancel = function () {
+        $uibModalInstance.dismiss('cancel');
+    };
+
+    $scope.text = {
+        key: ''
+    }
+
+
+    $scope.initData = function () {
+        dataservice.thungRacGoiVip(function (rs) {
+            rs = rs.data;
+            $scope.thungRacGoiVip = rs;
+            $scope.numberOfPages = function () {
+                return Math.ceil($scope.thungRacGoiVip.length / $scope.pageSize);
+            }
+            if ($scope.numberOfPages() < 8) {
+                $scope.soLuong = $scope.numberOfPages();
+            }
+        });
+
+    }
+    $scope.initData();
+    $scope.range = function (n) {
+        return new Array(n);
+    };
+
+    $scope.phanTrang = function (data) {
+        $scope.currentPage = data;
+    };
+
+    $scope.xoaVinhVien = function (data, vitribaihat) {
+
+
+        dataservice.xoaVinhVienGoiVip(data, function (rs) {
+            rs = rs.data;
+            if (rs == true) {
+                alertify.success("Xóa Thành Công");
+                $scope.thungRacGoiVip.splice(vitribaihat, 1);
+            }
+            else {
+                alertify.success("Xóa Thất Bại");
+            }
+
+        });
+    };
+    alertify.set('notifier', 'position', 'bottom-left');
+
+
+    $scope.khoiPhucGoiVip = function (data, vitribaihat) {
+        dataservice.khoiPhucGoiVip(data, function (rs) {
+            rs = rs.data;
+            if (rs == "loi5") {
+                alertify.success("Không Thể Khôi Phục Gói Vip <= 5");
+                return;
+            }
+            if (rs == true) {
+                alertify.success("Khôi Phục Thành Công");
+                $scope.thungRacGoiVip.splice(vitribaihat, 1);
+            }
+            else {
+                alertify.success("Khôi Phục Thất Bại");
+            }
+
+            $scope.initData();
+        });
+    };
+    $scope.currentPage = 0;
+    $scope.pageSize = 5;
+    $scope.size = 0;
+    $scope.soLuong = 8;
+
+    $scope.Truoc = function () {
+        if ($scope.numberOfPages() < 8) {
+            return;
+        }
+        else {
+            if ($scope.size == 0) {
+                return;
+            } else {
+                $scope.size -= 8;
+                $scope.soLuong = 8
+            }
+        }
+
+    }
+    $scope.Sau = function () {
+        if ($scope.numberOfPages() < 8) {
+            return;
+        }
+        else {
+
+            if ($scope.numberOfPages() % 8 == 0) {
+                if ($scope.size + $scope.soLuong >= $scope.numberOfPages())
+                    $scope.size = 0;
+                else {
+                    $scope.size += $scope.soLuong;
+                }
+            }
+            else {
+                $scope.bienTam = $scope.numberOfPages() % 8;
+                $scope.bienTam2 = $scope.numberOfPages() - $scope.bienTam;
+                if ($scope.size + $scope.soLuong == $scope.bienTam2) {
+
+                    $scope.size += 8;
+                    $scope.soLuong = $scope.bienTam;
+                }
+                else if ($scope.size + $scope.soLuong >= $scope.numberOfPages()) {
+                    $scope.size = 0;
+                    $scope.soLuong = 8
+                }
+                else {
+                    $scope.size += 8;
+
+                }
+            }
+        }
+
+
+    }
+
+
+
 });

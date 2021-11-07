@@ -1,4 +1,5 @@
 ﻿
+
 var ctxfolderurl = "/views/front-end/Home";
 
 var app = angular.module('App_ESEIM', ['ui.bootstrap', 'ngRoute', 'slick', 'ngCookies', 'ngAnimate', 'ngSanitize']);
@@ -1644,9 +1645,13 @@ app.controller('Ctrl_ESEIM', function ($scope, dataservice, $uibModal, $rootScop
     }
     $scope.clickBackSongs = function () {
         $scope.sttmusic--;
-        if ($scope.sttmusic < 0)
-            $scope.sttmusic = $scope.slbaihat - 1;
-        $scope.loadmusic($scope.sttmusic);
+        if ($scope.sttmusic < 0) {
+            $scope.sttmusic = 0;
+        }
+        else {
+            $scope.loadmusic($scope.sttmusic);
+        }
+       
     }
     $scope.ramdomSongs = function () {
         $scope.ramdomsong = !$scope.ramdomsong;
@@ -3966,11 +3971,11 @@ app.controller('canhan', function ($scope, dataservice, $rootScope, $location, $
         }
 
     }
-    $scope.doiEmailTaiKhoan = function (matkhaucu, emailmoi) {
+    $scope.doiEmailTaiKhoan = function (matkhaucu) {
         $("#loading_main").css("display", "block");
         var partternEmail = /^([a-zA-Z0-9_\.\-])+\@(([a-zA-Z0-9\-])+\.)+([a-zA-Z0-9]{2,4})+$/;
-        if (matkhaucu.length > 5 && emailmoi.length > 5) {
-            if (emailmoi != '' && emailmoi != null && partternEmail.test(emailmoi)) {
+        if (matkhaucu.length > 5 && $scope.emailmoi != undefined && $scope.emailmoi.length > 5) {
+            if (emailmoi != '' && $scope.emailmoi != null && partternEmail.test($scope.emailmoi)) {
                 var promise = new Promise(function (resolve, reject) {
                     firebase.auth().onAuthStateChanged((user) => {
                         if (user) {
@@ -3994,14 +3999,14 @@ app.controller('canhan', function ($scope, dataservice, $rootScope, $location, $
                     user.reauthenticateWithCredential(credential).then(() => {
 
 
-                        user.updateEmail(emailmoi).then(() => {
+                        user.updateEmail($scope.emailmoi).then(() => {
                             firebase.auth().currentUser.sendEmailVerification()
                                 .then(() => {
                                     // Email verification sent!
                                     // ...
                                 });
                             $scope.text = {
-                                key: emailmoi,
+                                key: $scope.emailmoi,
                                 uid: $rootScope.checklogin.uid
                             }
                             dataservice.ChinhSuaEmail($scope.text, function (rs) {
@@ -4037,6 +4042,10 @@ app.controller('canhan', function ($scope, dataservice, $rootScope, $location, $
 
 
 
+        }
+        else {
+            $("#loading_main").css("display", "none");
+            $scope.saiDuLieuDoiEmail = 2;
         }
 
 
@@ -4469,6 +4478,7 @@ app.controller('canhan', function ($scope, dataservice, $rootScope, $location, $
         }
         $scope.tenBaiHatEdit = $scope.baihatCookie.tenbaihat;
         $scope.casiBaiHatEdit = $scope.baihatCookie.casi;
+        $scope.loiBaiHatEdit = $scope.baihatCookie.loibaihat;
         dataservice.taiDanhSachPhatTheLoai($scope.text, function (rs) {
             rs = rs.data;
             $scope.datataiDanhSachPhatTheLoai = rs;
@@ -4484,6 +4494,7 @@ app.controller('canhan', function ($scope, dataservice, $rootScope, $location, $
         $("#loading_main").css("display", "block");
         $scope.baihatCookie.tenbaihat = $scope.tenBaiHatEdit;
         $scope.baihatCookie.casi = $scope.casiBaiHatEdit;
+        $scope.baihatCookie.loibaihat = $scope.loiBaiHatEdit;
         $scope.baihatCookie.danhsachphattheloai_id = $scope.valueDanhSachPhatTheLoai;
         dataservice.ChinhSuaTenBaiHat($scope.baihatCookie, function (rs) {
             rs = rs.data;

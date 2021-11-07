@@ -30,8 +30,17 @@
                 </thead>
                 <tbody>
                     <tr ng-repeat="data in taiDanhSachBaiHatDaXoa_ThungRac | filter:timkiembaihat | startFrom:currentPage*pageSize | limitTo:pageSize">
-                        <td style=" padding: 1.3em 0.3em 0.3em 0.3em;"><span class="chinhsua">{{data.tenbaihat}}</span></td>
-                        <td style=" padding: 1.3em 0.3em 0.3em 0.3em;"><span class="chinhsua">{{data.casi}}</span></td>
+                        <td style=" padding: 1.3em 0.3em 0.3em 0.3em;">
+                            <!--<span class="chinhsua">{{data.tenbaihat}}</span>-->
+                            <p  class="motadsptl chinhsua" title="{{data.tenbaihat}}" >{{data.tenbaihat}}</p>
+
+                        </td>
+
+                        <td style=" padding: 1.3em 0.3em 0.3em 0.3em;">
+                            <!--<span class="chinhsua">{{data.casi}}</span>-->
+                            <p class="motadsptl chinhsua" title="{{data.casi}}">{{data.casi}}</p>
+
+                        </td>
                         <td><img src="{{data.linkhinhanh}}" class="icon-category hinhanh"></td>
                         <td style=" padding: 1.3em 0.3em 0.3em 0.3em;"><span class="chinhsua">{{data.thoigianxoa | date:'dd/MM/yyyy '}}</span></td>
                         <td style=" padding: 1.3em 0.3em 0.3em 0.3em;"><span class="chinhsua"> <button ng-click="khoiPhucBaiHat(data,$index)" class="package__btnthem"><i class="fa fa-reply"></i></button></span></td>
@@ -203,5 +212,11 @@
     }
     .table td {
         border-top: 1px solid #007bff !important;
+    }
+    .motadsptl {
+        text-overflow: Ellipsis;
+        width: 150px;
+        white-space: nowrap;
+        overflow: hidden;
     }
 </style>

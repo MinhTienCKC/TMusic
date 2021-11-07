@@ -49,7 +49,8 @@ namespace TFourMusic
             services.AddAuthentication(CookieAuthenticationDefaults.AuthenticationScheme)
                 .AddCookie(options => {
                     options.LoginPath = "/Admin/dangnhap";
-                    options.AccessDeniedPath = "/Admin/dangnhap";
+                    options.AccessDeniedPath = "/Admin/TongQuat";
+                    
                 });
         }
 

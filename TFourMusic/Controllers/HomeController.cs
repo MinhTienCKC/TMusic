@@ -2441,7 +2441,7 @@ namespace TFourMusic.Controllers
                         {
                             list[0].luotnghe += 1;
 
-                            SetResponse setresponse = client.Set("csdlmoi/xuhuong/" + DateTime.Now.Year.ToString() + "/" + DateTime.Now.Month.ToString() + "/" + DateTime.Now.Day.ToString() + "/" + list[0].id, list[0]);
+                            SetResponse setresponse = client.Set("csdlmoi/xuhuong/" + DateTime.Now.Year.ToString() + "/" + DateTime.Now.Month.ToString() + "/" + DateTime.Now.Day.ToString() + "/" + list[0].id.ToString(), list[0]);
                             return true;
                         }
                         else
@@ -2629,16 +2629,22 @@ namespace TFourMusic.Controllers
             {
                 foreach (var item in data)
                 {
-                    foreach (var x in item)
+                    if (item != null)
                     {
-                        foreach (var y in x)
-
+                        foreach (var x in item)
                         {
-                            list.Add(JsonConvert.DeserializeObject<xuhuongModel>(((JProperty)y).Value.ToString()));
+                            foreach (var y in x)
+
+                            {
+
+                              //  list.Add( (JsonConvert.DeserializeObject<xuhuongModel>(y)).t);
+                                list.Add(JsonConvert.DeserializeObject<xuhuongModel>(((JProperty)y).Value.ToString()));
+
+                            }
 
                         }
-
-                    }
+                    }    
+                    
 
                 }
             }
