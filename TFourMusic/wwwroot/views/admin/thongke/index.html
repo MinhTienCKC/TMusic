@@ -86,7 +86,7 @@
                                 <th scope="col" class="border-0" style="background:white;"></th>
                                 <th scope="col" class="border-0" style="background:white;"></th>
                                 <th scope="col" class="border-0" style="background:white;">Số Hóa Đơn : {{taiThongKe.length}}</th>
-                                <th scope="col" class="border-0" style="background:white;">Tổng Tiền : {{tongTien | number:'0' | vietNamDong }}</th>
+                                <th scope="col" class="border-0" style="background:white;">Tổng Tiền : {{tongTien  }}</th>
 
 
 
@@ -97,7 +97,7 @@
                                 <td class="vitrigiua">{{($index + 1 * (currentPage*pageSize)) +1 }}</td>
                                 <td class="vitrigiua">{{data.email}}</td>
                                 <td class="vitrigiua">{{data.hdtt.phuongthucthanhtoan}}</td>
-                                <td class="vitrigiua">{{data.hdtt.giatien | number:'0' | vietNamDong}}</td>
+                                <td class="vitrigiua">{{data.hdtt.giatien }}</td>
                                 <td class="vitrigiua">{{data.hdtt.thoigian | date:'dd/MM/yyyy'}}</td>
                                 <td class="vitrigiua" style="width: 100px;">
                                     <p class="motadsptl" title="{{data.hdtt.mota}}">{{data.hdtt.mota}}</p>
@@ -160,7 +160,7 @@
                                 <th style="border: 1px solid black;" scope="col" class="border-0"></th>
                                 <th style="border: 1px solid black;" scope="col" class="border-0"></th>
                                 <th style="border: 1px solid black;" scope="col" class="border-0">Số Hóa Đơn : {{taiThongKe.length}}</th>
-                                <th style="border: 1px solid black;" scope="col" class="border-0">Tổng Tiền : {{tongTien | number:'0' | vietNamDong }}</thstyle="border:>
+                                <th style="border: 1px solid black;" scope="col" class="border-0">Tổng Tiền : {{tongTien  }}</th>
 
 
                             </tr>
@@ -170,7 +170,7 @@
                                 <td style="border: 1px solid black;" class="vitrigiua "><span>{{$index + 1}}</span></td>
                                  <td style="border: 1px solid black;" class="vitrigiua">{{data.email}}</td>
                                 <td style="border: 1px solid black;" class="vitrigiua "><span>{{data.hdtt.phuongthucthanhtoan}}</span></td>
-                                <td style="border: 1px solid black;" class="vitrigiua "><span>{{data.hdtt.giatien | number:'0' | vietNamDong}}</span></td>
+                                <td style="border: 1px solid black;" class="vitrigiua "><span>{{data.hdtt.giatien }}</span></td>
                                 <td style="border: 1px solid black;" class="vitrigiua "><span style="text-align:center;">{{data.hdtt.thoigian | date:'dd/MM/yyyy'}}</span></td>
 
                                 <!--<td class="vitrigiua "><span>{{data.hdtt.tenbaihat}}</span></td>
