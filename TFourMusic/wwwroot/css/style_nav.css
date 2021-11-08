@@ -960,7 +960,7 @@ section .loader span{
 }
 
 .tao_playlist_layout_nangcapvip {
-    z-index: 1000000;
+    z-index: 100;
     /* background-color: hsl(0deg 0% 0% / 80%); */
     /* display: none;*/
     justify-content: center;
