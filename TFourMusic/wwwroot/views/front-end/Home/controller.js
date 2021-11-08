@@ -597,7 +597,6 @@ app.directive('ngLogin', function () {
                                             <label ng-class="{'opacity_validate': form.username.$error.minlength}" class="not_opacity_validate" style="color: red;margin: 1px; margin-left: 10px; font-size:12px;">Họ Tên không được bỏ trống, Họ tên phải hơn 6 kí tự</label>
 
                                             <input ng-change="validatebutton()" style="outline:none;" ng-model="model.hoten" id="hotenlogin" name="username" type="text" maxlength="50" class="input" placeholder="Họ Tên" ng-minlength="6" ng-maxlength="50" required>
-
                                         </div>
                                         <div class="group">
                                             <label for="pass" class="label">Email*</label> <label ng-class="{'opacity_validate': form.email.$error.email}" class="not_opacity_validate" style="color: red;margin: 1px; margin-left: 10px; font-size:12px;">Email không đúng định dạng.</label>
@@ -623,7 +622,7 @@ app.directive('ngLogin', function () {
                                             <label ng-show="taoThatBai" style="color: #ed2b91;margin: 1px; margin-left: 10px; font-size:12px; margin: 10px 5px;">Email bạn nhập đã liên kết với tài khoản khác </label>
 
                                         </div>
-                                        <div class="group"> <button type="submit" ng-disabled="disabledbutton || form.$dirty && form.$invalid" style="outline:none;" class="button" placeholder="Mật Khẩu">Đăng Ký</button> </div>
+                                        <div class="group"> <button type="submit" ng-disabled="disabledbutton || form.$dirty && form.$invalid" style="outline:none;cursor:pointer;" class="button" placeholder="Mật Khẩu">Đăng Ký</button> </div>
                                     </form>
 
                                 </div>
@@ -965,12 +964,7 @@ app.directive('ngShowvip', function () {
                                            
                                         </div>
                                         <img ng-show="maGoiVip==x.id" class="img_package" style="position:absolute" src="https://firebasestorage.googleapis.com/v0/b/tfourmusic-1e3ff.appspot.com/o/image%2Fvip%2Fmain_sprites.png?alt=media&token=28619287-2347-4661-912b-9e9ecef4d22c" />
-
-
                                     </div>
-
-
-
                                 </div>
 
                                 <div class="package__line"></div>
@@ -981,14 +975,10 @@ app.directive('ngShowvip', function () {
                                         <img ng-show="phuongThucThanhToan==1" class="img_thanhtoan_icon" style="position:absolute" src="https://firebasestorage.googleapis.com/v0/b/tfourmusic-1e3ff.appspot.com/o/image%2Fvip%2Fmain_sprites.png?alt=media&token=28619287-2347-4661-912b-9e9ecef4d22c" />
 
                                     </div>
-
-
                                     <div ng-click="phuongThucThanhToan=2" ng-class="{'active_phuongthucthanhtoan': phuongThucThanhToan==2}" class="img_thanhtoan" style="background-image: url(https://firebasestorage.googleapis.com/v0/b/tfourmusic-1e3ff.appspot.com/o/image%2Fvip%2Fpaypal-32-498436.png?alt=media&token=adcc0aad-9283-400f-b730-f22e502bd663);background-size:cover;position:relative;cursor:pointer">
                                         <img ng-show="phuongThucThanhToan==2" class="img_thanhtoan_icon" style="position:absolute" src="https://firebasestorage.googleapis.com/v0/b/tfourmusic-1e3ff.appspot.com/o/image%2Fvip%2Fmain_sprites.png?alt=media&token=28619287-2347-4661-912b-9e9ecef4d22c" />
 
                                     </div>
-
-
                                 </div>
                                 <a ng-show="phuongThucThanhToan==1 && (maGoiVip != null ||  maGoiVip != undefined)" ng-click="$event.preventDefault();thanhToanBangMomo(goiVipThanhToan)" class="package__btn" href="#">THANH TOÁN BẰNG MOMO</a>
                                 <a ng-show="phuongThucThanhToan==2 && (maGoiVip != null ||  maGoiVip != undefined)" ng-click="$event.preventDefault();thanhToanBangPaypal(goiVipThanhToan)" class="package__btn" href="">THANH TOÁN BẰNG PAYPAL</a>
@@ -1019,14 +1009,9 @@ app.directive('ngTaonguoidung', function () {
                             <div>
                                 <h3 style=" font-size: 14px; margin-bottom: 5px; font-weight: 400;">Tạo tài khoản TMusic thành công</h3>
                                 <h3 style=" font-size: 14px; margin-bottom: 5px; font-weight: 400;">Chúng tôi đã gửi email xác thực tài khoản đến email của bạn. Vui lòng xác nhận email để đăng nhập.   </h3>
-
                             </div>
-
-
                         </div>
                         <div style="display: flex; padding-top: 20px;">
-
-
                             <button ng-click="taoThanhCong = !taoThanhCong;closelogin = !closelogin;" style="display: flex; justify-content: center; align-items: center; font-weight: 400; background-color: #ffffff1a; border: 1px solid #ffffff1a; color: rgb(255 255 255); margin: 0 auto;" class="button_create_playlist">Thoát</button>
                             <button ng-click="dangNhapEmailvaPass(model.email, model.matkhau);" class="button_create_playlist">
                                 Đăng Nhập Ngay
@@ -1176,11 +1161,6 @@ app.controller('Ctrl_ESEIM', function ($scope, dataservice, $uibModal, $rootScop
                                     $rootScope.checklogin.mota = rs.mota;
                                     $rootScope.checklogin.vip = rs.vip;
                                     $rootScope.checklogin.hansudungvip = rs.hansudungvip;
-
-
-
-
-
                                     //  $cookies.putObject("user", $rootScope.checklogin);
                                     var playlist = ''; // contexxtmenu
                                     dataservice.getPlaylist_CaNhan($rootScope.checklogin.uid, function (rs) {
@@ -1200,7 +1180,6 @@ app.controller('Ctrl_ESEIM', function ($scope, dataservice, $uibModal, $rootScop
 
                                 }
                             })
-
 
                             //// 29/07
                             //dataservice.taiTheLoaiKetHopDanhSachPhatTheLoaiMoi($rootScope.checklogin.uid, function (rs) {
@@ -1780,7 +1759,6 @@ app.controller('Ctrl_ESEIM', function ($scope, dataservice, $uibModal, $rootScop
     //}
 
 
-
     $scope.upLoadNhac = function () {
         if ($rootScope.checklogin.dadangnhap) {
             if ($scope.listBaiHatDaTaiLen.lenght <= 50 || $scope.listBaiHatDaTaiLen.lenght == undefined || $rootScope.checklogin.vip == 1) {
@@ -1841,10 +1819,11 @@ app.controller('Ctrl_ESEIM', function ($scope, dataservice, $uibModal, $rootScop
 
 
         if ($scope.model.gioitinh == 1) {
-            $scope.model.gioitinh = "Nam"
+            $scope.model.gioitinh = "Nam";
         }
         else
-            $scope.model.gioitinh = "Nữ"
+            $scope.model.gioitinh = "Nữ";
+        $scope.model.matkhau = "";
         dataservice.taoTaiKhoan($scope.model, function (rs) {
             rs = rs.data;
             $scope.kq = rs;
@@ -3975,7 +3954,7 @@ app.controller('canhan', function ($scope, dataservice, $rootScope, $location, $
         $("#loading_main").css("display", "block");
         var partternEmail = /^([a-zA-Z0-9_\.\-])+\@(([a-zA-Z0-9\-])+\.)+([a-zA-Z0-9]{2,4})+$/;
         if (matkhaucu.length > 5 && $scope.emailmoi != undefined && $scope.emailmoi.length > 5) {
-            if (emailmoi != '' && $scope.emailmoi != null && partternEmail.test($scope.emailmoi)) {
+            if ($scope.emailmoi != '' && $scope.emailmoi != null && partternEmail.test($scope.emailmoi)) {
                 var promise = new Promise(function (resolve, reject) {
                     firebase.auth().onAuthStateChanged((user) => {
                         if (user) {

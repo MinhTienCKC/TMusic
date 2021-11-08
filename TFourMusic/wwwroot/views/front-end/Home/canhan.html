@@ -324,14 +324,14 @@
         </div>
     </div>
     <div class="list_nhac_da_luu">
-        <div ng-if="listBaiHatYeuThich.length ==0" class="container page-search">
+        <!--<div ng-if="listBaiHatYeuThich.length ==0" class="container page-search">
             <div class="container no-content mar-t-30">
                 <div class="no-content-box">
                     <i class="icon main-icon ic-svg-dics-music-icon"></i>
                     <span class="no-content-text">Không có kết quả được tìm thấy</span>
                 </div>
             </div>
-        </div>
+        </div>-->
         <div ng-if="listBaiHatYeuThich.length > 0" class="item_nhac_da_luu" ng-class="{'active_baihat_timkiem' : kiemTraBaiHatDangPhat == x.id}" ng-repeat="x in listBaiHatYeuThich" animate context-menu="contextMenuBaiHat_BaiHat" ng-right-click="moChiTietBaiHat(x)">
             <div class="border_nhac_luu">
                 <div class="media_luu">
@@ -673,14 +673,14 @@
             </div>
 
         </div>
-        <div ng-if="listDaTaiXuong_CaNhan.length ==0" class="container page-search">
+        <!--<div ng-if="listDaTaiXuong_CaNhan.length ==0" class="container page-search">
             <div class="container no-content mar-t-30">
                 <div class="no-content-box">
                     <i class="icon main-icon ic-svg-dics-music-icon"></i>
                     <span class="no-content-text">Không Có Kết Quả Được Tìm Thấy</span>
                 </div>
             </div>
-        </div>
+        </div>-->
         <div ng-if="listDaTaiXuong_CaNhan.length > 0" class="item_nhac_da_luu" ng-class="{'active_baihat_timkiem' : kiemTraBaiHatDangPhat==x.id  }" ng-repeat="x in listDaTaiXuong_CaNhan" animate context-menu="contextMenuBaiHat_BaiHat" ng-right-click="moChiTietBaiHat(x)">
             <div class="border_nhac_luu">
                 <div class="media_luu_baihat">
@@ -877,14 +877,14 @@
             </div>
 
         </div>
-        <div ng-if="listBaiHatDaTaiLen.length ==0" class="container page-search">
+        <!--<div ng-if="listBaiHatDaTaiLen.length ==0" class="container page-search">
             <div class="container no-content mar-t-30">
                 <div class="no-content-box">
                     <i class="icon main-icon ic-svg-dics-music-icon"></i>
                     <span class="no-content-text">Không Có Kết Quả Được Tìm Thấy </span>
                 </div>
             </div>
-        </div>
+        </div>-->
         <div ng-if="listBaiHatDaTaiLen.length > 0" class="item_nhac_da_luu" ng-class="{'active_baihat_timkiem' : kiemTraBaiHatDangPhat==x.id  }" ng-repeat="x in listBaiHatDaTaiLen" animate context-menu="contextMenuBaiHat_CaNhan" ng-right-click="moChiTietBaiHat(x)">
             <div class="border_nhac_luu">
                 <div class="media_luu_baihat">
@@ -960,11 +960,7 @@
 
             </div>
         </div>
-
-
-
     </div>
-
 </div>
 <div class="zm-portal-modal" ng-show="chinhSuaBaiHat">
     <div class="modal_comment is-active">

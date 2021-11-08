@@ -36,14 +36,14 @@
                     </div>
 
                 </div>
-                <div ng-if="listDaTaiLenNgheSi.length ==0" class="container page-search">
+                <!--<div ng-if="listDaTaiLenNgheSi.length ==0" class="container page-search">
                     <div class="container no-content mar-t-30">
                         <div class="no-content-box">
                             <i class="icon main-icon ic-svg-dics-music-icon"></i>
                             <span class="no-content-text">Không có kết quả được tìm thấy</span>
                         </div>
                     </div>
-                </div>
+                </div>-->
                 <div ng-if="listDaTaiLenNgheSi.length >0" class="cloumn_baihat_kq">
                     <div class="top_kq">
                         <div>
@@ -122,14 +122,14 @@
     <h1 style=" padding: 20px;" class="titleis-2">
         <span>Bài Hát Nổi Bật</span>
     </h1>
-    <div ng-if="listDaTaiLenNgheSi.length ==0" class="container page-search">
+    <!--<div ng-if="listDaTaiLenNgheSi.length ==0" class="container page-search">
         <div class="container no-content mar-t-30">
             <div class="no-content-box">
                 <i class="icon main-icon ic-svg-dics-music-icon"></i>
                 <span class="no-content-text">Không có kết quả được tìm thấy</span>
             </div>
         </div>
-    </div>
+    </div>-->
     <div ng-if="listDaTaiLenNgheSi.length >0" class="zm-section song-animate-section">
 
         <ul class="songs-animate-container" animate>
@@ -194,14 +194,14 @@
         </h1>
 
     </div>
-    <div ng-if="listDSPNgheSi.length ==0" class="container page-search">
+    <!--<div ng-if="listDSPNgheSi.length ==0" class="container page-search">
         <div class="container no-content mar-t-30">
             <div class="no-content-box">
                 <i class="icon main-icon ic-svg-dics-music-icon"></i>
                 <span class="no-content-text">Không có kết quả được tìm thấy</span>
             </div>
         </div>
-    </div>
+    </div>-->
     <div ng-if="listDSPNgheSi.length > 0 && tabactiveIndex == 0" class="danh_sach_phat_account">
         <div class="button_nextplaylist">
             <a href="" class="btn-next" ng-click="nextPlaylist()"><i class="fa fa-chevron-right" aria-hidden="true"></i></a>
@@ -250,8 +250,6 @@
                     </div>
                 </div>
             </div>
-
-
         </div>
     </div>
 </div>
@@ -260,14 +258,14 @@
     <h1 style=" padding: 20px;" class="titleis-2">
         <span>Bài Hát</span>
     </h1>
-    <div ng-if="listDaTaiLenNgheSi.length ==0" class="container page-search">
+    <!--<div ng-if="listDaTaiLenNgheSi.length ==0" class="container page-search">
         <div class="container no-content mar-t-30">
             <div class="no-content-box">
                 <i class="icon main-icon ic-svg-dics-music-icon"></i>
                 <span class="no-content-text">Không có kết quả được tìm thấy</span>
             </div>
         </div>
-    </div>
+    </div>-->
     <div ng-if="listDaTaiLenNgheSi.length > 0 " class="list_bhnghesi_tab">
 
         <div class="item_nhac_da_luu_timkiem animate" ng-class="{'active_baihat_timkiem' : kiemTraBaiHatDangPhat == x.id}" ng-repeat="x in listDaTaiLenNgheSi" context-menu="contextMenuBaiHat_BaiHat" ng-right-click="moChiTietBaiHat(x)">
@@ -287,8 +285,6 @@
 
                                 <i class="fas fa-play icon_play_timkiem"></i>
                             </label>
-
-
                         </div>
                         <div class="info_da_luu">
                             <span class="ten_bai_hat_da_luu">{{x.tenbaihat}}</span>
