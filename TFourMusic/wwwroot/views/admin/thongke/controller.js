@@ -110,7 +110,8 @@ app.controller('index', function ($rootScope, $scope, dataservice, $uibModal, Ex
             $scope.tongTien = 0;
 
             for (var i = 0; i < $scope.taiThongKe.length; i++) {
-                $scope.tongTien +=$scope.taiThongKe[i].hdtt.giatien;
+                $scope.tongTien += $scope.taiThongKe[i].hdtt.giatien;
+                console.log($scope.taiThongKe[i]);
                // console.log($scope.taiThongKe[i].hdtt.giatien);
             }
         });
@@ -144,6 +145,7 @@ app.controller('index', function ($rootScope, $scope, dataservice, $uibModal, Ex
             $scope.tongTien = 0;
             for (var i = 0; i < $scope.taiThongKe.length; i++) {
                 //  $scope.tongTien += $scope.taiThongKe.hdtt[i].giatien;
+                console.log($scope.taiThongKe[i]);
                 $scope.tongTien += $scope.taiThongKe[i].hdtt.giatien;
             }
         });
