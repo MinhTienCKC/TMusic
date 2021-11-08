@@ -110,7 +110,7 @@ app.controller('index', function ($rootScope, $scope, dataservice, $uibModal, Ex
             $scope.tongTien = 0;
 
             for (var i = 0; i < $scope.taiThongKe.length; i++) {
-                $scope.tongTien += parseFloat($scope.taiThongKe[i].hdtt.giatien);
+                $scope.tongTien += parseFloat($scope.taiThongKe[i].hdtt.giatien.toString());
             }
         });
     }
@@ -143,7 +143,7 @@ app.controller('index', function ($rootScope, $scope, dataservice, $uibModal, Ex
             $scope.tongTien = 0;
             for (var i = 0; i < $scope.taiThongKe.length; i++) {
                 //  $scope.tongTien += $scope.taiThongKe.hdtt[i].giatien;
-                $scope.tongTien += parseFloat($scope.taiThongKe[i].hdtt.giatien);
+                $scope.tongTien += parseFloat($scope.taiThongKe[i].hdtt.giatien.toString());
             }
         });
         

@@ -166,7 +166,7 @@
                             </tr>
                         </thead>
                         <tbody>
-                            <tr  ng-repeat="data in taiThongKe">
+                            <tr  ng-repeat="data in taiThongKe track by $index">
                                 <td style="border: 1px solid black;" class="vitrigiua "><span>{{$index + 1}}</span></td>
                                  <td style="border: 1px solid black;" class="vitrigiua">{{data.email}}</td>
                                 <td style="border: 1px solid black;" class="vitrigiua "><span>{{data.hdtt.phuongthucthanhtoan}}</span></td>
