@@ -52,7 +52,7 @@
     </div>
     <!-- End Page Header -->
     <!-- Default Light Table -->
-    <div class="row" ng-if="taiThongKe.length <= 0 ">
+    <div class="row" ng-show="taiThongKe.length <= 0 ">
         <div class="col">
             <div class="card card-small mb-4 dodai" style="height: 570px!important; max-height: 570px!important;">                
                 <div style=" display: flex; flex-wrap: wrap; flex-direction: column;" class="card-body p-0 pb-3 text-center">
@@ -63,7 +63,7 @@
             </div>
         </div>
     </div>
-    <div class="row" ng-if="taiThongKe.length > 0 ">
+    <div class="row" ng-show="taiThongKe.length > 0 ">
         <div class="col">
             <div class="card card-small mb-4 dodai" style="height: 570px!important; max-height: 570px!important;">               
                 <div class="card-body p-0 pb-3 text-center">
