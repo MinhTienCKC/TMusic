@@ -1,4 +1,4 @@
-﻿var ctxfolderurl = "/views/admin/QuangCao";
+﻿var ctxfolderurl = "/views/admin/quangCao";
 
 var app = angular.module('T_Music', ["ui.bootstrap", "ngRoute"]);
 //var app = angular.module('T_Music', ["ui.bootstrap", "ngRoute", "ngValidate", "datatables", "datatables.bootstrap", 'datatables.colvis', "ui.bootstrap.contextMenu", 'datatables.colreorder', 'angular-confirm', "ngJsTree", "treeGrid", "ui.select", "ngCookies", "pascalprecht.translate"])
@@ -268,7 +268,7 @@ app.controller('index', function ($rootScope, $scope, dataservice, $uibModal) {
 
 
 
-    $scope.xoaQuangCao = function (data) {
+    $scope.xoaQuangCao = function (data, vitribaihat) {
         if ($scope.taiQuangCao.length <= 4) {
             alertify.success("Không thể xóa tổng số quảng cáo lớn hơn bằng 4 !!!");
             return;

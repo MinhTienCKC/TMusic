@@ -85,19 +85,19 @@
                                 <th scope="col" class="border-0" style="background:white;"></th>
                                 <th scope="col" class="border-0" style="background:white;"></th>
                                 <th scope="col" class="border-0" style="background:white;"></th>
-                                <th scope="col" class="border-0" style="background:white;">Số Hóa Đơn : {{taiThongKe.length}}</th>
-                                <th scope="col" class="border-0" style="background:white;">Tổng Tiền : {{tongTien  }}</th>
+                                <th scope="col" class="border-0" style="background:white;">Số Hóa Đơn : {{taiThongKeDoanhThu.tonghoadon}}</th>
+                                <th scope="col" class="border-0" style="background:white;">Tổng Tiền : {{taiThongKeDoanhThu.tongtien | number:'0' | vietNamDong }}</th>
 
 
 
                             </tr>
                         </thead>
                         <tbody>
-                            <tr style="" ng-repeat="data in taiThongKe | filter:timkiem | startFrom:currentPage*pageSize | limitTo:pageSize">
+                            <tr style="" ng-repeat="data in taiThongKe  | filter:timkiem | startFrom:currentPage*pageSize | limitTo:pageSize">
                                 <td class="vitrigiua">{{($index + 1 * (currentPage*pageSize)) +1 }}</td>
                                 <td class="vitrigiua">{{data.email}}</td>
                                 <td class="vitrigiua">{{data.hdtt.phuongthucthanhtoan}}</td>
-                                <td class="vitrigiua">{{data.hdtt.giatien }}</td>
+                                <td class="vitrigiua">{{data.hdtt.giatien | number:'0' | vietNamDong}}</td>
                                 <td class="vitrigiua">{{data.hdtt.thoigian | date:'dd/MM/yyyy'}}</td>
                                 <td class="vitrigiua" style="width: 100px;">
                                     <p class="motadsptl" title="{{data.hdtt.mota}}">{{data.hdtt.mota}}</p>
@@ -111,7 +111,7 @@
             </div>
         </div>
     </div>
-    <div class="row" style="padding:0px 0px 0px 15px" ng-if="taiThongKe.length > 0 ">
+    <div class="row" style="padding:0px 0px 0px 15px" ng-show="taiThongKe.length > 0 ">
         <!--{{currentPage+1}}/{{numberOfPages()}}-->
         <nav aria-label="Page navigation example">
             <ul class="pagination pagination-primary" style="padding-left: 0px;">
@@ -159,18 +159,18 @@
                                 <th style="border: 1px solid black;" scope="col" class="border-0"></th>
                                 <th style="border: 1px solid black;" scope="col" class="border-0"></th>
                                 <th style="border: 1px solid black;" scope="col" class="border-0"></th>
-                                <th style="border: 1px solid black;" scope="col" class="border-0">Số Hóa Đơn : {{taiThongKe.length}}</th>
-                                <th style="border: 1px solid black;" scope="col" class="border-0">Tổng Tiền : {{tongTien  }}</th>
+                                <th style="border: 1px solid black;" scope="col" class="border-0">Số Hóa Đơn : {{taiThongKeDoanhThu.tonghoadon}}</th>
+                                <th style="border: 1px solid black;" scope="col" class="border-0">Tổng Tiền : {{taiThongKeDoanhThu.tongtien | number:'0' | vietNamDong }}</th>
 
 
                             </tr>
                         </thead>
                         <tbody>
-                            <tr  ng-repeat="data in taiThongKe track by $index">
+                            <tr  ng-repeat="data in taiThongKe ">
                                 <td style="border: 1px solid black;" class="vitrigiua "><span>{{$index + 1}}</span></td>
                                  <td style="border: 1px solid black;" class="vitrigiua">{{data.email}}</td>
                                 <td style="border: 1px solid black;" class="vitrigiua "><span>{{data.hdtt.phuongthucthanhtoan}}</span></td>
-                                <td style="border: 1px solid black;" class="vitrigiua "><span>{{data.hdtt.giatien }}</span></td>
+                                <td style="border: 1px solid black;" class="vitrigiua "><span>{{data.hdtt.giatien | number:'0' | vietNamDong}}</span></td>
                                 <td style="border: 1px solid black;" class="vitrigiua "><span style="text-align:center;">{{data.hdtt.thoigian | date:'dd/MM/yyyy'}}</span></td>
 
                                 <!--<td class="vitrigiua "><span>{{data.hdtt.tenbaihat}}</span></td>
@@ -178,7 +178,7 @@
                                 <td class="vitrigiua">{{data.hdtt.phuongthucthanhtoan}}</td>
                                 <td class="vitrigiua">{{data.hdtt.giatien | number:'0' | vietNamDong}}</td>
                                 <td class="vitrigiua">{{data.hdtt.thoigian | date:'dd/MM/yyyy'}}</td>-->
-                                <td style="border: 1px solid black;" class="vitrigiua" style="width: 100px;">
+                                <td style="border: 1px solid black; width: 100px;" class="vitrigiua" >
                                     <p class="motadsptl" title="{{data.hdtt.mota}}">{{data.hdtt.mota}}</p>
 
                                 </td>

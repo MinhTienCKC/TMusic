@@ -1,4 +1,4 @@
-﻿var ctxfolderurl = "/views/admin/thongke";
+﻿var ctxfolderurl = "/views/admin/thongKe";
 
 var app = angular.module('T_Music', ["ui.bootstrap", "ngRoute"]);
 //var app = angular.module('T_Music', ["ui.bootstrap", "ngRoute", "ngValidate", "datatables", "datatables.bootstrap", 'datatables.colvis', "ui.bootstrap.contextMenu", 'datatables.colreorder', 'angular-confirm', "ngJsTree", "treeGrid", "ui.select", "ngCookies", "pascalprecht.translate"])
@@ -8,7 +8,9 @@ app.factory('dataservice', function ($http) {
         taiThongKe: function (data,callback) {
             $http.post('/Admin/ThongKe/taiThongKe',data).then(callback); 
         },
-       
+        taiThongKeDoanhThu: function (data, callback) {
+            $http.post('/Admin/ThongKe/taiThongKeDoanhThu', data).then(callback);
+        },
        
         
         
@@ -107,13 +109,22 @@ app.controller('index', function ($rootScope, $scope, dataservice, $uibModal, Ex
             if ($scope.numberOfPages() < 8) {
                 $scope.soLuong = $scope.numberOfPages();
             }
-            $scope.tongTien = 0;
+         
+            //$scope.tongTien = 0;
+            //var tientien = 0;
+            //for (var i = 0; i < $scope.taiThongKe.length; i++) {
+            //    $scope.tongTien += $scope.taiThongKe[i].hdtt.giatien;
+            //    //  $scope.tongTien += Math.floor($scope.taiThongKe.hdtt[i].giatien);
+            // //   $scope.tongTien += parseFloat($scope.taiThongKe.hdtt[i].giatien.toString());
+            //  //  tientien += $scope.taiThongKe[i].hdtt.giatien;
+            //  //  $scope.tongTien = tientien;
+            //}
+            dataservice.taiThongKeDoanhThu($scope.model, function (rs) {
 
-            for (var i = 0; i < $scope.taiThongKe.length; i++) {
-                $scope.tongTien += $scope.taiThongKe[i].hdtt.giatien;
-                console.log($scope.taiThongKe[i]);
-               // console.log($scope.taiThongKe[i].hdtt.giatien);
-            }
+                rs = rs.data;
+                $scope.taiThongKeDoanhThu = rs;
+               
+            });
         });
     }
     //$scope.filterNumber = function (val) {
@@ -142,12 +153,26 @@ app.controller('index', function ($rootScope, $scope, dataservice, $uibModal, Ex
             if ($scope.numberOfPages() < 8) {
                 $scope.soLuong = $scope.numberOfPages();
             }
-            $scope.tongTien = 0;
-            for (var i = 0; i < $scope.taiThongKe.length; i++) {
-                //  $scope.tongTien += $scope.taiThongKe.hdtt[i].giatien;
-                console.log($scope.taiThongKe[i]);
-                $scope.tongTien += $scope.taiThongKe[i].hdtt.giatien;
-            }
+            dataservice.taiThongKeDoanhThu($scope.model, function (rs) {
+
+                rs = rs.data;
+                $scope.taiThongKeDoanhThu = rs;
+
+            });
+           // $scope.tongTien = 0;
+           // var tientien = 0;
+           // for (var i = 0; i < $scope.taiThongKe.length; i++) {
+           //// $scope.tongTien += $scope.taiThongKe.hdtt[i].giatien;
+           //     // $scope.tongTien += Math.ceil($scope.taiThongKe[i].hdtt.giatien);
+           // /*    $scope.tongTien += parseFloat($scope.taiThongKe.hdtt[i].giatien);*/
+           //     tientien += $scope.taiThongKe[i].hdtt.giatien;
+           //     $scope.tongTien = tientien;
+           // }
+            //$scope.tongTien = 0;
+           
+            //for (var i = 0; i < $scope.taiThongKe.length; i++) {
+            //    $scope.tongTien += $scope.taiThongKe[i].hdtt.giatien;
+            //}
         });
         
     };

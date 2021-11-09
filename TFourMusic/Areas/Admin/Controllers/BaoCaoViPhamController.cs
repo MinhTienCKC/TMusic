@@ -104,6 +104,31 @@ namespace TFourMusic.Controllers
                                    select nd).ToList();
                 var baihatbaocao = LayBangBaoCaoBaiHatChuaXuLy();
                 var nguoidung = LayBangNguoiDung();
+                var firebase = new FirebaseClient(Key);
+                foreach (var item in dsndvpdaxoa)
+                {
+                    await firebase
+                 .Child("csdlmoi")
+                 .Child("baocao")
+                 .Child("nguoidungvipham")
+                 .Child("daxuly")
+                 .Child("khongvipham")
+                 .Child(item.nguoidung_id)
+                 .Child(item.id)
+                 .DeleteAsync();
+                }
+                foreach (var item in dsbhvpdaxoa)
+                {
+                    await firebase
+                 .Child("csdlmoi")
+                 .Child("baocao")
+                 .Child("baihatvipham")
+                 .Child("daxuly")
+                 .Child("khongvipham")
+                 .Child(item.nguoidung_id)
+                 .Child(item.id)
+                 .DeleteAsync();
+                }
                 nguoidungModel admin = new nguoidungModel();
                 admin.uid = "admin";
                 admin.email = "admin";
@@ -1428,7 +1453,7 @@ namespace TFourMusic.Controllers
                 var data = LayChiTietBangBaoCaoNguoiDungDaXuLy_ViPham(item.nguoidung_id, item.id);
                 var nguoidung = LayBangNguoiDung(data.nguoidung_baocao_id);
                 client = new FireSharp.FirebaseClient(config);
-                object p123 = client.Set("csdlmoi/baocao/nguoidungvipham/daxuly/vipham" + item.nguoidung_id + "/" + item.id + "/" + "ngayxuly", DateTime.Now);
+                object p123 = client.Set("csdlmoi/baocao/nguoidungvipham/daxuly/vipham/" + item.nguoidung_id + "/" + item.id + "/" + "ngayxuly", DateTime.Now);
                 if ( nguoidung[0].vohieuhoa == 1)
                 {
 
