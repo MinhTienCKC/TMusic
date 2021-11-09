@@ -1,4 +1,4 @@
-﻿var ctxfolderurl = "/views/admin/GoiVip";
+﻿var ctxfolderurl = "/views/admin/goiVip";
 
 var app = angular.module('T_Music', ["ui.bootstrap", "ngRoute"]);
 //var app = angular.module('T_Music', ["ui.bootstrap", "ngRoute", "ngValidate", "datatables", "datatables.bootstrap", 'datatables.colvis', "ui.bootstrap.contextMenu", 'datatables.colreorder', 'angular-confirm', "ngJsTree", "treeGrid", "ui.select", "ngCookies", "pascalprecht.translate"])
@@ -114,6 +114,15 @@ app.filter('startFrom', function () {
         if (!input || !input.length) { return; }
         start = +start; //parse to int
         return input.slice(start);
+    }
+});
+app.filter('vietNamDong', function () {
+    return function (val) {
+        var ret = (val) ? val.toString().replace(",", ".") : null;
+        var ret2 = (ret) ? ret.toString().replace(",", ".") : null;
+        var ret3 = (ret) ? ret.toString().replace(",", ".") : null;
+        var ret4 = (ret) ? ret.toString().replace(",", ".") : null;
+        return ret4 + " VNĐ";
     }
 });
 app.config(function ($routeProvider) {

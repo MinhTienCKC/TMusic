@@ -191,6 +191,8 @@ namespace TFourMusic.Controllers
                                 where DateTime.Parse(hoadon1.hdtt.thoigian.ToString("dd-MM-yyyy")) >= ngaybatdau 
                                       && DateTime.Parse(hoadon1.hdtt.thoigian.ToString("dd-MM-yyyy")) <= ngayketthuc
                                  select hoadon1).ToList();
+
+
                     return Json(hdttd.OrderByDescending(x => x.hdtt.thoigian));
                 }
                 else if(item.hientimkiem == "theothang") 
@@ -216,6 +218,95 @@ namespace TFourMusic.Controllers
             }
            
             
+        }
+        public class doanhthu
+        {
+            public float tongtien { get; set; }
+            public float tonghoadon { get; set; }
+
+        }
+        [HttpPost]
+        public async Task<IActionResult> taiThongKeDoanhThu([FromBody] modelthongke item)
+        {
+            var hoadonthanhtoan1 = LayBangHoaDonThanhToan();
+            var nguoidung = LayBangNguoiDung();
+            var hoadon = from hdtt in hoadonthanhtoan1
+                         join nd in nguoidung on hdtt.nguoidung_id equals nd.uid
+                         select new { hdtt, email = nd.email };
+            var hoadonthanhtoan = (from hdtt in hoadon
+                                   select hdtt).ToList();
+            //var hdtt = (from bh in hoadonthanhtoan
+            //            where DateTime.Parse(bh.thoigian.ToString("MM-yyyy")) == DateTime.Parse(DateTime.Now.ToString("MM/yyyy"))
+            //            select bh).ToList();
+            try
+            {
+                if (item.hientimkiem == "theongay")
+                {
+                    DateTime ngaybatdau = DateTime.Parse(item.ngaybatdau.ToString("dd-MM-yyyy"));
+                    DateTime ngayketthuc = DateTime.Parse(item.ngayketthuc.ToString("dd-MM-yyyy"));
+                    var hdttd = (from hoadon1 in hoadonthanhtoan
+                                 where DateTime.Parse(hoadon1.hdtt.thoigian.ToString("dd-MM-yyyy")) >= ngaybatdau
+                                       && DateTime.Parse(hoadon1.hdtt.thoigian.ToString("dd-MM-yyyy")) <= ngayketthuc
+                                 select hoadon1).ToList();
+
+                    doanhthu dt = new doanhthu();
+                   
+
+                    
+
+
+                    int ng = 0;
+               
+                    foreach (var n in hdttd)
+                    {
+                        ng += n.hdtt.giatien;
+                    }
+                    dt.tongtien = ng;
+                    dt.tonghoadon = hdttd.Count();
+                    return Json(dt);
+                }
+                else if (item.hientimkiem == "theothang")
+                {
+                    DateTime theothang = DateTime.Parse(item.theothang.ToString("MM-yyyy"));
+                    var hdttd = (from hoadon1 in hoadonthanhtoan
+                                 where DateTime.Parse(hoadon1.hdtt.thoigian.ToString("MM-yyyy")) == theothang
+                                 select hoadon1).ToList();
+                    int ng = 0;
+                    doanhthu dt = new doanhthu();
+                    foreach (var n in hdttd)
+                    {
+                        ng += n.hdtt.giatien;
+                    }
+                    dt.tongtien = ng;
+                    dt.tonghoadon = hdttd.Count();
+                    return Json(dt);
+                  //  return Json(hdttd.OrderByDescending(x => x.hdtt.thoigian));
+                }
+                else
+                {
+                    int theonam = item.theonam.Year;
+                    var hdttd = (from hoadon1 in hoadonthanhtoan
+                                 where hoadon1.hdtt.thoigian.Year == theonam
+                                 select hoadon1).ToList();
+
+                    int ng = 0;
+                    doanhthu dt = new doanhthu();
+                    foreach (var n in hdttd)
+                    {
+                        ng += n.hdtt.giatien;
+                    }
+                    dt.tongtien = ng;
+                    dt.tonghoadon = hdttd.Count();
+                    return Json(dt);
+                  //  return Json(hdttd.OrderByDescending(x => x.hdtt.thoigian));
+                }
+            }
+            catch (Exception ex)
+            {
+                return Json(ex.Message.ToString());
+            }
+
+
         }
         [HttpPost]
         public async Task<IActionResult> taiBangDanhSachPhatTheLoai()

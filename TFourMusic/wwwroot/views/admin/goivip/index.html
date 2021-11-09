@@ -78,8 +78,8 @@
                                     </label>
                                 </td>
                                 <td class="vitrigiua "><span>{{data.sothang}}</span></td>
-                                <td class="vitrigiua "><span>{{data.giatiengoc | currency:"":0}} VNĐ</span></td>
-                                <td class="vitrigiua "><span>{{data.giatiengiamgia | currency:"":0}} VNĐ</span></td>
+                                <td class="vitrigiua "><span>{{data.giatiengoc | number:'0' | vietNamDong}} </span></td>
+                                <td class="vitrigiua "><span>{{data.giatiengiamgia | number:'0' | vietNamDong}} </span></td>
 
                                 <!--<td class="vitrigiua"> <button ng-click="edit(data)" style="width: 25px; height: 25px; padding: 0px;-webkit-box-shadow: 0 2px 5px 0 rgba(85,168,253,0.45);" class="btn btn-accent blue "><i class="fa fa-edit"></i></button>       </td>-->
                                 <td class="vitrigiua"> <button type="submit" ng-click="xoaGoiVip(data,($index + ((currentPage+1)*pageSize)-pageSize))" style="width: 25px; height: 25px; padding: 0px;-webkit-box-shadow: 0 2px 5px 0 rgba(230,60,95,0.45)" class="btn btn-accent red "><i class="fa fa-trash"></i></button></td>

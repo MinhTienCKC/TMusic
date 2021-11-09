@@ -221,9 +221,9 @@
                 <div class="card-body p-0 d-flex"  style=" background: #ffc107;">
                     <div class="d-flex flex-column m-auto">
                         <div class="stats-small__data text-center">
-                            <span class="stats-small__label text-uppercase">Doanh Thu Theo Ngày ({{taiThongKe.ngay.length}})</span>
+                            <span class="stats-small__label text-uppercase">Doanh Thu Theo Ngày ({{taiThongKe123.ngay.tonghoadon}})</span>
                             <span class="">{{date | date:'dd/MM/yyyy'}}</span>
-                            <h6 class="stats-small__value count my-3">{{tongTienNgay | number:'0' | vietNamDong }}</h6>
+                            <h6 class="stats-small__value count my-3">{{taiThongKe123.ngay.tongtien | number:'0' | vietNamDong }}</h6>
                         </div>
                         <!--<div class="stats-small__data">
                             <span class="stats-small__percentage stats-small__percentage--increase">4.7%</span>
@@ -238,9 +238,9 @@
                 <div class="card-body p-0 d-flex"  style=" background: #ffc107;">
                     <div class="d-flex flex-column m-auto">
                         <div class="stats-small__data text-center">
-                            <span class="stats-small__label text-uppercase">Doanh Thu Theo Tháng ({{taiThongKe.thang.length}})</span>
+                            <span class="stats-small__label text-uppercase">Doanh Thu Theo Tháng ({{taiThongKe123.thang.tonghoadon}})</span>
                             <span class="">{{date | date:'MM/yyyy'}}</span>
-                            <h6 class="stats-small__value count my-3">{{tongTienThang | number:'0' | vietNamDong }}</h6>
+                            <h6 class="stats-small__value count my-3">{{taiThongKe123.thang.tongtien | number:'0' | vietNamDong }}</h6>
                         </div>
                         <!--<div class="stats-small__data">
                             <span class="stats-small__percentage stats-small__percentage--increase">12.4%</span>
@@ -255,9 +255,9 @@
                 <div class="card-body p-0 d-flex" style=" background: #ffc107;">
                     <div class="d-flex flex-column m-auto">
                         <div class="stats-small__data text-center">
-                            <span class="stats-small__label text-uppercase">Doanh Thu Theo Năm ({{taiThongKe.nam.length}})</span>
+                            <span class="stats-small__label text-uppercase">Doanh Thu Theo Năm ({{taiThongKe123.nam.tonghoadon}})</span>
                             <span class="">{{date | date:'yyyy'}}</span>
-                            <h6 class="stats-small__value count my-3">{{tongTienNam | number:'0' | vietNamDong }}</h6>
+                            <h6 class="stats-small__value count my-3">{{taiThongKe123.nam.tongtien   | number:'0' | vietNamDong }}</h6>
                         </div>
                         <!--<div class="stats-small__data">
                             <span class="stats-small__percentage stats-small__percentage--decrease">3.8%</span>

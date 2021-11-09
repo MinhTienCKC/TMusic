@@ -177,6 +177,89 @@ namespace TFourMusic.Controllers
             public List<hoadonthanhtoanModel> thang { get; set; }
             public List<hoadonthanhtoanModel> nam { get; set; }
         }
+        public class doanhthu
+        {
+            public float tongtien { get; set; }
+            public float tonghoadon { get; set; }
+           
+        }
+        public class hoadon1
+        {
+            public doanhthu ngay { get; set; }
+            public doanhthu thang { get; set; }
+            public doanhthu nam { get; set; }
+        }
+        [HttpPost]
+        public async Task<IActionResult> taiThongKe123([FromBody] modelthongke item)
+        {
+
+
+          
+            var firebase = new FirebaseClient(Key);
+           
+            var hoadonthanhtoan1 = LayBangHoaDonThanhToan();
+           
+
+
+
+
+            try
+            {
+                DateTime ngaybatdau = DateTime.Parse(item.ngaybatdau.ToString("dd-MM-yyyy"));
+                DateTime ngayketthuc = DateTime.Parse(item.ngayketthuc.ToString("dd-MM-yyyy"));
+                var hdttd1 = (from hoadon1 in hoadonthanhtoan1
+                              where DateTime.Parse(hoadon1.thoigian.ToString("dd-MM-yyyy")) >= ngaybatdau
+                                    && DateTime.Parse(hoadon1.thoigian.ToString("dd-MM-yyyy")) <= ngayketthuc
+                              select hoadon1).ToList();
+                DateTime theothang = DateTime.Parse(item.theothang.ToString("MM-yyyy"));
+                var hdttd2 = (from hoadon1 in hoadonthanhtoan1
+                              where DateTime.Parse(hoadon1.thoigian.ToString("MM-yyyy")) == theothang
+                              select hoadon1).ToList();
+
+                int theonam = item.theonam.Year;
+                var hdttd3 = (from hoadon1 in hoadonthanhtoan1
+                              where hoadon1.thoigian.Year == theonam
+                              select hoadon1).ToList();
+                doanhthu dtngay = new doanhthu();
+                doanhthu dtthang = new doanhthu();
+                doanhthu dtnam = new doanhthu();
+
+                hoadon1 data1 = new hoadon1();              
+                
+           
+                int ng = 0;
+                int th = 0;
+                int na = 0;
+                foreach (var n in hdttd1)
+                {
+                    ng += n.giatien;
+                }
+                foreach (var n in hdttd2)
+                {
+                    th += n.giatien;
+                }
+                foreach (var n in hdttd3)
+                {
+                    na += n.giatien;
+                }
+                dtngay.tongtien = ng;
+                dtthang.tongtien = th;
+                dtnam.tongtien = na;
+                dtngay.tonghoadon = hdttd1.Count();
+                dtthang.tonghoadon = hdttd2.Count();
+                dtnam.tonghoadon = hdttd3.Count();
+                data1.ngay = dtngay;
+                data1.thang = dtthang;
+                data1.nam = dtnam;
+                return Json(data1);
+            }
+            catch (Exception ex)
+            {
+                return Json(ex.Message.ToString());
+            }
+
+
+        }
         [HttpPost]
         public async Task<IActionResult> taiThongKe([FromBody] modelthongke item)
         {

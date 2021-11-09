@@ -155,9 +155,9 @@ namespace TFourMusic.Controllers
 
             var NguoiDung = LayBangNguoiDung();
 
-            var data = from t20 in NguoiDung
-                         
-                       select t20;
+            var data = (from t20 in NguoiDung
+
+                        select t20).ToList() ;
             var auth = new FirebaseConfig1(ApiKey);
             
 
@@ -174,7 +174,7 @@ namespace TFourMusic.Controllers
             //};
 
             //   UserRecord userRecord123 = await FirebaseAuth123.DefaultInstance.UpdateUserAsync(args);
-            return Json(data);
+            return Json(data.OrderByDescending(x => x.thoigian));
         }
 
         [HttpPost]
