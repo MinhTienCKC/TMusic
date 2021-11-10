@@ -7,6 +7,7 @@ using Microsoft.Extensions.Logging;
 using Microsoft.Web.Administration;
 using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
 
@@ -14,6 +15,7 @@ namespace TFourMusic
 {
     public class Program
     {
+
         public static void Main(string[] args)
         {
             //using (ServerManager serverManager = new ServerManager())
@@ -30,11 +32,13 @@ namespace TFourMusic
 
             //    serverManager.CommitChanges();
             //}
+
             FirebaseApp.Create(new AppOptions()
             {
-                Credential = GoogleCredential.FromFile("../TFourMusic/tfourmusic-1e3ff-firebase-adminsdk-b8byd-fb95ff4dbc.json"),
+                Credential = GoogleCredential.FromFile("wwwroot/tfourmusic-1e3ff-firebase-adminsdk-b8byd-fb95ff4dbc.json"),
             });
             CreateHostBuilder(args).Build().Run();
+            
         }
 
         public static IHostBuilder CreateHostBuilder(string[] args) =>

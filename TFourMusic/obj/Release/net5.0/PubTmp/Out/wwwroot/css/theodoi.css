@@ -21,7 +21,7 @@
 .zm-card_theodoi {
     max-width: 100%;
     position: relative;
-    width: 33%;
+    width: 29%;
     height: auto;
     background-color: #ffffff12;
     /* background-color: #fff; */
@@ -175,7 +175,7 @@
     top: 50%;
     bottom: auto;
     right: auto;
-    z-index: 98;
+    z-index: 3;
     transform: translateX(-50%) translateY(-50%);
     display: -moz-flex;
     display: flex;

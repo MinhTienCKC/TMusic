@@ -8,7 +8,8 @@
     <div ng-show="taiDanhSachBaiHatDaXoa_ThungRac.length == 0" class="container no-content mar-0" >
     <div class="no-content-box">
         <i class="fa fa-music" style="font-size: 80px; margin-bottom: 20px;"></i>
-        <span class="no-content-text">Không có bài hát trong thùng rác !!!</span></div>
+        <span class="no-content-text">Không có bài hát trong thùng rác !!!</span>
+    </div>
     </div>
     <form ng-show="taiDanhSachBaiHatDaXoa_ThungRac.length > 0">
         <div class="card-body p-0 pb-3 text-center">
@@ -29,12 +30,21 @@
                 </thead>
                 <tbody>
                     <tr ng-repeat="data in taiDanhSachBaiHatDaXoa_ThungRac | filter:timkiembaihat | startFrom:currentPage*pageSize | limitTo:pageSize">
-                        <td style=" padding: 1.3em 0.3em 0.3em 0.3em;"><span class="chinhsua">{{data.tenbaihat}}</span></td>
-                        <td style=" padding: 1.3em 0.3em 0.3em 0.3em;"><span class="chinhsua">{{data.casi}}</span></td>
+                        <td style=" padding: 1.3em 0.3em 0.3em 0.3em;">
+                            <!--<span class="chinhsua">{{data.tenbaihat}}</span>-->
+                            <p  class="motadsptl chinhsua" title="{{data.tenbaihat}}" >{{data.tenbaihat}}</p>
+
+                        </td>
+
+                        <td style=" padding: 1.3em 0.3em 0.3em 0.3em;">
+                            <!--<span class="chinhsua">{{data.casi}}</span>-->
+                            <p class="motadsptl chinhsua" title="{{data.casi}}">{{data.casi}}</p>
+
+                        </td>
                         <td><img src="{{data.linkhinhanh}}" class="icon-category hinhanh"></td>
                         <td style=" padding: 1.3em 0.3em 0.3em 0.3em;"><span class="chinhsua">{{data.thoigianxoa | date:'dd/MM/yyyy '}}</span></td>
                         <td style=" padding: 1.3em 0.3em 0.3em 0.3em;"><span class="chinhsua"> <button ng-click="khoiPhucBaiHat(data,$index)" class="package__btnthem"><i class="fa fa-reply"></i></button></span></td>
-                        <td style=" padding: 1.3em 0.3em 0.3em 0.3em;"><span class="chinhsua"> <button ng-click="xoaBaiHat(data,$index)" class="package__btnthem"><i class="fa fa-plus"></i></button></span></td>
+                        <td style=" padding: 1.3em 0.3em 0.3em 0.3em;"><span class="chinhsua"> <button ng-click="xoaBaiHat(data,$index)" class="package__btnthem"><i class="fa fa-trash" aria-hidden="true"></i></button></span></td>
                     </tr>
 
                 </tbody>
@@ -202,5 +212,11 @@
     }
     .table td {
         border-top: 1px solid #007bff !important;
+    }
+    .motadsptl {
+        text-overflow: Ellipsis;
+        width: 150px;
+        white-space: nowrap;
+        overflow: hidden;
     }
 </style>

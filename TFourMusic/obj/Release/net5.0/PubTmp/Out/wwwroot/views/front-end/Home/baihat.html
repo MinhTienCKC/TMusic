@@ -6,19 +6,19 @@
                 <div style="height:100px;">
                     <div class="media-left" style=" width: 300px; height: 300px;" animatechitiet>
                         <div class="zm-card header-thumbnail">
-                            <div class="zm-card-image item" style="height: 300px;" ng-class="{'xoayHinh': kiemTraDSPBaiHatClick == taiBaiHatTheoId[0].id && playmusic == 1 }">
+                            <div class="zm-card-image item" style="height: 300px;" ng-class="{'xoayHinh': kiemTraBaiHatDangPhat == taiBaiHatTheoId[0].id && playmusic == 1 }">
                                 <figure class="image is-48x48">
                                     <img style="height: 300px; object-fit: cover;" src="{{taiBaiHatTheoId[0].linkhinhanh}}" alt="">
                                 </figure>
-                                <div class="opacity" ng-class="{'hien_nen_den': kiemTraDSPBaiHatClick == taiBaiHatTheoId[0].id && playmusic == 1 }"></div>
+                                <div class="opacity" ng-class="{'hien_nen_den': kiemTraBaiHatDangPhat == taiBaiHatTheoId[0].id && playmusic == 1 }"></div>
                                 <div class="zm-actions-container itemchitiet">
-                                    <div ng-click="$event.preventDefault(); Play(); " class="play11-play1" style="cursor: pointer; width: 55px; height: 55px; display: flex; align-items: center; justify-content: center; border: 1px solid #fff; border-radius: 50%; font-size: 20px; opacity: 100%" tabindex="0" ng-show="kiemTraDSPBaiHatClick == taiBaiHatTheoId[0].id">
+                                    <div ng-click="$event.preventDefault(); Play(); " class="play11-play1" style="cursor: pointer; width: 55px; height: 55px; display: flex; align-items: center; justify-content: center; border: 1px solid #fff; border-radius: 50%; font-size: 20px; opacity: 100%" tabindex="0" ng-show="kiemTraBaiHatDangPhat == taiBaiHatTheoId[0].id">
                                         <div ng-show="playmusic == 1 " class="play_baihat_nhacmoi" style="top: 30%;left: 28%; height: 26px; width: 27px;"> </div>
 
                                         <!--<i ng-show="playmusic == 0 " class="nutplay_baihat_nhacmoi fa fa-play" style="color: white;"></i>-->
                                         <i ng-show="playmusic == 0 " class="fa fa-play" style="width: 55px; height: 55px; display: flex; align-items: center; justify-content: center; font-size: 20px;"></i>
                                     </div>
-                                    <div ng-show="kiemTraDSPBaiHatClick != taiBaiHatTheoId[0].id" class="play11-play1 add-to-cartchitiet" style="cursor: pointer; width: 55px; height: 55px; display: flex; align-items: center; justify-content: center; border: 1px solid #fff; border-radius: 50%; font-size: 20px; " ng-click="playMotBanNhac(taiBaiHatTheoId[0]); xoayHinhDSPBaiHat_BaiHat(taiBaiHatTheoId[0].id); themBaiHatVaoDanhSachPhat(taiDanhSachBaiHatTheoTheLoai);">
+                                    <div ng-show="kiemTraBaiHatDangPhat != taiBaiHatTheoId[0].id" class="play11-play1 add-to-cartchitiet" style="cursor: pointer; width: 55px; height: 55px; display: flex; align-items: center; justify-content: center; border: 1px solid #fff; border-radius: 50%; font-size: 20px; " ng-click="playMotBanNhac(taiBaiHatTheoId[0]); xoayHinhDSPBaiHat_BaiHat(taiBaiHatTheoId[0].id); themBaiHatVaoDanhSachPhat(taiDanhSachBaiHatTheoTheLoai);">
 
                                         <!--<i class="fa fa-play-circle"></i>-->
                                         <i class="fa fa-play" style="width: 55px; height: 55px; display: flex; align-items: center; justify-content: center;  "></i>
@@ -39,10 +39,10 @@
 
                         </div>
                         <div class="actions">
-                            <button ng-show="kiemTraDSPBaiHatClick != taiBaiHatTheoId[0].id" class="zm-btn btn-play-all is-outlined active is-medium is-upper button" tabindex="0" style="width: 180px; height: 40px; border-color: #ed2b91; background-color: #ed2b91;" ng-click="playMotBanNhac(taiBaiHatTheoId[0]); xoayHinhDSPBaiHat_BaiHat(taiBaiHatTheoId[0].id); themBaiHatVaoDanhSachPhat(taiDanhSachBaiHatTheoTheLoai);">
+                            <button ng-show="kiemTraBaiHatDangPhat != taiBaiHatTheoId[0].id" class="zm-btn btn-play-all is-outlined active is-medium is-upper button" tabindex="0" style="width: 180px; height: 40px; border-color: #ed2b91; background-color: #ed2b91;" ng-click="playMotBanNhac(taiBaiHatTheoId[0]); xoayHinhDSPBaiHat_BaiHat(taiBaiHatTheoId[0].id); themBaiHatVaoDanhSachPhat(taiDanhSachBaiHatTheoTheLoai);">
                                 <i class="fa fa-play" style=" padding-right: 10px;"></i><span> PHÁT TÂT CẢ</span>
                             </button>
-                            <button ng-show="kiemTraDSPBaiHatClick == taiBaiHatTheoId[0].id" ng-click="$event.preventDefault(); Play(); " class="zm-btn btn-play-all is-outlined active is-medium is-upper button" tabindex="0" style="width: 180px; height: 40px; border-color: #ed2b91; background-color: #ed2b91;">
+                            <button ng-show="kiemTraBaiHatDangPhat == taiBaiHatTheoId[0].id" ng-click="$event.preventDefault(); Play(); " class="zm-btn btn-play-all is-outlined active is-medium is-upper button" tabindex="0" style="width: 180px; height: 40px; border-color: #ed2b91; background-color: #ed2b91;">
                                 <i ng-show="playmusic == 0 ">  <i  class="fa fa-play" style=" padding-right: 10px;"></i><span> TIẾP TỤC PHÁT</span></i>
                                 <i ng-show="playmusic == 1">  <i  class="fa fa-pause" style=" padding-right: 10px;"></i><span> TẠM DỪNG</span></i>
                             </button>
@@ -95,14 +95,14 @@
                                     </label>
                                     <div class="list-item bor-b-1 media-item" style="width: 1000px; height: auto;">
                                         <div class="media">
-                                            <div class="media-left">
+                                            <div class="media-left" animate>
                                                 <div class="song-prefix mar-r-15">
 
                                                     <div class="sort" style="padding-bottom: 0px;">
                                                         <i class="icon is-18x18  fa fa-music" style=" width: 10px; height: 2px; font-size: 14px;"></i>
                                                     </div>
                                                 </div>
-                                                <div class="song-thumb ">
+                                                <div class="song-thumb item">
                                                     <figure class="image is-40x40" style="height: auto; width: auto; padding: 0px; " title="{{taiBaiHatTheoId[0].tenbaihat}}">
                                                         <img src="{{taiBaiHatTheoId[0].linkhinhanh}}" alt="" style="height: 51.2px; width: 70px; object-fit: cover; border-radius: 6px;">
                                                     </figure>
@@ -111,7 +111,7 @@
                                                         <div ng-show="playmusic == 1 " class="play_baihat_nhacmoi" style="color: white;"> </div>
                                                         <i ng-show="playmusic == 0 " class="nutplay_baihat_nhacmoi fa fa-play" style="color: white;"></i>
                                                     </div>
-                                                    <div class="play-play" ng-show="kiemTraBaiHatDangPhat != taiBaiHatTheoId[0].id" ng-click="playMotBanNhac(taiBaiHatTheoId[0]);xoayHinhDSPBaiHat_BaiHat(taiBaiHatTheoId[0].id); themBaiHatVaoDanhSachPhat(taiDanhSachBaiHatTheoTheLoai);">
+                                                    <div class="play-play add-to-cart" ng-show="kiemTraBaiHatDangPhat != taiBaiHatTheoId[0].id" ng-click="playMotBanNhac(taiBaiHatTheoId[0]);xoayHinhDSPBaiHat_BaiHat(taiBaiHatTheoId[0].id); themBaiHatVaoDanhSachPhat(taiDanhSachBaiHatTheoTheLoai);">
                                                         <i class="nutplay_baihat_nhacmoi fa fa-play" style="color: white;"></i>
                                                     </div>
                                                 </div>
@@ -134,9 +134,7 @@
                                                 <div class="level">
                                                     <div class="level-item"></div>
                                                     <div class="level-item">
-                                                        <button class="button-item1">
-                                                            <i class="ibutton fa fa-microphone"></i>
-                                                        </button>
+                                                      
 
 
 
@@ -169,7 +167,7 @@
                                         </label>
                                         <div class="list-item bor-b-1 media-item" style="width: 1000px; height: auto;">
                                             <div class="media">
-                                                <div class="media-left">
+                                                <div class="media-left" animate> 
                                                     <div class="song-prefix mar-r-15">
 
                                                         <div class="sort" style="padding-bottom: 0px;">
@@ -208,9 +206,9 @@
                                                     <div class="level">
                                                         <div class="level-item"></div>
                                                         <div class="level-item">
-                                                            <button class="button-item1">
+                                                            <!--<button class="button-item1">
                                                                 <i class="ibutton fa fa-microphone"></i>
-                                                            </button>
+                                                            </button>-->
 
 
 
@@ -245,7 +243,7 @@
             </div>
 
             <div class="theLoaiCon">
-                <div class="list">
+                <div class="list" style="padding-bottom: 110px;">
 
                     <div class="zm-section playlist-section mar-b-30" ng-repeat="tl in taiTheLoaiKetHopDanhSachPhatTheLoaiMoi | limitTo: 3">
                         <div class="container" style="max-width: 1230px; padding-right: 70px;">

@@ -1,4 +1,4 @@
-﻿var ctxfolderurl = "/views/admin/NguoiDung";
+﻿var ctxfolderurl = "/views/admin/nguoiDung";
 
 var app = angular.module('T_Music', ["ui.bootstrap", "ngRoute"]);
 //var app = angular.module('T_Music', ["ui.bootstrap", "ngRoute", "ngValidate", "datatables", "datatables.bootstrap", 'datatables.colvis', "ui.bootstrap.contextMenu", 'datatables.colreorder', 'angular-confirm', "ngJsTree", "treeGrid", "ui.select", "ngCookies", "pascalprecht.translate"])
@@ -74,6 +74,15 @@ app.controller('T_Music', function () {
 
 });
 app.controller('index', function ($rootScope, $scope, dataservice, $uibModal) {
+    $(".nav-nguoidung").addClass("active");
+    $scope.hienTimKiem = false;
+    $scope.showSearch = function () {
+        if (!$scope.hienTimKiem) {
+            $scope.hienTimKiem = true;
+        } else {
+            $scope.hienTimKiem = false;
+        }
+    }
     $scope.tenbien = 'null';
     $scope.hoatdong = false;
     $scope.modelsapxep = 'null';
@@ -177,10 +186,20 @@ app.controller('index', function ($rootScope, $scope, dataservice, $uibModal) {
     }
 
     $scope.voHieuHoa = function (data) {
-
+        $("#loading_main").css("display", "block");
         dataservice.voHieuHoa(data, function (rs) {
             rs = rs.data;
-
+            if (rs == "") {
+                alertify.success("Tài khoản phân quyền Admin mới thực hiện chức năng này !!!");
+                if (data.vohieuhoa == 1) {
+                    data.vohieuhoa = 0;
+                }
+                else {
+                    data.vohieuhoa = 1;
+                }
+                $("#loading_main").css("display", "none");
+                return;
+            }
             if (rs == true) {
                 if (data.vohieuhoa == 1) {
                     alertify.success("Đã vô hiệu hóa !!!.");
@@ -192,6 +211,7 @@ app.controller('index', function ($rootScope, $scope, dataservice, $uibModal) {
             else {
                 alertify.success("Lỗi không thực hiện vô hiệu hóa !!!.");
             }
+            $("#loading_main").css("display", "none");
         });
     }
     alertify.set('notifier', 'position', 'bottom-left');
@@ -218,9 +238,7 @@ app.controller('index', function ($rootScope, $scope, dataservice, $uibModal) {
 
         }, function () {
 
-            setTimeout(function () {
-                $scope.initData();
-            }, 2000);
+           
         });
     }
     $scope.xemDanhSachPhat = function (key) {
@@ -245,13 +263,35 @@ app.controller('index', function ($rootScope, $scope, dataservice, $uibModal) {
 
         }, function () {
 
-            setTimeout(function () {
-                $scope.initData();
-            }, 2000);
+           
         });
     }
 
-    
+    $scope.xemChiTietNguoiDung = function (key) {
+        var modalInstance = $uibModal.open({
+            animation: true,
+            templateUrl: ctxfolderurl + '/chitietnguoidung.html',
+            controller: 'chitietnguoidung',
+            backdrop: 'true',
+            backdropClass: ".fade:not(.show)",
+            backdropClass: ".modal-backdrop",
+            backdropClass: ".col-lg-8",
+            backdropClass: ".modal-content",
+
+            size: '100',
+            resolve: {
+                para: function () {
+                    return key;
+                }
+            }
+        });
+        modalInstance.result.then(function () {
+
+        }, function () {
+
+           
+        });
+    }
 
 });
 app.controller('baihatnguoidung', function ($rootScope, $scope, $uibModalInstance, dataservice, para) {
@@ -298,7 +338,7 @@ app.controller('baihatnguoidung', function ($rootScope, $scope, $uibModalInstanc
     };
 
     $scope.voHieuHoaBaiHat = function (data) {
-
+        $("#loading_main").css("display", "block");
         dataservice.voHieuHoaBaiHatNguoiDung(data, function (rs) {
             rs = rs.data;
 
@@ -314,6 +354,7 @@ app.controller('baihatnguoidung', function ($rootScope, $scope, $uibModalInstanc
                 alertify.success("Lỗi không thực hiện vô hiệu hóa !!!.");
             }
         });
+        $("#loading_main").css("display", "none");
     }
 
     $scope.currentPage = 0;
@@ -487,4 +528,27 @@ app.controller('danhsachphatnguoidung', function ($rootScope, $scope, $uibModalI
 
     }
 
+});
+app.controller('chitietnguoidung', function ($rootScope, $scope, $uibModalInstance, dataservice, para) {
+    $scope.ok = function () {
+        $uibModalInstance.close();
+    };
+    alertify.set('notifier', 'position', 'bottom-left');
+    $scope.duLieuChiTietNguoiDung = para;
+    $scope.cancel = function () {
+        $uibModalInstance.dismiss('cancel');
+    };
+   
+    $scope.text = {
+
+        key: '',
+        uid: ''
+
+    }
+    $scope.initData = function () {
+      
+
+    }
+    $scope.initData();
+   
 });

@@ -185,30 +185,45 @@ namespace TFourMusic.Controllers
             {
                 if (item.hientimkiem == "theongay")
                 {
-                    DateTime ngaybatdau = DateTime.Parse(item.ngaybatdau.ToString("dd-MM-yyyy"));
-                    DateTime ngayketthuc = DateTime.Parse(item.ngayketthuc.ToString("dd-MM-yyyy"));
+                    //DateTime ngaybatdau = DateTime.Parse(item.ngaybatdau.ToString("dd-MM-yyyy"));
+                    //DateTime ngayketthuc = DateTime.Parse(item.ngayketthuc.ToString("dd-MM-yyyy"));
+                    //var hdttd = (from hoadon1 in hoadonthanhtoan
+                    //            where DateTime.Parse(hoadon1.hdtt.thoigian.ToString("dd-MM-yyyy")) >= ngaybatdau 
+                    //                  && DateTime.Parse(hoadon1.hdtt.thoigian.ToString("dd-MM-yyyy")) <= ngayketthuc
+                    //             select hoadon1).ToList();
                     var hdttd = (from hoadon1 in hoadonthanhtoan
-                                where DateTime.Parse(hoadon1.hdtt.thoigian.ToString("dd-MM-yyyy")) >= ngaybatdau 
-                                      && DateTime.Parse(hoadon1.hdtt.thoigian.ToString("dd-MM-yyyy")) <= ngayketthuc
+                                 where hoadon1.hdtt.thoigian >= item.ngaybatdau
+                                    && hoadon1.hdtt.thoigian <= item.ngayketthuc
                                  select hoadon1).ToList();
-
+                   
 
                     return Json(hdttd.OrderByDescending(x => x.hdtt.thoigian));
                 }
                 else if(item.hientimkiem == "theothang") 
                 {
-                    DateTime theothang = DateTime.Parse(item.theothang.ToString("MM-yyyy"));
+                    //DateTime theothang = DateTime.Parse(item.theothang.ToString("MM-yyyy"));
+                    //var hdttd = (from hoadon1 in hoadonthanhtoan
+                    //            where DateTime.Parse(hoadon1.hdtt.thoigian.ToString("MM-yyyy")) == theothang
+                    //             select hoadon1).ToList();
+                    int theothang_nam = item.theothang.Year;
+                    int theothang_thang = item.theothang.Month;
+                 
                     var hdttd = (from hoadon1 in hoadonthanhtoan
-                                where DateTime.Parse(hoadon1.hdtt.thoigian.ToString("MM-yyyy")) == theothang
-                                 select hoadon1).ToList();
+                                  where hoadon1.hdtt.thoigian.Year == theothang_nam && hoadon1.hdtt.thoigian.Month == theothang_thang
+                                  select hoadon1).ToList();
+
                     return Json(hdttd.OrderByDescending(x => x.hdtt.thoigian));
                 }
                 else
                 {
+                    //int theonam = item.theonam.Year;
+                    //var hdttd = (from hoadon1 in hoadonthanhtoan
+                    //             where hoadon1.hdtt.thoigian.Year == theonam
+                    //             select hoadon1).ToList();
                     int theonam = item.theonam.Year;
                     var hdttd = (from hoadon1 in hoadonthanhtoan
-                                 where hoadon1.hdtt.thoigian.Year == theonam
-                                 select hoadon1).ToList();
+                                  where hoadon1.hdtt.thoigian.Year == theonam
+                                  select hoadon1).ToList();
                     return Json(hdttd.OrderByDescending(x=>x.hdtt.thoigian));
                 }
             }

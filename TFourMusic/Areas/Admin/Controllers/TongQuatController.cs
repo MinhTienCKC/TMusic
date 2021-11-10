@@ -190,7 +190,7 @@ namespace TFourMusic.Controllers
             public doanhthu nam { get; set; }
         }
         [HttpPost]
-        public async Task<IActionResult> taiThongKe123([FromBody] modelthongke item)
+        public async Task<IActionResult> taiThongKe123()
         {
 
 
@@ -198,24 +198,38 @@ namespace TFourMusic.Controllers
             var firebase = new FirebaseClient(Key);
            
             var hoadonthanhtoan1 = LayBangHoaDonThanhToan();
-           
 
 
 
+            modelthongke item = new modelthongke();
+            item.hientimkiem = "theongay";
+            item.ngaybatdau = DateTime.Now;
+            item.ngayketthuc = DateTime.Now;
+            item.theonam = DateTime.Now;
+            item.theothang = DateTime.Now;
 
             try
             {
-                DateTime ngaybatdau = DateTime.Parse(item.ngaybatdau.ToString("dd-MM-yyyy"));
-                DateTime ngayketthuc = DateTime.Parse(item.ngayketthuc.ToString("dd-MM-yyyy"));
-                var hdttd1 = (from hoadon1 in hoadonthanhtoan1
-                              where DateTime.Parse(hoadon1.thoigian.ToString("dd-MM-yyyy")) >= ngaybatdau
-                                    && DateTime.Parse(hoadon1.thoigian.ToString("dd-MM-yyyy")) <= ngayketthuc
-                              select hoadon1).ToList();
-                DateTime theothang = DateTime.Parse(item.theothang.ToString("MM-yyyy"));
-                var hdttd2 = (from hoadon1 in hoadonthanhtoan1
-                              where DateTime.Parse(hoadon1.thoigian.ToString("MM-yyyy")) == theothang
-                              select hoadon1).ToList();
+                //DateTime ngaybatdau = DateTime.Parse(item.ngaybatdau.ToString("dd-MM-yyyy"));
+                //DateTime ngayketthuc = DateTime.Parse(item.ngayketthuc.ToString("dd-MM-yyyy"));
 
+                //var hdttd1 = (from hoadon1 in hoadonthanhtoan1
+                //              where DateTime.Parse(hoadon1.thoigian.ToString("dd-MM-yyyy")) >= ngaybatdau
+                //                    && DateTime.Parse(hoadon1.thoigian.ToString("dd-MM-yyyy")) <= ngayketthuc
+                //              select hoadon1).ToList();
+                var hdttd1 = (from hoadon1 in hoadonthanhtoan1
+                              where hoadon1.thoigian >= item.ngaybatdau
+                                    && hoadon1.thoigian <= item.ngayketthuc
+                              select hoadon1).ToList();
+                //DateTime theothang = DateTime.Parse(item.theothang.ToString("MM-yyyy"));
+                int theothang_nam = item.theothang.Year;
+                int theothang_thang = item.theothang.Month;
+                //var hdttd2 = (from hoadon1 in hoadonthanhtoan1
+                //              where DateTime.Parse(hoadon1.thoigian.ToString("MM-yyyy")) == theothang
+                //              select hoadon1).ToList();
+                var hdttd2 = (from hoadon1 in hoadonthanhtoan1
+                              where hoadon1.thoigian.Year == theothang_nam && hoadon1.thoigian.Month == theothang_thang
+                              select hoadon1).ToList();
                 int theonam = item.theonam.Year;
                 var hdttd3 = (from hoadon1 in hoadonthanhtoan1
                               where hoadon1.thoigian.Year == theonam
@@ -230,18 +244,30 @@ namespace TFourMusic.Controllers
                 int ng = 0;
                 int th = 0;
                 int na = 0;
-                foreach (var n in hdttd1)
+                if (hdttd1.Count > 0)
                 {
-                    ng += n.giatien;
+                    foreach (var n in hdttd1)
+                    {
+                        ng += n.giatien;
+                    }
                 }
-                foreach (var n in hdttd2)
+                if (hdttd2.Count > 0)
                 {
-                    th += n.giatien;
+                    foreach (var n in hdttd2)
+                    {
+                        th += n.giatien;
+                    }
                 }
-                foreach (var n in hdttd3)
+                if (hdttd3.Count > 0)
                 {
-                    na += n.giatien;
+                    foreach (var n in hdttd3)
+                    {
+                        na += n.giatien;
+                    }
                 }
+               
+               
+                
                 dtngay.tongtien = ng;
                 dtthang.tongtien = th;
                 dtnam.tongtien = na;
@@ -464,7 +490,7 @@ namespace TFourMusic.Controllers
                 //                 where DateTime.Parse(bh.thoigian.ToString("MM-yyyy")) == theothang && bh.nguoidung_id != "Admin"
                 //              select bh).ToList();
                 var databh = (from bh in baihat
-                              where bh.thoigian.Month == item.theothang.Month
+                              where bh.thoigian.Month == item.theothang.Month && bh.thoigian.Year == item.theothang.Year
                               select bh).ToList();
            
                 var dataadmin = (from bh in databh

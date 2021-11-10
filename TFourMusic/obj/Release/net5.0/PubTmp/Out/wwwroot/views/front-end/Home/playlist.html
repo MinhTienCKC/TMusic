@@ -136,10 +136,7 @@
                                                 <div class="level">
                                                     <div class="level-item"></div>
                                                     <div class="level-item">
-                                                        <button class="button-item1">
-                                                            <i class="ibutton fa fa-microphone"></i>
-                                                        </button>
-
+                                                     
 
 
                                                     </div>
@@ -153,7 +150,7 @@
                                                         </button>
 
                                                     </div>
-                                                    <div class="level-item" context-menu1="contextMenuBaiHatPlaylist" ng-click="moChiTietBaiHat(data)">
+                                                    <div class="level-item" context-menu1="contextMenuBaiHatPlaylist" ng-click="moChiTietBaiHat(data,$index)">
                                                         <button class="button-item1">
                                                             <i class="ibutton fa fa-ellipsis-h"></i>
                                                         </button>
@@ -184,14 +181,14 @@
                                     </label>
                                     <div class="list-item bor-b-1 media-item" style="width:1000px;     height: auto;">
                                         <div class="media">
-                                            <div class="media-left">
+                                            <div class="media-left" animate>
                                                 <div class="song-prefix mar-r-15">
 
                                                     <div class="sort" style="padding-bottom: 0px;">
                                                         <i class="icon is-18x18  fa fa-music" style=" width: 10px; height: 2px; font-size: 14px;"></i>
                                                     </div>
                                                 </div>
-                                                <div class="song-thumb">
+                                                <div class="song-thumb item"  >
                                                     <figure class="image is-40x40" style="height: auto; width: auto; padding: 0px; " title="{{taiDanhSachBaiHatTheoTheLoai[$index+size].tenbaihat}}">
                                                         <img src="{{taiDanhSachBaiHatTheoTheLoai[$index+size].linkhinhanh}}" alt="" style="height: 51.2px; width: 70px; object-fit: cover; border-radius: 6px;">
                                                     </figure>
@@ -200,7 +197,7 @@
                                                         <div ng-show="playmusic == 1 " class="play_baihat_nhacmoi" style="color: white;"> </div>
                                                         <i ng-show="playmusic == 0 " class="nutplay_baihat_nhacmoi fa fa-play" style="color: white;"></i>
                                                     </div>
-                                                    <div class="play-play" ng-show="kiemTraBaiHatDangPhat != taiDanhSachBaiHatTheoTheLoai[$index+size].id" ng-click="playMotBanNhac(taiDanhSachBaiHatTheoTheLoai[$index+size])">
+                                                    <div class="play-play add-to-cart" ng-show="kiemTraBaiHatDangPhat != taiDanhSachBaiHatTheoTheLoai[$index+size].id" ng-click="playMotBanNhac(taiDanhSachBaiHatTheoTheLoai[$index+size])">
                                                         <i class="nutplay_baihat_nhacmoi fa fa-play" style="color: white;"></i>
                                                     </div>
                                                 </div>
@@ -270,7 +267,7 @@
             </div>
 
             <div class="theLoaiCon">
-                <div class="list">
+                <div style="padding-bottom:110px;" class="list">
 
                     <div class="zm-section playlist-section mar-b-30" ng-repeat="tl in taiTheLoaiKetHopDanhSachPhatTheLoaiMoi | limitTo: 3">
                         <div class="container" style="max-width: 1230px; padding-right: 70px;">

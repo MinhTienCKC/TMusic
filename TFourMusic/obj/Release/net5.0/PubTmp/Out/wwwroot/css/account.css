@@ -263,6 +263,7 @@
     flex-grow: 0;
     flex-shrink: 0;
     height: 55px;
+    position: relative;
 }
 
 .icon_nhac_luu {
@@ -271,15 +272,22 @@
 }
 
 .hinh_baihat_daluu {
-    margin-right: 10px;
+    margin-right: 20px;
     flex-shrink: 0;
     display: block;
     position: relative;
     overflow: hidden;
     border-radius: 4px;
     cursor: pointer;
+   
 }
-
+.icon_edithinhanh {
+    color: #fff;
+    position: absolute;
+    left: 25%;
+    top: 70%;
+    font-size: 17px;
+}
 .info_da_luu {
     display: flex;
     flex-direction: column;
@@ -366,9 +374,14 @@
 .icon_account {
     font-size: 16px;
     color: #ed2b91;
-    margin-top: 8px;
+    margin-top: 9px;
+    margin-left: 9px;
 }
-
+.icon_delete {
+    font-size: 16px;
+    margin-left: 10px;
+    margin-top: 10px;
+}
 .icon_account_notfocus {
     font-size: 21px;
     margin-top: 5px;
@@ -384,6 +397,7 @@
     height: 29px;
     /* background: red; */
     border-radius: 50%;
+    position:relative;
 }
 
     .label_account:hover {
@@ -597,9 +611,11 @@
 }
 
 .hover_remove_playlist {
-    padding: 10px;
+   /* padding: 10px;*/
     border-radius: 50%;
-    cursor:pointer;
+    cursor: pointer;
+    height: 35px;
+    width: 35px;
 }
 
 @keyframes hover {
@@ -671,7 +687,7 @@
 
 .icon_play_canhan {
     position: absolute;
-    z-index: 5;
+    z-index: 4;
     font-size: 25px;
     color: #fff;
     top: 9px;
@@ -894,8 +910,20 @@
     width: auto;
     height: auto;
 }
+.display_flex {
+   /* display: flex;*/
+    width: 100%;
+    justify-content: space-evenly;
+    display: flex;
+    align-items: center;
+    z-index: 2;
+    position: absolute;
+}
+.padding_bottom {
+    padding-bottom: 30px;
+}
 .tao_playlist_layout_xacthuc {
-    z-index: 6;
+    z-index: 10;
     /* background-color: hsl(0deg 0% 0% / 80%); */
     justify-content: center;
     align-items: center;

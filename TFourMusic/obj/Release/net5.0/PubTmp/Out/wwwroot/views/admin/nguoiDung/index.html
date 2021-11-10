@@ -139,13 +139,29 @@
 <!--</div>-->
 <div class="main-content-container container-fluid px-4">
     <!-- Page Header -->
-    <div class="page-header row no-gutters py-4">
+    <div class="page-header row no-gutters py-4" style="padding-bottom: 0.1rem!important;">
         <div class="col-12 col-sm-4 text-center text-sm-left mb-0">
-           
-            
+            <button type="submit" ng-show="!hienTimKiem" ng-click="showSearch();currentPage = 0;" class="btn btn-accent " style=" font-size: 0.75rem; width: 95px;"><i class="fa fa-search"></i>  Tìm Kiếm</button>
+
+
+
+        </div>     
+    </div>
+    <div class="page-header row no-gutters py-4" style="padding-top: 0rem !important; padding-bottom: 0.1rem!important;" ng-show="hienTimKiem">
+        <div class="col-12 col-sm-4 text-center text-sm-left mb-0">
+            <input type="text" ng-model="timkiem.hoten" class="form-control " id="feLastName23" placeholder="Tìm theo tên người dùng" value="Brooks" ng-change="currentPage = 0;">
+            <input type="text" ng-model="timkiem.email" class="form-control " id="feLastName2" placeholder="Tìm theo email" value="Brooks" ng-change="currentPage = 0;">
+            <!--<input type="text" ng-model="timkiem.object.tenbaihat" class="form-control" id="feLastName" placeholder="Tìm theo tên" value="Brooks">-->
         </div>
         <div class="col-12 col-sm-4 text-center text-sm-left mb-0">
+
+            <!--<button type="submit"  ng-click="timKiem()" class="btn btn-accent" style="padding: 28px 15px;">Tìm Kiếm</button>-->
+            <button type="submit" ng-click="showSearch(); timkiem.hoten = '';timkiem.email =''; " class="btn btn-accent" style="padding: 28px 8px;">Ẩn Tìm Kiếm</button>
+
+
         </div>
+
+
     </div>
     <!-- End Page Header -->
     <!-- Default Light Table -->
@@ -165,14 +181,14 @@
                                 <th scope="col" class="border-0">Hình Ảnh</th>
                                 <th scope="col" class="border-0">Vip</th>
                                 <th scope="col" class="border-0" title="Xem bài hát của người dùng">Xem BH</th>
-                                <th scope="col" class="border-0"title="Xem danh sách phát người dùng">Xem DSP</th>
+                                <th scope="col" class="border-0" title="Xem danh sách phát người dùng">Xem DSP</th>
                                 <th scope="col" class="border-0" title="Vô hiệu hóa không có người dùng đăng nhập">Vô Hiệu Hóa</th>
 
                             </tr>
                         </thead>
                         <tbody>
                             <tr style="" ng-repeat="data in taiNguoiDung | filter:timkiem | startFrom:currentPage*pageSize | limitTo:pageSize">
-                                <td class="vitrigiua">{{data.hoten}}</td>
+                                <td class="vitrigiua"><a style=" color: #007bff; cursor: pointer;" class="tennguoidung" ng-click="xemChiTietNguoiDung(data)">{{data.hoten}}</a></td>
                                 <td class="vitrigiua">{{data.email}}</td>
                                 <td>
                                     <img ng-if="data.hinhdaidien != ''" src="{{data.hinhdaidien}}" class="icon-category hinhanh" />
@@ -184,8 +200,8 @@
                                     <img ng-if="data.vip == 1" src="../../../image/iconvip.png" class="icon-category iconvip">
                                 </td>
                                 <td class="vitrigiua"> <button ng-click="xemBaiHat(data)" style="width: 25px; height: 25px; padding: 0px;-webkit-box-shadow: 0 2px 5px 0 rgba(85,168,253,0.45);" class="btn btn-accent blue"><i class="fa fa-music" aria-hidden="true"></i></button> </td>
-                                <td class="vitrigiua"> <button  ng-click="xemDanhSachPhat(data)" style="width: 25px; height: 25px; padding: 0px;-webkit-box-shadow: 0 2px 5px 0 rgba(85,168,253,0.45);" class="btn btn-accent blue"><i class="far fa-list-alt"></i></button> </td>
-                          
+                                <td class="vitrigiua"> <button ng-click="xemDanhSachPhat(data)" style="width: 25px; height: 25px; padding: 0px;-webkit-box-shadow: 0 2px 5px 0 rgba(85,168,253,0.45);" class="btn btn-accent blue"><i class="far fa-list-alt"></i></button> </td>
+
                                 <td class="vitrigiua">
                                     <label class="switch1">
                                         <input ng-change="voHieuHoa(data)" type="checkbox" ng-model="data.vohieuhoa"
@@ -221,7 +237,9 @@
     </div>
 </div>
 <style>
-   
+   .tennguoidung:hover{
+       color:black!important;
+   }
     .iconvip {
         height: 40px;
         width: 40px;

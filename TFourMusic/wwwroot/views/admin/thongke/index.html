@@ -93,7 +93,7 @@
                             </tr>
                         </thead>
                         <tbody>
-                            <tr style="" ng-repeat="data in taiThongKe  | filter:timkiem | startFrom:currentPage*pageSize | limitTo:pageSize">
+                            <tr style="" ng-repeat="data in taiThongKe  | startFrom:currentPage*pageSize | limitTo:pageSize">
                                 <td class="vitrigiua">{{($index + 1 * (currentPage*pageSize)) +1 }}</td>
                                 <td class="vitrigiua">{{data.email}}</td>
                                 <td class="vitrigiua">{{data.hdtt.phuongthucthanhtoan}}</td>

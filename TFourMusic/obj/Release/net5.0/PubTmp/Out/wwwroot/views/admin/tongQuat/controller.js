@@ -1,4 +1,5 @@
-﻿var ctxfolderurl = "/views/admin/tongQuat";
+﻿
+var ctxfolderurl = "/views/admin/tongQuat";
 
 var app = angular.module('T_Music', ["ui.bootstrap", "ngRoute"]);
 //var app = angular.module('T_Music', ["ui.bootstrap", "ngRoute", "ngValidate", "datatables", "datatables.bootstrap", 'datatables.colvis', "ui.bootstrap.contextMenu", 'datatables.colreorder', 'angular-confirm', "ngJsTree", "treeGrid", "ui.select", "ngCookies", "pascalprecht.translate"])
@@ -37,6 +38,12 @@ app.factory('dataservice', function ($http) {
         taiTheLoai: function (callback) {
             $http.post('/Admin/BaiHat/taiTheloai').then(callback);
 
+        },
+        taiTaiKhoanQuanTri: function (callback) {
+            $http.post('/Admin/TongQuat/taiTaiKhoanQuanTri').then(callback);
+        },   
+        taiThongKe123: function ( callback) {
+            $http.post('/Admin/TongQuat/taiThongKe123').then(callback);
         },
     }
 
@@ -374,7 +381,13 @@ app.controller('index', function ($rootScope, $scope, dataservice, $uibModal) {
            
 
         });
+        dataservice.taiTaiKhoanQuanTri(function (rs) {
 
+            rs = rs.data;
+            $scope.taiTaiKhoanQuanTri = rs;
+
+           
+        });
 
         dataservice.taiBangBaiHat(function (rs) {
            
@@ -418,25 +431,25 @@ app.controller('index', function ($rootScope, $scope, dataservice, $uibModal) {
 
             rs = rs.data;
             $scope.taiBangNguoiDung = rs;
-            new Chart(document.getElementById("pie-chart"), {
-                type: 'pie',
-                data: {
-                    labels: ["Có Vip", "Không Vip"],
-                    datasets: [{
-                        label: "Admin",
-                        backgroundColor: ["#3e95cd", "#8e5ea2"],
+            //new Chart(document.getElementById("pie-chart"), {
+            //    type: 'pie',
+            //    data: {
+            //        labels: ["Có Vip", "Không Vip"],
+            //        datasets: [{
+            //            label: "Admin",
+            //            backgroundColor: ["#3e95cd", "#8e5ea2"],
 
-                        data: [truyVan($scope.taiBangNguoiDung, "vip", 1).length, truyVan($scope.taiBangNguoiDung, "vip", 0).length]
-                    }]
-                },
-                options: {
-                    title: {
-                        display: true,
-                        text: 'Người Dùng',
-                        color: '#fff'
-                    }
-                }
-            });
+            //            data: [truyVan($scope.taiBangNguoiDung, "vip", 1).length, truyVan($scope.taiBangNguoiDung, "vip", 0).length]
+            //        }]
+            //    },
+            //    options: {
+            //        title: {
+            //            display: true,
+            //            text: 'Người Dùng',
+            //            color: '#fff'
+            //        }
+            //    }
+            //});
         });
         dataservice.taiDanhSachSoBHTheoNgay($scope.model, function (rs) {
             rs = rs.data;
@@ -455,21 +468,29 @@ app.controller('index', function ($rootScope, $scope, dataservice, $uibModal) {
             myLineChart.update();
         });
 
-        dataservice.taiThongKe($scope.model, function (rs) {
+        //dataservice.taiThongKe($scope.model, function (rs) {
+        //    rs = rs.data;
+        //    $scope.taiThongKe = rs;    
+        //    $scope.tongTienNgay = 0;
+        //    $scope.tongTienThang = 0;
+        //    $scope.tongTienNam = 0;
+         
+        //    for (var i = 0; i < $scope.taiThongKe.ngay.length; i++) {
+        //        $scope.tongTienNgay += $scope.taiThongKe.ngay[i].giatien;
+        //    }
+        //    for (var i = 0; i < $scope.taiThongKe.thang.length; i++) {
+        //        $scope.tongTienThang += $scope.taiThongKe.thang[i].giatien;
+        //    }
+        //    for (var i = 0; i < $scope.taiThongKe.nam.length; i++) {
+        //        $scope.tongTienNam += $scope.taiThongKe.nam[i].giatien;
+        //    }
+        //});
+        dataservice.taiThongKe123( function (rs) {
             rs = rs.data;
-            $scope.taiThongKe = rs;    
-            $scope.tongTienNgay = 0;
-            $scope.tongTienThang = 0;
-            $scope.tongTienNam = 0;
-            for (var i = 0; i < $scope.taiThongKe.ngay.length; i++) {
-                $scope.tongTienNgay += $scope.taiThongKe.ngay[i].giatien;
-            }
-            for (var i = 0; i < $scope.taiThongKe.thang.length; i++) {
-                $scope.tongTienThang += $scope.taiThongKe.thang[i].giatien;
-            }
-            for (var i = 0; i < $scope.taiThongKe.nam.length; i++) {
-                $scope.tongTienNam += $scope.taiThongKe.nam[i].giatien;
-            }
+            $scope.taiThongKe123 = rs;
+
+            console.log("danh sách thống kê ngày tháng năm trang chủ");
+            console.log($scope.taiThongKe123);
         });
     };
 

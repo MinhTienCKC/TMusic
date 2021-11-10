@@ -42,8 +42,8 @@ app.factory('dataservice', function ($http) {
         taiTaiKhoanQuanTri: function (callback) {
             $http.post('/Admin/TongQuat/taiTaiKhoanQuanTri').then(callback);
         },   
-        taiThongKe123: function (data, callback) {
-            $http.post('/Admin/TongQuat/taiThongKe123', data).then(callback);
+        taiThongKe123: function ( callback) {
+            $http.post('/Admin/TongQuat/taiThongKe123').then(callback);
         },
     }
 
@@ -485,10 +485,12 @@ app.controller('index', function ($rootScope, $scope, dataservice, $uibModal) {
         //        $scope.tongTienNam += $scope.taiThongKe.nam[i].giatien;
         //    }
         //});
-        dataservice.taiThongKe123($scope.model, function (rs) {
+        dataservice.taiThongKe123( function (rs) {
             rs = rs.data;
             $scope.taiThongKe123 = rs;
-          
+
+            console.log("danh sách thống kê ngày tháng năm trang chủ");
+            console.log($scope.taiThongKe123);
         });
     };
 

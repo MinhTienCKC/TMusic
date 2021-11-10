@@ -13,8 +13,9 @@
                     <a style=" display: block; padding: 15px 0px;" class="">Playlist <span class="total mar-l-5">{{danhSachPhatNguoiDungTimKiem.length + danhSachPhatTheLoaiTimKiem.length}}</span></a>
                 </li>
                 <li class="item_timkiem" ng-click="TimKiemTheoDanhMuc(3)" ng-class="{'active_timkiem': activeTimKiem==3}">
-                    <a style=" display: block; padding: 15px 0px;" class="">Nghệ Sĩ <span class="total mar-l-5">{{danhsachNgheSi.length}}</span></a>
+                    <a style=" display: block; padding: 15px 0px;" class="">Nghệ Sĩ<span class="total mar-l-5">{{danhsachNgheSi.length}}</span></a>
                 </li>
+                <li></li>
             </ul>
         </div>
     </nav>
@@ -73,7 +74,7 @@
             <div ng-if="danhSachBaiHatTimKiem.length > 0" ng-class="{'active_baihat_timkiem' : kiemTraBaiHatDangPhat==x.id  }" animate class="item_nhac_da_luu_timkiem item" ng-repeat="x in danhSachBaiHatTimKiem | limitTo: 6" context-menu="contextMenuBaiHat_BaiHat" ng-right-click="moChiTietBaiHat(x)">
                 <div ng-if="$index > 0" class="border_nhac_luu">
                     <div class="media_luu_baihat_timkiem">
-                        <div class="media_luu_left_baihat_timkiem">
+                        <div class="media_luu_left_baihat_timkiem" animate>
                             <span class="stt_xep_hang_timkiem"><i class="fas fa-music"></i> </span>
 
                             <div class="hinh_baihat_daluu item">
@@ -98,7 +99,7 @@
                         <div class="media_luu_content_timkiem"><div class="time_bai_hat_timkiem">{{danhSachBaiHatTimKiem[$index+1].thoiluongbaihat}}</div></div>
                         <div class="media_luu_right">
                             <label class="label_account" ng-click="toggleYeuThichBH_TimKiem($index)">
-                                <i ng-show="danhSachBaiHatTimKiem[$index].yeuthich==0 && checklogin.dadangnhap == true" style="position:inherit;" class="far fa-heart icon_nav_right_first_timkiem"></i>
+                                <i ng-show="danhSachBaiHatTimKiem[$index].yeuthich==0 && checklogin.dadangnhap == true" class="far fa-heart icon_nav_right_first_timkiem"></i>
                                 <i ng-show="danhSachBaiHatTimKiem[$index].yeuthich==1 && checklogin.dadangnhap == true" class="fas fa-heart icon_active_yeuthich_timkiem"></i>
                                 <i ng-show="!checklogin.dadangnhap" class="far fa-heart icon_nav_right_first_timkiem"></i>
                             </label>
@@ -114,7 +115,6 @@
                 </div>
             </div>
         </div>
-
     </div>
     <h3 class="title is-2" style="font-size: 18px; color: #fff; /* margin-bottom: 10px; */ margin-left: 3.7%;">
         <a href="#/timkiem/">Playlist/Album<i class="icon ic-go-right"></i></a>
@@ -134,13 +134,13 @@
                     <div class="img_playlist_timkiem" ng-style="{'background-image': 'url(' + x.linkhinhanh + ')'}"></div>
                     <div class="hover_playlist item" animate ng-class="{'display_block' : kiemTraDSPNguoiDungClick == x.id  }">
                         <label class="hover_remove_playlist" style="cursor:pointer;" ng-click="$event.preventDefault();  yeuThichDanhSachPhatNguoiDung($index); yeuThichDanhSachPhatNguoiDungID(x.id)">
-                            <i ng-show="x.yeuthich==1 && checklogin.dadangnhap == true" class="fas fa-heart icon_account"></i>
-                            <i ng-show="x.yeuthich==0 && checklogin.dadangnhap == true" class="far fa-heart icon_nav_right_first_timkiem_a"></i>
-                            <i ng-show="!checklogin.dadangnhap" class="far fa-heart icon_nav_right_first_timkiem_a"></i>
+                            <i style="font-size:16px" ng-show="x.yeuthich==1 && checklogin.dadangnhap == true" class="fas fa-heart icon_account"></i>
+                            <i style="font-size:16px" ng-show="x.yeuthich==0 && checklogin.dadangnhap == true" class="far fa-heart icon_nav_right_first_timkiem_a"></i>
+                            <i style="font-size:16px" ng-show="!checklogin.dadangnhap" class="far fa-heart icon_nav_right_first_timkiem_a"></i>
                         </label>
                         <div ng-click="$event.preventDefault(); Play(); " class="play1-play2 nut_dsp_tl vong_tron_play" style="" tabindex="0" ng-show="kiemTraDSPNguoiDungClick == x.id">
                             <div ng-show="playmusic == 1 " class="play_baihat_dsptl" style="top: 51%;left: 38%; height: 26px; width: 27px;"> </div>
-
+                            
                             <!--<i ng-show="playmusic == 0 " class="nutplay_baihat_nhacmoi fa fa-play" style="color: white;"></i>-->
                             <i ng-show="playmusic == 0 " class="fa fa-play" style=""></i><!--width: 55px; height: 55px; display: flex; align-items: center; justify-content: center; font-size: 20px;-->
                         </div>
@@ -222,7 +222,7 @@
                 </div>
             </div>
         </div>
-        <div class="item_nhac_da_luu_timkiem" ng-class="{'active_baihat_timkiem' : kiemTraBaiHatDangPhat==x.id }" ng-repeat="x in danhSachBaiHatTimKiem | limitTo : 30" context-menu="contextMenuBaiHat_BaiHat" ng-right-click="moChiTietBaiHat(x)">
+        <div class="item_nhac_da_luu_timkiem" ng-class="{'active_baihat_timkiem' : kiemTraBaiHatDangPhat==x.id }" ng-repeat="x in danhSachBaiHatTimKiem " context-menu="contextMenuBaiHat_BaiHat" ng-right-click="moChiTietBaiHat(x)">
             <div class="border_nhac_luu">
                 <div class="media_luu_baihat_timkiem">
                     <div class="media_luu_left_baihat_timkiem" animate>
@@ -249,9 +249,9 @@
                     <div class="media_luu_content_timkiem"><div class="time_bai_hat_timkiem">{{x.thoiluongbaihat}}</div></div>
                     <div class="media_luu_right">
                         <label class="label_account" ng-click="toggleYeuThichBH_TimKiem($index)">
-                            <i ng-show="x.yeuthich==0 && checklogin.dadangnhap == true" style="right:141px" class="far fa-heart icon_nav_right_first_timkiem_TAB"></i>
-                            <i ng-show="x.yeuthich==1 && checklogin.dadangnhap == true" style="position: inherit;" class="fas fa-heart icon_active_yeuthich_timkiem"></i>
-                            <i ng-show="!checklogin.dadangnhap" style="right:141px"  class="far fa-heart icon_nav_right_first_timkiem_TAB"></i>
+                            <i ng-show="x.yeuthich==0 && checklogin.dadangnhap == true" style="right:9px" class="far fa-heart icon_nav_right_first_timkiem_TAB"></i>
+                            <i ng-show="x.yeuthich==1 && checklogin.dadangnhap == true" style="position: absolute;" class="fas fa-heart icon_active_yeuthich_timkiem"></i>
+                            <i ng-show="!checklogin.dadangnhap" style="right:7px"  class="far fa-heart icon_nav_right_first_timkiem_TAB"></i>
                         </label>
                         <!--<label class="label_account">
                             <i class="far fa-heart icon_account_notfocus"></i>

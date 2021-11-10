@@ -146,10 +146,23 @@ app.controller('index', function ($rootScope, $scope, dataservice, $uibModal, Ex
 
             rs = rs.data;
             $scope.taiThongKe = rs;
+            console.log("danh sách thống kê");
+            console.log($scope.taiThongKe);
+            
+                $scope.numberOfPages = function () {
+                    if ($scope.taiThongKe.length > 0) {
+                        return Math.ceil($scope.taiThongKe.length / $scope.pageSize);
+
+                    }
+                    else {
+                        return 1;
+                    }
+                }
+                console.log("số trang");
+                console.log($scope.numberOfPages);
+            
+           
           
-            $scope.numberOfPages = function () {
-                return Math.ceil($scope.taiThongKe.length / $scope.pageSize);
-            }
             if ($scope.numberOfPages() < 8) {
                 $scope.soLuong = $scope.numberOfPages();
             }
@@ -157,7 +170,8 @@ app.controller('index', function ($rootScope, $scope, dataservice, $uibModal, Ex
 
                 rs = rs.data;
                 $scope.taiThongKeDoanhThu = rs;
-
+                console.log("danh sách thống kê Doanh thu");
+                console.log($scope.taiThongKeDoanhThu);
             });
            // $scope.tongTien = 0;
            // var tientien = 0;

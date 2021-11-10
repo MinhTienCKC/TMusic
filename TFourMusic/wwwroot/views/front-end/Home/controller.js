@@ -3272,9 +3272,10 @@ app.controller('Ctrl_ESEIM', function ($scope, dataservice, $uibModal, $rootScop
                                 $scope.xoaNhacDaTaiXuong = rs;
                                 //$("#loaddingdownload").css("display", "none");
                                 //$("#loaddingdownload1").css("display", "none");
-                                $("#loading_main").css("display", "none");
+                               
                             });
-                        }, 1000);
+                            $("#loading_main").css("display", "none");
+                        }, 5000);
 
                     }, 5000);
                 }

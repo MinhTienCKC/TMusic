@@ -275,7 +275,7 @@
     max-width: 100%;
     padding-top: 5px;
     margin-left: 3%;
-    padding-bottom: 35px;
+    padding-bottom: 110px;
 }
 .item_ds_chitiet_item_timkiem{
     width: 19%;
@@ -614,15 +614,15 @@ figure_timkiem {
 .icon_active_yeuthich_timkiem {
     margin-top: 7px;
     position: absolute;
-    right: 78px;
+    right: 9px;
     color: #ed2b91;
     /* opacity: 0; */
     font-size: 16px;
 }
 .icon_nav_right_first_timkiem {
-    margin-top: 10px;
+    margin-top: 9px;
     position: absolute;
-    right: 79px;
+    right: 9px;
     /* opacity: 0; */
     font-size: 14px;
     color: #ffffff;
@@ -630,7 +630,7 @@ figure_timkiem {
 .icon_nav_right_first_timkiem_TAB {
     margin-top: 9px;
     /* position: absolute; */
-    right: 144px;
+    right: 9px;
     /* opacity: 0; */
     font-size: 14px;
     color: #ffffff;
@@ -638,7 +638,7 @@ figure_timkiem {
 .icon_active_yeuthich_timkiem_tab {
     margin-top: 5px;
     position: absolute;
-    right: 141px;
+    right: 9px;
     color: #ed2b91;
     /* opacity: 0; */
     font-size: 22px;
@@ -683,17 +683,19 @@ icon_nav_right_first_timkiem_tab1 {
     /* margin: auto; */
     font-size: 20px;
     color: #fff;
-    top: 15px;
-    left: 30px;
+    top: 35%;
+    left: 40%;
 }
 .icon_nav_right_first_timkiem_a {
     margin-top: 1px;
+    margin-top: 10px;
+    margin-left: 9px;
     /* position: absolute; */
     right: 153px;
     /* opacity: 0; */
-    font-size: 21px;
+    font-size: 16px;
     color: #fff;
-    cursor:pointer;
+    cursor: pointer;
 }
 .active_baihat_timkiem {
     background-color: rgb(255 255 255 / 10%);
@@ -715,4 +717,7 @@ icon_nav_right_first_timkiem_tab1 {
 .display_blockbg{
     z-index:1;
     display:block;
+}
+.marginleft {
+    margin-left: 30px;
 }

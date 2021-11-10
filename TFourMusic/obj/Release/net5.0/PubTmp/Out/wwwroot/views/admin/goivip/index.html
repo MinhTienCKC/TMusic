@@ -2,28 +2,34 @@
 <div class="main-content-container container-fluid px-4">
     <!-- Page Header -->
     <div class="page-header row no-gutters py-4" style="padding-bottom: 0.1rem!important;">
-        <div class="col-12 col-sm-4 text-center text-sm-left mb-0">
-            <button id="" type="submit" ng-click="taoGoiVip_index()" class="btn btn-accent " style=""><i class="fa fa-plus"></i>  Tạo Gói Vip</button>
-            <button type="submit" ng-show="!hienTimKiem" ng-click="showSearch()" class="btn btn-accent " style=" font-size: 0.75rem; width: 95px;"><i class="fa fa-search"></i>  Tìm Kiếm</button>
+        <div class="col-12 col-sm-4 text-center text-sm-left mb-0" style=" display: flex; flex-direction: row; flex-wrap: nowrap;">
+            <button id="" type="submit" ng-click="taoGoiVip_index()" class="btn btn-accent " style="margin-right:5px;"><i class="fa fa-plus"></i>  Tạo Gói Vip</button>
+            <button id="" type="submit" ng-click="thungrac()" class="btn btn-accent " style="left: 246%; position: inherit;"><i class="fa fa-trash"></i>  Thùng rác</button>
+            <!--<button type="submit" ng-show="!hienTimKiem" ng-click="showSearch()" class="btn btn-accent " style=" font-size: 0.75rem; width: 95px; "><i class="fa fa-search"></i>  Tìm Kiếm</button>
+
+    <input type="text" ng-model="timkiem.tengoivip" class="form-control " id="feLastName23" placeholder="Tìm theo tên" value="Brooks" ng-show="hienTimKiem">
+    <button type="submit" ng-click="showSearch(); timkiem.tengoivip = '';" class="btn btn-accent" style=" margin: 0px 5px;" ng-show="hienTimKiem">Ẩn Tìm Kiếm</button>-->
+
+
         </div>
     </div>
-    <div class="page-header row no-gutters py-4" style="padding-top: 0rem !important; padding-bottom: 0.1rem!important;" ng-show="hienTimKiem">
+    <!--<div class="page-header row no-gutters py-4" style="padding-top: 0rem !important; padding-bottom: 0.1rem!important;" ng-show="hienTimKiem">
         <div class="col-12 col-sm-4 text-center text-sm-left mb-0">
-            <input type="text" ng-model="timkiem.tengoivip" class="form-control " id="feLastName23" placeholder="Tìm theo tên" value="Brooks">
+            <input type="text" ng-model="timkiem.tengoivip" class="form-control " id="feLastName23" placeholder="Tìm theo tên" value="Brooks" ng-show="hienTimKiem">
         </div>
         <div class="col-12 col-sm-4 text-center text-sm-left mb-0">
-            <button type="submit" ng-click="showSearch(); timkiem.tengoivip = '';" class="btn btn-accent" style="padding: 10px 8px;">Ẩn Tìm Kiếm</button>
+            <button type="submit" ng-click="showSearch(); timkiem.tengoivip = '';" class="btn btn-accent" style="padding: 10px 8px;" ng-show="hienTimKiem">Ẩn Tìm Kiếm</button>
         </div>
 
 
-    </div>
+    </div>-->
     <!-- End Page Header -->
     <!-- Default Light Table -->
     <div class="row">
 
         <div class="col">
             <div class="card card-small mb-4 dodai">
-                <div class="card-header border-bottom">
+                <div class="card-header border-bottom" style=" ">
                     <h6 class="m-0">
                         <span class="chuot" ng-click="sapXep('null'); hoatdong=false; currentPage = 0;">Gói Vip</span>
                     </h6>
@@ -54,7 +60,7 @@
                                     <span class="sortorder" ng-show="tenbien === 'giatiengiamgia'" ng-class="{hoatdong: hoatdong}"></span>
                                 </th>
                                                            
-                                <th scope="col" class="border-0">Sửa</th>
+                                <!--<th scope="col" class="border-0">Sửa</th>-->
                                 <th scope="col" class="border-0">Xóa</th>
 
                             </tr>
@@ -72,10 +78,10 @@
                                     </label>
                                 </td>
                                 <td class="vitrigiua "><span>{{data.sothang}}</span></td>
-                                <td class="vitrigiua "><span>{{data.giatiengoc | currency:"":0}} VNĐ</span></td>
-                                <td class="vitrigiua "><span>{{data.giatiengiamgia | currency:"":0}} VNĐ</span></td>
+                                <td class="vitrigiua "><span>{{data.giatiengoc | number:'0' | vietNamDong}} </span></td>
+                                <td class="vitrigiua "><span>{{data.giatiengiamgia | number:'0' | vietNamDong}} </span></td>
 
-                                <td class="vitrigiua"> <button ng-click="edit(data)" style="width: 25px; height: 25px; padding: 0px;-webkit-box-shadow: 0 2px 5px 0 rgba(85,168,253,0.45);" class="btn btn-accent blue "><i class="fa fa-edit"></i></button>       </td>
+                                <!--<td class="vitrigiua"> <button ng-click="edit(data)" style="width: 25px; height: 25px; padding: 0px;-webkit-box-shadow: 0 2px 5px 0 rgba(85,168,253,0.45);" class="btn btn-accent blue "><i class="fa fa-edit"></i></button>       </td>-->
                                 <td class="vitrigiua"> <button type="submit" ng-click="xoaGoiVip(data,($index + ((currentPage+1)*pageSize)-pageSize))" style="width: 25px; height: 25px; padding: 0px;-webkit-box-shadow: 0 2px 5px 0 rgba(230,60,95,0.45)" class="btn btn-accent red "><i class="fa fa-trash"></i></button></td>
 
 

@@ -9,7 +9,7 @@
 
 .zm-sidebar {
     position: fixed;
-    z-index: 5;
+    z-index: 4;
     width: 240px;
     background-color: var(--sidebar-bg);
     top: 0;
@@ -65,39 +65,42 @@ html {
 
 .zm-sidebar-wrapper {
     position: absolute;
-    top: 12%;
+    top: 15%;
     left: 0;
     right: 0;
     bottom: 0;
 }
 
 .zmp3-logo {
-    margin-top: 12%;
-    /* margin-left: 5px; */
+    /* margin-top: 12%; */
+    margin-left: 20px;
     margin-bottom: 5%;
     height: 100%;
-    /*background-image: url(/image/logo.png);*/
-    background-image: url('../image/logo (2).png');
+    /* background-image: url(/image/logo.png); */
+    background-image: url('../image/8.png');
     background-repeat: no-repeat;
-    background-size: 59%;
+    background-size: 100%;
     border-radius: 0;
     border: 0;
     cursor: pointer;
-    width: 120px;
+    width: 122px;
 }
+    .zmp3-logo:hover{
+        opacity:0.7;
+    }
 
-.zm-btn_index {
-    position: relative;
-    width: 100%;
-    height: 100%;
-    box-sizing: border-box;
-    background-color: var(--sidebar-bg);
-}
+    .zm-btn_index {
+        position: relative;
+        width: 100%;
+        height: 100%;
+        box-sizing: border-box;
+        background-color: var(--sidebar-bg);
+    }
 
 .zm-navbar-item {
     list-style-type: none;
     font-size: 2rem;
-    padding: 6.5%;
+    padding: 5%;
     margin-left: -4%;
 }
 
@@ -287,8 +290,9 @@ section .loader span{
 .suggest__list {
     position: absolute;
     overflow: hidden;
-    width: 42.7%;
-    margin-left: 89px;
+    width: 401px;
+    min-width:401px;
+    margin-left: 95px;
     height: auto;
     min-height: 0;
     max-height: 601px;
@@ -455,7 +459,10 @@ section .loader span{
 .overplay:checked ~ .tao_playlist_layout {
     display: flex;
 }
-.overplay:checked ~ .tao_playlist_layout_label {
+/*.overplay:checked ~ .tao_playlist_layout_label {
+    display: block;
+}*/
+.overplaylayout:checked ~ .tao_playlist_layout_label {
     display: block;
 }
 .showtimers:checked ~ .tao_playlist_layout_label{
@@ -463,6 +470,9 @@ section .loader span{
 }
 .showtimers:checked ~ .tao_playlist_timer {
     display: flex;
+}
+.overplay:checked ~ .tao_playlist_layout_lb {
+    display: block;
 }
 .tao_playlist_timer {
     z-index: 1000000;
@@ -476,7 +486,18 @@ section .loader span{
     width: auto;
     height: auto;
 }
-
+.tao_playlist_layout_lb {
+    background-color: hsl(0deg 0% 0% / 80%);
+    display: none;
+    justify-content: center;
+    align-items: center;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: 10;
+}
 .modal_laylist_layout {
     background-color: hsl(265deg 51% 45%);
     border-radius: 8px;
@@ -939,7 +960,7 @@ section .loader span{
 }
 
 .tao_playlist_layout_nangcapvip {
-    z-index: 1000000;
+    z-index: 100;
     /* background-color: hsl(0deg 0% 0% / 80%); */
     /* display: none;*/
     justify-content: center;
