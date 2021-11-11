@@ -1,6 +1,6 @@
 ﻿var ctxfolderurl = "/views/admin/quangCao";
 
-var app = angular.module('T_Music', ["ui.bootstrap", "ngRoute"]);
+var app = angular.module('Music', ["ui.bootstrap", "ngRoute"]);
 //var app = angular.module('T_Music', ["ui.bootstrap", "ngRoute", "ngValidate", "datatables", "datatables.bootstrap", 'datatables.colvis', "ui.bootstrap.contextMenu", 'datatables.colreorder', 'angular-confirm', "ngJsTree", "treeGrid", "ui.select", "ngCookies", "pascalprecht.translate"])
 app.factory('dataservice', function ($http) {
     return {
@@ -94,7 +94,7 @@ app.config(function ($routeProvider) {
             controller: 'index'
         })
 });
-app.controller('T_Music', function () {
+app.controller('Music', function () {
 
 });
 app.controller('index', function ($rootScope, $scope, dataservice, $uibModal) {

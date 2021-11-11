@@ -2659,17 +2659,31 @@ namespace TFourMusic.Controllers
                 {
                     listxh.Add(congLuotNgheThang(list, item.Key.ToString()));
                 }
-                foreach (var item in listxh)
+                listbh = getListBaiHat();
+               listbh = (from bh in listbh
+                            join xh in listxh on bh.id equals xh.baihat_id
+                            select bh).ToList();
+                for(int i = 0; i< listbh.Count; i++)
                 {
-                    FirebaseResponse rp = client.Get("csdlmoi/baihat/" + item.nguoidung_id.ToString() + "/" + item.baihat_id.ToString());
-                    var datarp = JsonConvert.DeserializeObject<baihatModel>(rp.Body);
-
-                    if (datarp != null)
+                    for(int j = 0; j<listxh.Count;j++)
                     {
-                        datarp.luotnghe = item.luotnghe;
-                        listbh.Add(datarp);
-                    }
-                }
+                        if(listbh[i].id == listxh[j].baihat_id)
+                        {
+                            listbh[i].luotnghe = listxh[j].luotnghe;
+                        }    
+                    }    
+                }    
+                //foreach (var item in listxh)
+                //{
+                //    FirebaseResponse rp = client.Get("csdlmoi/baihat/" + item.nguoidung_id.ToString() + "/" + item.baihat_id.ToString());
+                //    var datarp = JsonConvert.DeserializeObject<baihatModel>(rp.Body);
+
+                //    if (datarp != null)
+                //    {
+                //        datarp.luotnghe = item.luotnghe;
+                //        listbh.Add(datarp);
+                //    }
+                //}
                 if (listbh.Count > 0)
                 {
 
