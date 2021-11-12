@@ -622,13 +622,14 @@ app.controller('add', function ($rootScope, $scope, dataservice, $uibModalInstan
     $scope.dinhDangBaiHat = "audio/mpeg";
     $scope.dinhDangHinhAnh = "image/";
     $scope.submit = function () {
-        
+        $("#loading_main").css("display", "block");
         if ($scope.dinhDangHinhAnh != "image/"
             || $scope.dinhDangBaiHat != "audio/mpeg"
             || !$scope.addBaiHat.addTenBaiHat.$valid
             || !$scope.addBaiHat.addLinkBaiHat.$valid
             || !$scope.addBaiHat.addLinkHinhAnh.$valid
             || !$scope.addBaiHat.addTenCaSi.$valid) {
+            $("#loading_main").css("display", "none");
             alert("Vùng Lòng  Điền Đầy Đủ Và Kiểm Tra Thông Tin !!!");
         }
         else {
@@ -642,18 +643,29 @@ app.controller('add', function ($rootScope, $scope, dataservice, $uibModalInstan
             dataservice.uploadaudio(duLieuNhac, function (rs) {
                 rs = rs.data;
                 $scope.model.link = rs;
-                dataservice.uploadHinhAnh(duLieuHinh, function (rs) {
-                    rs = rs.data;
-                    $scope.model.linkhinhanh = rs;
-                    dataservice.taoBaiHat($scope.model, function (rs) {
+                setTimeout(function () {
+                    dataservice.uploadHinhAnh(duLieuHinh, function (rs) {
                         rs = rs.data;
-                        $scope.data = rs;
+                        $scope.model.linkhinhanh = rs;
+
+                        setTimeout(function () {
+
+                            dataservice.taoBaiHat($scope.model, function (rs) {
+                                rs = rs.data;
+                                $scope.data = rs;
+
+                                $("#loading_main").css("display", "none");
+                                $uibModalInstance.dismiss('cancel');
+                            });
+                        }, 500);
+                       
                     });
-                });
+              }, 500);
+                
             });
 
 
-            $uibModalInstance.dismiss('cancel');  
+          
         }
        
     }
@@ -896,6 +908,7 @@ app.controller('edit', function ($rootScope, $scope, $uibModalInstance, dataserv
     $scope.initData();
     
     $scope.submit = function () {
+        $("#loading_main").css("display", "block");
         if ( $scope.valueDanhSachPhatTheLoai == null
             ||
             $scope.valueTheLoai == null
@@ -903,7 +916,8 @@ app.controller('edit', function ($rootScope, $scope, $uibModalInstance, dataserv
             $scope.valueChuDe == null
             ||
            !$scope.editBaiHat.editTenBaiHat.$valid         
-            || !$scope.editBaiHat.editTenCaSi.$valid ) {
+            || !$scope.editBaiHat.editTenCaSi.$valid) {
+            $("#loading_main").css("display", "none");
             alert("Vùng Lòng  Điền Đầy Đủ Và Kiểm Tra Thông Tin !!!");
         }
         else {
@@ -916,10 +930,11 @@ app.controller('edit', function ($rootScope, $scope, $uibModalInstance, dataserv
             dataservice.suaBaiHat($scope.modelbaihat,function (rs) {
                rs = rs.data;
                 $scope.suaBaiHat = rs;
-
+                $("#loading_main").css("display", "none");
+                $uibModalInstance.dismiss('cancel');
             });
 
-            $uibModalInstance.dismiss('cancel');
+          
         }   
     }
 });

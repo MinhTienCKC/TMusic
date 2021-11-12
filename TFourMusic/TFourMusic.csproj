@@ -250,7 +250,6 @@
     <None Include="wwwroot\assets\styles\scss\_variables.scss" />
     <None Include="wwwroot\assets\tippy\popper.min.js" />
     <None Include="wwwroot\assets\tippy\tippy-bundle.umd.min.js" />
-    <None Include="wwwroot\views\admin\baiHat\controller.js" />
     <None Include="wwwroot\views\admin\baoCaoViPham\controller.js" />
     <None Include="wwwroot\views\admin\chuDe\controller.js" />
     <None Include="wwwroot\views\admin\dangKy\controller.js" />

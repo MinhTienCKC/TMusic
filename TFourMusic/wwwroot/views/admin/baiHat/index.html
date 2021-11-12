@@ -2,40 +2,40 @@
 <div class="main-content-container container-fluid px-4" id="main-baihat">
     <!-- Page Header -->
     <div class="page-header row no-gutters py-4" style="padding-bottom: 0.1rem!important;">
-        <div class="col-12 col-sm-4 text-center text-sm-left mb-0">
-            <button id="" type="submit" ng-click="taoBaiHat_index()" class="btn btn-accent " style=""><i class="fa fa-plus"></i>  Tạo bài hát</button>
+        <div class="col-12 col-sm-4 text-center text-sm-left mb-0" style=" flex: 0 0 70%; max-width: 70%; display: flex; flex-direction: row; flex-wrap: nowrap;     height: 32.8px;">
+            <button id="" type="submit" ng-click="taoBaiHat_index()" class="btn btn-accent " style="margin-right:5px"><i class="fa fa-plus"></i>  Tạo bài hát</button>
+            <input ng-show="hienTimKiem" type="text" ng-model="timkiem.tenbaihat" class="form-control " placeholder="Tìm theo tên bài hát" ng-change="currentPage = 0;">
+            <input ng-show="hienTimKiem" type="text" ng-model="timkiem.casi" class="form-control " placeholder="Tìm theo ca sĩ" ng-change="currentPage = 0;">
+            <button ng-show="hienTimKiem" type="submit" ng-click="showSearch(); timkiem.tenbaihat = '';timkiem.casi =''; " class="btn btn-accent" style="margin-left:5px;">Ẩn Tìm Kiếm</button>
+
             <button type="submit" ng-show="!hienTimKiem" ng-click="showSearch();currentPage = 0;" class="btn btn-accent " style=" font-size: 0.75rem; width: 95px;"><i class="fa fa-search"></i>  Tìm Kiếm</button>
-            <button id="" ng-style="{ left: hienTimKiem ? '246%' : '223%' }" type="submit" ng-click="thungrac()" class="btn btn-accent " style="left: 223%; position: inherit;"><i class="fa fa-trash"></i>  Thùng rác</button>
 
 
 
         </div>
-        <div class="col-12 col-sm-4 text-center text-sm-left mb-0">
-            <button id="" type="submit" ng-click="timkiem.nguoidung_id = 'admin'; layBaiHatAdmin(taiBaiHat | filter:timkiem);" class="btn btn-accent " style="">Admin</button>
-            <button id="" type="submit" ng-click="timkiem.nguoidung_id = ''; layBaiHatAdmin(taiBaiHat | filter:timkiem);" class="btn btn-accent " style="">Tất Cả</button>
 
+        <div class="col-12 col-sm-4 text-center text-sm-left mb-0" style=" flex: 0 0 21%; max-width: 21%; margin-left:9%;">
+            <button id="" type="submit" ng-click="timkiem.nguoidung_id = 'admin'; layBaiHatAdmin(taiBaiHat | filter:timkiem);" class="btn btn-accent " style="" title="Nút lấy danh sách bài hát của admin tải lên">Admin</button>
+            <button id="" type="submit" ng-click="timkiem.nguoidung_id = ''; layBaiHatAdmin(taiBaiHat | filter:timkiem);" class="btn btn-accent " style="" title="Nút lấy tất bài hát ">Tất Cả</button>
+
+
+            <button id="" type="submit" ng-click="thungrac()" class="btn btn-accent "><i class="fa fa-trash"></i>  Thùng rác</button>
 
         </div>
     </div>
-    <div class="page-header row no-gutters py-4" style="padding-top: 0rem !important; padding-bottom: 0.1rem!important;" ng-show="hienTimKiem">
+    <!--<div class="page-header row no-gutters py-4" style="padding-top: 0rem !important; padding-bottom: 0.1rem!important;" ng-show="hienTimKiem">
         <div class="col-12 col-sm-4 text-center text-sm-left mb-0">
             <input type="text" ng-model="timkiem.tenbaihat" class="form-control " id="feLastName23" placeholder="Tìm theo tên bài hát" value="Brooks" ng-change="currentPage = 0;">
-            <input type="text" ng-model="timkiem.casi" class="form-control " id="feLastName2" placeholder="Tìm theo ca sĩ" value="Brooks" ng-change="currentPage = 0;">
-            <!--<input type="text" ng-model="timkiem.object.tenbaihat" class="form-control" id="feLastName" placeholder="Tìm theo tên" value="Brooks">-->
+            <input type="text" ng-model="timkiem.casi" class="form-control " id="feLastName2" placeholder="Tìm theo ca sĩ" value="Brooks" ng-change="currentPage = 0;">-->
+    <!--<input type="text" ng-model="timkiem.object.tenbaihat" class="form-control" id="feLastName" placeholder="Tìm theo tên" value="Brooks">-->
+    <!--</div>
+    <div class="col-12 col-sm-4 text-center text-sm-left mb-0">-->
+    <!--<button type="submit"  ng-click="timKiem()" class="btn btn-accent" style="padding: 28px 15px;">Tìm Kiếm</button>-->
+    <!--<button type="submit" ng-click="showSearch(); timkiem.tenbaihat = '';timkiem.casi =''; " class="btn btn-accent" style="padding: 28px 8px;">Ẩn Tìm Kiếm</button>
 
 
-
-        </div>
-        <div class="col-12 col-sm-4 text-center text-sm-left mb-0">
-
-            <!--<button type="submit"  ng-click="timKiem()" class="btn btn-accent" style="padding: 28px 15px;">Tìm Kiếm</button>-->
-            <button type="submit" ng-click="showSearch(); timkiem.tenbaihat = '';timkiem.casi =''; " class="btn btn-accent" style="padding: 28px 8px;">Ẩn Tìm Kiếm</button>
-
-
-        </div>
-
-
-    </div>
+    </div>-->
+    <!--</div>-->
     <!-- End Page Header -->
     <!-- Default Light Table -->
     <div class="row">
@@ -74,20 +74,7 @@
                                     <span class="chuot" ng-click="sapXep('luotnghe')">Lượt Nghe</span>
                                     <span class="sortorder" ng-show="tenbien === 'luotnghe'" ng-class="{hoatdong: hoatdong}"></span>
                                 </th>
-                                <!--<th scope="col" class="border-0">
-                                    <span class="chuot" ng-click="sapXep('luottaixuong')">Lượt Tải Xuống</span>
-                                    <span class="sortorder" ng-show="tenbien === 'luottaixuong'" ng-class="{hoatdong: hoatdong}"></span>
-                                </th>-->
-                                <!--<th scope="col" class="border-0">
-                                    <span class="chuot" ng-click="sapXep('luotthich')">Lượt Thích</span>
-                                    <span class="sortorder" ng-show="tenbien === 'luotthich'" ng-class="{hoatdong: hoatdong}"></span>
-                                </th>-->
-                                <!--<th scope="col" class="border-0">Thời Lượng</th>-->
-                                <!--<th scope="col" class="border-0">Mô Tả</th>-->
-                                <!--<th scope="col" class="border-0">Ca Sĩ</th>
-                                <th scope="col" class="border-0">Lượt Nghe</th>
-                                <th scope="col" class="border-0">Lượt Tải Xuống</th>
-                                <th scope="col" class="border-0">Lượt Thích</th>-->
+
                                 <th ng-if="timkiem.nguoidung_id == 'admin'" scope="col" title="chế độ công khai hoặc cá nhân" class="border-0">Chế Độ</th>
                                 <th scope="col" class="border-0">Sửa</th>
                                 <th scope="col" class="border-0">Xóa</th>
@@ -95,11 +82,11 @@
                             </tr>
                         </thead>
                         <tbody>
-                            <tr  ng-repeat="data in taiBaiHat | orderBy:tenbien:hoatdong | filter:timkiem | startFrom:currentPage*pageSize | limitTo:pageSize ">
+                            <tr ng-repeat="data in taiBaiHat | orderBy:tenbien:hoatdong | filter:timkiem | startFrom:currentPage*pageSize | limitTo:pageSize ">
                                 <!--<td class="vitrigiua "><span>{{data.tenbaihat}}</span></td>-->
                                 <td class="vitrigiua" style="width: 200px;">
                                     <p style="margin-bottom: 0px !important;" class="motadsptl tenbaihat123" title="{{data.tenbaihat}}" ng-click="xemChiTietBaiHat(data)">{{data.tenbaihat}}</p>
-                                 
+
                                 <td>
                                     <img src="{{data.linkhinhanh}}" class="icon-category hinhanh">
                                     <label style="color: #0479f8;" class="anh">
@@ -110,8 +97,7 @@
                                 <td class="vitrigiua">{{data.thoiluongbaihat}}</td>
                                 <td class="vitrigiua">{{data.casi}}</td>
                                 <td class="vitrigiua">{{data.luotnghe}}</td>
-                                <!--<td class="vitrigiua">{{data.luottaixuong}}</td>-->
-                                <!--<td class="vitrigiua">{{data.luotthich}}</td>-->
+
                                 <td ng-if="timkiem.nguoidung_id == 'admin'" class="vitrigiua">
                                     <label class="switch1">
                                         <input ng-change="cheDo(data)" type="checkbox" ng-model="data.chedo"
@@ -139,7 +125,7 @@
         </div>
 
     </div>
-   
+
     <!-- End Default Light Table -->
     <!-- Default Dark Table -->
     <div class="row" style="padding:0px 0px 0px 15px">
@@ -160,46 +146,52 @@
 <style>
     .tenbaihat123 {
         color: #006fe6;
-        cursor:pointer;
+        cursor: pointer;
     }
-    .tenbaihat123:hover{
-        color:black!important;
-    }
+
+        .tenbaihat123:hover {
+            color: black !important;
+        }
+
     .motadsptl {
         text-overflow: Ellipsis;
         width: 200px;
         white-space: nowrap;
         overflow: hidden;
     }
+
     .soTrangChon {
         background-color: #006fe6 !important;
-        color:white !important;
+        color: white !important;
     }
+
     .page-link:hover {
         background-color: #006fe6 !important;
         color: white !important;
     }
+
     .khungso {
         border: 1px solid #006fe6;
         border-radius: 9px;
         padding: 6px;
     }
-    .anh {    
+
+    .anh {
         position: relative;
         display: inline-block;
-/*         margin-top: 20px;*/
-        cursor:pointer;
-   
+        /*         margin-top: 20px;*/
+        cursor: pointer;
     }
+
         .anh:hover {
-               color:red !important;
+            color: red !important;
         }
+
     table {
         border-collapse: inherit;
     }
 
-    .table td  {
+    .table td {
         border-top: 1px solid #007bff !important;
     }
-    
 </style>

@@ -3,9 +3,9 @@
 
 
 <!--thông tin chi tiet người dùng-->
-<div class="modal-header" style="margin: 0px 0px 0px 0px; display:flex;" >
-    <h6 class="m-0" >Chi Tiết Người Dùng </h6>
-
+<div class="modal-header" style="margin: 0px 0px 0px 0px; display:flex;">
+    <h6 class="m-0">Chi Tiết Người Dùng </h6>
+    <h6 class="m-0"> Người Dùng ID:  {{duLieuChiTietNguoiDung.uid}} </h6>
     <button type="submit" id="btntext" ng-click="hienThiTaiXuong()" style="display:none;" class="btn btn-accent"></button>
     <!--<h6 class="m-0" style="padding-left: 50%;">Vô hiệu hóa: </h6>
     <div>-->
@@ -21,21 +21,22 @@
 <div class="modal-body" style="padding: 15px 30px 10px 30px !important;" >
     <div style="display:flex;">
         <div style=" width: 60%;">
-            <img ng-if="duLieuChiTietNguoiDung.hinhdaidien.length > 5" src="{{duLieuChiTietNguoiDung.hinhdaidien}}" class="" style=" height: 200px; width: 200px; border-radius: 10px; object-fit: cover;">
-            <img ng-if="duLieuChiTietNguoiDung.hinhdaidien.length < 5" src="https://s120-ava-talk.zadn.vn/0/5/1/5/0/120/4ff9b54b6eb2292f46483676eda192ae.jpg" class="" style=" height: 200px; width: 200px; border-radius: 10px; object-fit: cover;">
-            <div class="form-group col-md-6" style="display:flex;  padding-top:10px;">
-                <label for="feLastName" style=" font-size: x-large;">Vip: </label>
-                <img ng-if="duLieuChiTietNguoiDung.vip == 0" src="../../../image/khongvip.png" class="icon-category iconvip" style="width:55px; height:35px;" />
-                <img ng-if="duLieuChiTietNguoiDung.vip == 1" src="../../../image/iconvip.png" class="icon-category iconvip" style="width:55px; height:35px;">
-            </div>
-            <div class="form-group col-md-6" style="     flex: 0 0 100%;
-    max-width: 100%;">
-                <a ng-if="duLieuChiTietNguoiDung.vip == 1" style="" ng-click="$event.preventDefault();" class="mua_vip_account ng-binding ng-scope">
-                    Ngày hết hạn : {{duLieuChiTietNguoiDung.hansudungvip | date:'dd/MM/yyyy'}}
-                </a>
-            </div>
-
+            <img ng-if="duLieuChiTietNguoiDung.hinhdaidien.length > 5" src="{{duLieuChiTietNguoiDung.hinhdaidien
+        }}" class="" style=" height: 200px; width: 200px; border-radius: 10px; object-fit: cover;">
+        <img ng-if="duLieuChiTietNguoiDung.hinhdaidien.length < 5" src="https://s120-ava-talk.zadn.vn/0/5/1/5/0/120/4ff9b54b6eb2292f46483676eda192ae.jpg" class="" style=" height: 200px; width: 200px; border-radius: 10px; object-fit: cover;">
+        <div class="form-group col-md-6" style="display:flex;  padding-top:10px;">
+            <label for="feLastName" style=" font-size: x-large;">Vip: </label>
+            <img ng-if="duLieuChiTietNguoiDung.vip == 0" src="../../../image/khongvip.png" class="icon-category iconvip" style="width:55px; height:35px;" />
+            <img ng-if="duLieuChiTietNguoiDung.vip == 1" src="../../../image/iconvip.png" class="icon-category iconvip" style="width:55px; height:35px;">
         </div>
+        <div class="form-group col-md-6" style="     flex: 0 0 100%;
+    max-width: 100%;">
+            <a ng-if="duLieuChiTietNguoiDung.vip == 1" style="" ng-click="$event.preventDefault();" class="mua_vip_account ng-binding ng-scope">
+                Ngày hết hạn : {{duLieuChiTietNguoiDung.hansudungvip | date:'dd/MM/yyyy'}}
+            </a>
+        </div>
+
+</div>
         <div style="">
             <div class="form-row kiemtra">
                 <div class="form-group col-md-6">

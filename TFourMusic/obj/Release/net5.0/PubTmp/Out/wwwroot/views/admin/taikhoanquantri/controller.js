@@ -1,4 +1,6 @@
-﻿var ctxfolderurl = "/views/admin/taiKhoanQuanTri";
+﻿
+
+var ctxfolderurl = "/views/admin/taiKhoanQuanTri";
 
 var app = angular.module('T_Music', ["ui.bootstrap", "ngRoute"]);
 //var app = angular.module('T_Music', ["ui.bootstrap", "ngRoute", "ngValidate", "datatables", "datatables.bootstrap", 'datatables.colvis', "ui.bootstrap.contextMenu", 'datatables.colreorder', 'angular-confirm', "ngJsTree", "treeGrid", "ui.select", "ngCookies", "pascalprecht.translate"])
@@ -229,10 +231,22 @@ app.controller('index', function ($rootScope, $scope, dataservice, $uibModal) {
             rs = rs.data;
             if (rs == "") {
                 alertify.success("Tài khoản Admin mới thực hiện chức năng này !!!");
+                if (data.vohieuhoa == 1) {
+                    data.vohieuhoa = 0;
+                }
+                else {
+                    data.vohieuhoa = 1;
+                }
                 return;
             }
             if (rs == "loi") {
                 alertify.success("Không thể xóa hay vô hiệu hóa chính mình !!!.");
+                if (data.vohieuhoa == 1) {
+                    data.vohieuhoa = 0;
+                }
+                else {
+                    data.vohieuhoa = 1;
+                }
                 return;
             }
             if (rs == true) {
@@ -272,6 +286,8 @@ app.controller('index', function ($rootScope, $scope, dataservice, $uibModal) {
         modalInstance.result.then(function () {
           
         }, function () {
+                $scope.initData();
+              
         });
     };
     $scope.xoaTaiKhoanQuanTri = function (data,vitri) {
@@ -350,14 +366,17 @@ app.controller('add', function ($rootScope, $scope, dataservice, $uibModalInstan
    
     $scope.initData();
     $scope.submit = function () {
+        $("#loading_main").css("display", "block");
         if ($scope.kiemTraTrung == true) {
+            $("#loading_main").css("display", "none");
             alert("Tài Khoản Đã Tồn Tại Vui Lòng Nhập Lại !!!");
             return;
         }
         if (
              !$scope.addTaiKhoanQuanTri.addTaiKhoan.$valid
             || !$scope.addTaiKhoanQuanTri.addMatKhau.$valid
-            ) {
+        ) {
+            $("#loading_main").css("display", "none");
             alert("Vùng Lòng  Điền Đầy Đủ Và Kiểm Tra Thông Tin !!!");
         }
         else {
@@ -369,10 +388,13 @@ app.controller('add', function ($rootScope, $scope, dataservice, $uibModalInstan
             dataservice.taoTaiKhoanQuanTri($scope.model, function (rs) {
                 rs = rs.data;
                 $scope.data = rs;
+
+                $("#loading_main").css("display", "none");
+                $uibModalInstance.dismiss('cancel');
             });
 
 
-            $uibModalInstance.dismiss('cancel');
+ 
         }
 
     }  
@@ -386,6 +408,13 @@ app.controller('edit', function ($rootScope, $scope, $uibModalInstance, dataserv
         key: ''
     };
     $scope.initData = function () {
+        dataservice.taiTaiKhoanQuanTri(function (rs) {
+
+            rs = rs.data;
+            $scope.taiTaiKhoanQuanTri = rs;
+
+
+        });
         if ($scope.modeltaikhoanquantri.phanquyen == 0) {
             $scope.valuePhanQuyen = 'Nhân Viên';
         } else {
@@ -406,9 +435,21 @@ app.controller('edit', function ($rootScope, $scope, $uibModalInstance, dataserv
     $scope.initData();
 
     $scope.submit = function () {
+        $("#loading_main").css("display", "block");
+        for (var i = 0; i < $scope.taiTaiKhoanQuanTri.length; i++) {
+            if ($scope.editTaiKhoan == $scope.taiTaiKhoanQuanTri[i].taikhoan && $scope.editMatKhau == $scope.taiTaiKhoanQuanTri[i].matkhau
+                && $scope.modeltaikhoanquantri.phanquyen == $scope.taiTaiKhoanQuanTri[i].phanquyen
+            ) {
+                $("#loading_main").css("display", "none");
+                $uibModalInstance.dismiss('cancel');
+                return;   
+            } 
+        }      
+       
         if (!$scope.editTaiKhoanQuanTri.editTaiKhoan.$valid
             || !$scope.editTaiKhoanQuanTri.editMatKhau.$valid
         ) {
+            $("#loading_main").css("display", "none");
             alert("Vùng Lòng  Điền Đầy Đủ Và Kiểm Tra Thông Tin !!!");
         }
         else {
@@ -419,11 +460,14 @@ app.controller('edit', function ($rootScope, $scope, $uibModalInstance, dataserv
             dataservice.suaTaiKhoanQuanTri($scope.modeltaikhoanquantri, function (rs) {
                 rs = rs.data;
                 $scope.suaTaiKhoanQuanTri = rs;
+
+                $("#loading_main").css("display", "none");
+                $uibModalInstance.dismiss('cancel');
             });
 
 
 
-            $uibModalInstance.dismiss('cancel');
+      
         }
     }
 });

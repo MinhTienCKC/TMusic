@@ -189,7 +189,7 @@ app.controller('index', function ($rootScope, $scope, dataservice, $uibModal) {
         $("#loading_main").css("display", "block");
         dataservice.voHieuHoa(data, function (rs) {
             rs = rs.data;
-            if (rs == "") {
+            if (rs == "admin") {
                 alertify.success("Tài khoản phân quyền Admin mới thực hiện chức năng này !!!");
                 if (data.vohieuhoa == 1) {
                     data.vohieuhoa = 0;

@@ -263,6 +263,8 @@ app.controller('index', function ($rootScope, $scope, dataservice, $uibModal) {
         modalInstance.result.then(function () {
 
         }, function () {
+                $scope.initData();
+              
         });
     };
 
@@ -431,11 +433,13 @@ app.controller('add', function ($rootScope, $scope, dataservice, $uibModalInstan
     var duLieuHinh = new FormData();
     $scope.dinhDangHinhAnh = "image/";
     $scope.submit = function () {
+        $("#loading_main").css("display", "block");
         if ($scope.dinhDangHinhAnh != "image/"
             || $scope.duLieuBaiHat == ""
             || !$scope.addQuangCao.addLinkHinhAnh.$valid
             || !$scope.addQuangCao.addNoiDung.$valid
             || !$scope.addQuangCao.addTenQuangCao.$valid) {
+            $("#loading_main").css("display", "none");
             alert("Vùng Lòng  Điền Đầy Đủ Và Kiểm Tra Thông Tin !!!");
         }
         else {
@@ -449,10 +453,11 @@ app.controller('add', function ($rootScope, $scope, dataservice, $uibModalInstan
 
                 dataservice.taoQuangCao($scope.model, function (rs) {
                     rs = rs.data;
-
+                    $("#loading_main").css("display", "none");
+                    $uibModalInstance.dismiss('cancel');
                 });
             })
-            $uibModalInstance.dismiss('cancel');
+          
         }
 
 
@@ -485,9 +490,11 @@ app.controller('edit', function ($rootScope, $scope, $uibModalInstance, dataserv
     };
     $scope.initData();
     $scope.submit = function () {
+        $("#loading_main").css("display", "block");
         if (!$scope.editQuangCao.editTenQuangCao.$valid
             || !$scope.editQuangCao.editNoiDung.$valid
-            ) {
+        ) {
+            $("#loading_main").css("display", "none");
             alert("Vùng Lòng  Điền Đầy Đủ Và Kiểm Tra Thông Tin !!!");
         }
         else {
@@ -495,9 +502,12 @@ app.controller('edit', function ($rootScope, $scope, $uibModalInstance, dataserv
             $scope.modelQuangCao.noidung = $scope.editNoiDung;
             dataservice.suaQuangCao($scope.modelQuangCao, function (rs) {
                 rs = rs.data;
+
+                $("#loading_main").css("display", "none");
+                $uibModalInstance.dismiss('cancel');
             });
 
-            $uibModalInstance.dismiss('cancel');
+           
         }
     }
 });

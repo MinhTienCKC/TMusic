@@ -257,9 +257,9 @@ app.controller('index', function ($rootScope, $scope, dataservice, $uibModal) {
         modalInstance.result.then(function () {
 
         }, function () {
-                setTimeout(function () {
+                
                     $scope.initData();
-                }, 2000);
+                
         });
     };
 
@@ -330,9 +330,11 @@ app.controller('add', function ($rootScope, $scope, dataservice, $uibModalInstan
     var duLieuHinh = new FormData();
     $scope.dinhDangHinhAnh = "image/";
     $scope.submit = function () {
+        $("#loading_main").css("display", "block");
         if ($scope.dinhDangHinhAnh != "image/"
             || !$scope.addTheLoai.addLinkHinhAnh.$valid
             || !$scope.addTheLoai.addTenTheLoai.$valid) {
+            $("#loading_main").css("display", "none");
             alert("Vùng Lòng  Điền Đầy Đủ Và Kiểm Tra Thông Tin !!!");
         }
         else {
@@ -344,10 +346,11 @@ app.controller('add', function ($rootScope, $scope, dataservice, $uibModalInstan
 
                 dataservice.taoTheLoai($scope.model, function (rs) {
                     rs = rs.data;
-
+                    $("#loading_main").css("display", "none");
+                    $uibModalInstance.dismiss('cancel');
                 });
             })
-            $uibModalInstance.dismiss('cancel');
+            
         }
 
 
@@ -379,7 +382,10 @@ app.controller('edit', function ($rootScope, $scope, $uibModalInstance, dataserv
     };
     $scope.initData();
     $scope.submit = function () {
+        $("#loading_main").css("display", "block");
         if (!$scope.editTheLoai.editTenTheLoai.$valid) {
+
+            $("#loading_main").css("display", "none");
             alert("Vùng Lòng  Điền Đầy Đủ Và Kiểm Tra Thông Tin !!!");
         }
         else {
@@ -388,10 +394,11 @@ app.controller('edit', function ($rootScope, $scope, $uibModalInstance, dataserv
             dataservice.suaTheLoai($scope.modelTheLoai, function (rs) {
                 rs = rs.data;
 
-
+                $("#loading_main").css("display", "none");
+                $uibModalInstance.dismiss('cancel');
             });
 
-            $uibModalInstance.dismiss('cancel');
+            
         }
     }
 });

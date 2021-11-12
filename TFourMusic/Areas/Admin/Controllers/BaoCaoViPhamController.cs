@@ -96,11 +96,17 @@ namespace TFourMusic.Controllers
                 //var okok = from okok in baihatbaocao123
                 //           where okok.thoigian
                 //DateTime ok = DateTime.Parse(DateTime.Now.AddMonths(1).ToString("dd/MM/yyyy"));
+                //var dsbhvpdaxoa = (from bh in BaoCaoBaiHatDaXuLy_KhongViPham
+                //                   where bh.trangthai == 2 && DateTime.Parse(bh.ngayxuly.AddDays(7).ToString("dd-MM-yyyy")) <= DateTime.Parse(DateTime.Now.ToString("dd/MM/yyyy"))
+                //                 select bh).ToList();
+                //var dsndvpdaxoa = (from nd in BaoCaoNguoiDungDaXuLy_KhongViPham
+                //                   where nd.trangthai == 2 && DateTime.Parse(nd.ngayxuly.AddDays(7).ToString("dd-MM-yyyy")) <= DateTime.Parse(DateTime.Now.ToString("dd/MM/yyyy"))
+                //                   select nd).ToList();
                 var dsbhvpdaxoa = (from bh in BaoCaoBaiHatDaXuLy_KhongViPham
-                                   where bh.trangthai == 2 && DateTime.Parse(bh.ngayxuly.AddDays(7).ToString("dd-MM-yyyy")) <= DateTime.Parse(DateTime.Now.ToString("dd/MM/yyyy"))
-                                 select bh).ToList();
+                                   where bh.trangthai == 2 && bh.ngayxuly.AddDays(7) <= DateTime.Now
+                                   select bh).ToList();
                 var dsndvpdaxoa = (from nd in BaoCaoNguoiDungDaXuLy_KhongViPham
-                                   where nd.trangthai == 2 && DateTime.Parse(nd.ngayxuly.AddDays(7).ToString("dd-MM-yyyy")) <= DateTime.Parse(DateTime.Now.ToString("dd/MM/yyyy"))
+                                   where nd.trangthai == 2 && nd.ngayxuly.AddDays(7) <= DateTime.Now
                                    select nd).ToList();
                 var baihatbaocao = LayBangBaoCaoBaiHatChuaXuLy();
                 var nguoidung = LayBangNguoiDung();
@@ -129,10 +135,10 @@ namespace TFourMusic.Controllers
                  .Child(item.id)
                  .DeleteAsync();
                 }
-                nguoidungModel admin = new nguoidungModel();
-                admin.uid = "admin";
-                admin.email = "admin";
-                nguoidung.Add(admin);
+                //nguoidungModel admin = new nguoidungModel();
+                //admin.uid = "admin";
+                //admin.email = "admin";
+                //nguoidung.Add(admin);
                 var data1 = (from bcvp in baihatbaocao
                              join nd in nguoidung on bcvp.nguoidung_id equals nd.uid
                              join nd1 in nguoidung on bcvp.nguoidung_baocao_id equals nd1.uid

@@ -291,7 +291,7 @@ namespace TFourMusic.Controllers
             }
             else
             {
-                return Json("");
+                return Json("admin");
             }
 
            

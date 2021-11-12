@@ -87,10 +87,10 @@ app.controller('index', function ($rootScope, $scope, dataservice, $uibModal) {
             rs = rs.data;
 
             if (rs == true) {
-                alertify.success("Thay đỗi trang thái thành công.");
+                alertify.success("Thay đổi trang thái thành công.");
             }
             else {
-                alertify.success("Thay đỗi trạng thái thất bại .");
+                alertify.success("Thay đổi trạng thái thất bại .");
             }
         });
     }

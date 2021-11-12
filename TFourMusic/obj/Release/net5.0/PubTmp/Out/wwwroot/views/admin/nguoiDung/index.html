@@ -140,29 +140,33 @@
 <div class="main-content-container container-fluid px-4">
     <!-- Page Header -->
     <div class="page-header row no-gutters py-4" style="padding-bottom: 0.1rem!important;">
-        <div class="col-12 col-sm-4 text-center text-sm-left mb-0">
+        <div class="col-12 col-sm-4 text-center text-sm-left mb-0" style="display: flex; flex-direction: row; flex-wrap: nowrap;     height: 35px; ">
             <button type="submit" ng-show="!hienTimKiem" ng-click="showSearch();currentPage = 0;" class="btn btn-accent " style=" font-size: 0.75rem; width: 95px;"><i class="fa fa-search"></i>  Tìm Kiếm</button>
+            <input ng-show="hienTimKiem" type="text" ng-model="timkiem.hoten" class="form-control " placeholder="Tìm theo tên người dùng" ng-change="currentPage = 0;">
+            <input ng-show="hienTimKiem" type="text" ng-model="timkiem.email" class="form-control " placeholder="Tìm theo email" ng-change="currentPage = 0;">
+            <button ng-show="hienTimKiem" type="submit" ng-click="showSearch(); timkiem.hoten = '';timkiem.email =''; " class="btn btn-accent" style="margin-left:5px">Ẩn Tìm Kiếm</button>
 
 
-
-        </div>     
+        </div>
     </div>
-    <div class="page-header row no-gutters py-4" style="padding-top: 0rem !important; padding-bottom: 0.1rem!important;" ng-show="hienTimKiem">
+
+
+    <!--<div class="page-header row no-gutters py-4" style="padding-top: 0rem !important; padding-bottom: 0.1rem!important;" ng-show="hienTimKiem">
         <div class="col-12 col-sm-4 text-center text-sm-left mb-0">
             <input type="text" ng-model="timkiem.hoten" class="form-control " id="feLastName23" placeholder="Tìm theo tên người dùng" value="Brooks" ng-change="currentPage = 0;">
-            <input type="text" ng-model="timkiem.email" class="form-control " id="feLastName2" placeholder="Tìm theo email" value="Brooks" ng-change="currentPage = 0;">
+            <input type="text" ng-model="timkiem.email" class="form-control " id="feLastName2" placeholder="Tìm theo email" value="Brooks" ng-change="currentPage = 0;">-->
             <!--<input type="text" ng-model="timkiem.object.tenbaihat" class="form-control" id="feLastName" placeholder="Tìm theo tên" value="Brooks">-->
-        </div>
-        <div class="col-12 col-sm-4 text-center text-sm-left mb-0">
+        <!--</div>
+        <div class="col-12 col-sm-4 text-center text-sm-left mb-0">-->
 
             <!--<button type="submit"  ng-click="timKiem()" class="btn btn-accent" style="padding: 28px 15px;">Tìm Kiếm</button>-->
-            <button type="submit" ng-click="showSearch(); timkiem.hoten = '';timkiem.email =''; " class="btn btn-accent" style="padding: 28px 8px;">Ẩn Tìm Kiếm</button>
+            <!--<button type="submit" ng-click="showSearch(); timkiem.hoten = '';timkiem.email =''; " class="btn btn-accent" style="padding: 28px 8px;">Ẩn Tìm Kiếm</button>
 
 
         </div>
 
 
-    </div>
+    </div>-->
     <!-- End Page Header -->
     <!-- Default Light Table -->
     <div class="row">

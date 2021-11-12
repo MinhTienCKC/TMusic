@@ -1,11 +1,11 @@
 ﻿
-<div  class="zm-sidebar-scrollbar-big" style="padding:0px 70px 0px 70px; width: 105.8%; top:20px;">
+<div ng-if="taiTop20ChiTiet[0].daxoa == 0" class="zm-sidebar-scrollbar-big" style="padding:0px 70px 0px 70px; width: 105.8%; top:20px;">
     <div class="zm-sidebar-scrollbar" style=" overflow: overlay;  height: 1000px; color:hsla(0,0%,100%,0.5); ">
         <nav class="zm-navbar zm-navbar-main mar-t-5 mar-b-0">
             <div style=" display: flex;">
                 <div style="height:100px;">
                     <div class="media-left" style=" width: 300px; height: 300px;" animatechitiet>
-                        <div class="zm-card header-thumbnail " >
+                        <div class="zm-card header-thumbnail ">
                             <div class="zm-card-image item" style="height: 300px;" ng-class="{'xoayHinh': kiemTraDSPTop20Click == taiTop20ChiTiet[0].danhsachphattheloai_id && playmusic == 1 }">
                                 <figure class="image is-48x48">
                                     <img style="height: 300px; object-fit: cover;" src="{{taiTop20ChiTiet[0].linkhinhanh}}" alt="">
@@ -47,9 +47,9 @@
                                 <!--<div class="level-item" style="font-size: 2rem; height: 30px; width: 30px; " >-->
                                 <!--<i class="far fa-heart iconmusic"></i>-->
                                 <!--<i ng-show="!checklogin.dadangnhap" class="far fa-heart iconmusic" style="font-size: 14px;"></i>
-            <i ng-show="taiDanhSachPhatTheLoaiChiTiet[0].yeuthich==0" class="far fa-heart iconmusic" style="font-size: 14px;"></i>
-            <i ng-show="taiDanhSachPhatTheLoaiChiTiet[0].yeuthich==1" class="fas fa-heart " style="color:#ed2b91; font-size: 14px;"></i>
-        </div>-->
+                                    <i ng-show="taiDanhSachPhatTheLoaiChiTiet[0].yeuthich==0" class="far fa-heart iconmusic" style="font-size: 14px;"></i>
+                                    <i ng-show="taiDanhSachPhatTheLoaiChiTiet[0].yeuthich==1" class="fas fa-heart " style="color:#ed2b91; font-size: 14px;"></i>
+                                </div>-->
                                 <div class="level-item" style=" margin-right: -220px;" ng-click="$event.preventDefault();  yeuThichTop20ChiTietUi();yeuThichTop20(taiTop20ChiTiet[0].id)">
                                     <button class="button-item1" style=" width: 30px; height: 30px; background-color: hsla(0,0%,100%,0.1);">
                                         <i ng-show="taiTop20ChiTiet[0].yeuthich==0 || !checklogin.dadangnhap" class="far fa-heart" style="font-size: 1.7rem; color:white;"></i>
@@ -261,11 +261,11 @@
                                     </div>
                                 </div>
                                 <!--<button class="zm-btn zm-carousel-control-prev zm-disabled is-hide button" tabindex="0">
-                        <i class="icon ic-go-left"></i>
-                    </button>
-                    <button class="zm-btn zm-carousel-control-next zm-disabled is-hide button" tabindex="0">
-                        <i class="icon ic-go-right"></i>
-                    </button>-->
+                                    <i class="icon ic-go-left"></i>
+                                </button>
+                                <button class="zm-btn zm-carousel-control-next zm-disabled is-hide button" tabindex="0">
+                                    <i class="icon ic-go-right"></i>
+                                </button>-->
                             </div>
                         </div>
                     </div>
@@ -286,12 +286,18 @@
 
 
 
+<div ng-if="taiTop20ChiTiet[0].daxoa == 1">
+    <div style=" text-align: center;">
+        <img style="width: 400px; height: 400px;" src="../../../image/404-bg123123.png" />
+        <h3 style="font-size: 18px; font-weight: 700; margin-top: 40px; color: white;" class="title-404">WoooW, trang bạn tìm không còn tồn tại hoặc đã có lỗi</h3>
+    </div>
+</div>
 <!--modal - loi bài hát-->
-<div class="modal fade" id="myModal" role="dialog">
-    <div class="modal-dialog">
+<!--<div class="modal fade" id="myModal" role="dialog">
+    <div class="modal-dialog">-->
 
         <!-- Modal content-->
-        <div class="modal-content" style="width:540px !important; background-color: #6a39af; border-radius: 8px;">
+        <!--<div class="modal-content" style="width:540px !important; background-color: #6a39af; border-radius: 8px;">
             <div class="add-lyric-content clearfix">
                 <h3 class="title">Lời bài hát</h3>
                 <div class="content1">
@@ -301,4 +307,4 @@
         </div>
 
     </div>
-</div>
+</div>-->

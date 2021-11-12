@@ -5339,7 +5339,7 @@ namespace TFourMusic.Controllers
                     int i = 0;
                     foreach (var tl in theloaitext)
                     {
-                        var dsptl123 = convertTop20(LayBangTop20(tl.key), item.uid.ToString());
+                        var dsptl123 = convertTop20(LayBangTop20(tl.key).Where(x => x.daxoa == 0).ToList(), item.uid.ToString());
                         if (theloaitext[i].key == tl.key)
                         {
                             theloaitext[i].Object.AddRange(dsptl123);
@@ -5362,7 +5362,7 @@ namespace TFourMusic.Controllers
                     int i = 0;
                     foreach (var tl in theloaitext)
                     {
-                        var dsptl123 = LayBangTop20(tl.key);
+                        var dsptl123 = LayBangTop20(tl.key).Where(x => x.daxoa == 0).ToList();
                         if (theloaitext[i].key == tl.key)
                         {
                             theloaitext[i].Object.AddRange(dsptl123);
@@ -5456,7 +5456,7 @@ namespace TFourMusic.Controllers
                     int i = 0;
                     foreach (var tl in theloaitext)
                     {
-                        var dsptl123 = convertTop20(LayBangTop20(tl.key), uid.ToString());
+                        var dsptl123 = convertTop20(LayBangTop20(tl.key).Where(x => x.daxoa == 0).ToList(), uid.ToString());
                         if (theloaitext[i].key == tl.key)
                         {
                             theloaitext[i].Object.AddRange(dsptl123);
@@ -5479,7 +5479,7 @@ namespace TFourMusic.Controllers
                     int i = 0;
                     foreach (var tl in theloaitext)
                     {
-                        var dsptl123 = LayBangTop20(tl.key);
+                        var dsptl123 = LayBangTop20(tl.key).Where(x => x.daxoa == 0).ToList();
                         if (theloaitext[i].key == tl.key)
                         {
                             theloaitext[i].Object.AddRange(dsptl123);
@@ -5501,7 +5501,7 @@ namespace TFourMusic.Controllers
 
             var top20 = LayBangTop20();
             var data = (from t20 in top20
-                        where t20.id.Equals(item.key.ToString()) && t20.daxoa == 0
+                        where t20.id.Equals(item.key.ToString()) 
                         select t20).ToList();
             try
             {
@@ -5773,7 +5773,7 @@ namespace TFourMusic.Controllers
             if (uid != null && uid != "null")
             {
                 var listdspyeuthich = LayBangYeuThichTop20();
-                var listdsp = LayBangTop20();
+                var listdsp = LayBangTop20().Where(x => x.daxoa == 0);
 
                 var result = (from list in listdsp
                               join yttop20 in listdspyeuthich on list.id equals yttop20.top20_id

@@ -181,6 +181,7 @@ namespace TFourMusic.Controllers
             //var hdtt = (from bh in hoadonthanhtoan
             //            where DateTime.Parse(bh.thoigian.ToString("MM-yyyy")) == DateTime.Parse(DateTime.Now.ToString("MM/yyyy"))
             //            select bh).ToList();
+            //jnnj
             try
             {
                 if (item.hientimkiem == "theongay")
@@ -192,8 +193,8 @@ namespace TFourMusic.Controllers
                     //                  && DateTime.Parse(hoadon1.hdtt.thoigian.ToString("dd-MM-yyyy")) <= ngayketthuc
                     //             select hoadon1).ToList();
                     var hdttd = (from hoadon1 in hoadonthanhtoan
-                                 where hoadon1.hdtt.thoigian >= item.ngaybatdau
-                                    && hoadon1.hdtt.thoigian <= item.ngayketthuc
+                                 where hoadon1.hdtt.thoigian.Date >= item.ngaybatdau.Date
+                                    && hoadon1.hdtt.thoigian.Date <= item.ngayketthuc.Date
                                  select hoadon1).ToList();
                    
 
