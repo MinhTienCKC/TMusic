@@ -272,7 +272,7 @@ app.controller('index', function ($rootScope, $scope, dataservice, $uibModal) {
             $scope.xoaChuDe = rs;
             if (rs == true) {
                 alertify.success("Xóa Thành Công");
-                $scope.xoaChuDe.splice(vitritheloai, 1);
+                $scope.taiChuDe.splice(vitritheloai, 1);
             }
             else {
                 alertify.success("Xóa Thất Bại");

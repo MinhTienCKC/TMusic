@@ -735,7 +735,7 @@ app.controller('chitietnguoidungvipham', function ($rootScope, $scope, $uibModal
     }
     $scope.troLai = function () {
         $scope.layBaiHatNut = false;
-        $(".modal-content").css({ "width": "160%", "color": "#5A6169", "left": "-35%" });
+        $(".modal-content").css({ "width": "160%", "color": "#5A6169", "left": "5%" });
     }
     $scope.cancel = function () {
         $uibModalInstance.dismiss('cancel');

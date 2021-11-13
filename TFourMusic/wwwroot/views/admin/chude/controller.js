@@ -272,7 +272,7 @@ app.controller('index', function ($rootScope, $scope, dataservice, $uibModal) {
             $scope.xoaChuDe = rs;
             if (rs == true) {
                 alertify.success("Xóa Thành Công");
-                $scope.xoaChuDe.splice(vitritheloai, 1);
+                $scope.taiChuDe.splice(vitritheloai, 1);
             }
             else {
                 alertify.success("Xóa Thất Bại");
@@ -320,7 +320,30 @@ app.controller('add', function ($rootScope, $scope, dataservice, $uibModalInstan
       
     };
       
-  
+    $scope.initData = function () {
+      
+        dataservice.taiChuDe(function (rs) {
+
+            rs = rs.data;
+            $scope.taiChuDe = rs;
+
+
+        });
+
+    };
+    $scope.initData();
+    $scope.kiemTraTrung = false;
+    $scope.kiemtra = function () {
+
+        for (var i = 0; i < $scope.taiChuDe.length; i++) {
+            if ($scope.addTenChuDe.toLowerCase() == $scope.taiChuDe[i].tenchude.toLowerCase()) {
+                $scope.kiemTraTrung = true;
+                break;
+            } else {
+                $scope.kiemTraTrung = false;
+            }
+        }
+    }
     $scope.model = {
         id: '',
         tenchude: '',
@@ -331,6 +354,11 @@ app.controller('add', function ($rootScope, $scope, dataservice, $uibModalInstan
     $scope.dinhDangHinhAnh = "image/";
     $scope.submit = function () {
         $("#loading_main").css("display", "block");
+        if ($scope.kiemTraTrung == true) {
+            $("#loading_main").css("display", "none");
+            alert("Tên Chủ Đề Đã Tồn Tại Vui Lòng Nhập Lại !!!");
+            return;
+        }
         if ($scope.dinhDangHinhAnh != "image/"
             || !$scope.addChuDe.addLinkHinhAnh.$valid
             || !$scope.addChuDe.addTenChuDe.$valid) {

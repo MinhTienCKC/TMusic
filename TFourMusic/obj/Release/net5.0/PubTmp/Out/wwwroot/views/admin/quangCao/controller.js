@@ -280,7 +280,7 @@ app.controller('index', function ($rootScope, $scope, dataservice, $uibModal) {
             $scope.xoaQuangCao = rs;
             if (rs == true) {
                 alertify.success("Xóa Thành Công");
-                $scope.$scope.taiQuangCao.splice(vitribaihat, 1);
+                $scope.taiQuangCao.splice(vitribaihat, 1);
             }
             else {
                 alertify.success("Xóa Thất Bại");

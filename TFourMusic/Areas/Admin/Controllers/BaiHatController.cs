@@ -339,9 +339,9 @@ namespace TFourMusic.Controllers
 
 
 
-            DateTime ok = DateTime.Parse(DateTime.Now.AddMonths(1).ToString("dd/MM/yyyy"));
+         //   DateTime ok = DateTime.Parse(DateTime.Now.AddMonths(1).ToString("dd/MM/yyyy"));
             var dsbhdaxoa = (from bh in baihat
-                             where bh.daxoa.Equals(1) && DateTime.Parse(bh.thoigianxoa.ToString("dd/MM/yyyy")) == DateTime.Parse(DateTime.Now.ToString("dd/MM/yyyy"))
+                             where bh.daxoa.Equals(1) && bh.thoigianxoa <= DateTime.Now
                              select bh).ToList();
             if (dsbhdaxoa.Count > 0)
             {

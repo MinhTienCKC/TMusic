@@ -258,13 +258,17 @@ namespace TFourMusic.Controllers
             {
                 if (item.hientimkiem == "theongay")
                 {
-                    DateTime ngaybatdau = DateTime.Parse(item.ngaybatdau.ToString("dd-MM-yyyy"));
-                    DateTime ngayketthuc = DateTime.Parse(item.ngayketthuc.ToString("dd-MM-yyyy"));
-                    var hdttd = (from hoadon1 in hoadonthanhtoan
-                                 where DateTime.Parse(hoadon1.hdtt.thoigian.ToString("dd-MM-yyyy")) >= ngaybatdau
-                                       && DateTime.Parse(hoadon1.hdtt.thoigian.ToString("dd-MM-yyyy")) <= ngayketthuc
-                                 select hoadon1).ToList();
+                    //DateTime ngaybatdau = DateTime.Parse(item.ngaybatdau.ToString("dd-MM-yyyy"));
+                    //DateTime ngayketthuc = DateTime.Parse(item.ngayketthuc.ToString("dd-MM-yyyy"));
+                    //var hdttd = (from hoadon1 in hoadonthanhtoan
+                    //             where DateTime.Parse(hoadon1.hdtt.thoigian.ToString("dd-MM-yyyy")) >= ngaybatdau
+                    //                   && DateTime.Parse(hoadon1.hdtt.thoigian.ToString("dd-MM-yyyy")) <= ngayketthuc
+                    //             select hoadon1).ToList();
 
+                    var hdttd = (from hoadon1 in hoadonthanhtoan
+                                 where hoadon1.hdtt.thoigian.Date >= item.ngaybatdau.Date
+                                    && hoadon1.hdtt.thoigian.Date <= item.ngayketthuc.Date
+                                 select hoadon1).ToList();
                     doanhthu dt = new doanhthu();
                    
 
@@ -283,9 +287,16 @@ namespace TFourMusic.Controllers
                 }
                 else if (item.hientimkiem == "theothang")
                 {
-                    DateTime theothang = DateTime.Parse(item.theothang.ToString("MM-yyyy"));
+                    //DateTime theothang = DateTime.Parse(item.theothang.ToString("MM-yyyy"));
+                    //var hdttd = (from hoadon1 in hoadonthanhtoan
+                    //             where DateTime.Parse(hoadon1.hdtt.thoigian.ToString("MM-yyyy")) == theothang
+                    //             select hoadon1).ToList();
+
+                    int theothang_nam = item.theothang.Year;
+                    int theothang_thang = item.theothang.Month;
+
                     var hdttd = (from hoadon1 in hoadonthanhtoan
-                                 where DateTime.Parse(hoadon1.hdtt.thoigian.ToString("MM-yyyy")) == theothang
+                                 where hoadon1.hdtt.thoigian.Year == theothang_nam && hoadon1.hdtt.thoigian.Month == theothang_thang
                                  select hoadon1).ToList();
                     int ng = 0;
                     doanhthu dt = new doanhthu();
