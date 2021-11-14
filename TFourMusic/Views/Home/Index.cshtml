@@ -255,9 +255,9 @@
 
                     <li ng-mousedown="mousedowmTimKiemKq()" ng-mouseup="mouseupTimKiem(x.tenbaihat)" ng-repeat="x in ketQuaTimKiem" class="suggest__item"> <i class="fas fa-search searchitem searchsubitem"></i><span class="item_search"> {{x.tenbaihat}}</span></li>
                     @*<li class="suggest__item"> <i class="fas fa-search searchitem searchsubitem"></i><span class="item_search"> Phía Sau Một Cô Gái 2</span></li>
-                    <li ng-click="clickCloseTimKiem()" class="suggest__item"> <i class="fas fa-search searchitem searchsubitem"></i><span class="item_search"> Phía Sau Một Cô Gái</span></li>
-                    <li class="suggest__item"> <i class="fas fa-search searchitem searchsubitem"></i><span class="item_search"> Phía Sau Một Cô Gái 3</span></li>
-                    <li class="suggest__item"> <i class="fas fa-search searchitem searchsubitem"></i> <span class="item_search">Phía Sau Một Cô Gái 4</span></li>*@
+            <li ng-click="clickCloseTimKiem()" class="suggest__item"> <i class="fas fa-search searchitem searchsubitem"></i><span class="item_search"> Phía Sau Một Cô Gái</span></li>
+            <li class="suggest__item"> <i class="fas fa-search searchitem searchsubitem"></i><span class="item_search"> Phía Sau Một Cô Gái 3</span></li>
+            <li class="suggest__item"> <i class="fas fa-search searchitem searchsubitem"></i> <span class="item_search">Phía Sau Một Cô Gái 4</span></li>*@
                     <li class="suggest__item__song"> </li>
                     <li ng-mousedown="mousedowmTimKiemKq()" ng-repeat="x in ketQuaTimKiem" ng-mouseup="mouseupTimKiemKq($index)" class="suggest__item__song__kq hover_item__song">
                         <div ng-style="{'background-image': 'url(' + x.linkhinhanh + ')'}" class="hinh_baihatmoi_search ">
@@ -275,6 +275,37 @@
                             <div class="ca_si_bai_hat_moi_search">{{x.casi}}</div>
                         </div>
                     </li>
+
+                </ul>
+                <ul class="songs-animate-containerheader" animate>
+                    @*<li ng-repeat="x in songs" ng-class="{'secondheader': checkindexsecondqc == $index,'firstheader':  checkindexqc == $index }" ng-click="playMotBanNhac(x)" class=" animate add-to-cart">*@
+                    <li ng-repeat="x in baiHatGoiY" class="  song-animate-itemheader third animate " ng-class="{'firstheader':checkindexhearder == $index}">
+                        <div class="itemheader">
+                            <div>
+                                <div class="hinh_baihat_daluu item">
+                                    <img class="hinh_da_luu_timkiem" style="width: 65px; height: 45px; object-fit: cover" src="{{x.linkhinhanh}}" alt="item" />
+                                    <div ng-click="Play(); " ng-show="kiemTraBaiHatDangPhat==x.id " class="playmusic_header">
+                                        <div ng-show="kiemTraBaiHatDangPhat==x.id &&playmusic ==1 " class="play_baihat"> </div>
+
+                                        <i ng-show="kiemTraBaiHatDangPhat==x.id &&playmusic ==0 " class="fas fa-play icon_play_timkiem"></i>
+                                    </div>
+                                    <label ng-show="kiemTraBaiHatDangPhat!=x.id " class="background_icon_play_header add-to-cart" ng-click="playMotBanNhac(x)">
+
+                                        <i class="fas fa-play icon_play_header"></i>
+                                    </label>
+
+
+                                </div>
+                                @*<img style=" " src="{{x.linkhinhanh}}" />*@
+                            </div>
+                            <div class="infoitemheader">
+                                <div class="ten_bai_hat_moi_search">{{x.tenbaihat}}</div>
+                                <div class="ca_si_bai_hat_moi_search">{{x.casi}}</div>
+                            </div>
+                        </div>
+                     
+                    </li>
+                    @*</li>*@
 
                 </ul>
             </div>
@@ -596,10 +627,10 @@
                                 <div class="hinh_baihat_daluu">
 
                                     <img class="music--image"
-                                         src="{{x.baihat.linkhinhanh}}"
+                                         src="{{x.linkhinhanh}}"
                                          alt="Avatar">
 
-                                    <label class="background_icon_play_index" ng-click="baiHatGoiY.splice($index, 1);playMotBanNhac(x.baihat)">
+                                    <label class="background_icon_play_index" ng-click="baiHatGoiY.splice($index, 1);playMotBanNhac(x)">
 
                                         <i class="fas fa-play icon_play_index"></i>
                                     </label>
@@ -607,15 +638,15 @@
                                 </div>
                             </div>
                             <div class="music__player__contain">
-                                <div title="{{x.baihat.tenbaihat}}" class="music__player__contain-tilte">{{x.baihat.tenbaihat}}</div>
-                                <div title="{{x.baihat.casi}}" class="music__player__contain-singer">{{x.baihat.casi}} </div>
+                                <div title="{{x.tenbaihat}}" class="music__player__contain-tilte">{{x.tenbaihat}}</div>
+                                <div title="{{x.casi}}" class="music__player__contain-singer">{{x.casi}} </div>
                                 <div id="icon_option" class="icon_nav_right_final">
 
-                                    <span ng-click="baiHatGoiY.splice($index, 1); themBaiHatVaoDanhSachPhat(x.baihat)" style=" margin-top: -3px; font-size: 20px; margin-left: -4px; " class="material-icons-outlined icon_nav_right_first_goiy">
+                                    <span ng-click="baiHatGoiY.splice($index, 1); themBaiHatVaoDanhSachPhat(x)" style=" margin-top: -3px; font-size: 20px; margin-left: -4px; " class="material-icons-outlined icon_nav_right_first_goiy">
                                         add
                                     </span>
 
-                                    <i class="fas fa-ellipsis-v icon_nav_right_end" context-menu1="contextMenuBaiHat_BaiHat" ng-click="moChiTietBaiHat(x.baihat)"></i>
+                                    <i class="fas fa-ellipsis-v icon_nav_right_end" context-menu1="contextMenuBaiHat_BaiHat" ng-click="moChiTietBaiHat(x)"></i>
                                 </div>
 
                             </div>

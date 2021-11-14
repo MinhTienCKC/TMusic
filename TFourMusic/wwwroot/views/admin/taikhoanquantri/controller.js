@@ -347,7 +347,7 @@ app.controller('add', function ($rootScope, $scope, dataservice, $uibModalInstan
     $scope.kiemtra = function () {
         
         for (var i = 0; i < $scope.taiTaiKhoanQuanTri.length; i++) {
-            if ($scope.addTaiKhoan == $scope.taiTaiKhoanQuanTri[i].taikhoan) {
+            if ($scope.addTaiKhoan.toLowerCase() == $scope.taiTaiKhoanQuanTri[i].taikhoan.toLowerCase()) {
                 $scope.kiemTraTrung = true;
                 break;
             } else {
@@ -407,13 +407,18 @@ app.controller('edit', function ($rootScope, $scope, $uibModalInstance, dataserv
     $scope.text = {
         key: ''
     };
+    function danhSachTrung(lists,id) {
+        let res = lists.filter(item => item["id"] != id);
+        return res
+    }
     $scope.initData = function () {
         dataservice.taiTaiKhoanQuanTri(function (rs) {
 
             rs = rs.data;
             $scope.taiTaiKhoanQuanTri = rs;
 
-
+            $scope.danhSachTrung = danhSachTrung($scope.taiTaiKhoanQuanTri, $scope.modeltaikhoanquantri.id);
+      
         });
         if ($scope.modeltaikhoanquantri.phanquyen == 0) {
             $scope.valuePhanQuyen = 'Nhân Viên';
@@ -423,6 +428,18 @@ app.controller('edit', function ($rootScope, $scope, $uibModalInstance, dataserv
         $scope.editTaiKhoan = $scope.modeltaikhoanquantri.taikhoan;
         $scope.editMatKhau = $scope.modeltaikhoanquantri.matkhau;
     };
+    $scope.kiemTraTrung = false;
+    $scope.kiemtra = function () {
+
+        for (var i = 0; i < $scope.danhSachTrung.length; i++) {
+            if ($scope.editTaiKhoan.toLowerCase() == $scope.danhSachTrung[i].taikhoan.toLowerCase()) {
+                $scope.kiemTraTrung = true;
+                break;
+            } else {
+                $scope.kiemTraTrung = false;
+            }
+        }
+    }
     $scope.changePhanQuyen = function () {
         if ($scope.valuePhanQuyen == 'Admin') {
             $scope.modeltaikhoanquantri.phanquyen = 1;
@@ -436,16 +453,20 @@ app.controller('edit', function ($rootScope, $scope, $uibModalInstance, dataserv
 
     $scope.submit = function () {
         $("#loading_main").css("display", "block");
-        for (var i = 0; i < $scope.taiTaiKhoanQuanTri.length; i++) {
-            if ($scope.editTaiKhoan == $scope.taiTaiKhoanQuanTri[i].taikhoan && $scope.editMatKhau == $scope.taiTaiKhoanQuanTri[i].matkhau
-                && $scope.modeltaikhoanquantri.phanquyen == $scope.taiTaiKhoanQuanTri[i].phanquyen
-            ) {
-                $("#loading_main").css("display", "none");
-                $uibModalInstance.dismiss('cancel');
-                return;   
-            } 
-        }      
-       
+        //for (var i = 0; i < $scope.taiTaiKhoanQuanTri.length; i++) {
+        //    if ($scope.editTaiKhoan == $scope.taiTaiKhoanQuanTri[i].taikhoan && $scope.editMatKhau == $scope.taiTaiKhoanQuanTri[i].matkhau
+        //        && $scope.modeltaikhoanquantri.phanquyen == $scope.taiTaiKhoanQuanTri[i].phanquyen
+        //    ) {
+        //        $("#loading_main").css("display", "none");
+        //        $uibModalInstance.dismiss('cancel');
+        //        return;   
+        //    } 
+        //}      
+        if ($scope.kiemTraTrung == true) {
+            $("#loading_main").css("display", "none");
+            alert("Tài Khoản Đã Tồn Tại Vui Lòng Nhập Lại !!!");
+            return;
+        }
         if (!$scope.editTaiKhoanQuanTri.editTaiKhoan.$valid
             || !$scope.editTaiKhoanQuanTri.editMatKhau.$valid
         ) {

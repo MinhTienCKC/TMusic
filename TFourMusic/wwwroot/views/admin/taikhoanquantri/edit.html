@@ -84,8 +84,9 @@
         <div class="form-row kiemtra"> 
             <div class="form-group col-md-6">
                 <label for="feLastName">Tài khoản</label>
-                <input type="text" validatekitudacbiet ng-model="editTaiKhoan" name="editTaiKhoan" class="form-control" id="feLastName12" maxlength="255" value="Brooks" required>
+                <input type="text" validatekitudacbiet ng-model="editTaiKhoan" name="editTaiKhoan" class="form-control" id="feLastName12" maxlength="255" value="Brooks" required ng-change="kiemtra()">
                 <span class="thong_bao_sai" ng-show="editTaiKhoanQuanTri.editTaiKhoan.$touched && editTaiKhoanQuanTri.editTaiKhoan.$invalid">Tài Khoản không hợp lệ.</span>
+                <span class="thong_bao_sai" ng-show="kiemTraTrung == true">Tài Khoản Đã Tồn Tại.</span>
             </div>
             <div class="form-group col-md-6">
                 <label for="feFirstName">Mật Khẩu</label>

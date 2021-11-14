@@ -658,8 +658,28 @@ app.controller('add', function ($rootScope, $scope, dataservice,$uibModalInstanc
             $scope.taiTheLoai = rs;        
             $scope.valueTheLoai = rs[0].id;         
         });
+        dataservice.taiDanhSachPhatTheLoai(function (rs) {
+
+            rs = rs.data;
+            $scope.taiDanhSachPhatTheLoai = rs;
+
+            
+        });
+
     };
     $scope.initData();
+    $scope.kiemTraTrung = false;
+    $scope.kiemtra = function () {
+
+        for (var i = 0; i < $scope.taiDanhSachPhatTheLoai.length; i++) {
+            if ($scope.addTenDanhSachPhatTheLoai.toLowerCase() == $scope.taiDanhSachPhatTheLoai[i].tendanhsachphattheloai.toLowerCase()) {
+                $scope.kiemTraTrung = true;
+                break;
+            } else {
+                $scope.kiemTraTrung = false;
+            }
+        }
+    }
     $scope.model = {
         id: '',
         theloai_id: '',
@@ -672,6 +692,11 @@ app.controller('add', function ($rootScope, $scope, dataservice,$uibModalInstanc
     $scope.dinhDangHinhAnh = "image/";
     $scope.submit = function () {
         $("#loading_main").css("display", "block");
+        if ($scope.kiemTraTrung == true) {
+            $("#loading_main").css("display", "none");
+            alert("Tên Danh Sách Phát Thể Loại Đã Tồn Tại Vui Lòng Nhập Lại !!!");
+            return;
+        }
         if ($scope.dinhDangHinhAnh != "image/"       
             || $scope.valueTheLoai == null
             || !$scope.addDanhSachPhatTheLoai.addTenDanhSachPhatTheLoai.$valid
@@ -723,6 +748,10 @@ app.controller('edit', function ($rootScope, $scope, $uibModalInstance, dataserv
     $scope.cancel = function () {
         $uibModalInstance.dismiss('cancel');
     }
+    function danhSachTrung(lists, id) {
+        let res = lists.filter(item => item["id"] != id);
+        return res
+    }
     $scope.modelDanhSachPhatTheLoai = para;
     $scope.model = {
         id: '',
@@ -748,15 +777,37 @@ app.controller('edit', function ($rootScope, $scope, $uibModalInstance, dataserv
         //    }      
 
         //});
-    
+        dataservice.taiDanhSachPhatTheLoai(function (rs) {
+
+            rs = rs.data;
+            $scope.taiDanhSachPhatTheLoai = rs;
+            $scope.danhSachTrung = danhSachTrung($scope.taiDanhSachPhatTheLoai, $scope.modelDanhSachPhatTheLoai.id);
+
+        });
     };
     $scope.initData();
+    $scope.kiemTraTrung = false;
+    $scope.kiemtra = function () {
 
+        for (var i = 0; i < $scope.danhSachTrung.length; i++) {
+            if ($scope.editTenDanhSachPhatTheLoai.toLowerCase() == $scope.danhSachTrung[i].tendanhsachphattheloai.toLowerCase()) {
+                $scope.kiemTraTrung = true;
+                break;
+            } else {
+                $scope.kiemTraTrung = false;
+            }
+        }
+    }
 
    
                               
     $scope.submit = function () {
         $("#loading_main").css("display", "block");
+        if ($scope.kiemTraTrung == true) {
+            $("#loading_main").css("display", "none");
+            alert("Tên Danh Sách Phát Thể Loại Đã Tồn Tại Vui Lòng Nhập Lại !!!");
+            return;
+        }
             if (
                  !$scope.editDanhSachPhatTheLoai.editTenDanhSachPhatTheLoai.$valid
                 

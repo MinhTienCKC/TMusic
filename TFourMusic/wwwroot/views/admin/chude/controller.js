@@ -402,15 +402,41 @@ app.controller('edit', function ($rootScope, $scope, $uibModalInstance, dataserv
     $scope.cancel = function () {
         $uibModalInstance.dismiss('cancel');
     }
-
+    function danhSachTrung(lists, id) {
+        let res = lists.filter(item => item["id"] != id);
+        return res
+    }
     $scope.modelChuDe = para;        
     $scope.initData = function () {
+        dataservice.taiChuDe(function (rs) {
 
+            rs = rs.data;
+            $scope.taiChuDe = rs;
+
+            $scope.danhSachTrung = danhSachTrung($scope.taiChuDe, $scope.modelChuDe.id);
+        });
         $scope.editTenChuDe = $scope.modelChuDe.tenchude;
     };
     $scope.initData();
+    $scope.kiemTraTrung = false;
+    $scope.kiemtra = function () {
+
+        for (var i = 0; i < $scope.danhSachTrung.length; i++) {
+            if ($scope.editTenChuDe.toLowerCase() == $scope.danhSachTrung[i].tenchude.toLowerCase()) {
+                $scope.kiemTraTrung = true;
+                break;
+            } else {
+                $scope.kiemTraTrung = false;
+            }
+        }
+    }
     $scope.submit = function () {
         $("#loading_main").css("display", "block");
+        if ($scope.kiemTraTrung == true) {
+            $("#loading_main").css("display", "none");
+            alert("Tên Chủ Đề Đã Tồn Tại Vui Lòng Nhập Lại !!!");
+            return;
+        }
         if (!$scope.editChuDe.editTenChuDe.$valid) {
             $("#loading_main").css("display", "none");
             alert("Vùng Lòng  Điền Đầy Đủ Và Kiểm Tra Thông Tin !!!");

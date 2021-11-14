@@ -1074,3 +1074,101 @@ section .loader span{
     width: auto;
     height: auto;
 }
+
+.songs-animate-containerheader .song-animate-itemheader {
+    position: absolute;
+    cursor: pointer;
+    border-radius: 4px;
+    overflow: hidden;
+    transition: all .9s;
+    width: 300px;
+    height: 45px;
+    z-index: 0;
+    display: none;
+    right: 0;
+}
+
+    .songs-animate-containerheader .song-animate-itemheader.firstheader {
+        z-index: 3;
+        /*left: 60px;*/
+        opacity: 1;
+        width: 300px;
+        height: 45px;
+        right: 35%;
+        display: block;
+        transition: all .9s;
+        animation: both 1.8s header;
+        margin:0;
+        padding:0;
+        max-width:300px;
+        max-height: 45px;
+    }
+.itemheader{
+    display:flex;
+}
+
+@keyframes header {
+    0% {
+       opacity: 0;
+       right: 20%;
+    }
+
+
+
+    100% {
+        right: 35%;
+        opacity:1 ;
+    }
+}
+.background_icon_play_header {
+    width: 70%;
+    height: 100%;
+    background-color: #1e171778;
+    position: absolute;
+
+    top: 4px;
+    left: 30px;
+    display: none;
+}
+.icon_play_header {
+    position: absolute;
+    z-index: 5;
+    /* margin: auto; */
+    font-size: 20px;
+    color: #fff;
+    top: 7px;
+    left: 27px;
+}
+.song-animate-itemheader:hover .background_icon_play_header{
+    display:block;
+}
+.playmusic_header {
+    width: 71%;
+    width: 71%;
+    height: 92%;
+    background-color: #1e171778;
+    position: absolute;
+    margin-left: 30px;
+    margin-top: 4px;
+    border-radius: 2px;
+    top: 0px;
+}
+.icon_play_header_p {
+    position: absolute;
+    z-index: 5;
+    /* margin: auto; */
+    font-size: 20px;
+    color: #fff;
+    top: 10px;
+    left: 25px;
+}
+  /*  .songs-animate-containerheader .song-animate-itemheader.secondheader {
+        z-index: 2;
+        left: 20px;
+        width: 196px;
+        height: 196px;
+        opacity: .7;
+        background-image: linear-gradient( 90deg,hsla(0,0%,100%,.5) 1%,rgba(0,0,0,.6) 14%);
+      
+        display: block;
+    }*/

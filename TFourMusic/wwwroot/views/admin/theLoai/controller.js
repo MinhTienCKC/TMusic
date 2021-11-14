@@ -326,11 +326,39 @@ app.controller('add', function ($rootScope, $scope, dataservice, $uibModalInstan
         tentheloai: '',
         linkhinhanh: ''
     }
+    $scope.initData = function () {
 
+        dataservice.taiTheLoai(function (rs) {
+
+            rs = rs.data;
+            $scope.taiTheLoai = rs;
+
+
+        });
+
+    };
+    $scope.initData();
+    $scope.kiemTraTrung = false;
+    $scope.kiemtra = function () {
+
+        for (var i = 0; i < $scope.taiTheLoai.length; i++) {
+            if ($scope.addTenTheLoai.toLowerCase() == $scope.taiTheLoai[i].tentheloai.toLowerCase()) {
+                $scope.kiemTraTrung = true;
+                break;
+            } else {
+                $scope.kiemTraTrung = false;
+            }
+        }
+    }
     var duLieuHinh = new FormData();
     $scope.dinhDangHinhAnh = "image/";
     $scope.submit = function () {
         $("#loading_main").css("display", "block");
+        if ($scope.kiemTraTrung == true) {
+            $("#loading_main").css("display", "none");
+            alert("Tên Thể Loại Đã Tồn Tại Vui Lòng Nhập Lại !!!");
+            return;
+        }
         if ($scope.dinhDangHinhAnh != "image/"
             || !$scope.addTheLoai.addLinkHinhAnh.$valid
             || !$scope.addTheLoai.addTenTheLoai.$valid) {
@@ -374,15 +402,41 @@ app.controller('edit', function ($rootScope, $scope, $uibModalInstance, dataserv
     $scope.cancel = function () {
         $uibModalInstance.dismiss('cancel');
     }
-
+    function danhSachTrung(lists, id) {
+        let res = lists.filter(item => item["id"] != id);
+        return res
+    }
     $scope.modelTheLoai = para;
     $scope.initData = function () {
+        dataservice.taiTheLoai(function (rs) {
 
+            rs = rs.data;
+            $scope.taiTheLoai = rs;
+
+            $scope.danhSachTrung = danhSachTrung($scope.taiTheLoai, $scope.modelTheLoai.id);
+        });
         $scope.editTenTheLoai = $scope.modelTheLoai.tentheloai;
     };
     $scope.initData();
+    $scope.kiemTraTrung = false;
+    $scope.kiemtra = function () {
+
+        for (var i = 0; i < $scope.danhSachTrung.length; i++) {
+            if ($scope.editTenTheLoai.toLowerCase() == $scope.danhSachTrung[i].tentheloai.toLowerCase()) {
+                $scope.kiemTraTrung = true;
+                break;
+            } else {
+                $scope.kiemTraTrung = false;
+            }
+        }
+    }
     $scope.submit = function () {
         $("#loading_main").css("display", "block");
+        if ($scope.kiemTraTrung == true) {
+            $("#loading_main").css("display", "none");
+            alert("Tên Thể Loại Đã Tồn Tại Vui Lòng Nhập Lại !!!");
+            return;
+        }
         if (!$scope.editTheLoai.editTenTheLoai.$valid) {
 
             $("#loading_main").css("display", "none");
