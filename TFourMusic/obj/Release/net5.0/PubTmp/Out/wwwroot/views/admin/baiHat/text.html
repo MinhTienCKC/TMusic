@@ -1,0 +1,86 @@
+﻿<div id="contextmenubaihat_baihat" class="zm-contextmenu song-menu" style=" padding:10px 0;">
+    <div class="menu">
+        <ul class="menu-list">
+            <div class="menu-list--submenu">
+                <div class="media song-info-menu">
+                    <div class="media-left">
+                        <figure class="image is-40x40" style="width: 65px;">
+                            <img style="height:40px;object-fit: cover;" src="` + data.linkhinhanh + `" alt="">
+                        </figure>
+                    </div>
+                    <div class="is-w-150 media-content">
+                        <a href="/#/baihat/` + data.id + `" class="a-hover">
+                            <div class="title-wrapper">
+                                <span class="item-title title" title="` + data.tenbaihat + `">` + data.tenbaihat + `</span>
+                            </div>
+                        </a>
+                        <div class="song-stats">
+                            <div class="stat-item">
+                                <i class="icon far fa-heart iconmusic" aria-hidden="true"></i>
+                                <span>` + data.luotthich + `K</span>
+                            </div>
+                            <div class="stat-item">
+                                <i class="icon fa fa-headphones" aria-hidden="true"></i><span>` + data.luotnghe + `K</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </ul>
+        <ul class="menu-list">
+            <div class="group-button-menu">
+                <div class="group-button-list">
+                    <button class="zm-btn button" ng-click="taiXuong()">
+                        <i class="icon fa fa-download" aria-hidden="true"></i>
+                        <span>Tải xuống</span>
+                    </button>
+                    <button class="zm-btn button" tabindex="0" data-toggle="modal" data-target="#myModal">
+                        <i class="icon fa fa-book" aria-hidden="true"></i>
+                        <span>Lời bài hát</span>
+                    </button>
+                    <span ng-click="showBaoCao()" class="zm-btn button">
+                        <i class="icon fa fa-ban" aria-hidden="true"></i>
+                        <span>Báo Cáo</span>
+                    </span>
+
+                </div>
+            </div>
+        </ul>
+        <ul class="menu-list">
+            <li>
+                <button class="zm-btn button" tabindex="0" ng-click="themBaiHatVaoDanhSachPhat(baihatCookie)">
+                    <i class="icon far fa-list-alt"></i><span>Thêm vào danh sách phát</span>
+                </button>
+            </li>
+            <li>
+                <button class="zm-btn button" tabindex="0" ng-click="themBaiHatVaoPhatTiepTheo(baihatCookie)">
+                    <i class="icon fa fa-play" aria-hidden="true"></i><span>Phát tiếp theo</span>
+                </button>
+            </li>
+            <li>
+                <div class="menu-list--submenu" subtext-menu="subtextMenuPlayList">
+                    <button class="zm-btn button" tabindex="0" ng-click="kiemTraThemBaiHatVaoPlayList()">
+                        <i class="icon fa fa-plus" aria-hidden="true"></i><span>Thêm vào playlist</span><i class="icon fa fa-chevron-right" style="margin-left: auto;"></i>
+                    </button>
+                </div>
+            </li>
+            <li>
+                <button class="zm-btn button" tabindex="0" ng-click="loadBinhLuanBaiHat(` + " `" + data.id + "`" + `)">
+                    <i class="icon far fa-comment"></i><span>Bình luận</span><span class="comment-badge"></span>
+                </button>
+            </li>
+            <li>
+                <button class="zm-btn button" ng-click="copyLinkBaiHat(` + " `" + window.location.origin + "/#/baihat/" + data.id + "`" + `)" tabindex="0">
+                    <i class="icon fa fa-link"></i><span>Sao chép link</span>
+                </button>
+            </li>
+            <li>
+                <div class="menu-list--submenu" subtext-menu="subtextMenuChiaSe">
+                    <button class="zm-btn button" tabindex="0" ng-click="share()">
+                        <i class="icon fa fa-share"></i><span>Chia sẻ Facebook</span>
+                    </button>
+                </div>
+            </li>
+        </ul>
+    </div>
+</div>

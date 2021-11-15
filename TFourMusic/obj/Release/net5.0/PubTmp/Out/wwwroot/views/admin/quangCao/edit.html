@@ -1,0 +1,66 @@
+﻿<div class="modal-header" style="margin: 0px 0px 0px 0px;" >
+    <h6 class="m-0">Sửa Quảng Cáo</h6>
+    <button type="submit" id="btntext" ng-click="hienThiTaiXuong()" style="display:none;" class="btn btn-accent"></button>
+</div>
+<div class="modal-body" style="padding: 15px 30px 10px 30px !important;" >
+    <form name="editQuangCao">
+        <div class="form-row kiemtra">
+            <div class="form-group col-md-6">
+                <label for="feLastName">Tên Quảng Cáo</label>
+                <input  type="text" validatekitudacbiet ng-model="editTenQuangCao" name="editTenQuangCao" class="form-control" id="feLastName12" maxlength="255" value="Brooks" required>
+                <span class="thong_bao_sai" ng-show="editQuangCao.editTenQuangCao.$touched && editQuangCao.editTenGoiVip.$invalid">Tên quảng cáo không hợp lệ.</span>
+            </div>
+            <div class="form-group col-md-6 ">
+                <label for="feFirstName">Nội Dung</label>
+                <input type="text" validatekitudacbiet ng-model="editNoiDung" name="editNoiDung" class="form-control" maxlength="255" id="feFir12stNa2me" value="Sierra" required>
+                <span class="thong_bao_sai" ng-show="editQuangCao.editNoiDung.$touched && editQuangCao.editNoiDung.$invalid">Nội dung không hợp lệ.</span>
+            </div>
+        </div>             
+    </form>
+</div>
+<div class="modal-footer" style="margin:0px 0px 0px 0px;">
+
+    <button type="submit" ng-click="submit()" class="btn btn-accent" id="submitcd">Sửa Quảng Cáo</button>
+    <button type="submit" ng-click="cancel()" class="btn btn-accent">Thoát</button>
+</div>
+<style>
+    .laybaihat:hover {
+        color: #fff;
+        background-color: #006fe6;
+        border-color: #006fe6;
+        box-shadow: 0 5px 15px rgb(0 0 0 / 5%), 0 4px 10px rgb(0 123 255 / 25%);
+    }
+
+    .modal-content {
+        border-radius: 30px;
+        border: 1px solid #007bff;
+        top: 160px;
+        background: #F5F6F8;
+    }
+
+    .thong_bao_sai {
+        color: red;
+        font-size: 11px;
+    }
+
+    .kiemtra, .kiemtra.form-group {
+        height: 88px !important;
+        max-height: 88px !important;
+        margin-bottom: 0.1rem !important;
+    }
+
+    .modal-header {
+        display: block;
+        color: white;
+        border-bottom: 1px solid #007bff !important;
+    }
+
+    .modal-body {
+        pediting: 0px 0px 0px 0px !important;
+    }
+
+    .modal-footer {
+        border-top: 1px solid #007bff !important;
+    }
+
+</style>

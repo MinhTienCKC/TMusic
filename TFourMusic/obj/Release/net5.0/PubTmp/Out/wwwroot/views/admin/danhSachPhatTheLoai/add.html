@@ -1,0 +1,125 @@
+﻿<!--<div class="col-lg-8">
+    <div class="card card-small mb-4">
+        <div class="card-header border-bottom">
+            <h6 class="m-0">Tạo Chủ Đề</h6>
+        </div>
+        <ul class="list-group list-group-flush">
+            <li class="list-group-item p-3">
+                <div class="row">
+                    <div class="col">
+                        <form>
+                            <div class="form-row">
+                                <div class="form-group col-md-6">
+                                    <label for="feLastName">Tên Danh Sách Phát Thể Loại</label>
+                                    <input type="text" ng-model="model.tendanhsachphattheloai" style="font-size:19px" class="form-control" id="feLastName" value="Brooks">
+                                </div>
+                                <div class="form-group col-md-6">
+                                    <label for="feFirstName">Link Hình Ảnh</label>-->
+
+                                    <!--<input type="file" id="upload" style="display:none" ng-files="getTheFilesHinhAnh($files)" multiple>-->
+                                    <!--<input type="file" class="form-control" style="font-size:15px" name="file" ng-files="getTheFilesHinhAnh($files)" accept="image/*" required>
+
+
+
+                                </div>
+                            </div>
+                            <div class="form-row">
+                                <div class="form-group col-md-6">
+                                    <label for="feLastName">Mô Tả</label>
+                                    <input type="text" ng-model="model.mota" style="font-size:19px" class="form-control" id="feLastName" value="Brooks">
+                                </div>
+                                <div class="form-group col-md-6">
+                                    <label for="feFirstName">Thể Loại</label>
+                                    <select ng-model="valueTheLoai" style="width: 100%; height: 44px; border-color:#007bff;" class="form-control" ng-change="changeTheLoai()">
+                                        <option style="width: 100%; color: #007bff;" ng-value="x.object.id" value="{{x.object.id}}" ng-repeat="x in dataloadtheloai">{{x.object.tentheloai}}</option>
+
+                                    </select>
+                                </div>
+                            </div>
+
+                            <button type="submit" ng-click="submit()" class="btn btn-accent" id="submitcd">Tạo Danh Sách Phát Thể Loại</button>
+                            <button type="submit" ng-click="cancel()" class="btn btn-accent">Thoát</button>
+                        </form>
+                    </div>
+                </div>
+            </li>
+        </ul>
+    </div>
+</div>-->
+<div class="modal-header" style="margin: 0px 0px 0px 0px;">
+    <h6 class="m-0">Tạo Danh Sách Phát Thể Loại</h6>
+    <button type="submit" id="btntext" ng-click="hienThiTaiXuong()" style="display:none;" class="btn btn-accent"></button>
+</div>
+<div class="modal-body" style="padding: 15px 30px 0px 30px !important;">
+    <form name="addDanhSachPhatTheLoai">
+        <div class="form-row kiemtra">
+            <div class="form-group col-md-6">
+                <label for="feLastName">Tên bài hát</label>
+                <input style="height:44.4px; " type="text" validatekitudacbiet ng-model="addTenDanhSachPhatTheLoai" name="addTenDanhSachPhatTheLoai" class="form-control" id="feLastName12" maxlength="255" value="Brooks" required ng-change="kiemtra()">
+                <span class="thong_bao_sai" ng-show="addDanhSachPhatTheLoai.addTenDanhSachPhatTheLoai.$touched && addDanhSachPhatTheLoai.addTenDanhSachPhatTheLoai.$invalid">Tên Bài Hát không hợp lệ.</span>
+                <span class="thong_bao_sai" ng-show="kiemTraTrung == true">Danh Sách Phát Thể Loại Đã Tồn Tại.</span>
+
+            </div>
+            <div class="form-group col-md-6">
+                <label for="hinhanh">Hình Ảnh</label>
+                <input  type="file" ng-model="addLinkHinhAnh" class="form-control" style=" font-size:15px" name="addLinkHinhAnh" id="hinhanh" ng-files="getTheFilesHinhAnh($files)" accept="image/*" required multiple>
+                <span class="thong_bao_sai" ng-show="addDanhSachPhatTheLoai.addLinkHinhAnh.$touched && addDanhSachPhatTheLoai.addLinkHinhAnh.$invalid">Vui Lòng Chọn Hình Ảnh.</span>
+                <span class="thong_bao_sai" ng-show="dinhDangHinhAnh != 'image/' ">Sai Định Dạng Hình Ảnh (*.jpg, *.png).</span>
+            </div>
+           
+
+        </div>      
+        <div class="form-row">
+            <div class="form-group col-md-6">
+                <label for="feFirstName">Mô tả</label>
+                <input type="text" validatekitudacbiet ng-model="model.mota" class="form-control" id="feF1irstName" value="Sierra">
+            </div>
+            <div class="form-group col-md-6">
+                <label for="feFirstName">Thể Loại</label>
+                <select ng-model="valueTheLoai" style="width: 100%; border-color:#007bff;" class="form-control" ng-change="changeTheLoai()">
+                    <option style="width: 100%; color: #007bff;" ng-value="x.id" value="{{x.id}}" ng-repeat="x in taiTheLoai">{{x.tentheloai}}</option>
+                </select>
+            </div>
+        </div>
+    </form>
+</div>
+<div class="modal-footer" style="margin:0px 0px 0px 0px;">
+
+    <button type="submit" ng-click="submit()" class="btn btn-accent" id="submitcd">Tạo Danh Sách Phát Thể Loại</button>
+    <button type="submit" ng-click="cancel()" class="btn btn-accent">Thoát</button>
+</div>
+<style>
+    .modal-content {
+        border-radius: 30px;
+        border: 1px solid #007bff;
+        top: 160px;
+        background: #F5F6F8;
+    }
+
+    .thong_bao_sai {
+        color: red;
+        font-size: 11px;
+    }
+
+    .kiemtra, .kiemtra.form-group {
+        height: 88px !important;
+        max-height: 88px !important;
+        margin-bottom: 0.1rem !important;
+    }
+
+    .modal-header {
+        display: block;
+        color: white;
+        border-bottom: 1px solid #007bff !important;
+    }
+
+    .modal-body {
+        padding: 0px 0px 0px 0px !important;
+    }
+
+    .modal-footer {
+        border-top: 1px solid #007bff !important;
+    }
+</style>
+
+

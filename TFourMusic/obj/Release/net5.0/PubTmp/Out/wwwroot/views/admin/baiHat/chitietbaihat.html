@@ -1,0 +1,188 @@
+﻿
+
+
+
+<!--thông tin chi tiet người dùng-->
+<div class="modal-header" style="margin: 0px 0px 0px 0px; display:flex;" >
+    <h6 class="m-0" >Chi Tiết Bài Hát </h6>
+
+    <button type="submit" id="btntext" ng-click="hienThiTaiXuong()" style="display:none;" class="btn btn-accent"></button>
+    <!--<h6 class="m-0" style="padding-left: 50%;">Vô hiệu hóa: </h6>
+    <div>-->
+    <!--<label for="feLastName"></label>-->
+    <!--<label class="switch1">
+            <input ng-change="voHieuHoaNguoiDung(taiChiTietNguoiDungViPham[0])" type="checkbox" ng-model="taiChiTietNguoiDungViPham[0].vohieuhoa"
+                   ng-true-value="1" ng-false-value="0">
+            <span ng-if="taiChiTietNguoiDungViPham[0].vohieuhoa == 1" class="slider1 round" title="Đã vô hiệu hóa"></span>
+            <span ng-if="taiChiTietNguoiDungViPham[0].vohieuhoa == 0" class="slider1 round" title="chưa vô hiệu hóa"></span>
+        </label>
+    </div>-->
+</div>
+<div class="modal-body" style="padding: 15px 30px 10px 30px !important;" >
+    <div style="display:flex;">
+        <div style=" width: 30%;">
+            <audio controls style=" border-radius: 20px; border: 1px solid;">
+                <source src="{{modelbaihat.link}}" type="audio/mpeg">
+            </audio>
+            <img ng-if="modelbaihat.linkhinhanh.length > 5" src="{{modelbaihat.linkhinhanh}}" class="" style=" height: 240px; width: 300px; border-radius: 10px; object-fit: cover;">
+            <img ng-if="modelbaihat.linkhinhanh.length < 5" src="https://s120-ava-talk.zadn.vn/0/5/1/5/0/120/4ff9b54b6eb2292f46483676eda192ae.jpg" class="" style=" height: 240px; width: 300px; border-radius: 10px; object-fit: cover;">
+            <div class="form-group col-md-6" style=" flex: 0 0 100%; max-width: 100%;">
+                <label for="feLastName" style="margin-bottom:0px" ng-show="modelbaihat.nguoidung_id != 'admin'">Tên Người Dùng</label>
+                <label for="feLastName" style="margin-bottom:0px" ng-show="modelbaihat.nguoidung_id == 'admin'">Người Quản Trị</label>
+                <span class="thong_bao_sai">{{taiChiTietNguoiDungQuaUID[0].hoten}}</span>
+                <span class="thong_bao_sai" ng-show="modelbaihat.nguoidung_id == 'admin'">Admin</span>
+            </div>
+            <div class="form-group col-md-6" style=" flex: 0 0 100%; max-width: 100%;" ng-show="modelbaihat.nguoidung_id != 'admin'">
+                <label for="feLastName" style="margin-bottom:0px">Email</label>
+                <span class="thong_bao_sai">{{taiChiTietNguoiDungQuaUID[0].email}}</span>
+            </div>
+        
+        </div>
+        <div style="margin-left: 10%;">
+            <div class="hang3 form-row ">
+                <div class="form-group col-md-6">
+                    <label for="feLastName">Tên Bài Hát</label>
+                    <span class="thong_bao_sai motadsptl" title="{{modelbaihat.tenbaihat}}">{{modelbaihat.tenbaihat}}</span>
+                </div>
+                <div class="form-group col-md-6" style=" padding-left:0px!important;padding-right:0px">
+                    <label for="feLastName">Ca Sĩ</label>
+                    <span class="thong_bao_sai" title="{{modelbaihat.casi}}">{{modelbaihat.casi}}</span>
+                </div>
+                <div class="form-group col-md-6">
+                    <label for="feLastName">Thời Lượng</label>
+                    <span ng-if="modelbaihat.thoiluongbaihat.length > 1" class="thong_bao_sai">{{modelbaihat.thoiluongbaihat}}</span>
+
+                </div>
+            </div>
+            <div class="hang3 form-row ">
+                <div class="form-group col-md-6">
+                    <label for="feLastName">Lượt Thích</label>
+                    <span class="thong_bao_sai">{{modelbaihat.luotnghe}}</span>
+                </div>
+                <div class="form-group col-md-6" style=" padding-left:0px!important;padding-right:0px">
+                    <label for="feLastName">Lượt Nghe</label>
+                    <span class="thong_bao_sai">{{modelbaihat.luotthich}}</span>
+                </div>
+                <div class="form-group col-md-6">
+                    <label for="feLastName">Lượt Tải Về</label>
+                    <span  class="thong_bao_sai">{{modelbaihat.luottaixuong}}</span>
+
+                </div>
+            </div>
+            <div class=" form-row ">
+
+                <div class="form-group col-md-6" >
+                    <label for="feLastName">Mô Tả</label>
+                    <span ng-if="modelbaihat.mota.length > 5" class="thong_bao_sai motadsptl" style="width: 300px !important;">{{modelbaihat.mota}}</span>
+                    <span ng-if="modelbaihat.mota.length < 5" class="thong_bao_sai">Đang cập nhật.</span>
+                </div>
+               
+            </div>
+            <div class="form-row">
+                <div class="form-group col-md-6" >
+                    <label id="addLoiBaiHat" for="feLastName">Lời Bài Hát</label>                
+                    <textarea  ng-model="modelbaihat.loibaihat" name="okem1" readonly="readonly" rows="8" cols="100" style=" border-color: rgb(0, 123, 255); margin-top: 0px; margin-bottom: 0px;     height: 144px;width: 120%;">
+                                    </textarea>
+                </div>
+            </div>
+        </div>
+    </div>
+   
+</div>
+<div class="modal-footer" style="margin:0px 0px 0px 0px;" >
+
+    <!--<button type="submit" ng-click="submit()" class="btn btn-accent" id="submitcd">Tạo Chủ Đề</button>-->
+    <button type="submit" ng-click="cancel()" class="package__btn123">Thoát</button>
+</div>
+<style>
+    .hang3 {
+        display: flex;
+        flex-direction: row;
+        flex-wrap: nowrap;
+        width: 45%;
+        margin-bottom: 10px;
+    }
+    .hang2 {
+        display: flex;
+        flex-direction: row;
+        flex-wrap: nowrap;
+        width: 80%;
+        margin-bottom: 10px;
+    }
+    .mua_vip_account {
+        background-color: #f8e71c;
+        color: #32323d;
+        font-size: 12px;
+        padding: 6px 6px;
+        text-transform: uppercase;
+        overflow: hidden;
+        border-radius: 999px !important;
+        margin-right: 23px;
+    }
+    .vitrigiua {
+        padding-top: 2.5em !important;
+    }
+    .form-row .col-md-6 {
+        padding-left: 20px;
+    }
+    .modal-content {
+        border-radius: 30px;
+        border: 1px solid #007bff;
+        top: 160px;
+        background: #F5F6F8;
+        width: 200%;
+        left: -20%;
+    }
+
+    .thong_bao_sai {
+        color: red;
+        font-size: 12px;
+        display: block;
+        font-size: unset;
+        width: 300px;
+    }
+
+    .kiemtra, .kiemtra.form-group {
+        height: 88px !important;
+        max-height: 88px !important;
+        margin-bottom: 0.1rem !important;
+    }
+
+    .modal-header {
+        display: block;
+        color: white;
+        border-bottom: 1px solid #007bff !important;
+    }
+
+    .modal-body {
+        padding: 0px 0px 0px 0px !important;
+    }
+
+    .modal-footer {
+        border-top: 1px solid #007bff !important;
+    }
+
+    .package__btn123 {
+        -webkit-appearance: media-slider;
+        cursor: pointer;
+        border-radius: 999px;
+        background-color: #007bff;
+        /*   #ed2b91;*/
+        color: #f3f591 !important;
+        font-size: 15px;
+        text-transform: uppercase;
+        font-weight: bold;
+        /* padding: 0.4em 2em;*/
+        display: inline-block;
+        margin-bottom: -0.5em;
+        -webkit-tap-highlight-color: rgba(0,0,0,0.2) !important;
+    }
+    .motadsptl {
+        text-overflow: Ellipsis;
+        width: 150px !important;
+        white-space: nowrap;
+        overflow: hidden;
+    }
+</style>
+
+

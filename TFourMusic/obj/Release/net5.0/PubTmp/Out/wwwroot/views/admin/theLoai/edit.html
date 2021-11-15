@@ -1,0 +1,61 @@
+﻿
+
+<div class="modal-header" style="margin: 0px 0px 0px 0px;">
+    <h6 class="m-0">Sửa Thể Loại</h6>
+    <button type="submit" id="btntext" style="display:none;" class="btn btn-accent"></button>
+</div>
+<div class="modal-body" style="padding: 15px 30px 0px 30px !important;">
+    <form name="editTheLoai">
+        <div class="form-row kiemtra">
+            <div class="form-group col-md-6">
+                <label for="feLastName">Tên Thể Loại</label>
+                <input style="width:200%;" type="text" validatekitudacbiet ng-model="editTenTheLoai" name="editTenTheLoai" class="form-control" id="feLastName12" maxlength="255" value="Brooks" required ng-change="kiemtra()">
+                <span class="thong_bao_sai" ng-show="editTheLoai.editTenTheLoai.$touched && editTheLoai.editTenTheLoai.$invalid">Tên Chủ Đề không hợp lệ.</span>
+                <span class="thong_bao_sai" ng-show="kiemTraTrung == true">Thể Loại Đã Tồn Tại.</span>
+
+            </div>
+        </div>
+
+    </form>
+</div>
+<div class="modal-footer" style="margin:0px 0px 0px 0px;">
+
+    <button type="submit" ng-click="submit()" class="btn btn-accent" id="submitcd">Sửa Thể Loại</button>
+    <button type="submit" ng-click="cancel()" class="btn btn-accent">Thoát</button>
+</div>
+<style>
+    .modal-content {
+        border-radius: 30px;
+        border: 1px solid #007bff;
+        top: 160px;
+        background: #F5F6F8;
+        width: 100%;
+    }
+
+    .thong_bao_sai {
+        color: red;
+        font-size: 11px;
+    }
+
+    .kiemtra, .kiemtra.form-group {
+        height: 88px !important;
+        max-height: 88px !important;
+        margin-bottom: 0.1rem !important;
+    }
+
+    .modal-header {
+        display: block;
+        color: white;
+        border-bottom: 1px solid #007bff !important;
+    }
+
+    .modal-body {
+        padding: 0px 0px 0px 0px !important;
+    }
+
+    .modal-footer {
+        border-top: 1px solid #007bff !important;
+    }
+</style>
+
+

@@ -1,0 +1,144 @@
+﻿
+<!--<div class="col-lg-8">
+    <div class="card card-small mb-4">
+        <div class="card-header border-bottom">
+            <h6 class="m-0">Account Details</h6>
+        </div>
+        <ul class="list-group list-group-flush">
+            <li class="list-group-item p-3">
+                <div class="row">
+                    <div class="col">
+                        <form name="editBaiHat">
+
+                            <div class="form-row">
+                                <div class="form-group col-md-6">
+                                    <label for="feLastName">Tên bài hát</label>
+                                    <input type="text" validatekitudacbiet ng-model="editTenBaiHat" name="editTenBaiHat" class="form-control" id="feLastName12" maxlength="255" value="Brooks" required>
+                                    <span ng-show="editBaiHat.editTenBaiHat.$touched && editBaiHat.editTenBaiHat.$invalid" style="color: red;">Tên Bài Hát không hợp lệ.</span>
+                                </div>
+                                <div class="form-group col-md-6">
+                                    <label for="feFirstName">Ca Sĩ</label>
+                                    <input type="text" validatekitudacbiet ng-model="editTenCaSi" name="editTenCaSi" class="form-control" maxlength="255" id="feFir12stNa2me" value="Sierra" required>
+                                    <span ng-show="editBaiHat.editTenCaSi.$touched && editBaiHat.editTenCaSi.$invalid" style="color: red;">Tên Ca Sĩ không hợp lệ.</span>
+
+                                </div>
+
+                            </div>
+                            <div class="form-row">
+                                <div class="form-group col-md-6">
+                                    <label for="feFirstName">Chủ Đề</label>
+                                    <select ng-model="valueChuDe" style="width: 100%; border-color:#007bff;" class="form-control" ng-change="changeChuDe()">
+                                        <option style="width: 100%; color: #007bff;" ng-value="x.object.id" value="{{x.object.id}}" ng-repeat="x in dataloadchude">{{x.object.tenchude}}</option>
+
+                                    </select>
+                                </div>
+                                <div class="form-group col-md-6">
+                                    <label for="feFirstName">Mô tả</label>
+                                    <input type="text" validatekitudacbiet ng-model="modelbaihat.mota" maxlength="700" class="form-control" id="feFirstName" value="Sierra">
+                                </div>
+
+                            </div>
+                            <div class="form-row">
+                                <div class="form-group col-md-6">
+                                    <label for="feFirstName">Thể Loại</label>
+                                    <select ng-model="valueTheLoai" style="width: 100%; border-color:#007bff;" class="form-control" ng-change="changeTheLoai()">
+                                        <option style="width: 100%; color: #007bff;" ng-value="x.object.id" value="{{x.object.id}}" ng-repeat="x in dataloadtheloai">{{x.object.tentheloai}}</option>
+
+                                    </select>
+                                </div>
+                                <div class="form-group col-md-6">
+                                    <label for="feFirstName">Danh Sách Phát Thể Loại</label>
+                                    <select ng-model="valueDanhSachPhatTheLoai" style="width: 100%; border-color:#007bff;" class="form-control" ng-change="changeDanhSachPhatTheLoai()">
+                                        <option style="width: 100%; color: #007bff;" ng-value="x.object.id" value="{{x.object.id}}" ng-repeat="x in datataiDanhSachPhatTheLoai">{{x.object.tendanhsachphattheloai}}</option>
+
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="form-row">
+                                <div class="form-group col-md-6">
+                                    <label id="addLoiBaiHat" for="feLastName">Lời Bài Hát</label>-->
+                                    <!--<input type="text" ng-model="model.loibaihat" class="form-control" value="Sierra">-->
+                                    <!--<textarea validatekitudacbiet ng-model="modelbaihat.loibaihat" name="okem1" rows="8" cols="100" style="border-color: #007bff;">
+                                    </textarea>
+
+                                </div>
+                            </div>
+                            <div class="form-row">
+
+                            </div>
+                            <button type="submit" ng-click="submit()" class="btn btn-accent">Sữa Bài Hát</button>
+                            <button type="submit" ng-click="cancel()" class="btn btn-accent">Thoát</button>
+                        </form>
+                    </div>
+                </div>
+            </li>
+        </ul>
+    </div>
+</div>-->
+<div class="modal-header" style="margin: 0px 0px 0px 0px;">
+    <h6 class="m-0">Sửa Tài Khoản Quản Trị</h6>
+</div>
+<div class="modal-body" style="padding: 15px 30px 0px 30px !important;">
+    <form name="editTaiKhoanQuanTri">
+
+        <div class="form-row kiemtra"> 
+            <div class="form-group col-md-6">
+                <label for="feLastName">Tài khoản</label>
+                <input type="text" validatekitudacbiet ng-model="editTaiKhoan" name="editTaiKhoan" class="form-control" id="feLastName12" maxlength="255" value="Brooks" required ng-change="kiemtra()">
+                <span class="thong_bao_sai" ng-show="editTaiKhoanQuanTri.editTaiKhoan.$touched && editTaiKhoanQuanTri.editTaiKhoan.$invalid">Tài Khoản không hợp lệ.</span>
+                <span class="thong_bao_sai" ng-show="kiemTraTrung == true">Tài Khoản Đã Tồn Tại.</span>
+            </div>
+            <div class="form-group col-md-6">
+                <label for="feFirstName">Mật Khẩu</label>
+                <input type="text" validatekitudacbiet ng-model="editMatKhau" name="editMatKhau" class="form-control" id="feLastName12" maxlength="255" value="Brooks" required>
+                <span class="thong_bao_sai" ng-show="editTaiKhoanQuanTri.editMatKhau.$touched && editTaiKhoanQuanTri.editMatKhau.$invalid">Mật Khẩu không hợp lệ.</span>
+            </div>
+
+        </div>
+        <div class="form-row kiemtra">
+            <div class="form-group col-md-6">
+                <label for="feFirstName">Phân Quyền</label>
+                <select ng-model="valuePhanQuyen" style="width: 100%; border-color:#007bff;" class="form-control" ng-change="changePhanQuyen()">
+                    <option style="width: 100%; color: #007bff;" value="Admin">Admin</option>
+                    <option style="width: 100%; color: #007bff;" value="Nhân Viên">Nhân Viên</option>
+                </select>
+            </div>
+        </div>
+
+    </form>
+</div>
+<div class="modal-footer" style="margin:0px 0px 0px 0px;">
+
+    <button type="submit" ng-click="submit()" class="btn btn-accent">Sửa Tài Khoản Quản Trị</button>
+    <button type="submit" ng-click="cancel()" class="btn btn-accent">Thoát</button>
+</div>
+<style>
+    .modal-content {
+        border-radius: 30px;
+        border: 1px solid #007bff;
+        background: #F5F6F8;
+    }
+    .thong_bao_sai {
+        color: red;
+        font-size: 11px;
+    }
+
+    .kiemtra, .kiemtra.form-group {
+        height: 88px !important;
+        max-height: 88px !important;
+        margin-bottom: 0.1rem !important;
+    }
+    .modal-header {
+        display: block;
+        color: white;
+        border-bottom: 1px solid #007bff !important;
+    }
+
+    .modal-body {
+        padding: 0px 0px 0px 0px !important;
+    }
+
+    .modal-footer {
+        border-top: 1px solid #007bff !important;
+    }
+</style>

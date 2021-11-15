@@ -1,0 +1,250 @@
+﻿<div class="modal-header" style="margin: 0px 0px 0px 0px;" ng-show="!layBaiHatNut">
+    <h6 class="m-0">Tạo Quảng Cáo</h6>
+    <button type="submit" id="btntext" ng-click="hienThiTaiXuong()" style="display:none;" class="btn btn-accent"></button>
+</div>
+<div class="modal-body" style="padding: 15px 30px 10px 30px !important;" ng-show="!layBaiHatNut">
+    <form name="addQuangCao">
+        <div class="form-row kiemtra">
+            <div class="form-group col-md-6">
+                <label for="feLastName">Tên Quảng Cáo</label>
+                <input style="height:44.4px;" type="text" validatekitudacbiet ng-model="addTenQuangCao" name="addTenQuangCao" class="form-control" id="feLastName12" maxlength="255" value="Brooks" required>
+                <span class="thong_bao_sai" ng-show="addQuangCao.addTenQuangCao.$touched && addQuangCao.addTenGoiVip.$invalid">Tên quảng cáo không hợp lệ.</span>
+            </div>
+            <div class="form-group col-md-6">
+                <label for="hinhanh">Hình Ảnh</label>
+                <input type="file" ng-model="addLinkHinhAnh" class="form-control" style="font-size:15px" name="addLinkHinhAnh" id="hinhanh" ng-files="getTheFilesHinhAnh($files)" accept="image/*" required multiple>
+                <span class="thong_bao_sai" ng-show="addQuangCao.addLinkHinhAnh.$touched && addQuangCao.addLinkHinhAnh.$invalid">Vui Lòng Chọn Hình Ảnh.</span>
+                <span class="thong_bao_sai" ng-show="dinhDangHinhAnh != 'image/' ">Sai Định Dạng Hình Ảnh (*.jpg, *.png).</span>
+            </div>
+
+        </div>
+        <div class="form-row kiemtra">
+            <div class="form-group col-md-6 ">
+                <label for="feFirstName">Nội Dung</label>
+                <input type="text" validatekitudacbiet ng-model="addNoiDung" name="addNoiDung" class="form-control" maxlength="255" id="feFir12stNa2me" value="Sierra" required>
+                <span class="thong_bao_sai" ng-show="addQuangCao.addNoiDung.$touched && addQuangCao.addNoiDung.$invalid">Nội dung không hợp lệ.</span>
+              
+            </div>
+            <div class="form-group col-md-6 ">
+                <label for="okok">Lấy Bài Hát Quảng Cáo</label>
+                <button class="form-control laybaihat" ng-click="moBangLayBaiHat()">Lấy Bài Hát</button>
+            </div>
+        </div>
+        <div class="form-row" ng-show="daChonBaiHat">
+            <table class="table mb-0">
+                <thead class="bg-light">
+                    <tr>
+                        <th scope="col" class="border-0 ">Tên Bài Hát</th>
+                        <th scope="col" class="border-0 ">Tên Ca Sĩ</th>
+                        <th scope="col" class="border-0">Ảnh</th>
+
+                        
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td class="vitrigiua "><span>{{duLieuBaiHat.tenbaihat}}</span></td>
+                        <td class="vitrigiua "><span>{{duLieuBaiHat.casi}}</span></td>
+                        <td>
+                            <img src="{{duLieuBaiHat.linkhinhanh}}" class="icon-category hinhanh">
+                        </td>
+                        
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </form>
+</div>
+<div class="modal-footer" style="margin:0px 0px 0px 0px;" ng-show="!layBaiHatNut">
+
+    <button type="submit" ng-click="submit()" class="btn btn-accent" id="submitcd">Tạo Quảng Cáo</button>
+    <button type="submit" ng-click="cancel()" class="btn btn-accent">Thoát</button>
+</div>
+
+<div class="modal-header" style="margin: 0px 0px 0px 0px;" ng-show="layBaiHatNut">
+    <input type="text" ng-model="timkiembaihat.tenbaihat" name="addTenBaiHat" class="input_upload_baihat" id="feLastName12" maxlength="255" value="Brooks" placeholder="Tìm theo tên bài hát">
+</div>
+<div class="modal-body" ng-show="layBaiHatNut">
+    <form>
+        <div class="card-body p-0 pb-3 text-center">
+            <table class="table mb-0" style=" max-height: 433px; height: 433px !important;">
+                <thead class="">
+                    <tr>
+                        <th scope="col" class="border-0">Tên Bài Hát</th>
+                        <th scope="col" class="border-0"> Ca Sĩ</th>
+                        <th scope="col" class="border-0"> Hình Ảnh</th>
+                        <th scope="col" class="border-0">Chọn Bài Hát Quảng Cáo</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr ng-repeat="data in taiDanhSachBaiHatDeThem_QuangCao | filter:timkiembaihat | startFrom:currentPage*pageSize | limitTo:pageSize">
+                        <td style=" padding: 1.3em 0.3em 0.3em 0.3em;"><span class="chinhsua">{{data.tenbaihat}}</span></td>
+                        <td style=" padding: 1.3em 0.3em 0.3em 0.3em;"><span class="chinhsua">{{data.casi}}</span></td>
+                        <td><img src="{{data.linkhinhanh}}" class="icon-category hinhanh"></td>
+                        <td style=" padding: 1.3em 0.3em 0.3em 0.3em;"><span class="chinhsua"> <button ng-click="themBaiHatVaoQuangCao(data)" class="package__btnthem"><i class="fa fa-plus"></i></button></span></td>
+                    </tr>
+
+                </tbody>
+            </table>
+            <span class="sotrang">{{currentPage+1}}/{{numberOfPages()}}</span>
+        </div>
+    </form>
+</div>
+<div class="modal-footer" style="margin:0px 0px 0px 0px;" ng-show="layBaiHatNut">
+    <div class="row" style="padding:0px 0px 0px 15px; margin: 0% 35% 0% 0%;">      
+        <nav aria-label="Page navigation example">
+            <ul class="pagination pagination-primary" style="padding-left: 0px;">
+                <li class="page-item"><button ng-click="Truoc()" class="package__btnthem">Trước</button></li>
+                <li class="page-item" ng-repeat="a in range(numberOfPages())| limitTo:soLuong track by $index  ">
+                    <button ng-class="{'soTrangChon': $index  == currentPage - size }" ng-click="phanTrang( $index + size )" class="package__btnthem canso">{{$index + 1 + size}}</button>
+                </li>
+                <li class="page-item"><button ng-click="Sau()" class="package__btnthem">Sau</button></li>
+            </ul>
+        </nav>
+
+    </div>
+    <button type="submit" ng-click="troLai()" class="package__btn123">Trở Lại</button>
+</div>
+<style>
+    .laybaihat:hover {
+        color: #fff;
+        background-color: #006fe6;
+        border-color: #006fe6;
+        box-shadow: 0 5px 15px rgb(0 0 0 / 5%), 0 4px 10px rgb(0 123 255 / 25%);
+    }
+    .modal-content {
+        border-radius: 30px;
+        border: 1px solid #007bff;
+        top: 160px;
+        background: #F5F6F8;
+    }
+
+    .thong_bao_sai {
+        color: red;
+        font-size: 11px;
+    }
+
+    .kiemtra, .kiemtra.form-group {
+        height: 88px !important;
+        max-height: 88px !important;
+        margin-bottom: 0.1rem !important;
+    }
+
+    .modal-header {
+        display: block;
+        color: white;
+        border-bottom: 1px solid #007bff !important;
+    }
+
+    .modal-body {
+        padding: 0px 0px 0px 0px !important;
+    }
+
+    .modal-footer {
+        border-top: 1px solid #007bff !important;
+    }
+    /*laybaihat*/
+    .sotrang {
+        -webkit-appearance: media-slider;
+        cursor: pointer;
+        border-radius: 999px;
+        background-color: #007bff;
+        color: #f3f591 !important;
+        font-size: 15px;
+        text-transform: uppercase;
+        font-weight: bold;
+        padding: 3px 3px 3px 3px;
+        display: inline-block;
+        -webkit-tap-highlight-color: rgba(0,0,0,0.2) !important;
+        /* margin: 0px 35% 3% 0px;*/
+    }
+
+    .package__btnthem:hover {
+        background-color: #273749;
+    }
+
+    .soTrangChon {
+        background-color: #273749 !important;
+    }
+
+    .canso {
+        width: 35px !important;
+    }
+    /*    .modal-footer > :not(:first-child) {
+        margin-left: 36.25rem !important;
+    }
+    .modal-footer > :not(:last-child) {
+        margin-right: -18.75rem;
+    }*/
+    .chinhsua {
+    }
+
+    .package__btnthem {
+        /*cursor: pointer;
+        border-radius: 999px;
+        background-color: #ed2b91;
+        color: #f3f591 !important;*/
+        cursor: pointer;
+        border-radius: 999px;
+        background-color: #007bff;
+        color: #f3f591 !important;
+        -webkit-appearance: media-slider;
+    }
+
+    .package__btn123 {
+        -webkit-appearance: media-slider;
+        cursor: pointer;
+        border-radius: 999px;
+        background-color: #007bff;
+        /*   #ed2b91;*/
+        color: #f3f591 !important;
+        font-size: 15px;
+        text-transform: uppercase;
+        font-weight: bold;
+       /* padding: 0.4em 2em;*/
+        display: inline-block;
+        margin-bottom: 1.5em;
+        -webkit-tap-highlight-color: rgba(0,0,0,0.2) !important;
+    }    
+    
+    .modal-title {
+        color: black;
+    }
+
+    .pb-3, .py-3 {
+        padding-bottom: 0px !important;
+    }
+
+    .hinhanh {
+        height: 50px;
+        width: 50px;
+        border-radius: 10px;
+        object-fit: cover;
+    }
+
+    .input_upload_baihat {
+        height: 40px;
+        width: 100%;
+        border-radius: 999px;
+        border: 1px solid #007bff;
+        background-color: #ffffff1a;
+        padding: 0 15px;
+        font-size: 14px;
+        max-width: 100%;
+        align-items: center;
+        display: inline-flex;
+        justify-content: flex-start;
+        line-height: 1.5;
+        vertical-align: top;
+        outline: none;
+        color: black;
+    }
+
+    table {
+        border-collapse: inherit;
+    }
+
+    .table td {
+        border-top: 1px solid #007bff !important;
+    }
+</style>

@@ -1,0 +1,222 @@
+﻿
+<div class="modal-header" style="margin: 0px 0px 0px 0px;">
+    <!--<button type="button" class="close" data-dismiss="modal">&times;</button>-->
+    <h4 class="modal-title">Thùng Rác</h4>
+    <input ng-show="taiDanhSachBaiHatDaXoa_ThungRac.length > 0" type="text" ng-model="timkiembaihat.tenbaihat" name="addTenBaiHat" class="input_upload_baihat" id="feLastName12" maxlength="255" value="Brooks" placeholder="Tìm theo tên bài hát">
+</div>
+<div class="modal-body">
+    <div ng-show="taiDanhSachBaiHatDaXoa_ThungRac.length == 0" class="container no-content mar-0" >
+    <div class="no-content-box">
+        <i class="fa fa-music" style="font-size: 80px; margin-bottom: 20px;"></i>
+        <span class="no-content-text">Không có bài hát trong thùng rác !!!</span>
+    </div>
+    </div>
+    <form ng-show="taiDanhSachBaiHatDaXoa_ThungRac.length > 0">
+        <div class="card-body p-0 pb-3 text-center">
+            <table class="table mb-0" style=" max-height: 430px; height: 430px !important;">
+                <thead class="">
+                    <tr>
+                        <!--<th scope="col" class="border-0">id</th>-->
+                        <th scope="col" class="border-0">Tên Bài Hát</th>
+                        <th scope="col" class="border-0"> Ca Sĩ</th>
+                        <th scope="col" class="border-0"> Hình Ảnh</th>
+                        <th scope="col" class="border-0"> Thời Gian Xóa</th>
+                        <!--<th scope="col" class="border-0">Chế Độ</th>-->
+                        <th scope="col" class="border-0">Khôi Phục</th>
+                        <th scope="col" class="border-0">Xóa Vĩnh Viễn</th>
+
+
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr ng-repeat="data in taiDanhSachBaiHatDaXoa_ThungRac | filter:timkiembaihat | startFrom:currentPage*pageSize | limitTo:pageSize">
+                        <td style=" padding: 1.3em 0.3em 0.3em 0.3em;">
+                            <!--<span class="chinhsua">{{data.tenbaihat}}</span>-->
+                            <p  class="motadsptl chinhsua" title="{{data.tenbaihat}}" >{{data.tenbaihat}}</p>
+
+                        </td>
+
+                        <td style=" padding: 1.3em 0.3em 0.3em 0.3em;">
+                            <!--<span class="chinhsua">{{data.casi}}</span>-->
+                            <p class="motadsptl chinhsua" title="{{data.casi}}">{{data.casi}}</p>
+
+                        </td>
+                        <td><img src="{{data.linkhinhanh}}" class="icon-category hinhanh"></td>
+                        <td style=" padding: 1.3em 0.3em 0.3em 0.3em;"><span class="chinhsua">{{data.thoigianxoa | date:'dd/MM/yyyy '}}</span></td>
+                        <td style=" padding: 1.3em 0.3em 0.3em 0.3em;"><span class="chinhsua"> <button ng-click="khoiPhucBaiHat(data,$index)" class="package__btnthem"><i class="fa fa-reply"></i></button></span></td>
+                        <td style=" padding: 1.3em 0.3em 0.3em 0.3em;"><span class="chinhsua"> <button ng-click="xoaBaiHat(data,$index)" class="package__btnthem"><i class="fa fa-trash" aria-hidden="true"></i></button></span></td>
+                    </tr>
+
+                </tbody>
+            </table>
+            <span class="sotrang">{{currentPage+1}}/{{numberOfPages()}}</span>
+        </div>
+
+
+
+    </form>
+</div>
+<div class="modal-footer" style="margin:0px 0px 0px 0px;">
+    <div class="row" style="padding:0px 0px 0px 15px; margin: 0% 35% 0% 0%;" ng-show="taiDanhSachBaiHatDaXoa_ThungRac.length > 0">       
+        <nav aria-label="Page navigation example">
+            <ul class="pagination pagination-primary" style="padding-left: 0px;">
+                <li class="page-item"><button ng-click="Truoc()" class="package__btnthem">Trước</button></li>
+                <li class="page-item" ng-repeat="a in range(numberOfPages())| limitTo:soLuong track by $index  ">                  
+                    <button ng-class="{'soTrangChon': $index  == currentPage - size }" ng-click="phanTrang( $index + size )" class="package__btnthem canso">{{$index + 1 + size}}</button>
+                </li>
+                <li class="page-item"><button ng-click="Sau()" class="package__btnthem">Sau</button></li>
+            </ul>
+        </nav>
+      
+    </div>
+   
+    <button type="submit" ng-click="cancel()" class="package__btn123">Thoát</button>
+</div>
+<style>
+    .no-content.container {
+        width: 100%;
+
+    }
+    .mar-0 {
+        margin: 0 !important;
+    }
+
+    .container {
+        flex-grow: 1;
+        margin: 0 auto;
+        position: relative;
+        width: 100%;
+    }
+    .no-content.container .no-content-box {
+        width: 100%;
+        padding: 30px 0;
+        min-height: 220px;
+        background-color: hsla(0,0%,100%,0.1);
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+    }
+    .sotrang {
+        -webkit-appearance: media-slider;
+        cursor: pointer;
+        border-radius: 999px;
+        background-color: #007bff;
+        color: #f3f591 !important;
+        font-size: 15px;
+        text-transform: uppercase;
+        font-weight: bold;
+        padding: 3px 3px 3px 3px;
+        display: inline-block;
+        -webkit-tap-highlight-color: rgba(0,0,0,0.2) !important;
+        /* margin: 0px 35% 3% 0px;*/
+    }
+    .package__btnthem:hover {
+        background-color: #273749;
+    }
+    .soTrangChon {
+        background-color: #273749 !important;
+    }
+    .canso {
+        width: 35px !important;
+    }
+
+    .chinhsua{
+
+    }
+    .package__btnthem {      
+        cursor: pointer;
+        border-radius: 999px;
+        background-color: #007bff;
+        color: #f3f591 !important;
+        -webkit-appearance: media-slider;
+    }
+    .package__btn123 {
+        -webkit-appearance: media-slider;
+        cursor: pointer;
+        border-radius: 999px;
+        background-color: #007bff;
+     /*   #ed2b91;*/
+        color: #f3f591 !important;
+        font-size: 15px;
+        text-transform: uppercase;
+        font-weight: bold;
+        padding: 0.4em 2em;
+        display: inline-block;
+        margin-bottom: 1.5em;
+        -webkit-tap-highlight-color: rgba(0,0,0,0.2) !important;
+    }
+    .modal-content {
+        /*  background-image: url(https://firebasestorage.googleapis.com/v0/b/tfourmusic-1e3ff.appspot.com/o/image%2Fvip%2Fbg.jpg?alt=media&token=edcad8d4-01df-4530-a5c3-80d0dff2bd34);
+        border-radius: 40px;
+        background-size: cover;
+        color: white;
+        max-height: 620px;
+        height: 620px;*/
+        /*   border-radius: 40px;
+        background-size: cover;
+        color: #212529;
+        max-height: 630px;
+        height: 630px;
+        border: 1px solid black;
+        background: #ece8e8;*/
+        border-radius: 30px;
+        border: 1px solid #007bff;
+        top: 160px;
+        background: #F5F6F8;
+    }
+
+    .modal-header {
+        display: block;
+        color: white;
+        border-bottom: 1px solid #007bff !important;
+    }
+    .modal-body {
+        padding:0px 0px 0px 0px !important;
+        
+    }
+    .modal-footer {
+        border-top: 1px solid #007bff !important;
+    }
+    .modal-title {
+        color: black;
+    }
+    .pb-3, .py-3 {
+         padding-bottom: 0px !important; 
+    }
+    .hinhanh {
+        height: 50px;
+        width: 50px;
+        border-radius: 10px;
+        object-fit: cover;
+    }
+    .input_upload_baihat {
+        height: 40px;
+        width: 100%;
+        border-radius: 999px;
+        border: 1px solid black;
+        background-color: #ffffff1a;
+        padding: 0 15px;
+        font-size: 14px;
+        max-width: 100%;
+        align-items: center;
+        display: inline-flex;
+        justify-content: flex-start;
+        line-height: 1.5;
+        vertical-align: top;
+        outline: none;
+        color: black;
+    }
+    table {
+        border-collapse: inherit;
+    }
+    .table td {
+        border-top: 1px solid #007bff !important;
+    }
+    .motadsptl {
+        text-overflow: Ellipsis;
+        width: 150px;
+        white-space: nowrap;
+        overflow: hidden;
+    }
+</style>

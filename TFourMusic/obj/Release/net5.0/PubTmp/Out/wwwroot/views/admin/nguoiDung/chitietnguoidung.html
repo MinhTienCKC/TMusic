@@ -1,0 +1,152 @@
+﻿
+
+
+
+<!--thông tin chi tiet người dùng-->
+<div class="modal-header" style="margin: 0px 0px 0px 0px; display:flex;">
+    <h6 class="m-0">Chi Tiết Người Dùng </h6>
+    <h6 class="m-0"> Người Dùng ID:  {{duLieuChiTietNguoiDung.uid}} </h6>
+    <button type="submit" id="btntext" ng-click="hienThiTaiXuong()" style="display:none;" class="btn btn-accent"></button>
+    <!--<h6 class="m-0" style="padding-left: 50%;">Vô hiệu hóa: </h6>
+    <div>-->
+    <!--<label for="feLastName"></label>-->
+    <!--<label class="switch1">
+            <input ng-change="voHieuHoaNguoiDung(taiChiTietNguoiDungViPham[0])" type="checkbox" ng-model="taiChiTietNguoiDungViPham[0].vohieuhoa"
+                   ng-true-value="1" ng-false-value="0">
+            <span ng-if="taiChiTietNguoiDungViPham[0].vohieuhoa == 1" class="slider1 round" title="Đã vô hiệu hóa"></span>
+            <span ng-if="taiChiTietNguoiDungViPham[0].vohieuhoa == 0" class="slider1 round" title="chưa vô hiệu hóa"></span>
+        </label>
+    </div>-->
+</div>
+<div class="modal-body" style="padding: 15px 30px 10px 30px !important;" >
+    <div style="display:flex;">
+        <div style=" width: 60%;">
+            <img ng-if="duLieuChiTietNguoiDung.hinhdaidien.length > 5" src="{{duLieuChiTietNguoiDung.hinhdaidien
+        }}" class="" style=" height: 200px; width: 200px; border-radius: 10px; object-fit: cover;">
+        <img ng-if="duLieuChiTietNguoiDung.hinhdaidien.length < 5" src="https://s120-ava-talk.zadn.vn/0/5/1/5/0/120/4ff9b54b6eb2292f46483676eda192ae.jpg" class="" style=" height: 200px; width: 200px; border-radius: 10px; object-fit: cover;">
+        <div class="form-group col-md-6" style="display:flex;  padding-top:10px;">
+            <label for="feLastName" style=" font-size: x-large;">Vip: </label>
+            <img ng-if="duLieuChiTietNguoiDung.vip == 0" src="../../../image/khongvip.png" class="icon-category iconvip" style="width:55px; height:35px;" />
+            <img ng-if="duLieuChiTietNguoiDung.vip == 1" src="../../../image/iconvip.png" class="icon-category iconvip" style="width:55px; height:35px;">
+        </div>
+        <div class="form-group col-md-6" style="     flex: 0 0 100%;
+    max-width: 100%;">
+            <a ng-if="duLieuChiTietNguoiDung.vip == 1" style="" ng-click="$event.preventDefault();" class="mua_vip_account ng-binding ng-scope">
+                Ngày hết hạn : {{duLieuChiTietNguoiDung.hansudungvip | date:'dd/MM/yyyy'}}
+            </a>
+        </div>
+
+</div>
+        <div style="">
+            <div class="form-row kiemtra">
+                <div class="form-group col-md-6">
+                    <label for="feLastName">Họ Tên</label>
+                    <span class="thong_bao_sai">{{duLieuChiTietNguoiDung.hoten}}</span>
+                </div>
+                <div class="form-group col-md-6" style=" padding-left:0px!important;padding-right:0px">
+                    <label for="feLastName">Email</label>
+                    <span class="thong_bao_sai" >{{duLieuChiTietNguoiDung.email}}</span>
+                </div>
+            </div>
+            <div class="form-row kiemtra">
+                <div class="form-group col-md-6">
+                    <label for="feLastName">Ngày Sinh</label>
+                    <span ng-if="duLieuChiTietNguoiDung.ngaysinh.length > 1" class="thong_bao_sai">{{duLieuChiTietNguoiDung.ngaysinh | date:'dd-MM-yyyy'}}</span>
+                    <span ng-if="duLieuChiTietNguoiDung.ngaysinh.length < 1" class="thong_bao_sai">Đang cập nhật.</span>
+                </div>
+                <div class="form-group col-md-6" style=" padding-left:0px!important;padding-right:0px">
+                    <label for="feLastName">Giới Tính</label>
+                    <span ng-if="duLieuChiTietNguoiDung.gioitinh.length > 1" class="thong_bao_sai">{{duLieuChiTietNguoiDung.gioitinh}}</span>
+                    <span ng-if="duLieuChiTietNguoiDung.gioitinh.length < 1" class="thong_bao_sai">Đang cập nhật.</span>
+                </div>
+            </div>
+            <div class="form-row kiemtra">
+                <div class="form-group col-md-6" style=" flex: 0 0 100%; max-width: 100%;">
+                    <label for="feLastName">Mô Tả</label>
+                    <span ng-if="duLieuChiTietNguoiDung.mota.length > 5" class="thong_bao_sai">{{duLieuChiTietNguoiDung.mota}}</span>
+                    <span ng-if="duLieuChiTietNguoiDung.mota.length < 5" class="thong_bao_sai">Đang cập nhật.</span>
+                </div>
+
+            </div>
+        </div>
+    </div>
+   
+</div>
+<div class="modal-footer" style="margin:0px 0px 0px 0px;" >
+
+    <!--<button type="submit" ng-click="submit()" class="btn btn-accent" id="submitcd">Tạo Chủ Đề</button>-->
+    <button type="submit" ng-click="cancel()" class="package__btn123">Thoát</button>
+</div>
+<style>
+    .mua_vip_account {
+        background-color: #f8e71c;
+        color: #32323d;
+        font-size: 12px;
+        padding: 6px 6px;
+        text-transform: uppercase;
+        overflow: hidden;
+        border-radius: 999px !important;
+        margin-right: 23px;
+    }
+    .vitrigiua {
+        padding-top: 2.5em !important;
+    }
+    .form-row .col-md-6 {
+        padding-left: 20px;
+    }
+    .modal-content {
+        border-radius: 30px;
+        border: 1px solid #007bff;
+        top: 160px;
+        background: #F5F6F8;
+        width: 135%;
+        left: 5%;
+        
+    }
+
+    .thong_bao_sai {
+        color: red;
+        font-size: 12px;
+        display: block;
+        font-size: unset;
+        width: 300px;
+    }
+
+    .kiemtra, .kiemtra.form-group {
+        height: 88px !important;
+        max-height: 88px !important;
+        margin-bottom: 0.1rem !important;
+    }
+
+    .modal-header {
+        display: block;
+        color: white;
+        border-bottom: 1px solid #007bff !important;
+    }
+
+    .modal-body {
+        padding: 0px 0px 0px 0px !important;
+    }
+
+    .modal-footer {
+        border-top: 1px solid #007bff !important;
+    }
+
+    .package__btn123 {
+        -webkit-appearance: media-slider;
+        cursor: pointer;
+        border-radius: 999px;
+        background-color: #007bff;
+        /*   #ed2b91;*/
+        color: #f3f591 !important;
+        font-size: 15px;
+        text-transform: uppercase;
+        font-weight: bold;
+        /* padding: 0.4em 2em;*/
+        display: inline-block;
+        margin-bottom: -0.5em;
+        -webkit-tap-highlight-color: rgba(0,0,0,0.2) !important;
+    }
+</style>
+
+
