@@ -5,13 +5,13 @@
     <input type="text" ng-model="timkiemdanhsachphat.tendanhsachphat" name="addTenBaiHat" class="input_upload_baihat" id="feLastName12" maxlength="255" value="Brooks" placeholder="Tìm theo tên danh sách phát">
 </div>
 <div class="modal-body">
-    <div ng-show="xemDanhSachPhatNguoiDung == 0" class="container no-content mar-0">
+    <div ng-show="xemDanhSachPhatNguoiDung.length == 0" class="container no-content mar-0">
         <div class="no-content-box">
             <i class="fa fa-music" style="font-size: 80px; margin-bottom: 20px;"></i>
             <span class="no-content-text">Không có danh sách phát !!!</span>
         </div>
     </div>
-    <form ng-show="xemDanhSachPhatNguoiDung > 0">
+    <form ng-show="xemDanhSachPhatNguoiDung.length > 0">
         <div class="card-body p-0 pb-3 text-center">
             <table class="table mb-0" style=" max-height: 433px; height: 433px !important;">
                 <thead class="">

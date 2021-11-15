@@ -339,9 +339,9 @@ namespace TFourMusic.Controllers
 
 
 
-            DateTime ok = DateTime.Parse(DateTime.Now.AddMonths(1).ToString("dd/MM/yyyy"));
+         //   DateTime ok = DateTime.Parse(DateTime.Now.AddMonths(1).ToString("dd/MM/yyyy"));
             var dsbhdaxoa = (from bh in baihat
-                             where bh.daxoa.Equals(1) && DateTime.Parse(bh.thoigianxoa.ToString("dd/MM/yyyy")) == DateTime.Parse(DateTime.Now.ToString("dd/MM/yyyy"))
+                             where bh.daxoa.Equals(1) && bh.thoigianxoa <= DateTime.Now
                              select bh).ToList();
             if (dsbhdaxoa.Count > 0)
             {
@@ -569,19 +569,21 @@ namespace TFourMusic.Controllers
                           select yt).ToList();
 
             var firebase = new FirebaseClient(Key);
+
             var dino1 = (await firebase
                .Child("csdlmoi")
              .Child("chitietdanhsachphatnguoidung")
              .OnceAsync<Dictionary<string, chitietdanhsachphatnguoidungModel>>()).ToList();
 
 
-     
+      
             var dsp = (from yt in dino1
                        where (from yt1 in yt.Object
                               where yt1.Value.baihat_id == item.id
                               select yt1.Value.baihat_id).FirstOrDefault() == item.id
                        select yt).ToList();
-
+            //int okok = dsp.Count;
+            //Console.WriteLine(dsp);
             foreach (var dl1 in dsp)
             {
                 foreach (var dl2 in dl1.Object)
@@ -598,10 +600,18 @@ namespace TFourMusic.Controllers
                     }
                 }
             }
-
-
-
-
+            // xóa bình luận cha
+            await firebase
+                .Child("csdlmoi")
+               .Child("binhluancha")
+               .Child(item.id)
+               .DeleteAsync();
+            // xóa bình luận con
+            await firebase
+             .Child("csdlmoi")
+            .Child("binhluancon")
+            .Child(item.id)
+            .DeleteAsync();
             if (datatl.Count > 0)
             {
                 foreach (var bh in datatl)
@@ -629,22 +639,22 @@ namespace TFourMusic.Controllers
                 .DeleteAsync();
                 }
             }
-            var ok = datatl;
-            if (item.link != "")
-            {
-                var xoaBaiHatStorage = xoaStorageBangLink(item.link);
-            }
-            if (item.linkhinhanh != "")
-            {
-                var xoaHinhAnhStorage = xoaStorageBangLink(item.linkhinhanh);
-            }
-         //   var firebase = new FirebaseClient(Key);
-            await firebase
-           .Child("csdlmoi")
-          .Child("baihat")
-          .Child(item.nguoidung_id)
-          .Child(item.id)
-          .DeleteAsync();
+         //   var ok = datatl;
+         //   if (item.link != "")
+         //   {
+         //       var xoaBaiHatStorage = xoaStorageBangLink(item.link);
+         //   }
+         //   if (item.linkhinhanh != "")
+         //   {
+         //       var xoaHinhAnhStorage = xoaStorageBangLink(item.linkhinhanh);
+         //   }
+         ////   var firebase = new FirebaseClient(Key);
+         //   await firebase
+         //  .Child("csdlmoi")
+         // .Child("baihat")
+         // .Child(item.nguoidung_id)
+         // .Child(item.id)
+         // .DeleteAsync();
         }
         public async Task<IActionResult> xoaStorageBangLink(string link)
         {

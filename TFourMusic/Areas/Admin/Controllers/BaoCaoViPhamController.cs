@@ -96,11 +96,17 @@ namespace TFourMusic.Controllers
                 //var okok = from okok in baihatbaocao123
                 //           where okok.thoigian
                 //DateTime ok = DateTime.Parse(DateTime.Now.AddMonths(1).ToString("dd/MM/yyyy"));
+                //var dsbhvpdaxoa = (from bh in BaoCaoBaiHatDaXuLy_KhongViPham
+                //                   where bh.trangthai == 2 && DateTime.Parse(bh.ngayxuly.AddDays(7).ToString("dd-MM-yyyy")) <= DateTime.Parse(DateTime.Now.ToString("dd/MM/yyyy"))
+                //                 select bh).ToList();
+                //var dsndvpdaxoa = (from nd in BaoCaoNguoiDungDaXuLy_KhongViPham
+                //                   where nd.trangthai == 2 && DateTime.Parse(nd.ngayxuly.AddDays(7).ToString("dd-MM-yyyy")) <= DateTime.Parse(DateTime.Now.ToString("dd/MM/yyyy"))
+                //                   select nd).ToList();
                 var dsbhvpdaxoa = (from bh in BaoCaoBaiHatDaXuLy_KhongViPham
-                                   where bh.trangthai == 2 && DateTime.Parse(bh.ngayxuly.AddDays(7).ToString("dd-MM-yyyy")) <= DateTime.Parse(DateTime.Now.ToString("dd/MM/yyyy"))
-                                 select bh).ToList();
+                                   where bh.trangthai == 2 && bh.ngayxuly.AddDays(7) <= DateTime.Now
+                                   select bh).ToList();
                 var dsndvpdaxoa = (from nd in BaoCaoNguoiDungDaXuLy_KhongViPham
-                                   where nd.trangthai == 2 && DateTime.Parse(nd.ngayxuly.AddDays(7).ToString("dd-MM-yyyy")) <= DateTime.Parse(DateTime.Now.ToString("dd/MM/yyyy"))
+                                   where nd.trangthai == 2 && nd.ngayxuly.AddDays(7) <= DateTime.Now
                                    select nd).ToList();
                 var baihatbaocao = LayBangBaoCaoBaiHatChuaXuLy();
                 var nguoidung = LayBangNguoiDung();
@@ -129,10 +135,10 @@ namespace TFourMusic.Controllers
                  .Child(item.id)
                  .DeleteAsync();
                 }
-                nguoidungModel admin = new nguoidungModel();
-                admin.uid = "admin";
-                admin.email = "admin";
-                nguoidung.Add(admin);
+                //nguoidungModel admin = new nguoidungModel();
+                //admin.uid = "admin";
+                //admin.email = "admin";
+                //nguoidung.Add(admin);
                 var data1 = (from bcvp in baihatbaocao
                              join nd in nguoidung on bcvp.nguoidung_id equals nd.uid
                              join nd1 in nguoidung on bcvp.nguoidung_baocao_id equals nd1.uid
@@ -429,6 +435,7 @@ namespace TFourMusic.Controllers
                 //var dulieu = (from bc in dino
                 //              select bc.Object).ToList();
                 var data = (from bcvp in nguoidungbaocao
+                            where bcvp.nguoidung_baocao_id != "admin"
                             select new
                             {
                                 // loibaihat = JsonConvert.DeserializeObject(ok123.Object.noidung)
@@ -1049,7 +1056,113 @@ namespace TFourMusic.Controllers
             }
             return bh;
         }
+        public List<danhsachphatnguoidungModel> LayBangDanhSachPhatNguoiDung(string uid = null)
+        {
+            if (uid == null)
+            {
+                client = new FireSharp.FirebaseClient(config);
+                FirebaseResponse response = client.Get("csdlmoi/danhsachphatnguoidung");
+                var data = JsonConvert.DeserializeObject<dynamic>(response.Body);
+                var list = new List<danhsachphatnguoidungModel>();
 
+                if (data != null)
+                {
+
+                    foreach (var item in data)
+                    {
+                        foreach (var x in item)
+                        {
+                            foreach (var y in x)
+
+                            {
+                                list.Add(JsonConvert.DeserializeObject<danhsachphatnguoidungModel>(((JProperty)y).Value.ToString()));
+
+                            }
+
+                        }
+
+                    }
+                }
+
+
+                return list;
+            }
+            else
+            {
+                client = new FireSharp.FirebaseClient(config);
+                FirebaseResponse response = client.Get("csdlmoi/danhsachphatnguoidung/" + uid);
+                var data = JsonConvert.DeserializeObject<dynamic>(response.Body);
+                var list = new List<danhsachphatnguoidungModel>();
+
+                if (data != null)
+                {
+                    foreach (var item in data)
+                    {
+                        list.Add(JsonConvert.DeserializeObject<danhsachphatnguoidungModel>(((JProperty)item).Value.ToString()));
+
+                    }
+                }
+                return list;
+            }
+
+
+
+        }
+        public List<baihatModel> LayBangBaiHat(string uid = null)
+        {
+            try
+            {
+                if (uid == null)
+                {
+                    client = new FireSharp.FirebaseClient(config);
+                    FirebaseResponse response = client.Get("csdlmoi/baihat");
+                    var data = JsonConvert.DeserializeObject<dynamic>(response.Body);
+                    var list = new List<baihatModel>();
+
+
+                    if (data != null)
+                    {
+                        foreach (var item in data)
+                        {
+                            foreach (var x in item)
+                            {
+                                foreach (var y in x)
+
+                                {
+                                    list.Add(JsonConvert.DeserializeObject<baihatModel>(((JProperty)y).Value.ToString()));
+
+                                }
+
+                            }
+
+                        }
+                    }
+                    return list;
+                }
+                else
+                {
+                    client = new FireSharp.FirebaseClient(config);
+                    FirebaseResponse response = client.Get("csdlmoi/baihat/" + uid);
+                    var data = JsonConvert.DeserializeObject<dynamic>(response.Body);
+                    var list = new List<baihatModel>();
+
+                    if (data != null)
+                    {
+                        foreach (var item in data)
+                        {
+                            list.Add(JsonConvert.DeserializeObject<baihatModel>(((JProperty)item).Value.ToString()));
+
+                        }
+                    }
+                    return list;
+                }
+            }
+            catch
+            {
+                return null;
+            }
+
+        }
         public baocaonguoidungModel LayChiTietBangBaoCaoNguoiDungDaXuLy_ViPham(string nguoidungid, string idbh)
         {
             client = new FireSharp.FirebaseClient(config);
@@ -1456,7 +1569,24 @@ namespace TFourMusic.Controllers
                 object p123 = client.Set("csdlmoi/baocao/nguoidungvipham/daxuly/vipham/" + item.nguoidung_id + "/" + item.id + "/" + "ngayxuly", DateTime.Now);
                 if ( nguoidung[0].vohieuhoa == 1)
                 {
-
+                    var baihatnguoidung = LayBangBaiHat(data.nguoidung_baocao_id);
+                    var danhsachphatnguoidung = LayBangDanhSachPhatNguoiDung(data.nguoidung_baocao_id);
+                    if (baihatnguoidung.Count > 0)
+                    {
+                        foreach (var bh in baihatnguoidung)
+                        {
+                            client = new FireSharp.FirebaseClient(config);
+                            object p1 = client.Set("csdlmoi/baihat/" + data.nguoidung_baocao_id + "/" + bh.id + "/" + "vohieuhoa", 0);
+                        }
+                    }
+                    if (danhsachphatnguoidung.Count > 0)
+                    {
+                        foreach (var dsp in danhsachphatnguoidung)
+                        {
+                            client = new FireSharp.FirebaseClient(config);
+                            object p2 = client.Set("csdlmoi/danhsachphatnguoidung/" + data.nguoidung_baocao_id + "/" + dsp.id + "/" + "vohieuhoa", 0);
+                        }
+                    }
                     UserRecordArgs args = new UserRecordArgs()
                     {
                         Uid = data.nguoidung_baocao_id,
@@ -1537,6 +1667,7 @@ namespace TFourMusic.Controllers
             return Json(success);
 
         }
+
         [HttpPost]
         public async Task<IActionResult> voHieuHoaNguoiDung([FromBody] nguoidungModel item)
         {         
@@ -1545,13 +1676,31 @@ namespace TFourMusic.Controllers
             var phanQuyen = heThong.Claims.FirstOrDefault(c => c.Type == ClaimTypes.Role).Value;
             //if (phanQuyen == "Admin")
             //{
-               
-                try
+       
+            try
                 {
 
                     if (item.vohieuhoa == 0)
                     {
-                        UserRecordArgs args = new UserRecordArgs()
+                    var baihatnguoidung = LayBangBaiHat(item.uid);
+                    var danhsachphatnguoidung = LayBangDanhSachPhatNguoiDung(item.uid);
+                    if (baihatnguoidung.Count > 0)
+                    {
+                        foreach (var bh in baihatnguoidung)
+                        {
+                            client = new FireSharp.FirebaseClient(config);
+                            object p1 = client.Set("csdlmoi/baihat/" + item.uid + "/" + bh.id + "/" + "vohieuhoa", 0);
+                        }
+                    }
+                    if (danhsachphatnguoidung.Count > 0)
+                    {
+                        foreach (var dsp in danhsachphatnguoidung)
+                        {
+                            client = new FireSharp.FirebaseClient(config);
+                            object p2 = client.Set("csdlmoi/danhsachphatnguoidung/" + item.uid + "/" + dsp.id + "/" + "vohieuhoa", 0);
+                        }
+                    }
+                    UserRecordArgs args = new UserRecordArgs()
                         {
                             Uid = item.uid,
                             Disabled = false,
@@ -1598,14 +1747,32 @@ namespace TFourMusic.Controllers
                     }
                     else
                     {
-                        UserRecordArgs args = new UserRecordArgs()
+                    var baihatnguoidung = LayBangBaiHat(item.uid);
+                    var danhsachphatnguoidung = LayBangDanhSachPhatNguoiDung(item.uid);
+                    if (baihatnguoidung.Count > 0)
+                    {
+                        foreach (var bh in baihatnguoidung)
+                        {
+                            client = new FireSharp.FirebaseClient(config);
+                            object p1 = client.Set("csdlmoi/baihat/" + item.uid + "/"+ bh.id + "/" + "vohieuhoa", 1);
+                        }
+                    }
+                    if (danhsachphatnguoidung.Count > 0)
+                    {
+                        foreach (var dsp in danhsachphatnguoidung)
+                        {
+                            client = new FireSharp.FirebaseClient(config);
+                            object p2 = client.Set("csdlmoi/danhsachphatnguoidung/" + item.uid + "/" + dsp.id + "/" + "vohieuhoa", 1);
+                        }
+                    }
+                    UserRecordArgs args = new UserRecordArgs()
                         {
                             Uid = item.uid,
                             Disabled = true,
                         };
                         UserRecord userRecord = await FirebaseAdmin.Auth.FirebaseAuth.DefaultInstance.UpdateUserAsync(args);
-                        client = new FireSharp.FirebaseClient(config);
-                        object p = client.Set("csdlmoi/nguoidung/" + item.uid + "/" + "vohieuhoa", item.vohieuhoa);
+                    client = new FireSharp.FirebaseClient(config);
+                    object p = client.Set("csdlmoi/nguoidung/" + item.uid + "/" + "vohieuhoa", item.vohieuhoa);
                         var message = new MimeMessage();
                         message.From.Add(new MailboxAddress("Admin TMUSIC", "0306181067@caothang.edu.vn"));
                         message.To.Add(new MailboxAddress("Người Dùng", item.email));
@@ -1654,6 +1821,7 @@ namespace TFourMusic.Controllers
             //    return Json("");
             //}
         }
+       
         [HttpPost]
         public async Task<IActionResult> voHieuHoaBaiHatNguoiDung([FromBody] baihatModel item)
         {
@@ -1667,13 +1835,14 @@ namespace TFourMusic.Controllers
 
                 if (item.vohieuhoa == 0)
                 {
-
+                 
                     client = new FireSharp.FirebaseClient(config);
                     object p = client.Set("csdlmoi/baihat/" + item.nguoidung_id + "/" + item.id + "/" + "vohieuhoa", item.vohieuhoa);
 
 
                     if (item.nguoidung_id != "admin")
                     {
+
                         var nguoidung = LayBangNguoiDung(item.nguoidung_id);
                         var message = new MimeMessage();
                         message.From.Add(new MailboxAddress("Admin TMUSIC", "0306181067@caothang.edu.vn"));

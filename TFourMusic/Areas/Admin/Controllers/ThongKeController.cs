@@ -165,6 +165,7 @@ namespace TFourMusic.Controllers
             public DateTime ngayketthuc { get; set; }
             public DateTime theothang { get; set; }
             public DateTime theonam { get; set; }
+            public string phuongthucthanhtoan { get; set; }
             public string hientimkiem { get; set; }
 
         }
@@ -181,34 +182,110 @@ namespace TFourMusic.Controllers
             //var hdtt = (from bh in hoadonthanhtoan
             //            where DateTime.Parse(bh.thoigian.ToString("MM-yyyy")) == DateTime.Parse(DateTime.Now.ToString("MM/yyyy"))
             //            select bh).ToList();
+            //jnnj
             try
             {
                 if (item.hientimkiem == "theongay")
                 {
-                    DateTime ngaybatdau = DateTime.Parse(item.ngaybatdau.ToString("dd-MM-yyyy"));
-                    DateTime ngayketthuc = DateTime.Parse(item.ngayketthuc.ToString("dd-MM-yyyy"));
+                    //DateTime ngaybatdau = DateTime.Parse(item.ngaybatdau.ToString("dd-MM-yyyy"));
+                    //DateTime ngayketthuc = DateTime.Parse(item.ngayketthuc.ToString("dd-MM-yyyy"));
+                    //var hdttd = (from hoadon1 in hoadonthanhtoan
+                    //            where DateTime.Parse(hoadon1.hdtt.thoigian.ToString("dd-MM-yyyy")) >= ngaybatdau 
+                    //                  && DateTime.Parse(hoadon1.hdtt.thoigian.ToString("dd-MM-yyyy")) <= ngayketthuc
+                    //             select hoadon1).ToList();
+
                     var hdttd = (from hoadon1 in hoadonthanhtoan
-                                where DateTime.Parse(hoadon1.hdtt.thoigian.ToString("dd-MM-yyyy")) >= ngaybatdau 
-                                      && DateTime.Parse(hoadon1.hdtt.thoigian.ToString("dd-MM-yyyy")) <= ngayketthuc
+                                 where hoadon1.hdtt.thoigian.Date >= item.ngaybatdau.Date
+                                    && hoadon1.hdtt.thoigian.Date <= item.ngayketthuc.Date
+                                 select hoadon1).ToList();
+                    if (item.phuongthucthanhtoan == "Momo")
+                    {
+                        hdttd = (from hoadon1 in hdttd
+                                 where hoadon1.hdtt.phuongthucthanhtoan == "Momo"
                                  select hoadon1).ToList();
 
+                    }
+                    else if (item.phuongthucthanhtoan == "Paypal")
+                    {
+                        hdttd = (from hoadon1 in hdttd
+                                 where hoadon1.hdtt.phuongthucthanhtoan == "Paypal"
+                                 select hoadon1).ToList();
 
+                    }
+                    else
+                    {
+                        hdttd = (from hoadon1 in hdttd
+                                 select hoadon1).ToList();
+
+                    }
+         
                     return Json(hdttd.OrderByDescending(x => x.hdtt.thoigian));
+
                 }
                 else if(item.hientimkiem == "theothang") 
                 {
-                    DateTime theothang = DateTime.Parse(item.theothang.ToString("MM-yyyy"));
+                    //DateTime theothang = DateTime.Parse(item.theothang.ToString("MM-yyyy"));
+                    //var hdttd = (from hoadon1 in hoadonthanhtoan
+                    //            where DateTime.Parse(hoadon1.hdtt.thoigian.ToString("MM-yyyy")) == theothang
+                    //             select hoadon1).ToList();
+                    int theothang_nam = item.theothang.Year;
+                    int theothang_thang = item.theothang.Month;
+                 
                     var hdttd = (from hoadon1 in hoadonthanhtoan
-                                where DateTime.Parse(hoadon1.hdtt.thoigian.ToString("MM-yyyy")) == theothang
+                                  where hoadon1.hdtt.thoigian.Year == theothang_nam && hoadon1.hdtt.thoigian.Month == theothang_thang
+                                  select hoadon1).ToList();
+                    if (item.phuongthucthanhtoan == "Momo")
+                    {
+                        hdttd = (from hoadon1 in hdttd
+                                 where hoadon1.hdtt.phuongthucthanhtoan == "Momo"
                                  select hoadon1).ToList();
+
+                    }
+                    else if (item.phuongthucthanhtoan == "Paypal")
+                    {
+                        hdttd = (from hoadon1 in hdttd
+                                 where hoadon1.hdtt.phuongthucthanhtoan == "Paypal"
+                                 select hoadon1).ToList();
+
+                    }
+                    else
+                    {
+                        hdttd = (from hoadon1 in hdttd
+                                 select hoadon1).ToList();
+
+                    }
                     return Json(hdttd.OrderByDescending(x => x.hdtt.thoigian));
                 }
                 else
                 {
+                    //int theonam = item.theonam.Year;
+                    //var hdttd = (from hoadon1 in hoadonthanhtoan
+                    //             where hoadon1.hdtt.thoigian.Year == theonam
+                    //             select hoadon1).ToList();
                     int theonam = item.theonam.Year;
                     var hdttd = (from hoadon1 in hoadonthanhtoan
-                                 where hoadon1.hdtt.thoigian.Year == theonam
+                                  where hoadon1.hdtt.thoigian.Year == theonam
+                                  select hoadon1).ToList();
+                    if (item.phuongthucthanhtoan == "Momo")
+                    {
+                        hdttd = (from hoadon1 in hdttd
+                                 where hoadon1.hdtt.phuongthucthanhtoan == "Momo"
                                  select hoadon1).ToList();
+
+                    }
+                    else if (item.phuongthucthanhtoan == "Paypal")
+                    {
+                        hdttd = (from hoadon1 in hdttd
+                                 where hoadon1.hdtt.phuongthucthanhtoan == "Paypal"
+                                 select hoadon1).ToList();
+
+                    }
+                    else
+                    {
+                        hdttd = (from hoadon1 in hdttd
+                                 select hoadon1).ToList();
+
+                    }
                     return Json(hdttd.OrderByDescending(x=>x.hdtt.thoigian));
                 }
             }
@@ -242,19 +319,42 @@ namespace TFourMusic.Controllers
             {
                 if (item.hientimkiem == "theongay")
                 {
-                    DateTime ngaybatdau = DateTime.Parse(item.ngaybatdau.ToString("dd-MM-yyyy"));
-                    DateTime ngayketthuc = DateTime.Parse(item.ngayketthuc.ToString("dd-MM-yyyy"));
+                    //DateTime ngaybatdau = DateTime.Parse(item.ngaybatdau.ToString("dd-MM-yyyy"));
+                    //DateTime ngayketthuc = DateTime.Parse(item.ngayketthuc.ToString("dd-MM-yyyy"));
+                    //var hdttd = (from hoadon1 in hoadonthanhtoan
+                    //             where DateTime.Parse(hoadon1.hdtt.thoigian.ToString("dd-MM-yyyy")) >= ngaybatdau
+                    //                   && DateTime.Parse(hoadon1.hdtt.thoigian.ToString("dd-MM-yyyy")) <= ngayketthuc
+                    //             select hoadon1).ToList();
+
                     var hdttd = (from hoadon1 in hoadonthanhtoan
-                                 where DateTime.Parse(hoadon1.hdtt.thoigian.ToString("dd-MM-yyyy")) >= ngaybatdau
-                                       && DateTime.Parse(hoadon1.hdtt.thoigian.ToString("dd-MM-yyyy")) <= ngayketthuc
+                                 where hoadon1.hdtt.thoigian.Date >= item.ngaybatdau.Date
+                                    && hoadon1.hdtt.thoigian.Date <= item.ngayketthuc.Date
                                  select hoadon1).ToList();
+                    if (item.phuongthucthanhtoan == "Momo")
+                    {
+                         hdttd = (from hoadon1 in hdttd
+                                  where hoadon1.hdtt.phuongthucthanhtoan == "Momo"
+                                     select hoadon1).ToList();
+              
+                    }
+                    else if (item.phuongthucthanhtoan == "Paypal")
+                    {
+                         hdttd = (from hoadon1 in hdttd
+                                  where  hoadon1.hdtt.phuongthucthanhtoan == "Paypal"
+                                     select hoadon1).ToList();
+                     
+                    }
+                    else
+                    {
+                         hdttd = (from hoadon1 in hdttd                          
+                                     select hoadon1).ToList();
+                  
+                    }
+
+
 
                     doanhthu dt = new doanhthu();
-                   
-
-                    
-
-
+                  
                     int ng = 0;
                
                     foreach (var n in hdttd)
@@ -267,10 +367,37 @@ namespace TFourMusic.Controllers
                 }
                 else if (item.hientimkiem == "theothang")
                 {
-                    DateTime theothang = DateTime.Parse(item.theothang.ToString("MM-yyyy"));
+                    //DateTime theothang = DateTime.Parse(item.theothang.ToString("MM-yyyy"));
+                    //var hdttd = (from hoadon1 in hoadonthanhtoan
+                    //             where DateTime.Parse(hoadon1.hdtt.thoigian.ToString("MM-yyyy")) == theothang
+                    //             select hoadon1).ToList();
+
+                    int theothang_nam = item.theothang.Year;
+                    int theothang_thang = item.theothang.Month;
+
                     var hdttd = (from hoadon1 in hoadonthanhtoan
-                                 where DateTime.Parse(hoadon1.hdtt.thoigian.ToString("MM-yyyy")) == theothang
+                                 where hoadon1.hdtt.thoigian.Year == theothang_nam && hoadon1.hdtt.thoigian.Month == theothang_thang
                                  select hoadon1).ToList();
+                    if (item.phuongthucthanhtoan == "Momo")
+                    {
+                        hdttd = (from hoadon1 in hdttd
+                                 where hoadon1.hdtt.phuongthucthanhtoan == "Momo"
+                                 select hoadon1).ToList();
+
+                    }
+                    else if (item.phuongthucthanhtoan == "Paypal")
+                    {
+                        hdttd = (from hoadon1 in hdttd
+                                 where hoadon1.hdtt.phuongthucthanhtoan == "Paypal"
+                                 select hoadon1).ToList();
+
+                    }
+                    else
+                    {
+                        hdttd = (from hoadon1 in hdttd
+                                 select hoadon1).ToList();
+
+                    }
                     int ng = 0;
                     doanhthu dt = new doanhthu();
                     foreach (var n in hdttd)
@@ -288,6 +415,26 @@ namespace TFourMusic.Controllers
                     var hdttd = (from hoadon1 in hoadonthanhtoan
                                  where hoadon1.hdtt.thoigian.Year == theonam
                                  select hoadon1).ToList();
+                    if (item.phuongthucthanhtoan == "Momo")
+                    {
+                        hdttd = (from hoadon1 in hdttd
+                                 where hoadon1.hdtt.phuongthucthanhtoan == "Momo"
+                                 select hoadon1).ToList();
+
+                    }
+                    else if (item.phuongthucthanhtoan == "Paypal")
+                    {
+                        hdttd = (from hoadon1 in hdttd
+                                 where hoadon1.hdtt.phuongthucthanhtoan == "Paypal"
+                                 select hoadon1).ToList();
+
+                    }
+                    else
+                    {
+                        hdttd = (from hoadon1 in hdttd
+                                 select hoadon1).ToList();
+
+                    }
 
                     int ng = 0;
                     doanhthu dt = new doanhthu();

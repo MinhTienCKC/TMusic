@@ -19,21 +19,33 @@
         <h3 ng-if="model.hienTimKiem == 'theothang'" style="padding-left: 22%; font-family: sans-serif; font-size: 2.953rem; " class="m-0">Báo Cáo Doanh Thu Theo Tháng</h3>
         <h3 ng-if="model.hienTimKiem == 'theonam'" style="padding-left: 22%; font-family: sans-serif; font-size: 2.953rem; " class="m-0">Báo Cáo Doanh Thu Theo Năm</h3>
     </div>
-    <div class="page-header row no-gutters py-4" style="padding-top: 0rem !important; padding-bottom: 0.1rem!important;" ng-if="model.hienTimKiem == 'theongay'">
-        <div class="col-12 col-sm-4 text-center text-sm-left mb-0" style="display:flex;flex: 0 0 70%;max-width: 70%;">
-            <span style=" padding: 10px;">Từ ngày:</span> <input  style="width:180px;" type="date" class="form-control" ng-model="model.ngaybatdau">
+    <div class="page-header row no-gutters py-4" style="padding-top: 0rem !important; padding-bottom: 0.1rem!important; " ng-if="model.hienTimKiem == 'theongay'">
+        <div class="col-12 col-sm-4 text-center text-sm-left mb-0" style="display:flex;flex: 0 0 70%;max-width: 70%; height:40px;">
+            <span style=" padding: 10px;">Từ ngày:</span> <input style="width:180px;" type="date" class="form-control" ng-model="model.ngaybatdau">
 
-            <span style=" padding: 10px;">Đến ngày:</span> <input  style="width:180px;" type="date" class="form-control" ng-model="model.ngayketthuc">
+            <span style=" padding: 10px;">Đến ngày:</span> <input style="width:180px;" type="date" class="form-control" ng-model="model.ngayketthuc">
+            <select ng-model="model.phuongthucthanhtoan" style=" margin: 0px 5px 0px 5px; height:40px; width: 85px; border-color: #007bff;" class="form-control" title="Phương Thức Thanh Toán">
+                <option style="width: 100%; color: #007bff;" value="tatca">Tất Cả</option>
+                <option style="width: 100%; color: #007bff;" value="Momo">Momo</option>
+                <option style="width: 100%; color: #007bff;" value="Paypal">Paypal</option>
+            </select>
             <button id="" type="submit" ng-click="layDanhSach()" class="btn btn-accent " style="">Lấy Danh Sách</button>
         </div>
+      
         <div class="col-12 col-sm-4 text-center text-sm-left mb-0" style="text-align: right !important; flex: 0 0 30%;max-width: 30%; display: flex; justify-content: flex-end;">
             <button id="" type="submit" ng-click="xuatThongKe()" class="btn btn-accent " style="">Xuất Excel</button>
         </div>
     </div>
+   
     <div class="page-header row no-gutters py-4" style="padding-top: 0rem !important; padding-bottom: 0.1rem!important;" ng-if="model.hienTimKiem == 'theothang'">
 
-        <div class="col-12 col-sm-4 text-center text-sm-left mb-0" style="display:flex;flex: 0 0 70%;max-width: 70%;">
-            <span style=" padding: 10px;">Chọn Tháng:</span> <input  style="width:180px;" type="month" class="form-control" ng-model="model.theothang">
+        <div class="col-12 col-sm-4 text-center text-sm-left mb-0" style="display:flex;flex: 0 0 70%;max-width: 70%; height:40px;">
+            <span style=" padding: 10px;">Chọn Tháng:</span> <input style="width:180px;" type="month" class="form-control" ng-model="model.theothang">
+            <select ng-model="model.phuongthucthanhtoan" style=" margin: 0px 5px 0px 5px; height:40px; width: 85px; border-color: #007bff;" class="form-control" title="Phương Thức Thanh Toán">
+                <option style="width: 100%; color: #007bff;" value="tatca">Tất Cả</option>
+                <option style="width: 100%; color: #007bff;" value="Momo">Momo</option>
+                <option style="width: 100%; color: #007bff;" value="Paypal">Paypal</option>
+            </select>
             <button id="" type="submit" ng-click="layDanhSach()" class="btn btn-accent " style="">Lấy Danh Sách</button>
         </div>
         <div class="col-12 col-sm-4 text-center text-sm-left mb-0" style="text-align: right !important; flex: 0 0 30%;max-width: 30%; display: flex; justify-content: flex-end;">
@@ -42,8 +54,13 @@
     </div>
     <div class="page-header row no-gutters py-4" style="padding-top: 0rem !important; padding-bottom: 0.1rem!important;" ng-if="model.hienTimKiem == 'theonam'">
 
-        <div class="col-12 col-sm-4 text-center text-sm-left mb-0" style="display:flex;flex: 0 0 70%;max-width: 70%;">
-            <span style=" padding: 10px;">Chọn Năm:</span> <input  style="width:180px;" type="month" class="form-control" ng-model="model.theonam">
+        <div class="col-12 col-sm-4 text-center text-sm-left mb-0" style="display:flex;flex: 0 0 70%;max-width: 70%; height:40px;">
+            <span style=" padding: 10px;">Chọn Năm:</span> <input style="width:180px;" type="month" class="form-control" ng-model="model.theonam">
+            <select ng-model="model.phuongthucthanhtoan" style=" margin: 0px 5px 0px 5px; height:40px; width: 85px; border-color: #007bff;" class="form-control" title="Phương Thức Thanh Toán">
+                <option style="width: 100%; color: #007bff;" value="tatca">Tất Cả</option>
+                <option style="width: 100%; color: #007bff;" value="Momo">Momo</option>
+                <option style="width: 100%; color: #007bff;" value="Paypal">Paypal</option>
+            </select>
             <button id="" type="submit" ng-click="layDanhSach()" class="btn btn-accent " style="">Lấy Danh Sách</button>
         </div>
         <div class="col-12 col-sm-4 text-center text-sm-left mb-0" style="text-align: right !important; flex: 0 0 30%;max-width: 30%; display: flex; justify-content: flex-end;">
@@ -54,7 +71,7 @@
     <!-- Default Light Table -->
     <div class="row" ng-show="taiThongKe.length <= 0 ">
         <div class="col">
-            <div class="card card-small mb-4 dodai" style="height: 570px!important; max-height: 570px!important;">                
+            <div class="card card-small mb-4 dodai" style="height: 570px!important; max-height: 570px!important;">
                 <div style=" display: flex; flex-wrap: wrap; flex-direction: column;" class="card-body p-0 pb-3 text-center">
                     <span style="font-size:xx-large;">Danh sách thống kê Trống !!!</span>
                     <span style="font-size:14px;">Hãy chọn ngày tháng năm để lấy danh sách</span>
@@ -65,7 +82,7 @@
     </div>
     <div class="row" ng-show="taiThongKe.length > 0 ">
         <div class="col">
-            <div class="card card-small mb-4 dodai" style="height: 570px!important; max-height: 570px!important;">               
+            <div class="card card-small mb-4 dodai" style="height: 570px!important; max-height: 570px!important;">
                 <div class="card-body p-0 pb-3 text-center">
                     <table class="table mb-0 dodaibang" style="">
                         <thead class="bg-light">
@@ -93,7 +110,7 @@
                             </tr>
                         </thead>
                         <tbody>
-                            <tr style="" ng-repeat="data in taiThongKe  | filter:timkiem | startFrom:currentPage*pageSize | limitTo:pageSize">
+                            <tr style="" ng-repeat="data in taiThongKe  | startFrom:currentPage*pageSize | limitTo:pageSize">
                                 <td class="vitrigiua">{{($index + 1 * (currentPage*pageSize)) +1 }}</td>
                                 <td class="vitrigiua">{{data.email}}</td>
                                 <td class="vitrigiua">{{data.hdtt.phuongthucthanhtoan}}</td>
@@ -123,7 +140,7 @@
             </ul>
         </nav>
     </div>
-    <div class="row" id="thongke_id" hidden >
+    <div class="row" id="thongke_id" hidden>
         <div class="col">
             <div class="card card-small mb-4 ">
                 <div class="card-header border-bottom">
@@ -132,7 +149,7 @@
                     <h3 ng-if="model.hienTimKiem == 'theothang'" style=" padding-left: 30%;" class="m-0">Báo Cáo Doanh Thu Theo Tháng</h3>
                     <h3 ng-if="model.hienTimKiem == 'theonam'" style=" padding-left: 30%;" class="m-0">Báo Cáo Doanh Thu Theo Năm</h3>
                 </div>
-                <div class="card-header border-bottom" >
+                <div class="card-header border-bottom">
                     <h5 ng-if="model.hienTimKiem == 'theongay'" style=" padding-left: 30%; font-size:14px;" class="m-0">Từ ngày:{{model.ngaybatdau | date:'dd/MM/yyyy'}} Đến ngày: {{model.ngayketthuc | date:'dd/MM/yyyy'}}</h5>
                     <h5 ng-if="model.hienTimKiem == 'theothang'" style=" padding-left: 30%;" class="m-0">Theo tháng: {{model.theothang | date:'MM/yyyy'}}</h5>
                     <h5 ng-if="model.hienTimKiem == 'theonam'" style=" padding-left: 30%;" class="m-0">Theo năm: {{model.theonam | date:'yyyy'}}</h5>
@@ -166,9 +183,9 @@
                             </tr>
                         </thead>
                         <tbody>
-                            <tr  ng-repeat="data in taiThongKe ">
+                            <tr ng-repeat="data in taiThongKe ">
                                 <td style="border: 1px solid black;" class="vitrigiua "><span>{{$index + 1}}</span></td>
-                                 <td style="border: 1px solid black;" class="vitrigiua">{{data.email}}</td>
+                                <td style="border: 1px solid black;" class="vitrigiua">{{data.email}}</td>
                                 <td style="border: 1px solid black;" class="vitrigiua "><span>{{data.hdtt.phuongthucthanhtoan}}</span></td>
                                 <td style="border: 1px solid black;" class="vitrigiua "><span>{{data.hdtt.giatien | number:'0' | vietNamDong}}</span></td>
                                 <td style="border: 1px solid black;" class="vitrigiua "><span style="text-align:center;">{{data.hdtt.thoigian | date:'dd/MM/yyyy'}}</span></td>
@@ -178,7 +195,7 @@
                                 <td class="vitrigiua">{{data.hdtt.phuongthucthanhtoan}}</td>
                                 <td class="vitrigiua">{{data.hdtt.giatien | number:'0' | vietNamDong}}</td>
                                 <td class="vitrigiua">{{data.hdtt.thoigian | date:'dd/MM/yyyy'}}</td>-->
-                                <td style="border: 1px solid black; width: 100px;" class="vitrigiua" >
+                                <td style="border: 1px solid black; width: 100px;" class="vitrigiua">
                                     <p class="motadsptl" title="{{data.hdtt.mota}}">{{data.hdtt.mota}}</p>
 
                                 </td>

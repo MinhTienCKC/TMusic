@@ -55,8 +55,10 @@
         <div class="form-row kiemtra">
             <div class="form-group col-md-6">
                 <label for="feLastName">Tên bài hát</label>
-                <input style="height:44.4px; " type="text" validatekitudacbiet ng-model="addTenDanhSachPhatTheLoai" name="addTenDanhSachPhatTheLoai" class="form-control" id="feLastName12" maxlength="255" value="Brooks" required>
+                <input style="height:44.4px; " type="text" validatekitudacbiet ng-model="addTenDanhSachPhatTheLoai" name="addTenDanhSachPhatTheLoai" class="form-control" id="feLastName12" maxlength="255" value="Brooks" required ng-change="kiemtra()">
                 <span class="thong_bao_sai" ng-show="addDanhSachPhatTheLoai.addTenDanhSachPhatTheLoai.$touched && addDanhSachPhatTheLoai.addTenDanhSachPhatTheLoai.$invalid">Tên Bài Hát không hợp lệ.</span>
+                <span class="thong_bao_sai" ng-show="kiemTraTrung == true">Danh Sách Phát Thể Loại Đã Tồn Tại.</span>
+
             </div>
             <div class="form-group col-md-6">
                 <label for="hinhanh">Hình Ảnh</label>

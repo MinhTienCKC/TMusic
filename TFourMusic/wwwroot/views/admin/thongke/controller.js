@@ -71,6 +71,7 @@ app.controller('T_Music', function () {
 
 });
 app.controller('index', function ($rootScope, $scope, dataservice, $uibModal, Excel, $timeout) {
+    
     $scope.tenbien = 'null';
     $scope.hoatdong = false;
     $scope.modelsapxep = 'null';
@@ -84,6 +85,7 @@ app.controller('index', function ($rootScope, $scope, dataservice, $uibModal, Ex
         ngayketthuc: $scope.date,
         theonam: $scope.date,
         theothang: $scope.date,
+        phuongthucthanhtoan: 'tatca',
         hienTimKiem: 'theongay'
     }
   //  $scope.hienTimKiem = "theongay";
@@ -141,15 +143,28 @@ app.controller('index', function ($rootScope, $scope, dataservice, $uibModal, Ex
         $timeout(function () { location.href = exportHref; }, 100); // trigger download
     };
     $scope.initData = function () {
-        
+       // $scope.phuongThucThanhToan = 'tatca';
         dataservice.taiThongKe($scope.model,function (rs) {
 
             rs = rs.data;
             $scope.taiThongKe = rs;
+            console.log("danh sách thống kê");
+            console.log($scope.taiThongKe);
+            
+                $scope.numberOfPages = function () {
+                    if ($scope.taiThongKe.length > 0) {
+                        return Math.ceil($scope.taiThongKe.length / $scope.pageSize);
+
+                    }
+                    else {
+                        return 1;
+                    }
+                }
+                console.log("số trang");
+                console.log($scope.numberOfPages);
+            
+           
           
-            $scope.numberOfPages = function () {
-                return Math.ceil($scope.taiThongKe.length / $scope.pageSize);
-            }
             if ($scope.numberOfPages() < 8) {
                 $scope.soLuong = $scope.numberOfPages();
             }
@@ -157,7 +172,8 @@ app.controller('index', function ($rootScope, $scope, dataservice, $uibModal, Ex
 
                 rs = rs.data;
                 $scope.taiThongKeDoanhThu = rs;
-
+                console.log("danh sách thống kê Doanh thu");
+                console.log($scope.taiThongKeDoanhThu);
             });
            // $scope.tongTien = 0;
            // var tientien = 0;

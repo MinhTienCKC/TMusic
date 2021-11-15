@@ -2269,26 +2269,21 @@ namespace TFourMusic.Controllers
         {
             try
             {
-
-                client = new FireSharp.FirebaseClient(config);
-                FirebaseResponse response = client.Get("baihat");
-                var data = JsonConvert.DeserializeObject<dynamic>(response.Body);
-                var list = new List<baihatModel>();
-
-                if (data != null)
+                var list = getListBaiHat();
+            if(list.Count >0)
                 {
-                    foreach (var item in data)
-                    {
-                        list.Add(JsonConvert.DeserializeObject<baihatModel>(((JProperty)item).Value.ToString()));
-
-                    }
                     var datakq = (from baihat in list
                                   where baihat.tenbaihat.ToUpper().Contains(tuKhoa.ToUpper()) || baihat.casi.ToUpper().Contains(tuKhoa.ToUpper()) || baihat.loibaihat.ToUpper().Contains(tuKhoa.ToUpper()) && baihat.chedo == 1 && baihat.daxoa == 0 && baihat.vohieuhoa == 0
                                   select baihat).ToList().Take(list.Count > 5 ? 5 : list.Count);
 
                     return Json(datakq);
+
                 }
-                return Json("null");
+                else
+                {
+                    return Json(null);
+                }
+
             }
             catch (Exception ex)
             {
@@ -2659,17 +2654,31 @@ namespace TFourMusic.Controllers
                 {
                     listxh.Add(congLuotNgheThang(list, item.Key.ToString()));
                 }
-                foreach (var item in listxh)
+                listbh = getListBaiHat();
+               listbh = (from bh in listbh
+                            join xh in listxh on bh.id equals xh.baihat_id
+                            select bh).ToList();
+                for(int i = 0; i< listbh.Count; i++)
                 {
-                    FirebaseResponse rp = client.Get("csdlmoi/baihat/" + item.nguoidung_id.ToString() + "/" + item.baihat_id.ToString());
-                    var datarp = JsonConvert.DeserializeObject<baihatModel>(rp.Body);
-
-                    if (datarp != null)
+                    for(int j = 0; j<listxh.Count;j++)
                     {
-                        datarp.luotnghe = item.luotnghe;
-                        listbh.Add(datarp);
-                    }
-                }
+                        if(listbh[i].id == listxh[j].baihat_id)
+                        {
+                            listbh[i].luotnghe = listxh[j].luotnghe;
+                        }    
+                    }    
+                }    
+                //foreach (var item in listxh)
+                //{
+                //    FirebaseResponse rp = client.Get("csdlmoi/baihat/" + item.nguoidung_id.ToString() + "/" + item.baihat_id.ToString());
+                //    var datarp = JsonConvert.DeserializeObject<baihatModel>(rp.Body);
+
+                //    if (datarp != null)
+                //    {
+                //        datarp.luotnghe = item.luotnghe;
+                //        listbh.Add(datarp);
+                //    }
+                //}
                 if (listbh.Count > 0)
                 {
 
@@ -2925,21 +2934,31 @@ namespace TFourMusic.Controllers
             try
             {
                 var list = getListBaiHat();
+                var listqc = LayBangQuangCao();
 
-                if (list.Count > 0 && list[0] != null)
+                if (list.Count > 0 && list[0] != null && listqc.Count >0  )
                 {
 
+                    var dataqc = (from qc in listqc
+                                  join bh in list on qc.baihat_id equals bh.id
+                                   select bh).ToList();
+                    dataqc = (from baihat in dataqc
+                              where baihat.chedo == 1 && baihat.daxoa == 0 && baihat.vohieuhoa == 0 && (baihat.tenbaihat.ToUpper().Contains(model.tuKhoa.ToUpper()) || baihat.casi.ToUpper().Contains(model.tuKhoa.ToUpper()) || baihat.loibaihat.ToUpper().Contains(model.tuKhoa.ToUpper()))
+                              select baihat).OrderBy(x => x.tenbaihat).ToList();
                     var datakq = (from baihat in list
                                   where  baihat.chedo == 1 && baihat.daxoa == 0 && baihat.vohieuhoa == 0 && (baihat.tenbaihat.ToUpper().Contains(model.tuKhoa.ToUpper()) || baihat.casi.ToUpper().Contains(model.tuKhoa.ToUpper()) || baihat.loibaihat.ToUpper().Contains(model.tuKhoa.ToUpper())) 
                                   select baihat).OrderBy(x => x.tenbaihat).ToList();
+                    dataqc.AddRange(datakq);
+                    dataqc = (from bh in dataqc
+                              select bh).Distinct().ToList();
                     if (model.uid != null)
                     {
-                        var result = convertBaiHat(datakq, model.uid);
+                        var result = convertBaiHat(dataqc, model.uid);
                         return Json(result);
                     }
                     else
                     {
-                        return datakq;
+                        return dataqc;
                     }
 
                 }
@@ -3346,6 +3365,7 @@ namespace TFourMusic.Controllers
                 danhsachphat.nguoidung_id = list[item].nguoidung_id;
                 danhsachphat.thoigian = list[item].thoigian;
                 danhsachphat.chedo = list[item].chedo;
+                danhsachphat.vohieuhoa = list[item].vohieuhoa;
                 bool checkYeuThich = false;
                 for (int j = 0; j < listyeuthichdsp.Count(); j++)
                 {
@@ -4542,7 +4562,7 @@ namespace TFourMusic.Controllers
             var baihat = getListBaiHat();
 
             var data = (from bh in baihat
-                        where bh.id.Equals(item.key.ToString()) && bh.daxoa == 0 && bh.vohieuhoa == 0
+                        where bh.id.Equals(item.key.ToString()) && bh.daxoa == 0 
                         select bh).ToList();
             try
             {
@@ -4661,7 +4681,7 @@ namespace TFourMusic.Controllers
         {
             var baihat = getListBaiHat();
             var data = (from bh in baihat
-                        where bh.theloai_id.Equals(item.key.ToString()) && bh.daxoa == 0 && bh.chedo == 1
+                        where bh.theloai_id.Equals(item.key.ToString()) && bh.daxoa == 0 && bh.chedo == 1 && bh.vohieuhoa == 0
                         select bh).ToList();
             //var data1 = data.Take(15)
             try
@@ -5152,7 +5172,7 @@ namespace TFourMusic.Controllers
                 var listbaihat = getListBaiHat();
                 var chitietdanhsachphattheloai = LayBangChiTietDanhSachPhatTheLoai(itemmodel.key.ToString());
                 var datakq = (from baihat in listbaihat
-                              where baihat.chedo == 1 && baihat.daxoa == 0 && baihat.danhsachphattheloai_id.Equals(itemmodel.key.ToString())
+                              where baihat.chedo == 1 && baihat.daxoa == 0 && baihat.vohieuhoa == 0 && baihat.danhsachphattheloai_id.Equals(itemmodel.key.ToString())
                               select baihat).OrderByDescending(x => x.luotnghe).Take(20).ToList();
                 var datathembaihat = (from bh in listbaihat
                                       join ctdsptl in chitietdanhsachphattheloai on bh.id equals ctdsptl.baihat_id
@@ -5325,7 +5345,7 @@ namespace TFourMusic.Controllers
                     int i = 0;
                     foreach (var tl in theloaitext)
                     {
-                        var dsptl123 = convertTop20(LayBangTop20(tl.key), item.uid.ToString());
+                        var dsptl123 = convertTop20(LayBangTop20(tl.key).Where(x => x.daxoa == 0).ToList(), item.uid.ToString());
                         if (theloaitext[i].key == tl.key)
                         {
                             theloaitext[i].Object.AddRange(dsptl123);
@@ -5348,7 +5368,7 @@ namespace TFourMusic.Controllers
                     int i = 0;
                     foreach (var tl in theloaitext)
                     {
-                        var dsptl123 = LayBangTop20(tl.key);
+                        var dsptl123 = LayBangTop20(tl.key).Where(x => x.daxoa == 0).ToList();
                         if (theloaitext[i].key == tl.key)
                         {
                             theloaitext[i].Object.AddRange(dsptl123);
@@ -5442,7 +5462,7 @@ namespace TFourMusic.Controllers
                     int i = 0;
                     foreach (var tl in theloaitext)
                     {
-                        var dsptl123 = convertTop20(LayBangTop20(tl.key), uid.ToString());
+                        var dsptl123 = convertTop20(LayBangTop20(tl.key).Where(x => x.daxoa == 0).ToList(), uid.ToString());
                         if (theloaitext[i].key == tl.key)
                         {
                             theloaitext[i].Object.AddRange(dsptl123);
@@ -5465,7 +5485,7 @@ namespace TFourMusic.Controllers
                     int i = 0;
                     foreach (var tl in theloaitext)
                     {
-                        var dsptl123 = LayBangTop20(tl.key);
+                        var dsptl123 = LayBangTop20(tl.key).Where(x => x.daxoa == 0).ToList();
                         if (theloaitext[i].key == tl.key)
                         {
                             theloaitext[i].Object.AddRange(dsptl123);
@@ -5487,7 +5507,7 @@ namespace TFourMusic.Controllers
 
             var top20 = LayBangTop20();
             var data = (from t20 in top20
-                        where t20.id.Equals(item.key.ToString()) && t20.daxoa == 0
+                        where t20.id.Equals(item.key.ToString()) 
                         select t20).ToList();
             try
             {
@@ -5759,7 +5779,7 @@ namespace TFourMusic.Controllers
             if (uid != null && uid != "null")
             {
                 var listdspyeuthich = LayBangYeuThichTop20();
-                var listdsp = LayBangTop20();
+                var listdsp = LayBangTop20().Where(x => x.daxoa == 0);
 
                 var result = (from list in listdsp
                               join yttop20 in listdspyeuthich on list.id equals yttop20.top20_id
@@ -5797,7 +5817,7 @@ namespace TFourMusic.Controllers
             {
                 var baihat = getListBaiHat();
                 var datakq = (from bh in baihat
-                              where bh.daxoa == 0 && bh.chedo == 1 && bh.chude_id.Equals(item.key.ToString())
+                              where bh.daxoa == 0 && bh.chedo == 1 && bh.vohieuhoa == 0 && bh.chude_id.Equals(item.key.ToString())
                               select bh).ToList();
                 if (item.uid != null && item.uid != "" && item.uid != "null")
                 {

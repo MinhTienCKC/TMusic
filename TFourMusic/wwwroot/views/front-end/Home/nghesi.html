@@ -1,4 +1,10 @@
-﻿<div class="container_nghesi">
+﻿<div ng-show="NgheSi[0].vohieuhoa == 1">
+    <div style=" text-align: center;">
+        <img style="width: 400px; height: 400px;" src="../../../image/404-bg123123.png" />
+        <h3 style="font-size: 18px; font-weight: 700; margin-top: 40px; color: white;" class="title-404">WoooW, trang bạn tìm không còn tồn tại hoặc đã có lỗi</h3>
+    </div>
+</div>
+<div ng-show="NgheSi[0].vohieuhoa == 0" class="container_nghesi">
     <div class="avatar_nghesi"></div>
     <div class="thong_tin_nghesi">
         <div class="column_thongtinnghesi">
@@ -90,7 +96,7 @@
 
 
 </div>
-<div class="tab_nghesi">
+<div ng-show="NgheSi[0].vohieuhoa == 0" class="tab_nghesi">
     <div class="zm-narbar-container_account">
         <ul class="zm-navbar-menu_account">
             <li ng-click="tabactiveNgheSi(0)" ng-class="{'is-active_account':  tabactiveIndex==0}" class="zm-navbar-item_account is-active_account">
@@ -118,7 +124,8 @@
     </div>
 
 </div>
-<div ng-if="tabactiveIndex == 0">
+
+<div  ng-if="tabactiveIndex == 0 && NgheSi[0].vohieuhoa == 0">
     <h1 style=" padding: 20px;" class="titleis-2">
         <span>Bài Hát Nổi Bật</span>
     </h1>
@@ -254,7 +261,7 @@
     </div>
 </div>
 
-<div ng-if="tabactiveIndex == 1">
+<div ng-if="tabactiveIndex == 1 && NgheSi[0].vohieuhoa == 0">
     <h1 style=" padding: 20px;" class="titleis-2">
         <span>Bài Hát</span>
     </h1>
@@ -311,7 +318,7 @@
         </div>
     </div>
 </div>
-<div ng-if="tabactiveIndex == 2">
+<div ng-if="tabactiveIndex == 2 && NgheSi[0].vohieuhoa == 0">
     <div class="header_option">
         <h1 class="titleis-2">
             <span>Danh Sách Phát</span>
@@ -376,7 +383,7 @@
         </div>
     </div>
 </div>
-<div class="zm-portal-modal" ng-show="showBaoCaoNguoiDung" ng-cloak>
+<div class="zm-portal-modal" ng-show="showBaoCaoNguoiDung && NgheSi[0].vohieuhoa == 0" ng-cloak>
     <div class="modal_comment is-active">
         <div class="modal-background" style="color:#fff;">
             <div class="">

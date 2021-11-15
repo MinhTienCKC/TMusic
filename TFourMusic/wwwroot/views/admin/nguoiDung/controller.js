@@ -189,7 +189,7 @@ app.controller('index', function ($rootScope, $scope, dataservice, $uibModal) {
         $("#loading_main").css("display", "block");
         dataservice.voHieuHoa(data, function (rs) {
             rs = rs.data;
-            if (rs == "") {
+            if (rs == "admin") {
                 alertify.success("Tài khoản phân quyền Admin mới thực hiện chức năng này !!!");
                 if (data.vohieuhoa == 1) {
                     data.vohieuhoa = 0;
@@ -349,12 +349,14 @@ app.controller('baihatnguoidung', function ($rootScope, $scope, $uibModalInstanc
                 else {
                     alertify.success("Đã bỏ vô hiệu hóa !!!");
                 }
+                $("#loading_main").css("display", "none");
             }
             else {
+                $("#loading_main").css("display", "none");
                 alertify.success("Lỗi không thực hiện vô hiệu hóa !!!.");
             }
         });
-        $("#loading_main").css("display", "none");
+       
     }
 
     $scope.currentPage = 0;

@@ -71,7 +71,8 @@
                     </div>
                 </div>
             </div>
-            <div ng-if="danhSachBaiHatTimKiem.length > 0" ng-class="{'active_baihat_timkiem' : kiemTraBaiHatDangPhat==x.id  }" animate class="item_nhac_da_luu_timkiem item" ng-repeat="x in danhSachBaiHatTimKiem | limitTo: 6" context-menu="contextMenuBaiHat_BaiHat" ng-right-click="moChiTietBaiHat(x)">
+         
+            <div ng-show="danhSachBaiHatTimKiem.length > 0" ng-class="{'active_baihat_timkiem' : kiemTraBaiHatDangPhat==x.id  }" animate class="item_nhac_da_luu_timkiem item" ng-repeat="x in danhSachBaiHatTimKiem |limitTo: 6" context-menu="contextMenuBaiHat_BaiHat" ng-right-click="moChiTietBaiHat(x)">
                 <div ng-if="$index > 0" class="border_nhac_luu">
                     <div class="media_luu_baihat_timkiem">
                         <div class="media_luu_left_baihat_timkiem" animate>
@@ -104,9 +105,9 @@
                                 <i ng-show="!checklogin.dadangnhap" class="far fa-heart icon_nav_right_first_timkiem"></i>
                             </label>
                             <!--<label class="label_account">
-                                <i class="far fa-heart icon_account_notfocus"></i>
-                            </label>-->
-                            <span style="cursor:pointer" class="material-icons-outlined dots_account_baihat_timkiem"context-menu1="contextMenuBaiHat_BaiHat" ng-click="moChiTietBaiHat(x)">
+                        <i class="far fa-heart icon_account_notfocus"></i>
+                    </label>-->
+                            <span style="cursor:pointer" class="material-icons-outlined dots_account_baihat_timkiem" context-menu1="contextMenuBaiHat_BaiHat" ng-click="moChiTietBaiHat(x)">
                                 more_horiz
                             </span>
                         </div>

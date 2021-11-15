@@ -190,6 +190,24 @@ namespace TFourMusic.Controllers
 
                     if (item.vohieuhoa == 0)
                     {
+                        var baihatnguoidung = LayBangBaiHat(item.uid);
+                        var danhsachphatnguoidung = LayBangDanhSachPhatNguoiDung(item.uid);
+                        if (baihatnguoidung.Count > 0)
+                        {
+                            foreach (var bh in baihatnguoidung)
+                            {
+                                client = new FireSharp.FirebaseClient(config);
+                                object p1 = client.Set("csdlmoi/baihat/" + item.uid + "/" + bh.id + "/" + "vohieuhoa", 0);
+                            }
+                        }
+                        if (danhsachphatnguoidung.Count > 0)
+                        {
+                            foreach (var dsp in danhsachphatnguoidung)
+                            {
+                                client = new FireSharp.FirebaseClient(config);
+                                object p2 = client.Set("csdlmoi/danhsachphatnguoidung/" + item.uid + "/" + dsp.id + "/" + "vohieuhoa", 0);
+                            }
+                        }
                         UserRecordArgs args = new UserRecordArgs()
                         {
                             Uid = item.uid,
@@ -238,6 +256,24 @@ namespace TFourMusic.Controllers
                     }
                     else
                     {
+                        var baihatnguoidung = LayBangBaiHat(item.uid);
+                        var danhsachphatnguoidung = LayBangDanhSachPhatNguoiDung(item.uid);
+                        if (baihatnguoidung.Count > 0)
+                        {
+                            foreach (var bh in baihatnguoidung)
+                            {
+                                client = new FireSharp.FirebaseClient(config);
+                                object p1 = client.Set("csdlmoi/baihat/" + item.uid + "/" + bh.id + "/" + "vohieuhoa", 1);
+                            }
+                        }
+                        if (danhsachphatnguoidung.Count > 0)
+                        {
+                            foreach (var dsp in danhsachphatnguoidung)
+                            {
+                                client = new FireSharp.FirebaseClient(config);
+                                object p2 = client.Set("csdlmoi/danhsachphatnguoidung/" + item.uid + "/" + dsp.id + "/" + "vohieuhoa", 1);
+                            }
+                        }
                         UserRecordArgs args = new UserRecordArgs()
                         {
                             Uid = item.uid,
@@ -291,7 +327,7 @@ namespace TFourMusic.Controllers
             }
             else
             {
-                return Json("");
+                return Json("admin");
             }
 
            
@@ -596,7 +632,7 @@ namespace TFourMusic.Controllers
                 if (item.uid != null && item.uid != "null")
                 {
                     var danhsachphat = LayBangDanhSachPhatNguoiDung(item.uid);
-                    return Json(danhsachphat);
+                    return Json(danhsachphat.ToList());
                 }
                 else
                 {

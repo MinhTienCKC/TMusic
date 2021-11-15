@@ -321,7 +321,7 @@ app.controller('index', function ($rootScope, $scope, dataservice, $uibModal) {
         modalInstance.result.then(function () {
             
         }, function () {
-             /*   $scope.initData();*/
+                $scope.initData();
         });
     };           
     $scope.xoaDanhSachPhatTheLoai = function (key,vitridanhsachphattheloai) {
@@ -658,8 +658,28 @@ app.controller('add', function ($rootScope, $scope, dataservice,$uibModalInstanc
             $scope.taiTheLoai = rs;        
             $scope.valueTheLoai = rs[0].id;         
         });
+        dataservice.taiDanhSachPhatTheLoai(function (rs) {
+
+            rs = rs.data;
+            $scope.taiDanhSachPhatTheLoai = rs;
+
+            
+        });
+
     };
     $scope.initData();
+    $scope.kiemTraTrung = false;
+    $scope.kiemtra = function () {
+
+        for (var i = 0; i < $scope.taiDanhSachPhatTheLoai.length; i++) {
+            if ($scope.addTenDanhSachPhatTheLoai.toLowerCase() == $scope.taiDanhSachPhatTheLoai[i].tendanhsachphattheloai.toLowerCase()) {
+                $scope.kiemTraTrung = true;
+                break;
+            } else {
+                $scope.kiemTraTrung = false;
+            }
+        }
+    }
     $scope.model = {
         id: '',
         theloai_id: '',
@@ -671,11 +691,18 @@ app.controller('add', function ($rootScope, $scope, dataservice,$uibModalInstanc
     var duLieuHinh = new FormData();
     $scope.dinhDangHinhAnh = "image/";
     $scope.submit = function () {
+        $("#loading_main").css("display", "block");
+        if ($scope.kiemTraTrung == true) {
+            $("#loading_main").css("display", "none");
+            alert("Tên Danh Sách Phát Thể Loại Đã Tồn Tại Vui Lòng Nhập Lại !!!");
+            return;
+        }
         if ($scope.dinhDangHinhAnh != "image/"       
             || $scope.valueTheLoai == null
             || !$scope.addDanhSachPhatTheLoai.addTenDanhSachPhatTheLoai.$valid
             || !$scope.addDanhSachPhatTheLoai.addLinkHinhAnh.$valid
-             ) {
+        ) {
+            $("#loading_main").css("display", "none");
             alert("Vùng Lòng  Điền Đầy Đủ Và Kiểm Tra Thông Tin !!!");
         }
         else {
@@ -695,10 +722,12 @@ app.controller('add', function ($rootScope, $scope, dataservice,$uibModalInstanc
                     else {
                         alertify.success("Tạo danh sách phát thể loại thất bại.");
                     }
+                    $("#loading_main").css("display", "none");
+                    $uibModalInstance.dismiss('cancel');
                 });
             })
            
-            $uibModalInstance.dismiss('cancel');
+          
         }     
     } 
     $scope.getTheFilesHinhAnh = function ($files) {
@@ -718,6 +747,10 @@ app.controller('add', function ($rootScope, $scope, dataservice,$uibModalInstanc
 app.controller('edit', function ($rootScope, $scope, $uibModalInstance, dataservice,para) {
     $scope.cancel = function () {
         $uibModalInstance.dismiss('cancel');
+    }
+    function danhSachTrung(lists, id) {
+        let res = lists.filter(item => item["id"] != id);
+        return res
     }
     $scope.modelDanhSachPhatTheLoai = para;
     $scope.model = {
@@ -744,18 +777,42 @@ app.controller('edit', function ($rootScope, $scope, $uibModalInstance, dataserv
         //    }      
 
         //});
-    
+        dataservice.taiDanhSachPhatTheLoai(function (rs) {
+
+            rs = rs.data;
+            $scope.taiDanhSachPhatTheLoai = rs;
+            $scope.danhSachTrung = danhSachTrung($scope.taiDanhSachPhatTheLoai, $scope.modelDanhSachPhatTheLoai.id);
+
+        });
     };
     $scope.initData();
+    $scope.kiemTraTrung = false;
+    $scope.kiemtra = function () {
 
+        for (var i = 0; i < $scope.danhSachTrung.length; i++) {
+            if ($scope.editTenDanhSachPhatTheLoai.toLowerCase() == $scope.danhSachTrung[i].tendanhsachphattheloai.toLowerCase()) {
+                $scope.kiemTraTrung = true;
+                break;
+            } else {
+                $scope.kiemTraTrung = false;
+            }
+        }
+    }
 
    
                               
-        $scope.submit = function () {
+    $scope.submit = function () {
+        $("#loading_main").css("display", "block");
+        if ($scope.kiemTraTrung == true) {
+            $("#loading_main").css("display", "none");
+            alert("Tên Danh Sách Phát Thể Loại Đã Tồn Tại Vui Lòng Nhập Lại !!!");
+            return;
+        }
             if (
                  !$scope.editDanhSachPhatTheLoai.editTenDanhSachPhatTheLoai.$valid
                 
             ) {
+                $("#loading_main").css("display", "none");
                 alert("Vùng Lòng  Điền Đầy Đủ Và Kiểm Tra Thông Tin !!!");
             }
             else {
@@ -764,8 +821,10 @@ app.controller('edit', function ($rootScope, $scope, $uibModalInstance, dataserv
 
                 dataservice.suaDanhSachPhatTheLoai($scope.modelDanhSachPhatTheLoai, function (rs) {
                     rs = rs.data;
+                    $("#loading_main").css("display", "none");
+                    $uibModalInstance.dismiss('cancel');
                 })
-                $uibModalInstance.dismiss('cancel');
+      
             }
         } 
                                              

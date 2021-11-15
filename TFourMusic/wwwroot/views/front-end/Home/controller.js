@@ -1384,7 +1384,11 @@ app.controller('Ctrl_ESEIM', function ($scope, dataservice, $uibModal, $rootScop
 
                 rs = rs.data;
                 $scope.listQuangCao = rs;
-                $scope.baiHatGoiY = angular.copy(rs);
+                $rootScope.baiHatGoiY = [];
+                angular.forEach($scope.listQuangCao, function (val, index) {
+                    $rootScope.baiHatGoiY.push(val.baihat);
+                });
+
             });
             if ($rootScope.checklogin.uid != null && $rootScope.checklogin.uid != '' && $rootScope.checklogin.uid != "null") {
                 dataservice.getListDaTaiLen_CaNhan($rootScope.checklogin.uid, function (rs) {
@@ -1868,7 +1872,7 @@ app.controller('Ctrl_ESEIM', function ($scope, dataservice, $uibModal, $rootScop
                             mota: 'null',
                             ngaysinh: '',
                             hinhdaidien: '',
-                            gioitinh: '1',
+                            gioitinh: '',
                             online: 0,
                             vip: 0,
                             hansudung: '',
@@ -1963,7 +1967,7 @@ app.controller('Ctrl_ESEIM', function ($scope, dataservice, $uibModal, $rootScop
                             mota: 'null',
                             ngaysinh: '',
                             hinhdaidien: '',
-                            gioitinh: '1',
+                            gioitinh: '',
                             online: 0,
                             vip: 0,
                             hansudung: '',
@@ -2032,7 +2036,7 @@ app.controller('Ctrl_ESEIM', function ($scope, dataservice, $uibModal, $rootScop
                                 mota: 'null',
                                 ngaysinh: '',
                                 hinhdaidien: '',
-                                gioitinh: '1',
+                                gioitinh: '',
                                 online: 0,
                                 vip: 0,
                                 hansudung: '',
@@ -3272,9 +3276,10 @@ app.controller('Ctrl_ESEIM', function ($scope, dataservice, $uibModal, $rootScop
                                 $scope.xoaNhacDaTaiXuong = rs;
                                 //$("#loaddingdownload").css("display", "none");
                                 //$("#loaddingdownload1").css("display", "none");
-                                $("#loading_main").css("display", "none");
+                               
                             });
-                        }, 1000);
+                            $("#loading_main").css("display", "none");
+                        }, 5000);
 
                     }, 5000);
                 }
@@ -3412,6 +3417,7 @@ app.controller('Ctrl_ESEIM', function ($scope, dataservice, $uibModal, $rootScop
 
         t = $scope.baihatCookie.tenbaihat;
         window.open('http://www.facebook.com/sharer.php?u=' + encodeURIComponent(u) + '&t=' + encodeURIComponent(t), 'sharer', 'toolbar=0,status=0,width=626,height=436');
+       /* window.open('https://www.facebook.com/sharer/sharer.php?u=https%3A%2F%2Fdevelopers.facebook.com%2Fdocs%2Fplugins%2F&amp;src=sdkpreparse');*/
     }
     //23/07 tuấn contextmenu bai hat
     //24/07 xoay hình
@@ -3527,7 +3533,18 @@ app.controller('Ctrl_ESEIM', function ($scope, dataservice, $uibModal, $rootScop
         $rootScope.tabactive = index;
     }
 
+    $scope.checkindexhearder = 0;
+    $interval(function () {
 
+        $scope.checkindexhearder++;
+
+        if ($scope.checkindexhearder >= $rootScope.baiHatGoiY.length) {
+            $scope.checkindexhearder = 0;
+        }
+
+       
+
+    }, 4500);
 
 
 });
@@ -4188,6 +4205,14 @@ app.controller('canhan', function ($scope, dataservice, $rootScope, $location, $
 
         });
     };
+    $scope.mousedowmthoathuan = function () {
+        $scope.settingFocus = true;
+    }
+    $scope.mouseupthoathuan= function () {
+
+        $scope.settingFocus = false;
+        $scope.checked = false;
+    }
     $scope.viTriBanNhac = function (index) {
         $scope.checkplaymusic = index;
     }
@@ -4612,6 +4637,10 @@ app.controller('timkiem', function ($scope, $routeParams, dataservice, $rootScop
                 resolve();
             });
         });
+        function danhSachTrung(lists, id) {
+            let res = lists.filter(item => item["id"] != id);
+            return res
+        }
         promise.then(function () {
             $scope.activeTimKiem = 0;
             $scope.tuKhoaTimKiem = $routeParams.tukhoa;
@@ -4630,6 +4659,10 @@ app.controller('timkiem', function ($scope, $routeParams, dataservice, $rootScop
                 rs = rs.data;
                 if (rs.Error) { } else {
                     $scope.danhSachBaiHatTimKiem = rs;
+                    /*$scope.danhSachBaiHatTimKiem.concat($rootScope.baiHatGoiY);*/
+                   
+                  ///  $scope.danhSachBaiHatTimKiem = danhSachTrung($scope.danhSachBaiHatTimKiem);
+
                 }
             })
             dataservice.timKiemDanhSachPhatTheLoai($scope.modelTimKiem, function (rs) {
@@ -4680,7 +4713,9 @@ app.controller('timkiem', function ($scope, $routeParams, dataservice, $rootScop
                     rs = rs.data;
                     if (rs.Error) { } else {
                         $scope.danhSachBaiHatTimKiem = rs;
+                       // $scope.danhSachBaiHatTimKiem = $scope.danhSachBaiHatTimKiem.concat($rootScope.baiHatGoiY);
                     }
+
                 })
 
                 dataservice.timKiemDanhSachPhatTheLoai($scope.tuKhoaTimKiem, function (rs) {
@@ -4696,6 +4731,7 @@ app.controller('timkiem', function ($scope, $routeParams, dataservice, $rootScop
                     rs = rs.data;
                     if (rs.Error) { } else {
                         $scope.danhSachBaiHatTimKiem = rs;
+                    //    $scope.danhSachBaiHatTimKiem = $scope.danhSachBaiHatTimKiem.concat($rootScope.baiHatGoiY);
                     }
                 })
             }
@@ -6254,6 +6290,19 @@ app.controller('danhsachphat', function ($rootScope, $scope, $routeParams, $cook
                 }
                 $scope.tongThoiGianPhat = secondsToHms(tongThoiLuong);
                 $scope.soBaiHat = $scope.taiDSPBaiHatTheoDSPTheLoai_DSP.length;
+                $scope.baiHatQuangCao = angular.copy($rootScope.baiHatGoiY);
+
+              
+                  
+                    for (var i = 0; i < $scope.taiDanhSachBaiHatTheoTheLoai.length; i++) {
+                       
+                        for (var y = 0; y < $scope.baiHatQuangCao.length; y++) {
+                            if ($scope.baiHatQuangCao[y].id == $scope.taiDanhSachBaiHatTheoTheLoai[i].id) {
+                                $scope.baiHatQuangCao.splice(y, 1);
+                            }
+                           
+                        }
+                  }
             });
 
         })
@@ -6514,9 +6563,24 @@ app.controller('baihat', function ($rootScope, $scope, $routeParams, $cookies, d
                 dataservice.taiDanhSachBaiHatTheoTheLoai($scope.text, function (rs) {
                     rs = rs.data;
                     $scope.taiDanhSachBaiHatTheoTheLoai = rs;
-                    for (var i = 0; i < $scope.taiDanhSachBaiHatTheoTheLoai.length; i++) {
-                        if ($scope.taiBaiHatTheoId[0].id == $scope.taiDanhSachBaiHatTheoTheLoai[i].id) {
-                            $scope.taiDanhSachBaiHatTheoTheLoai.splice(i, 1);
+                    //for (var i = 0; i < $scope.taiDanhSachBaiHatTheoTheLoai.length; i++) {
+                    //    if ($scope.taiBaiHatTheoId[0].id == $scope.taiDanhSachBaiHatTheoTheLoai[i].id) {
+                    //        $scope.taiDanhSachBaiHatTheoTheLoai.splice(i, 1);
+                    //    }
+                    //}
+                    $scope.baiHatQuangCao = angular.copy($rootScope.baiHatGoiY);
+
+                    for (var y = 0; y < $scope.baiHatQuangCao.length; y++) {
+                        if ($scope.baiHatQuangCao[0].id == $scope.taiBaiHatTheoId[0].theloai_id) {
+                            $scope.baiHatQuangCao.splice(i, 1);
+                        }
+                        for (var i = 0; i < $scope.taiDanhSachBaiHatTheoTheLoai.length; i++) {
+                            if ($scope.baiHatQuangCao[y].id == $scope.taiDanhSachBaiHatTheoTheLoai[i].id) {
+                                $scope.taiDanhSachBaiHatTheoTheLoai.splice(i, 1);
+                            }
+                            if ($scope.taiBaiHatTheoId[0].id == $scope.taiDanhSachBaiHatTheoTheLoai[i].id) {
+                                $scope.taiDanhSachBaiHatTheoTheLoai.splice(i, 1);
+                            }
                         }
                     }
                 });
@@ -6631,6 +6695,20 @@ app.controller('playlist', function ($rootScope, $scope, $routeParams, $cookies,
             }
         }
     };
+    $scope.yeuThichBaiHatUiQuangCao = function (viTri) {
+        if ($rootScope.checklogin.dadangnhap == true) {
+            //  alert($scope.taiDSPBaiHatMoi_NhacMoi[viTri].yeuthich);
+            $scope.yeuThuong = $scope.baiHatQuangCao[viTri].yeuthich;
+            if ($scope.yeuThuong == 1) {
+                //
+                $scope.baiHatQuangCao[viTri].yeuthich = 0;
+            }
+            else {
+
+                $scope.baiHatQuangCao[viTri].yeuthich = 1;
+            }
+        }
+    };
 
     $scope.idPlayList = $routeParams.id;
     function chuyenDoi(thoigian) {
@@ -6707,10 +6785,11 @@ app.controller('playlist', function ($rootScope, $scope, $routeParams, $cookies,
                     $scope.taiThongTinNguoiDungBangIdPlayList_PLayList = rs;
 
                 });
-
+               
                 dataservice.taiDSBaiHatTheoDSPNguoiDung_PlayList($scope.modelChiTietPlayList, function (rs) {
                     rs = rs.data;
                     $scope.taiDSBaiHatTheoDSPNguoiDung_PlayList = rs;
+
                     var tongThoiLuong = 0;
                     for (var i = 0; i < $scope.taiDSBaiHatTheoDSPNguoiDung_PlayList.length; i++) {
                         tongThoiLuong += chuyenDoi($scope.taiDSBaiHatTheoDSPNguoiDung_PlayList[i].thoiluongbaihat);
@@ -6718,23 +6797,38 @@ app.controller('playlist', function ($rootScope, $scope, $routeParams, $cookies,
                     }
                     $scope.tongThoiGianPhat = secondsToHms(tongThoiLuong);
                     $scope.soBaiHat = $scope.taiDSBaiHatTheoDSPNguoiDung_PlayList.length;
-                    $scope.text.key = $scope.taiDSBaiHatTheoDSPNguoiDung_PlayList[$scope.soBaiHat - 1].theloai_id;
+                    $scope.baiHatQuangCao = angular.copy($rootScope.baiHatGoiY);
+                    if ($scope.soBaiHat > 0) {
+                        $scope.text.key = $scope.taiDSBaiHatTheoDSPNguoiDung_PlayList[$scope.soBaiHat - 1].theloai_id;
 
-                    dataservice.taiDanhSachBaiHatTheoTheLoai($scope.text, function (rs) {
-                        rs = rs.data;
-                        $scope.taiDanhSachBaiHatTheoTheLoai = rs;
-                        for (var y = 0; y < $scope.soBaiHat; y++) {
-                            for (var i = 0; i < $scope.taiDanhSachBaiHatTheoTheLoai.length; i++) {
-                                if ($scope.taiDSBaiHatTheoDSPNguoiDung_PlayList[y].id == $scope.taiDanhSachBaiHatTheoTheLoai[i].id) {
-                                    $scope.taiDanhSachBaiHatTheoTheLoai.splice(i, 1);
+                        dataservice.taiDanhSachBaiHatTheoTheLoai($scope.text, function (rs) {
+                            rs = rs.data;
+                            $scope.taiDanhSachBaiHatTheoTheLoai = rs;
+                          
+                            for (var y = 0; y < $scope.taiDSBaiHatTheoDSPNguoiDung_PlayList.length; y++) {
+
+
+                                for (var a = 0; a < $scope.baiHatQuangCao.length; a++) {
+                                    if ($scope.taiDSBaiHatTheoDSPNguoiDung_PlayList[y].id == $scope.baiHatQuangCao[a].id) {
+                                        $scope.baiHatQuangCao.splice(a, 1);
+                                    }
+                                    for (var i = 0; i < $scope.taiDanhSachBaiHatTheoTheLoai.length; i++) {
+                                        if ($scope.taiDSBaiHatTheoDSPNguoiDung_PlayList[y].id == $scope.taiDanhSachBaiHatTheoTheLoai[i].id) {
+                                            $scope.taiDanhSachBaiHatTheoTheLoai.splice(i, 1);
+                                        }
+                                        if ($scope.baiHatQuangCao[a].id == $scope.taiDanhSachBaiHatTheoTheLoai[i].id) {
+                                            $scope.taiDanhSachBaiHatTheoTheLoai.splice(i, 1);
+                                        }
+                                    }
                                 }
                             }
-                        }
-                        //  $scope.soLuong = Math.floor($scope.taiDanhSachBaiHatTheoTheLoai.length / 3);
-                        if ($scope.taiDanhSachBaiHatTheoTheLoai.length < 8) {
-                            $scope.soLuong = $scope.taiDanhSachBaiHatTheoTheLoai.length;
-                        }
-                    });
+                            //  $scope.soLuong = Math.floor($scope.taiDanhSachBaiHatTheoTheLoai.length / 3);
+                            if ($scope.taiDanhSachBaiHatTheoTheLoai.length < 8) {
+                                $scope.soLuong = $scope.taiDanhSachBaiHatTheoTheLoai.length;
+                            }
+                        });
+                    }
+                  
 
                 });
 
@@ -6853,6 +6947,32 @@ app.controller('playlist', function ($rootScope, $scope, $routeParams, $cookies,
         // $scope.text.uid = $routeParams.id;
         $scope.taiDSBaiHatTheoDSPNguoiDung_PlayList.push(data);
         $scope.taiDanhSachBaiHatTheoTheLoai.splice(vitri, 1);
+        dataservice.themBaiHatVaoDanhSachPhatNguoiDung_NhacMoi($scope.modelThemBaiHatVaoDSPNguoiDung, function (rs) {
+            rs = rs.data;
+            $scope.themBaiHatVaoDanhSachPhatNguoiDung_NhacMoi = rs;
+            //alert("thêm thành công");
+            alertify.success("Thêm thành công.");
+        });
+    }
+    $scope.themBaiHatVaoPlaylistHienTai_QuangCao = function (data, vitri) {
+        // ubi = id danhsachphat nguoi dung playlist
+        // key là id bài hát
+        //$scope.modelThemBaiHatVaoDSPNguoiDung = {
+        //    baihat_id: '',
+        //    uid: $rootScope.checklogin.uid,
+        //    danhsachphatnguoidung_id: ''
+        //}
+        $scope.modelThemBaiHatVaoDSPNguoiDung = {
+            baihat: data,
+            uid: $rootScope.checklogin.uid,
+            danhsachphatnguoidung_id: ''
+        }
+        //  $scope.modelThemBaiHatVaoDSPNguoiDung.baihat_id = data.id;
+        $scope.modelThemBaiHatVaoDSPNguoiDung.danhsachphatnguoidung_id = $routeParams.id;
+        $scope.text.key = data.id;
+        // $scope.text.uid = $routeParams.id;
+        $scope.taiDSBaiHatTheoDSPNguoiDung_PlayList.push(data);
+        $scope.baiHatQuangCao.splice(vitri, 1);
         dataservice.themBaiHatVaoDanhSachPhatNguoiDung_NhacMoi($scope.modelThemBaiHatVaoDSPNguoiDung, function (rs) {
             rs = rs.data;
             $scope.themBaiHatVaoDanhSachPhatNguoiDung_NhacMoi = rs;
